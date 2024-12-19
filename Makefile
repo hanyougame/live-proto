@@ -1,7 +1,15 @@
 # Makefile
 PROJECT_ROOT ?= ../live-server-rpc/app
 SERVICES ?= game user
+# 配置项目根目录和第三方依赖目录
+PROTO_ROOT ?= ./proto
+PROTO_THIRD_PARTY ?= $(PROTO_ROOT)/third_party
+GENERATED_DIR ?= ./proto-gen-go
+# 使用 wildcard 和 filter 组合查找所有 .proto 文件
+PROTO_FILES := $(shell find $(PROTO_ROOT) -name "*.proto")
 
+# 从 .proto 文件路径中提取服务目录
+PROTO_SERVICES := $(sort $(dir $(PROTO_FILES)))
 # RPC 服务生成配置
 define generate_rpc
 echo "Generating RPC service: $(1)"
@@ -21,6 +29,29 @@ check-tools:
 	@which protoc-gen-go-grpc >/dev/null || (echo "Error: protoc-gen-go-grpc not found" && exit 1)
 	@which goctl >/dev/null || (echo "Error: goctl not found" && exit 1)
 
+
+# 动态创建目录结构（仅为有 .proto 文件的目录创建）
+prepare:
+	@$(foreach service,$(PROTO_SERVICES), \
+		mkdir -p $(GENERATED_DIR)/$(subst $(PROTO_ROOT)/,,$(patsubst %/,%,$(service))); \
+	)
+
+# 生成所有服务的 Go 代码
+gengo: prepare
+	@if [ -z "$(PROTO_FILES)" ]; then \
+		echo "没有找到 .proto 文件"; \
+	else \
+		for service in $(PROTO_SERVICES); do \
+			protoc \
+			--proto_path=$(PROTO_ROOT) \
+			--proto_path=$(PROTO_THIRD_PARTY) \
+			--go_out=$(GENERATED_DIR) \
+			--go_opt=paths=source_relative \
+			--go-grpc_out=$(GENERATED_DIR) \
+			--go-grpc_opt=paths=source_relative \
+			$$service/*.proto; \
+		done \
+	fi
 
 
 # 帮助信息
