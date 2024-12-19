@@ -14,13 +14,13 @@ TARGET_DIR="../live-server-rpc/app"
 mkdir -p ${TARGET_DIR}/${SERVICE}
 
 # 检查proto文件是否存在
-if [ ! -f "${SERVICE}/v1/${SERVICE}.proto" ]; then
-    echo "Error: Proto file ${SERVICE}/v1/${SERVICE}.proto not found"
+if [ ! -f "./proto/${SERVICE}/v1/${SERVICE}.proto" ]; then
+    echo "Error: Proto file ./proto/${SERVICE}/v1/${SERVICE}.proto not found"
     exit 1
 fi
 
 # 生成rpc服务代码
-goctl rpc protoc ${SERVICE}/v1/${SERVICE}.proto \
+goctl rpc protoc ./proto/${SERVICE}/v1/${SERVICE}.proto \
     --proto_path=. \
     --go_out=${TARGET_DIR}/${SERVICE} \
     --go-grpc_out=${TARGET_DIR}/${SERVICE} \
