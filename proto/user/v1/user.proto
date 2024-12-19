@@ -22,6 +22,7 @@ message UserDetailsInfoReply {
   string email = 10;                      //邮箱
   string birthday = 11;                      //生日
   int64 vip_level = 12;                      //vip等级
+  string balance = 13;
 }
 
 
