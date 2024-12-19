@@ -1,0 +1,304 @@
+syntax = "proto3";
+
+package game.v1;
+option go_package = "./pb/v1";
+
+
+
+message GameReq{
+
+}
+message GameReply{
+
+}
+service LiveGameExternalService{
+  //获取游戏资源信息
+  rpc K9GameResourceListSync (GameReq) returns (GameReply);
+}
+
+
+message SingleEnterGameReq{
+  int64 platform_key = 1;    //游戏平台key  唯一标识
+  int64 game_key = 2;        //游戏标志
+  uint64 user_id = 3;         //用户ID
+  string user_token = 4;      //用户TOKEN
+  string language = 5;        //语言
+  string currency_code = 6;   //货币Code
+  string param = 7 ;          //参数
+  string show_scene = 8;     //游戏进入场景
+  string os_type = 9;         //类型 “web” or “android” or "h5" or "ios"
+  string referer = 10;        //请求页面
+  string user_ip = 11;        //玩家IP
+}
+
+message SingleEnterGameReply{
+  string  url = 1 ;  //游戏地址
+}
+
+message SingleEnterGameTryReq{
+  int64 platform_key = 1;    //游戏平台key  唯一标识
+  int64 game_key = 2;        //游戏标志
+  uint64 user_id = 3;         //用户ID
+  string user_token = 4;      //用户TOKEN
+  string language = 5;        //语言
+  string currency_code = 6;   //货币Code
+  string param = 7 ;          //参数
+  string os_type = 8;         //类型 “web” or “android” or "h5" or "ios"
+  string referer = 9;         //请求页面
+  string user_ip = 10;        //玩家IP
+  string nickname = 11;
+  string user_avatar = 12;
+}
+
+message SingleEnterGameTryReply{
+  string  url = 1 ;  //游戏地址
+}
+
+service LiveGameExternalSingleService{
+  //进入游戏
+  rpc EnterGame (SingleEnterGameReq) returns (SingleEnterGameReply);
+  //进入游戏试玩
+  rpc EnterGameTry (SingleEnterGameTryReq) returns (SingleEnterGameTryReply);
+}
+
+
+message TransferEnterGameReq{
+  int64 platform_key = 1;    //游戏平台key  唯一标识
+  int64 game_key = 2;        //游戏标志
+  int64 user_id = 3;         //用户ID
+  string user_token = 4;      //用户TOKEN
+  string language = 5;        //语言
+  string currency_code = 6;   //货币Code
+  string param = 7 ;          //参数
+  string show_scene = 8;     //游戏进入场景
+  string os_type = 9;         //类型 “web” or “android” or "h5" or "ios"
+  string referer = 10;        //请求页面
+  string user_ip = 11;        //玩家IP
+}
+
+message TransferEnterGameReply{
+  string  url = 1 ;  //游戏地址
+}
+
+message WalletTransferInGameReq{
+  int64 platform_key = 1;    //游戏平台key  唯一标识
+  int64 game_key = 2;        //游戏标志
+  int64  user_id = 3;         //用户ID
+  string bill_no = 4;         //转入账单编号
+  string currency_code = 5;   //货币Code
+  int64 amount = 6;          //金额  整数且大于0
+}
+
+message WalletTransferInGameReply{
+  bool  status = 1 ;        //成功状态， true：成功，false 失败
+  int64 user_id = 2;        //用户ID
+  int64 amount = 3;        //金额
+  string game_order_no = 4; //转入订单编号
+  string err_msg = 5;       //失败消息
+}
+
+
+message WalletTransferOutGameReq{
+  int64 platform_key = 1;    //游戏平台key  唯一标识
+  int64 game_key = 2;        //游戏标志
+  int64  user_id = 3;         //用户ID
+  string game_order_no = 4; //转入订单编号
+  string currency_code = 5;     //货币Code
+  string amount = 6;        //金额
+}
+
+message WalletTransferOutGameReply{
+  bool  status = 1 ;        //成功状态， true：成功，false 失败
+  int64 user_id = 2;        //用户ID
+  string amount = 3;        //金额
+  string game_order_no = 4; //转出订单编号
+  string err_msg = 5;       //失败消息
+}
+
+message GetWalletTransferBalanceReq{
+  int64 platform_key = 1;    //游戏平台key  唯一标识
+  int64 game_key = 2;        //游戏标志
+  int64  user_id = 3;         //用户ID
+  string currency_code = 5;     //货币Code
+}
+
+message GetWalletTransferBalanceReply{
+  int64 user_id = 1;        //用户ID
+  string currency_code = 2;     //货币Code
+  string amount = 3;        //金额
+}
+
+
+message GetGameTransferOrderStatusReq{
+  string platform_key = 1;    //游戏平台key  唯一标识
+  repeated string order_no = 2;        //订单编号 最多100个
+}
+
+message GetGameTransferOrderStatusReply{
+  map<string, order_info> orders = 1;
+
+  message order_info{
+    int64  user_id = 1;         //用户ID
+    string order_no = 3;        //订单编号
+    int64 transfer_type = 4;    //交易类型：1:转入 2:转出
+    int64  status = 5 ; //转账状态， 0:处理中 1:处理成功 2:处理失败
+    string amounts = 6;         //订单金额
+    string msg = 7;             //信息
+  }
+
+}
+
+message GetGameTransferBetOrderListReq{
+  string start_time = 1;       //开始时间 查询玩家投注记录，按最后更新时间查询，最多查询上一个月数据。
+  string end_time = 2;       //结束时间 投注记录统一使用 UTC 时区，且投注记录会有 2 分钟左右的延迟，请查询当前时间前
+  int64 page_number = 3;
+}
+
+message GetGameTransferBetOrderListReply{
+  int64 total_page = 1;        //总页数
+  int64 current_page = 2;        //当前页数
+  string lastUpdate_date = 3;       //本批次数据的最后更新时间
+  repeated bet_info bet_list = 4; //订单列表
+  message bet_info{
+    int64 id = 1;                          // 记录 ID
+    string merchant_key = 2;                // 商户 KEY
+    string user_id = 3;                     // 玩家唯一标识
+    int64 trilateral_platform_id = 4;                   // 厂商 ID
+    int64 trilateral_game_id = 5;                      // 游戏 ID
+    string game_name = 6;                   // 游戏名称
+    string bet_id = 7;                      // 投注 ID
+    string currency = 8;                   // 货币
+    int64 status = 9;                      // 投注状态（1 未结算 2 已结算 3 已取消 4 无效）
+    string bet_time = 10;                   // 投注时间（字符串）
+    string settle_time = 11;                // 结算时间（字符串）
+    string update_time = 12;                // 最后更新时间（字符串）
+    string bet_detail = 13;                 // 投注记录详细，JSON 字符串
+    string bet_amount = 14;                 // 投注金额（作为字符串）
+    string pay_amount = 15;                 // 赔付金额（作为字符串）
+    string profit_loss = 16;                // 输赢金额（作为字符串）
+  }
+}
+
+service LiveGameExternalTransferService{
+  //进入游戏
+  rpc EnterGame (TransferEnterGameReq) returns (TransferEnterGameReply);
+  //转账钱包转入游戏
+  rpc WalletTransferInGame(WalletTransferInGameReq) returns (WalletTransferInGameReply);
+  //转账钱包转入
+  rpc WalletTransferOutGame(WalletTransferOutGameReq) returns (WalletTransferOutGameReply);
+  //转账钱包余额查询
+  rpc GetWalletTransferBalance(GetWalletTransferBalanceReq) returns (GetWalletTransferBalanceReply);
+  //查询用户游戏转账（转入、转出）订单状态
+  rpc GetGameTransferOrderStatus(GetGameTransferOrderStatusReq) returns (GetGameTransferOrderStatusReply);
+  //查询用户游戏投注订单列表
+  rpc GetGameTransferBetOrderList(GetGameTransferBetOrderListReq) returns (GetGameTransferBetOrderListReply);
+}
+
+
+//游戏投注创建请求
+message GameUserBetReq{
+  string platform_key = 1;  // 游戏平台key  唯一标识
+  string game_key = 2;      // 游戏标志
+  string trade_id = 3;      // 交易ID
+  uint64 user_id = 4;
+  string trade_amounts = 5;   //交易金额，非负值
+  string bet_session_id = 6;  //投注会话ID（单次投注派奖类的，取值trade_id）
+  string bet_desc = 7;      //订单描述
+  string currency_code = 8; //货币Code
+}
+//游戏投注创建回应
+message GameUserBetReply{
+  string balance = 1;         //余额
+  string currency_code = 2;   //货币代码
+  string order_no = 3;        //订单编号
+  int64 order_id = 4;         //订单ID
+  bool repeated = 5;          //是否重复
+  int64 spend_time = 6;
+  string spend_info = 7;       //
+}
+
+// 游戏订单派奖创建
+message GameUserRewardReq{
+  string platform_key = 1;  // 游戏平台key  唯一标识
+  string game_key = 2;  //游戏标志，如果不属于某个游戏，传入platform_key
+  string trade_id = 3;  // 交易ID
+  uint64 user_id = 4;
+  string trade_amounts = 5;   //交易金额，非负值
+  string bet_session_id = 6;  //投注会话ID，没有可不填
+  string order_desc = 7;      //订单描述
+  string currency_code = 8; //货币Code
+}
+message GameUserRewardReply{
+  string balance = 1;         //余额
+  string currency_code = 2;   //货币代码
+  string order_no = 3;        //订单编号
+  int64 order_id = 4;         //订单ID
+  bool repeated = 5;          //是否重复
+}
+
+//游戏投注撤销
+message GameUserBetCancelReq {
+  string platform_key = 1;      // 游戏平台key  唯一标识
+  string game_key = 2;          //游戏标志
+  uint64 user_id = 3;
+  string trade_id = 4;          // 交易ID
+  string trade_amounts = 5;     //交易金额，非负值
+  string original_trade_id = 6; //原订单交易ID
+}
+//游戏投注撤销响应
+message GameUserBetCancelReply {
+  string balance = 1;         //余额，非负值
+  string currency_code = 2;   // 货币代码
+  string order_no = 3;        //订单编号
+  int64 order_id = 4;         //订单ID
+  bool repeated = 5;          //是否重复
+}
+
+//游戏调整玩家余额(订单、活动等调整) 请求
+message GameUserAdjustmentReq {
+  string platform_key = 1;      // 游戏平台key  唯一标识
+  string game_key = 2;      // 游戏key  唯一标识 可以为空
+  uint64 user_id = 3;
+  string trade_id = 4;          // 交易ID
+  string adjust_amounts = 5;    //交易金额，加：正数，减：负数
+  string bet_session_id = 6;    //投注会话ID
+  string adjust_desc = 7;       //调整描述
+  string currency_code = 8; //货币Code
+}
+//游戏调整玩家余额(订单、活动等调整) 响应
+message GameUserAdjustmentReply {
+  string balance = 1;         //余额
+  string currency_code = 2;   // 货币代码
+  string order_no = 3;        //订单编号
+  int64 order_id = 4;         //订单ID
+  bool repeated = 5;          //是否重复
+}
+
+// 游戏转账订单回调
+message TransferCallbackReq {
+  int64 user_id = 1;
+  string order_no = 3;        //订单编号
+  int64 transfer_type = 4;    //交易类型：1:转入 2:转出
+  bool  status = 5 ;          //成功状态， true：成功，false 失败
+  string amounts = 6;         //订单金额
+  string msg = 7;             //信息描述
+}
+//游戏转账订单回调响应
+message TransferCallbackReply {
+}
+
+
+service LiveGameRpcService{
+  // 游戏投注
+  rpc GameUserBet(GameUserBetReq) returns(GameUserBetReply);
+  // 订单派奖
+  rpc GameUserReward(GameUserRewardReq) returns(GameUserRewardReply);
+  // 取消游戏投注
+  rpc GameUserBetCancel(GameUserBetCancelReq) returns(GameUserBetCancelReply);
+  // 调账
+  rpc GameUserAdjustment(GameUserAdjustmentReq) returns(GameUserAdjustmentReply);
+  // 订单回调
+  rpc TransferCallback(TransferCallbackReq) returns(TransferCallbackReply);
+}
+
+
