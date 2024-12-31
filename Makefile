@@ -1,47 +1,108 @@
 # Makefile
-PROJECT_ROOT ?= ../live-server-rpc/app
+
+# 检测操作系统类型
+ifeq ($(OS),Windows_NT)
+	DETECTED_OS := Windows
+	# Windows specific commands
+	SHELL := cmd.exe
+	RM_CMD := rd /s /q
+	MKDIR_CMD := mkdir
+	NULL_DEV := 2>nul
+	PATH_SEP := \\
+	PROTO_FILES := $(shell powershell -Command "Get-ChildItem -Path './proto' -Filter '*.proto' -Recurse | Select-Object -ExpandProperty FullName")
+	WHICH_CMD := where
+	SCRIPT_EXT := .bat
+else
+	DETECTED_OS := $(shell uname -s)
+	# Unix-like systems commands
+	RM_CMD := rm -rf
+	MKDIR_CMD := mkdir -p
+	NULL_DEV := 2>/dev/null
+	PATH_SEP := /
+	PROTO_FILES := $(shell find ./proto -name "*.proto")
+	WHICH_CMD := which
+	SCRIPT_EXT := .sh
+endif
+
+# 项目配置
+PROJECT_ROOT ?= ..$(PATH_SEP)live-rpc-server$(PATH_SEP)app
 SERVICES ?= game user
-# 配置项目根目录和第三方依赖目录
-PROTO_ROOT ?= ./proto
-PROTO_THIRD_PARTY ?= $(PROTO_ROOT)/third_party
-GENERATED_DIR ?= ./proto-gen-go
-# 使用 wildcard 和 filter 组合查找所有 .proto 文件
-PROTO_FILES := $(shell find $(PROTO_ROOT) -name "*.proto")
+PROTO_ROOT ?= .$(PATH_SEP)proto
+PROTO_THIRD_PARTY ?= $(PROTO_ROOT)$(PATH_SEP)third_party
+GENERATED_DIR ?= .$(PATH_SEP)proto-gen-go
 
 # 从 .proto 文件路径中提取服务目录
 PROTO_SERVICES := $(sort $(dir $(PROTO_FILES)))
+
 # RPC 服务生成配置
+ifeq ($(DETECTED_OS),Windows)
 define generate_rpc
-echo "Generating RPC service: $(1)"
-bash ./scripts/genrpc.sh $(1)
+	echo "Generating RPC service: $(1)" && \
+	cmd /c scripts\genrpc.bat $(1)
 endef
+else
+define generate_rpc
+	echo "Generating RPC service: $(1)" && \
+	./scripts/genrpc.sh $(1)
+endef
+endif
 
 # 生成所有 RPC 服务
 .PHONY: genrpc
 genrpc: check-tools
-	@$(foreach service,$(SERVICES),$(call generate_rpc,$(service));)
+	@echo "Starting RPC service generation..."
+	@for service in $(SERVICES); do \
+		$(call generate_rpc,$$service); \
+	done
+	@echo "RPC service generation completed."
 
 # 检查必要工具是否安装
 .PHONY: check-tools
 check-tools:
-	@which protoc >/dev/null || (echo "Error: protoc not found" && exit 1)
-	@which protoc-gen-go >/dev/null || (echo "Error: protoc-gen-go not found" && exit 1)
-	@which protoc-gen-go-grpc >/dev/null || (echo "Error: protoc-gen-go-grpc not found" && exit 1)
-	@which goctl >/dev/null || (echo "Error: goctl not found" && exit 1)
+	@$(WHICH_CMD) protoc $(NULL_DEV) || (echo "Error: protoc not found" && exit 1)
+	@$(WHICH_CMD) protoc-gen-go $(NULL_DEV) || (echo "Error: protoc-gen-go not found" && exit 1)
+	@$(WHICH_CMD) protoc-gen-go-grpc $(NULL_DEV) || (echo "Error: protoc-gen-go-grpc not found" && exit 1)
+	@$(WHICH_CMD) goctl $(NULL_DEV) || (echo "Error: goctl not found" && exit 1)
 
-
-# 动态创建目录结构（仅为有 .proto 文件的目录创建）
+# 动态创建目录结构
+.PHONY: prepare
 prepare:
-	@$(foreach service,$(PROTO_SERVICES), \
-		mkdir -p $(GENERATED_DIR)/$(subst $(PROTO_ROOT)/,,$(patsubst %/,%,$(service))); \
+ifeq ($(DETECTED_OS),Windows)
+	@for %%d in ($(PROTO_SERVICES)) do ( \
+		$(MKDIR_CMD) "$(GENERATED_DIR)$(PATH_SEP)%%~pd" $(NULL_DEV) || exit 0 \
 	)
+else
+	@for service in $(PROTO_SERVICES); do \
+		$(MKDIR_CMD) "$(GENERATED_DIR)/$(subst $(PROTO_ROOT)/,,$(patsubst %/,%,$$service))"; \
+	done
+endif
 
 # 生成所有服务的 Go 代码
+.PHONY: gengo
 gengo: prepare
+ifeq ($(DETECTED_OS),Windows)
+	@if "$(PROTO_FILES)" == "" ( \
+		echo "No .proto files found" \
+	) else ( \
+		for %%s in ($(PROTO_SERVICES)) do ( \
+			echo "Generating code for: %%~ns" && \
+			protoc \
+			--proto_path=$(PROTO_ROOT) \
+			--proto_path=$(PROTO_THIRD_PARTY) \
+			--go_out=$(GENERATED_DIR) \
+			--go_opt=paths=source_relative \
+			--go-grpc_out=$(GENERATED_DIR) \
+			--go-grpc_opt=paths=source_relative \
+			%%s*.proto \
+		) \
+	)
+	@rm -rf $(GENERATED_DIR)/$(PROTO_ROOT)
+else
 	@if [ -z "$(PROTO_FILES)" ]; then \
-		echo "没有找到 .proto 文件"; \
+		echo "No .proto files found"; \
 	else \
 		for service in $(PROTO_SERVICES); do \
+			echo "Generating code for: $$(basename $$service)" && \
 			protoc \
 			--proto_path=$(PROTO_ROOT) \
 			--proto_path=$(PROTO_THIRD_PARTY) \
@@ -52,13 +113,15 @@ gengo: prepare
 			$$service/*.proto; \
 		done \
 	fi
-
+	@rm -rf $(GENERATED_DIR)/$(PROTO_ROOT)
+endif
 
 # 帮助信息
 .PHONY: help
 help:
 	@echo "使用说明:"
 	@echo "  make genrpc     - 生成所有配置的 RPC 服务"
+	@echo "  make gengo      - 生成所有配置的 proto 文件"
 	@echo "  make install-tools - 安装所需工具"
 	@echo "  make clean      - 清理生成的文件"
 	@echo ""
@@ -70,12 +133,16 @@ help:
 .PHONY: clean
 clean:
 	@echo "清理生成的文件..."
+ifeq ($(DETECTED_OS),Windows)
+	@powershell -Command "if (Test-Path '$(PROJECT_ROOT)') { Get-ChildItem -Path '$(PROJECT_ROOT)' -Filter 'pb' -Directory -Recurse | Remove-Item -Recurse -Force }"
+else
 	@find $(PROJECT_ROOT) -type d -name "pb" -exec rm -rf {} +
+endif
 
 # 安装依赖工具
 .PHONY: install-tools
 install-tools:
 	@echo "Installing required tools..."
-	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-	go install github.com/zeromicro/go-zero/tools/goctl@latest
+	@go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	@go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	@go install github.com/zeromicro/go-zero/tools/goctl@latest
