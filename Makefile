@@ -9,9 +9,10 @@ ifeq ($(OS),Windows_NT)
 	MKDIR_CMD := mkdir
 	NULL_DEV := 2>nul
 	PATH_SEP := \\
-	PROTO_FILES := $(shell powershell -Command "Get-ChildItem -Path './proto' -Filter '*.proto' -Recurse | Select-Object -ExpandProperty FullName")
+	PROTO_FILES := $(shell powershell -Command "Get-ChildItem -Path './proto' -Filter '*.proto' -Recurse | Select-Object -ExpandProperty FullName | ForEach-Object { $$_.Replace('\', '/')}")
 	WHICH_CMD := where
 	SCRIPT_EXT := .bat
+
 else
 	DETECTED_OS := $(shell uname -s)
 	# Unix-like systems commands
@@ -51,9 +52,7 @@ endif
 .PHONY: genrpc
 genrpc: check-tools
 	@echo "Starting RPC service generation..."
-	@for service in $(SERVICES); do \
-		$(call generate_rpc,$$service); \
-	done
+	@$(foreach service,$(SERVICES),$(call generate_rpc,$(service));)
 	@echo "RPC service generation completed."
 
 # 检查必要工具是否安装
@@ -81,22 +80,14 @@ endif
 .PHONY: gengo
 gengo: prepare
 ifeq ($(DETECTED_OS),Windows)
-	@if "$(PROTO_FILES)" == "" ( \
-		echo "No .proto files found" \
-	) else ( \
-		for %%s in ($(PROTO_SERVICES)) do ( \
-			echo "Generating code for: %%~ns" && \
-			protoc \
-			--proto_path=$(PROTO_ROOT) \
-			--proto_path=$(PROTO_THIRD_PARTY) \
-			--go_out=$(GENERATED_DIR) \
-			--go_opt=paths=source_relative \
-			--go-grpc_out=$(GENERATED_DIR) \
-			--go-grpc_opt=paths=source_relative \
-			%%s*.proto \
-		) \
-	)
-	@rm -rf $(GENERATED_DIR)/$(PROTO_ROOT)
+	@echo "Generating Go code from proto files..."
+	@for /r proto %%i in (*.proto) do (
+			echo Processing file: %%i
+			protoc --proto_path=proto \
+			--go_out=paths=source_relative:proto-gen-go \
+			--go-grpc_out=paths=source_relative:proto-gen-go %%i
+		)
+	@echo "Generation complete."
 else
 	@if [ -z "$(PROTO_FILES)" ]; then \
 		echo "No .proto files found"; \
