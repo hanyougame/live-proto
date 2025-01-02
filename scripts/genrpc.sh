@@ -8,7 +8,7 @@ if [ $# -lt 1 ]; then
 fi
 
 SERVICE=$1
-TARGET_DIR="../live-server-rpc/app"
+TARGET_DIR="../live-rpc-server/app"
 
 # 检查目标目录是否存在，不存在则创建
 mkdir -p ${TARGET_DIR}/${SERVICE}

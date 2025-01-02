@@ -8,7 +8,7 @@ if "%~1"=="" (
 )
 
 set SERVICE=%~1
-set TARGET_DIR=..\live-server-rpc\app
+set TARGET_DIR=..\live-rpc-server\app
 
 REM Create target directory if it doesn't exist
 if not exist "%TARGET_DIR%\%SERVICE%" mkdir "%TARGET_DIR%\%SERVICE%"
