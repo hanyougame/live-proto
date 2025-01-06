@@ -27,7 +27,7 @@ endif
 
 # 项目配置
 PROJECT_ROOT ?= ..$(PATH_SEP)live-rpc-server$(PATH_SEP)app
-SERVICES ?= game user
+SERVICES ?= game user finance
 PROTO_ROOT ?= .$(PATH_SEP)proto
 PROTO_THIRD_PARTY ?= $(PROTO_ROOT)$(PATH_SEP)third_party
 GENERATED_DIR ?= .$(PATH_SEP)proto-gen-go
