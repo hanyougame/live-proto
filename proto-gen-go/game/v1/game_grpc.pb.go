@@ -574,6 +574,7 @@ var LiveGameExternalTransferService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
+	LiveGameRpcService_GetK9GameAccessKey_FullMethodName = "/game.v1.LiveGameRpcService/GetK9GameAccessKey"
 	LiveGameRpcService_GameUserBet_FullMethodName        = "/game.v1.LiveGameRpcService/GameUserBet"
 	LiveGameRpcService_GameUserReward_FullMethodName     = "/game.v1.LiveGameRpcService/GameUserReward"
 	LiveGameRpcService_GameUserBetCancel_FullMethodName  = "/game.v1.LiveGameRpcService/GameUserBetCancel"
@@ -585,6 +586,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LiveGameRpcServiceClient interface {
+	// 获取accessKey
+	GetK9GameAccessKey(ctx context.Context, in *GetK9GameAccessKeyReq, opts ...grpc.CallOption) (*GetK9GameAccessKeyReply, error)
 	// 游戏投注
 	GameUserBet(ctx context.Context, in *GameUserBetReq, opts ...grpc.CallOption) (*GameUserBetReply, error)
 	// 订单派奖
@@ -603,6 +606,16 @@ type liveGameRpcServiceClient struct {
 
 func NewLiveGameRpcServiceClient(cc grpc.ClientConnInterface) LiveGameRpcServiceClient {
 	return &liveGameRpcServiceClient{cc}
+}
+
+func (c *liveGameRpcServiceClient) GetK9GameAccessKey(ctx context.Context, in *GetK9GameAccessKeyReq, opts ...grpc.CallOption) (*GetK9GameAccessKeyReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetK9GameAccessKeyReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_GetK9GameAccessKey_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *liveGameRpcServiceClient) GameUserBet(ctx context.Context, in *GameUserBetReq, opts ...grpc.CallOption) (*GameUserBetReply, error) {
@@ -659,6 +672,8 @@ func (c *liveGameRpcServiceClient) TransferCallback(ctx context.Context, in *Tra
 // All implementations must embed UnimplementedLiveGameRpcServiceServer
 // for forward compatibility.
 type LiveGameRpcServiceServer interface {
+	// 获取accessKey
+	GetK9GameAccessKey(context.Context, *GetK9GameAccessKeyReq) (*GetK9GameAccessKeyReply, error)
 	// 游戏投注
 	GameUserBet(context.Context, *GameUserBetReq) (*GameUserBetReply, error)
 	// 订单派奖
@@ -679,6 +694,9 @@ type LiveGameRpcServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedLiveGameRpcServiceServer struct{}
 
+func (UnimplementedLiveGameRpcServiceServer) GetK9GameAccessKey(context.Context, *GetK9GameAccessKeyReq) (*GetK9GameAccessKeyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetK9GameAccessKey not implemented")
+}
 func (UnimplementedLiveGameRpcServiceServer) GameUserBet(context.Context, *GameUserBetReq) (*GameUserBetReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GameUserBet not implemented")
 }
@@ -713,6 +731,24 @@ func RegisterLiveGameRpcServiceServer(s grpc.ServiceRegistrar, srv LiveGameRpcSe
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&LiveGameRpcService_ServiceDesc, srv)
+}
+
+func _LiveGameRpcService_GetK9GameAccessKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetK9GameAccessKeyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).GetK9GameAccessKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_GetK9GameAccessKey_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).GetK9GameAccessKey(ctx, req.(*GetK9GameAccessKeyReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _LiveGameRpcService_GameUserBet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -812,6 +848,10 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "game.v1.LiveGameRpcService",
 	HandlerType: (*LiveGameRpcServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetK9GameAccessKey",
+			Handler:    _LiveGameRpcService_GetK9GameAccessKey_Handler,
+		},
 		{
 			MethodName: "GameUserBet",
 			Handler:    _LiveGameRpcService_GameUserBet_Handler,

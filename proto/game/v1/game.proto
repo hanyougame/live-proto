@@ -194,13 +194,21 @@ service LiveGameExternalTransferService{
   rpc GetGameTransferBetOrderList(GetGameTransferBetOrderListReq) returns (GetGameTransferBetOrderListReply);
 }
 
+// 获取K9游戏接入key
+message GetK9GameAccessKeyReq{
+  int64 type = 1;  // 1：单一钱包，2：转账钱包
 
+}
+// 获取K9游戏接入key
+message GetK9GameAccessKeyReply{
+  string access_key = 1;
+}
 //游戏投注创建请求
 message GameUserBetReq{
-  string platform_key = 1;  // 游戏平台key  唯一标识
-  string game_key = 2;      // 游戏标志
+  int64 game_platform_id = 1;  // 游戏平台id
+  int64 game_id = 2;      // 游戏id
   string trade_id = 3;      // 交易ID
-  uint64 user_id = 4;
+  int64 user_id = 4;
   string trade_amounts = 5;   //交易金额，非负值
   string bet_session_id = 6;  //投注会话ID（单次投注派奖类的，取值trade_id）
   string bet_desc = 7;      //订单描述
@@ -289,6 +297,8 @@ message TransferCallbackReply {
 
 
 service LiveGameRpcService{
+  // 获取accessKey
+  rpc GetK9GameAccessKey(GetK9GameAccessKeyReq) returns(GetK9GameAccessKeyReply);
   // 游戏投注
   rpc GameUserBet(GameUserBetReq) returns(GameUserBetReply);
   // 订单派奖
