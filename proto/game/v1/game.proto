@@ -205,14 +205,14 @@ message GetK9GameAccessKeyReply{
 }
 //游戏投注创建请求
 message GameUserBetReq{
-  int64 game_platform_id = 1;  // 游戏平台id
-  int64 game_id = 2;      // 游戏id
-  string trade_id = 3;      // 交易ID
-  int64 user_id = 4;
-  string trade_amounts = 5;   //交易金额，非负值
-  string bet_session_id = 6;  //投注会话ID（单次投注派奖类的，取值trade_id）
-  string bet_desc = 7;      //订单描述
-  string currency_code = 8; //货币Code
+  int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
+  int64 user_id = 2;  // 用户ID
+  int64 tripartite_game_id = 3;      // 三方游戏id
+  string round_id = 4;      // 牌局 ID
+  string order_no = 5;    // 投注订单号(每笔记录唯一)
+  string amount = 6;   //投注金额(6 位小数)
+  string currency_code = 7; // 玩家货币code
+  int64 timestamp = 8; //时间戳（毫秒）
 }
 //游戏投注创建回应
 message GameUserBetReply{
