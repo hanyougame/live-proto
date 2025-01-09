@@ -574,18 +574,18 @@ var LiveGameExternalTransferService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	LiveGameRpcService_GetK9GameAccessKey_FullMethodName = "/game.v1.LiveGameRpcService/GetK9GameAccessKey"
-	LiveGameRpcService_GameUserBet_FullMethodName        = "/game.v1.LiveGameRpcService/GameUserBet"
-	LiveGameRpcService_GameUserReward_FullMethodName     = "/game.v1.LiveGameRpcService/GameUserReward"
-	LiveGameRpcService_GameUserBetCancel_FullMethodName  = "/game.v1.LiveGameRpcService/GameUserBetCancel"
-	LiveGameRpcService_GameUserAdjustment_FullMethodName = "/game.v1.LiveGameRpcService/GameUserAdjustment"
-	LiveGameRpcService_TransferCallback_FullMethodName   = "/game.v1.LiveGameRpcService/TransferCallback"
+	LiveGameCallbackRpcService_GetK9GameAccessKey_FullMethodName = "/game.v1.LiveGameCallbackRpcService/GetK9GameAccessKey"
+	LiveGameCallbackRpcService_GameUserBet_FullMethodName        = "/game.v1.LiveGameCallbackRpcService/GameUserBet"
+	LiveGameCallbackRpcService_GameUserReward_FullMethodName     = "/game.v1.LiveGameCallbackRpcService/GameUserReward"
+	LiveGameCallbackRpcService_GameUserBetCancel_FullMethodName  = "/game.v1.LiveGameCallbackRpcService/GameUserBetCancel"
+	LiveGameCallbackRpcService_GameUserAdjustment_FullMethodName = "/game.v1.LiveGameCallbackRpcService/GameUserAdjustment"
+	LiveGameCallbackRpcService_TransferCallback_FullMethodName   = "/game.v1.LiveGameCallbackRpcService/TransferCallback"
 )
 
-// LiveGameRpcServiceClient is the client API for LiveGameRpcService service.
+// LiveGameCallbackRpcServiceClient is the client API for LiveGameCallbackRpcService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type LiveGameRpcServiceClient interface {
+type LiveGameCallbackRpcServiceClient interface {
 	// 获取accessKey
 	GetK9GameAccessKey(ctx context.Context, in *GetK9GameAccessKeyReq, opts ...grpc.CallOption) (*GetK9GameAccessKeyReply, error)
 	// 游戏投注
@@ -600,78 +600,78 @@ type LiveGameRpcServiceClient interface {
 	TransferCallback(ctx context.Context, in *TransferCallbackReq, opts ...grpc.CallOption) (*TransferCallbackReply, error)
 }
 
-type liveGameRpcServiceClient struct {
+type liveGameCallbackRpcServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewLiveGameRpcServiceClient(cc grpc.ClientConnInterface) LiveGameRpcServiceClient {
-	return &liveGameRpcServiceClient{cc}
+func NewLiveGameCallbackRpcServiceClient(cc grpc.ClientConnInterface) LiveGameCallbackRpcServiceClient {
+	return &liveGameCallbackRpcServiceClient{cc}
 }
 
-func (c *liveGameRpcServiceClient) GetK9GameAccessKey(ctx context.Context, in *GetK9GameAccessKeyReq, opts ...grpc.CallOption) (*GetK9GameAccessKeyReply, error) {
+func (c *liveGameCallbackRpcServiceClient) GetK9GameAccessKey(ctx context.Context, in *GetK9GameAccessKeyReq, opts ...grpc.CallOption) (*GetK9GameAccessKeyReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetK9GameAccessKeyReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcService_GetK9GameAccessKey_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, LiveGameCallbackRpcService_GetK9GameAccessKey_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *liveGameRpcServiceClient) GameUserBet(ctx context.Context, in *GameUserBetReq, opts ...grpc.CallOption) (*GameUserBetReply, error) {
+func (c *liveGameCallbackRpcServiceClient) GameUserBet(ctx context.Context, in *GameUserBetReq, opts ...grpc.CallOption) (*GameUserBetReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GameUserBetReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcService_GameUserBet_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, LiveGameCallbackRpcService_GameUserBet_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *liveGameRpcServiceClient) GameUserReward(ctx context.Context, in *GameUserRewardReq, opts ...grpc.CallOption) (*GameUserRewardReply, error) {
+func (c *liveGameCallbackRpcServiceClient) GameUserReward(ctx context.Context, in *GameUserRewardReq, opts ...grpc.CallOption) (*GameUserRewardReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GameUserRewardReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcService_GameUserReward_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, LiveGameCallbackRpcService_GameUserReward_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *liveGameRpcServiceClient) GameUserBetCancel(ctx context.Context, in *GameUserBetCancelReq, opts ...grpc.CallOption) (*GameUserBetCancelReply, error) {
+func (c *liveGameCallbackRpcServiceClient) GameUserBetCancel(ctx context.Context, in *GameUserBetCancelReq, opts ...grpc.CallOption) (*GameUserBetCancelReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GameUserBetCancelReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcService_GameUserBetCancel_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, LiveGameCallbackRpcService_GameUserBetCancel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *liveGameRpcServiceClient) GameUserAdjustment(ctx context.Context, in *GameUserAdjustmentReq, opts ...grpc.CallOption) (*GameUserAdjustmentReply, error) {
+func (c *liveGameCallbackRpcServiceClient) GameUserAdjustment(ctx context.Context, in *GameUserAdjustmentReq, opts ...grpc.CallOption) (*GameUserAdjustmentReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GameUserAdjustmentReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcService_GameUserAdjustment_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, LiveGameCallbackRpcService_GameUserAdjustment_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *liveGameRpcServiceClient) TransferCallback(ctx context.Context, in *TransferCallbackReq, opts ...grpc.CallOption) (*TransferCallbackReply, error) {
+func (c *liveGameCallbackRpcServiceClient) TransferCallback(ctx context.Context, in *TransferCallbackReq, opts ...grpc.CallOption) (*TransferCallbackReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TransferCallbackReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcService_TransferCallback_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, LiveGameCallbackRpcService_TransferCallback_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// LiveGameRpcServiceServer is the server API for LiveGameRpcService service.
-// All implementations must embed UnimplementedLiveGameRpcServiceServer
+// LiveGameCallbackRpcServiceServer is the server API for LiveGameCallbackRpcService service.
+// All implementations must embed UnimplementedLiveGameCallbackRpcServiceServer
 // for forward compatibility.
-type LiveGameRpcServiceServer interface {
+type LiveGameCallbackRpcServiceServer interface {
 	// 获取accessKey
 	GetK9GameAccessKey(context.Context, *GetK9GameAccessKeyReq) (*GetK9GameAccessKeyReply, error)
 	// 游戏投注
@@ -684,6 +684,236 @@ type LiveGameRpcServiceServer interface {
 	GameUserAdjustment(context.Context, *GameUserAdjustmentReq) (*GameUserAdjustmentReply, error)
 	// 订单回调
 	TransferCallback(context.Context, *TransferCallbackReq) (*TransferCallbackReply, error)
+	mustEmbedUnimplementedLiveGameCallbackRpcServiceServer()
+}
+
+// UnimplementedLiveGameCallbackRpcServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedLiveGameCallbackRpcServiceServer struct{}
+
+func (UnimplementedLiveGameCallbackRpcServiceServer) GetK9GameAccessKey(context.Context, *GetK9GameAccessKeyReq) (*GetK9GameAccessKeyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetK9GameAccessKey not implemented")
+}
+func (UnimplementedLiveGameCallbackRpcServiceServer) GameUserBet(context.Context, *GameUserBetReq) (*GameUserBetReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameUserBet not implemented")
+}
+func (UnimplementedLiveGameCallbackRpcServiceServer) GameUserReward(context.Context, *GameUserRewardReq) (*GameUserRewardReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameUserReward not implemented")
+}
+func (UnimplementedLiveGameCallbackRpcServiceServer) GameUserBetCancel(context.Context, *GameUserBetCancelReq) (*GameUserBetCancelReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameUserBetCancel not implemented")
+}
+func (UnimplementedLiveGameCallbackRpcServiceServer) GameUserAdjustment(context.Context, *GameUserAdjustmentReq) (*GameUserAdjustmentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameUserAdjustment not implemented")
+}
+func (UnimplementedLiveGameCallbackRpcServiceServer) TransferCallback(context.Context, *TransferCallbackReq) (*TransferCallbackReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TransferCallback not implemented")
+}
+func (UnimplementedLiveGameCallbackRpcServiceServer) mustEmbedUnimplementedLiveGameCallbackRpcServiceServer() {
+}
+func (UnimplementedLiveGameCallbackRpcServiceServer) testEmbeddedByValue() {}
+
+// UnsafeLiveGameCallbackRpcServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to LiveGameCallbackRpcServiceServer will
+// result in compilation errors.
+type UnsafeLiveGameCallbackRpcServiceServer interface {
+	mustEmbedUnimplementedLiveGameCallbackRpcServiceServer()
+}
+
+func RegisterLiveGameCallbackRpcServiceServer(s grpc.ServiceRegistrar, srv LiveGameCallbackRpcServiceServer) {
+	// If the following call pancis, it indicates UnimplementedLiveGameCallbackRpcServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&LiveGameCallbackRpcService_ServiceDesc, srv)
+}
+
+func _LiveGameCallbackRpcService_GetK9GameAccessKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetK9GameAccessKeyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameCallbackRpcServiceServer).GetK9GameAccessKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameCallbackRpcService_GetK9GameAccessKey_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameCallbackRpcServiceServer).GetK9GameAccessKey(ctx, req.(*GetK9GameAccessKeyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameCallbackRpcService_GameUserBet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameUserBetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserBet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameCallbackRpcService_GameUserBet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserBet(ctx, req.(*GameUserBetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameCallbackRpcService_GameUserReward_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameUserRewardReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserReward(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameCallbackRpcService_GameUserReward_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserReward(ctx, req.(*GameUserRewardReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameCallbackRpcService_GameUserBetCancel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameUserBetCancelReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserBetCancel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameCallbackRpcService_GameUserBetCancel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserBetCancel(ctx, req.(*GameUserBetCancelReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameCallbackRpcService_GameUserAdjustment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameUserAdjustmentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserAdjustment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameCallbackRpcService_GameUserAdjustment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameCallbackRpcServiceServer).GameUserAdjustment(ctx, req.(*GameUserAdjustmentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameCallbackRpcService_TransferCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TransferCallbackReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameCallbackRpcServiceServer).TransferCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameCallbackRpcService_TransferCallback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameCallbackRpcServiceServer).TransferCallback(ctx, req.(*TransferCallbackReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// LiveGameCallbackRpcService_ServiceDesc is the grpc.ServiceDesc for LiveGameCallbackRpcService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var LiveGameCallbackRpcService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "game.v1.LiveGameCallbackRpcService",
+	HandlerType: (*LiveGameCallbackRpcServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetK9GameAccessKey",
+			Handler:    _LiveGameCallbackRpcService_GetK9GameAccessKey_Handler,
+		},
+		{
+			MethodName: "GameUserBet",
+			Handler:    _LiveGameCallbackRpcService_GameUserBet_Handler,
+		},
+		{
+			MethodName: "GameUserReward",
+			Handler:    _LiveGameCallbackRpcService_GameUserReward_Handler,
+		},
+		{
+			MethodName: "GameUserBetCancel",
+			Handler:    _LiveGameCallbackRpcService_GameUserBetCancel_Handler,
+		},
+		{
+			MethodName: "GameUserAdjustment",
+			Handler:    _LiveGameCallbackRpcService_GameUserAdjustment_Handler,
+		},
+		{
+			MethodName: "TransferCallback",
+			Handler:    _LiveGameCallbackRpcService_TransferCallback_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "game/v1/game.proto",
+}
+
+const (
+	LiveGameRpcService_GetPlatformListByCurr_FullMethodName = "/game.v1.LiveGameRpcService/GetPlatformListByCurr"
+)
+
+// LiveGameRpcServiceClient is the client API for LiveGameRpcService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type LiveGameRpcServiceClient interface {
+	// 通过货币获取平台列表
+	GetPlatformListByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatformListByCurrReply, error)
+}
+
+type liveGameRpcServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewLiveGameRpcServiceClient(cc grpc.ClientConnInterface) LiveGameRpcServiceClient {
+	return &liveGameRpcServiceClient{cc}
+}
+
+func (c *liveGameRpcServiceClient) GetPlatformListByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatformListByCurrReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPlatformListByCurrReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_GetPlatformListByCurr_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// LiveGameRpcServiceServer is the server API for LiveGameRpcService service.
+// All implementations must embed UnimplementedLiveGameRpcServiceServer
+// for forward compatibility.
+type LiveGameRpcServiceServer interface {
+	// 通过货币获取平台列表
+	GetPlatformListByCurr(context.Context, *GetPlatformListByCurrReq) (*GetPlatformListByCurrReply, error)
 	mustEmbedUnimplementedLiveGameRpcServiceServer()
 }
 
@@ -694,23 +924,8 @@ type LiveGameRpcServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedLiveGameRpcServiceServer struct{}
 
-func (UnimplementedLiveGameRpcServiceServer) GetK9GameAccessKey(context.Context, *GetK9GameAccessKeyReq) (*GetK9GameAccessKeyReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetK9GameAccessKey not implemented")
-}
-func (UnimplementedLiveGameRpcServiceServer) GameUserBet(context.Context, *GameUserBetReq) (*GameUserBetReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GameUserBet not implemented")
-}
-func (UnimplementedLiveGameRpcServiceServer) GameUserReward(context.Context, *GameUserRewardReq) (*GameUserRewardReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GameUserReward not implemented")
-}
-func (UnimplementedLiveGameRpcServiceServer) GameUserBetCancel(context.Context, *GameUserBetCancelReq) (*GameUserBetCancelReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GameUserBetCancel not implemented")
-}
-func (UnimplementedLiveGameRpcServiceServer) GameUserAdjustment(context.Context, *GameUserAdjustmentReq) (*GameUserAdjustmentReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GameUserAdjustment not implemented")
-}
-func (UnimplementedLiveGameRpcServiceServer) TransferCallback(context.Context, *TransferCallbackReq) (*TransferCallbackReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TransferCallback not implemented")
+func (UnimplementedLiveGameRpcServiceServer) GetPlatformListByCurr(context.Context, *GetPlatformListByCurrReq) (*GetPlatformListByCurrReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPlatformListByCurr not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) mustEmbedUnimplementedLiveGameRpcServiceServer() {}
 func (UnimplementedLiveGameRpcServiceServer) testEmbeddedByValue()                            {}
@@ -733,110 +948,20 @@ func RegisterLiveGameRpcServiceServer(s grpc.ServiceRegistrar, srv LiveGameRpcSe
 	s.RegisterService(&LiveGameRpcService_ServiceDesc, srv)
 }
 
-func _LiveGameRpcService_GetK9GameAccessKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetK9GameAccessKeyReq)
+func _LiveGameRpcService_GetPlatformListByCurr_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPlatformListByCurrReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LiveGameRpcServiceServer).GetK9GameAccessKey(ctx, in)
+		return srv.(LiveGameRpcServiceServer).GetPlatformListByCurr(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LiveGameRpcService_GetK9GameAccessKey_FullMethodName,
+		FullMethod: LiveGameRpcService_GetPlatformListByCurr_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcServiceServer).GetK9GameAccessKey(ctx, req.(*GetK9GameAccessKeyReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveGameRpcService_GameUserBet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GameUserBetReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveGameRpcServiceServer).GameUserBet(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveGameRpcService_GameUserBet_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcServiceServer).GameUserBet(ctx, req.(*GameUserBetReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveGameRpcService_GameUserReward_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GameUserRewardReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveGameRpcServiceServer).GameUserReward(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveGameRpcService_GameUserReward_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcServiceServer).GameUserReward(ctx, req.(*GameUserRewardReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveGameRpcService_GameUserBetCancel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GameUserBetCancelReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveGameRpcServiceServer).GameUserBetCancel(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveGameRpcService_GameUserBetCancel_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcServiceServer).GameUserBetCancel(ctx, req.(*GameUserBetCancelReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveGameRpcService_GameUserAdjustment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GameUserAdjustmentReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveGameRpcServiceServer).GameUserAdjustment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveGameRpcService_GameUserAdjustment_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcServiceServer).GameUserAdjustment(ctx, req.(*GameUserAdjustmentReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveGameRpcService_TransferCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TransferCallbackReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveGameRpcServiceServer).TransferCallback(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveGameRpcService_TransferCallback_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcServiceServer).TransferCallback(ctx, req.(*TransferCallbackReq))
+		return srv.(LiveGameRpcServiceServer).GetPlatformListByCurr(ctx, req.(*GetPlatformListByCurrReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -849,28 +974,8 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LiveGameRpcServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetK9GameAccessKey",
-			Handler:    _LiveGameRpcService_GetK9GameAccessKey_Handler,
-		},
-		{
-			MethodName: "GameUserBet",
-			Handler:    _LiveGameRpcService_GameUserBet_Handler,
-		},
-		{
-			MethodName: "GameUserReward",
-			Handler:    _LiveGameRpcService_GameUserReward_Handler,
-		},
-		{
-			MethodName: "GameUserBetCancel",
-			Handler:    _LiveGameRpcService_GameUserBetCancel_Handler,
-		},
-		{
-			MethodName: "GameUserAdjustment",
-			Handler:    _LiveGameRpcService_GameUserAdjustment_Handler,
-		},
-		{
-			MethodName: "TransferCallback",
-			Handler:    _LiveGameRpcService_TransferCallback_Handler,
+			MethodName: "GetPlatformListByCurr",
+			Handler:    _LiveGameRpcService_GetPlatformListByCurr_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

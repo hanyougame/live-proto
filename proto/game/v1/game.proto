@@ -216,13 +216,10 @@ message GameUserBetReq{
 }
 //游戏投注创建回应
 message GameUserBetReply{
-  string balance = 1;         //余额
+  string balance = 1;         //用户余额
   string currency_code = 2;   //货币代码
-  string order_no = 3;        //订单编号
-  int64 order_id = 4;         //订单ID
-  bool repeated = 5;          //是否重复
-  int64 spend_time = 6;
-  string spend_info = 7;       //
+  string order_no = 3;        //订单编号(数据表的order_id)
+  string order_id = 4;         //订单ID(数据表主键ID)
 }
 
 // 游戏订单派奖创建
@@ -296,7 +293,7 @@ message TransferCallbackReply {
 }
 
 
-service LiveGameRpcService{
+service LiveGameCallbackRpcService{
   // 获取accessKey
   rpc GetK9GameAccessKey(GetK9GameAccessKeyReq) returns(GetK9GameAccessKeyReply);
   // 游戏投注
@@ -312,3 +309,43 @@ service LiveGameRpcService{
 }
 
 
+message GetPlatformListByCurrReq {
+  int64 currency_id = 1;
+  string currency_code = 2;
+}
+
+message GetPlatformListByCurrReply {
+  repeated GamePlatformDetail list = 20;
+}
+
+message GamePlatformDetail{
+  int64 id = 1;                                // 自增主键，唯一标识每条记录
+  int64 rank = 2;                              // 排名，表示货币在列表中的排序位置
+  int64 tripartite_platform_id = 3;            // 三方的游戏厂商ID
+  int64 game_category_id = 4;                  // 游戏类型ID
+  string platform_name = 5;                    // 平台名称
+  string currency_code = 6;                    // 货币代码，例如“INR”
+  string style = 7;                           // 版式风格
+  double minimum_entry = 8;                   // 最低准入
+  int64 promotion_style = 9;                  // 宣传图样式1：默认,2：自定义
+  string icon = 10;                            // 图标
+  string background_color = 11;                // 图片背景
+  string logo_url = 12;                        // 品牌LOGO
+  string promotion_image_url = 13;             // 宣传图URL
+  string hot_image_url = 14;                   // 热门图URL
+  repeated PlatformRedirectionBase platform_redirection = 15; // 平台跳转方式的展示
+  int64 game_num = 16;                         // 游戏数量
+}
+
+// 平台跳转方式的基础类型
+message PlatformRedirectionBase {
+  int64 platform_os_type = 1;
+  int64 open_method_type = 2;
+}
+
+
+service LiveGameRpcService{
+  // 通过货币获取平台列表
+  rpc GetPlatformListByCurr(GetPlatformListByCurrReq) returns(GetPlatformListByCurrReply);
+
+}
