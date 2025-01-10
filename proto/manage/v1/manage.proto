@@ -13,7 +13,7 @@ message ManageReply{
 
 
 message CurrencyDetailReply {
-  int64 id = 1;                          // 自增主键，唯一标识每条记录
+  int64 currency_id = 1;                          // 自增主键，唯一标识每条记录
   int64 rank = 2;                        // 排名，表示货币在列表中的排序位置
   string currency_name = 3;              // 货币名称，例如“印度卢比”
   string country_name = 4;               // 所属国家，例如“印度”，允许为空（如“波场”）

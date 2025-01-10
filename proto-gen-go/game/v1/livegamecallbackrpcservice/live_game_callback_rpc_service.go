@@ -14,6 +14,10 @@ import (
 )
 
 type (
+	CategoryNameBase                         = v1.CategoryNameBase
+	GameCategoryDetail                       = v1.GameCategoryDetail
+	GameDetails                              = v1.GameDetails
+	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
 	GamePlatformDetail                       = v1.GamePlatformDetail
 	GameReply                                = v1.GameReply
 	GameReq                                  = v1.GameReq
@@ -25,12 +29,22 @@ type (
 	GameUserBetReq                           = v1.GameUserBetReq
 	GameUserRewardReply                      = v1.GameUserRewardReply
 	GameUserRewardReq                        = v1.GameUserRewardReq
+	GetCategoryListByCurrReply               = v1.GetCategoryListByCurrReply
+	GetCategoryListByCurrReq                 = v1.GetCategoryListByCurrReq
+	GetGameDetailsListReply                  = v1.GetGameDetailsListReply
+	GetGameFavoriteListReq                   = v1.GetGameFavoriteListReq
+	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
+	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
+	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
 	GetGameTransferBetOrderListReplyBetInfo  = v1.GetGameTransferBetOrderListReplyBetInfo
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply
 	GetGameTransferOrderStatusReplyOrderInfo = v1.GetGameTransferOrderStatusReplyOrderInfo
 	GetGameTransferOrderStatusReq            = v1.GetGameTransferOrderStatusReq
+	GetHotGameListReq                        = v1.GetHotGameListReq
+	GetHotPlatformListReply                  = v1.GetHotPlatformListReply
+	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
