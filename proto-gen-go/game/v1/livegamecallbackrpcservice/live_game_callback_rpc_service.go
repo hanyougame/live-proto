@@ -17,6 +17,7 @@ type (
 	CategoryNameBase                         = v1.CategoryNameBase
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameDetails                              = v1.GameDetails
+	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
 	GamePlatformDetail                       = v1.GamePlatformDetail
 	GameReply                                = v1.GameReply

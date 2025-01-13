@@ -17,6 +17,7 @@ type (
 	CategoryNameBase                         = v1.CategoryNameBase
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameDetails                              = v1.GameDetails
+	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
 	GamePlatformDetail                       = v1.GamePlatformDetail
 	GameReply                                = v1.GameReply
@@ -86,6 +87,8 @@ type (
 		GetHotGameList(ctx context.Context, in *GetHotGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 		// 热门平台列表
 		GetHotPlatformList(ctx context.Context, in *GetHotPlatformListReq, opts ...grpc.CallOption) (*GetHotPlatformListReply, error)
+		// 根据游戏ID获取游戏详情
+		GetGameDetails(ctx context.Context, in *GameDetailsReq, opts ...grpc.CallOption) (*GameDetails, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -157,4 +160,10 @@ func (m *defaultLiveGameRpcService) GetHotGameList(ctx context.Context, in *GetH
 func (m *defaultLiveGameRpcService) GetHotPlatformList(ctx context.Context, in *GetHotPlatformListReq, opts ...grpc.CallOption) (*GetHotPlatformListReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetHotPlatformList(ctx, in, opts...)
+}
+
+// 根据游戏ID获取游戏详情
+func (m *defaultLiveGameRpcService) GetGameDetails(ctx context.Context, in *GameDetailsReq, opts ...grpc.CallOption) (*GameDetails, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetGameDetails(ctx, in, opts...)
 }

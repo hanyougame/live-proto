@@ -17,12 +17,14 @@ type (
 	GetInfoByUserTokenReq = v1.GetInfoByUserTokenReq
 	GetUserBalanceReply   = v1.GetUserBalanceReply
 	GetUserBalanceReq     = v1.GetUserBalanceReq
+	GetUserInfoByIdReq    = v1.GetUserInfoByIdReq
 	UserDetailsInfoReply  = v1.UserDetailsInfoReply
 	UserWalletInfo        = v1.UserWalletInfo
 
 	LiveUserRpcService interface {
 		GetInfoByUserToken(ctx context.Context, in *GetInfoByUserTokenReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
 		GetUserBalance(ctx context.Context, in *GetUserBalanceReq, opts ...grpc.CallOption) (*GetUserBalanceReply, error)
+		GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
 	}
 
 	defaultLiveUserRpcService struct {
@@ -44,4 +46,9 @@ func (m *defaultLiveUserRpcService) GetInfoByUserToken(ctx context.Context, in *
 func (m *defaultLiveUserRpcService) GetUserBalance(ctx context.Context, in *GetUserBalanceReq, opts ...grpc.CallOption) (*GetUserBalanceReply, error) {
 	client := v1.NewLiveUserRpcServiceClient(m.cli.Conn())
 	return client.GetUserBalance(ctx, in, opts...)
+}
+
+func (m *defaultLiveUserRpcService) GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error) {
+	client := v1.NewLiveUserRpcServiceClient(m.cli.Conn())
+	return client.GetUserInfoById(ctx, in, opts...)
 }

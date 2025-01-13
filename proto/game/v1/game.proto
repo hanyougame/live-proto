@@ -457,13 +457,15 @@ message GetGameFavoriteListReq {
   int64 page = 1;
   int64 page_size = 2;
   int64 user_id = 3;
+  int64 game_platform_id = 4;
 }
 
 // 热门游戏列表
 message GetHotGameListReq {
   int64 page = 1;
   int64 page_size = 2;
-  string currency_code = 3;
+  int64 game_platform_id = 3;
+  string currency_code = 4;
 }
 
 // 热门平台列表
@@ -474,6 +476,9 @@ message GetHotPlatformListReply {
   repeated GamePlatformDetail list = 1;
 }
 
+message GameDetailsReq {
+  int64 game_id = 1;
+}
 
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
@@ -496,4 +501,6 @@ service LiveGameRpcService{
   rpc GetHotGameList(GetHotGameListReq) returns (GetGameDetailsListReply);
   // 热门平台列表
   rpc GetHotPlatformList(GetHotPlatformListReq) returns (GetHotPlatformListReply);
+  // 根据游戏ID获取游戏详情
+  rpc GetGameDetails(GameDetailsReq) returns (GameDetails);
 }

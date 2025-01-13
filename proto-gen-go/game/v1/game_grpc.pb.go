@@ -889,6 +889,7 @@ const (
 	LiveGameRpcService_GameFavoriteList_FullMethodName          = "/game.v1.LiveGameRpcService/GameFavoriteList"
 	LiveGameRpcService_GetHotGameList_FullMethodName            = "/game.v1.LiveGameRpcService/GetHotGameList"
 	LiveGameRpcService_GetHotPlatformList_FullMethodName        = "/game.v1.LiveGameRpcService/GetHotPlatformList"
+	LiveGameRpcService_GetGameDetails_FullMethodName            = "/game.v1.LiveGameRpcService/GetGameDetails"
 )
 
 // LiveGameRpcServiceClient is the client API for LiveGameRpcService service.
@@ -915,6 +916,8 @@ type LiveGameRpcServiceClient interface {
 	GetHotGameList(ctx context.Context, in *GetHotGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 	// 热门平台列表
 	GetHotPlatformList(ctx context.Context, in *GetHotPlatformListReq, opts ...grpc.CallOption) (*GetHotPlatformListReply, error)
+	// 根据游戏ID获取游戏详情
+	GetGameDetails(ctx context.Context, in *GameDetailsReq, opts ...grpc.CallOption) (*GameDetails, error)
 }
 
 type liveGameRpcServiceClient struct {
@@ -1025,6 +1028,16 @@ func (c *liveGameRpcServiceClient) GetHotPlatformList(ctx context.Context, in *G
 	return out, nil
 }
 
+func (c *liveGameRpcServiceClient) GetGameDetails(ctx context.Context, in *GameDetailsReq, opts ...grpc.CallOption) (*GameDetails, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GameDetails)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_GetGameDetails_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcServiceServer is the server API for LiveGameRpcService service.
 // All implementations must embed UnimplementedLiveGameRpcServiceServer
 // for forward compatibility.
@@ -1049,6 +1062,8 @@ type LiveGameRpcServiceServer interface {
 	GetHotGameList(context.Context, *GetHotGameListReq) (*GetGameDetailsListReply, error)
 	// 热门平台列表
 	GetHotPlatformList(context.Context, *GetHotPlatformListReq) (*GetHotPlatformListReply, error)
+	// 根据游戏ID获取游戏详情
+	GetGameDetails(context.Context, *GameDetailsReq) (*GameDetails, error)
 	mustEmbedUnimplementedLiveGameRpcServiceServer()
 }
 
@@ -1088,6 +1103,9 @@ func (UnimplementedLiveGameRpcServiceServer) GetHotGameList(context.Context, *Ge
 }
 func (UnimplementedLiveGameRpcServiceServer) GetHotPlatformList(context.Context, *GetHotPlatformListReq) (*GetHotPlatformListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHotPlatformList not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) GetGameDetails(context.Context, *GameDetailsReq) (*GameDetails, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGameDetails not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) mustEmbedUnimplementedLiveGameRpcServiceServer() {}
 func (UnimplementedLiveGameRpcServiceServer) testEmbeddedByValue()                            {}
@@ -1290,6 +1308,24 @@ func _LiveGameRpcService_GetHotPlatformList_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcService_GetGameDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameDetailsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).GetGameDetails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_GetGameDetails_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).GetGameDetails(ctx, req.(*GameDetailsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1336,6 +1372,10 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetHotPlatformList",
 			Handler:    _LiveGameRpcService_GetHotPlatformList_Handler,
+		},
+		{
+			MethodName: "GetGameDetails",
+			Handler:    _LiveGameRpcService_GetGameDetails_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

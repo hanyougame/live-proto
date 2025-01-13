@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	LiveUserRpcService_GetInfoByUserToken_FullMethodName = "/user.v1.LiveUserRpcService/GetInfoByUserToken"
 	LiveUserRpcService_GetUserBalance_FullMethodName     = "/user.v1.LiveUserRpcService/GetUserBalance"
+	LiveUserRpcService_GetUserInfoById_FullMethodName    = "/user.v1.LiveUserRpcService/GetUserInfoById"
 )
 
 // LiveUserRpcServiceClient is the client API for LiveUserRpcService service.
@@ -29,6 +30,7 @@ const (
 type LiveUserRpcServiceClient interface {
 	GetInfoByUserToken(ctx context.Context, in *GetInfoByUserTokenReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
 	GetUserBalance(ctx context.Context, in *GetUserBalanceReq, opts ...grpc.CallOption) (*GetUserBalanceReply, error)
+	GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
 }
 
 type liveUserRpcServiceClient struct {
@@ -59,12 +61,23 @@ func (c *liveUserRpcServiceClient) GetUserBalance(ctx context.Context, in *GetUs
 	return out, nil
 }
 
+func (c *liveUserRpcServiceClient) GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserDetailsInfoReply)
+	err := c.cc.Invoke(ctx, LiveUserRpcService_GetUserInfoById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveUserRpcServiceServer is the server API for LiveUserRpcService service.
 // All implementations must embed UnimplementedLiveUserRpcServiceServer
 // for forward compatibility.
 type LiveUserRpcServiceServer interface {
 	GetInfoByUserToken(context.Context, *GetInfoByUserTokenReq) (*UserDetailsInfoReply, error)
 	GetUserBalance(context.Context, *GetUserBalanceReq) (*GetUserBalanceReply, error)
+	GetUserInfoById(context.Context, *GetUserInfoByIdReq) (*UserDetailsInfoReply, error)
 	mustEmbedUnimplementedLiveUserRpcServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedLiveUserRpcServiceServer) GetInfoByUserToken(context.Context,
 }
 func (UnimplementedLiveUserRpcServiceServer) GetUserBalance(context.Context, *GetUserBalanceReq) (*GetUserBalanceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserBalance not implemented")
+}
+func (UnimplementedLiveUserRpcServiceServer) GetUserInfoById(context.Context, *GetUserInfoByIdReq) (*UserDetailsInfoReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfoById not implemented")
 }
 func (UnimplementedLiveUserRpcServiceServer) mustEmbedUnimplementedLiveUserRpcServiceServer() {}
 func (UnimplementedLiveUserRpcServiceServer) testEmbeddedByValue()                            {}
@@ -138,6 +154,24 @@ func _LiveUserRpcService_GetUserBalance_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveUserRpcService_GetUserInfoById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfoByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveUserRpcServiceServer).GetUserInfoById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveUserRpcService_GetUserInfoById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveUserRpcServiceServer).GetUserInfoById(ctx, req.(*GetUserInfoByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveUserRpcService_ServiceDesc is the grpc.ServiceDesc for LiveUserRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var LiveUserRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserBalance",
 			Handler:    _LiveUserRpcService_GetUserBalance_Handler,
+		},
+		{
+			MethodName: "GetUserInfoById",
+			Handler:    _LiveUserRpcService_GetUserInfoById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
