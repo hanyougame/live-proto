@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package user.v1;
+option go_package = "./pb/v1";
+
+message EmptyRes {}
+
+message AddReq {
+  string label = 1; // 任务唯一标识
+  string spec = 2;  // 执行时间
+  int32 type = 3;   // 执行类型 0 正常执行 1 上次没执行完跳过 2 上次没执行完延后执行 3 只执行一次
+  string handler = 4; // 使用的方法
+  string params = 5;
+}
+
+message AddRes {
+  int64 crontab_id = 1; // 定时任务id
+}
+
+message DelReq {
+  string label = 1; // 定时任务唯一标识
+  int64 crontab_id = 2; // 定时任务id
+}
+
+service LiveCrontabRpcService {
+  // 添加定时任务
+  rpc Add(AddReq) returns(AddRes);
+  // 删除定时任务
+  rpc Del(DelReq) returns(EmptyRes);
+}
