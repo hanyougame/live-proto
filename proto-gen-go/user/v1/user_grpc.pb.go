@@ -21,16 +21,19 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	LiveUserRpcService_GetInfoByUserToken_FullMethodName = "/user.v1.LiveUserRpcService/GetInfoByUserToken"
 	LiveUserRpcService_GetUserBalance_FullMethodName     = "/user.v1.LiveUserRpcService/GetUserBalance"
-	LiveUserRpcService_GetUserInfoById_FullMethodName    = "/user.v1.LiveUserRpcService/GetUserInfoById"
+	LiveUserRpcService_UpdateUserBalance_FullMethodName  = "/user.v1.LiveUserRpcService/UpdateUserBalance"
 )
 
 // LiveUserRpcServiceClient is the client API for LiveUserRpcService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LiveUserRpcServiceClient interface {
+	// 根据token获取用户信息
 	GetInfoByUserToken(ctx context.Context, in *GetInfoByUserTokenReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
+	// 获取用户余额
 	GetUserBalance(ctx context.Context, in *GetUserBalanceReq, opts ...grpc.CallOption) (*GetUserBalanceReply, error)
-	GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
+	// 修改用户余额
+	UpdateUserBalance(ctx context.Context, in *UpdateUserBalanceReq, opts ...grpc.CallOption) (*UpdateUserBalanceResp, error)
 }
 
 type liveUserRpcServiceClient struct {
@@ -61,10 +64,10 @@ func (c *liveUserRpcServiceClient) GetUserBalance(ctx context.Context, in *GetUs
 	return out, nil
 }
 
-func (c *liveUserRpcServiceClient) GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error) {
+func (c *liveUserRpcServiceClient) UpdateUserBalance(ctx context.Context, in *UpdateUserBalanceReq, opts ...grpc.CallOption) (*UpdateUserBalanceResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserDetailsInfoReply)
-	err := c.cc.Invoke(ctx, LiveUserRpcService_GetUserInfoById_FullMethodName, in, out, cOpts...)
+	out := new(UpdateUserBalanceResp)
+	err := c.cc.Invoke(ctx, LiveUserRpcService_UpdateUserBalance_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,9 +78,12 @@ func (c *liveUserRpcServiceClient) GetUserInfoById(ctx context.Context, in *GetU
 // All implementations must embed UnimplementedLiveUserRpcServiceServer
 // for forward compatibility.
 type LiveUserRpcServiceServer interface {
+	// 根据token获取用户信息
 	GetInfoByUserToken(context.Context, *GetInfoByUserTokenReq) (*UserDetailsInfoReply, error)
+	// 获取用户余额
 	GetUserBalance(context.Context, *GetUserBalanceReq) (*GetUserBalanceReply, error)
-	GetUserInfoById(context.Context, *GetUserInfoByIdReq) (*UserDetailsInfoReply, error)
+	// 修改用户余额
+	UpdateUserBalance(context.Context, *UpdateUserBalanceReq) (*UpdateUserBalanceResp, error)
 	mustEmbedUnimplementedLiveUserRpcServiceServer()
 }
 
@@ -94,8 +100,8 @@ func (UnimplementedLiveUserRpcServiceServer) GetInfoByUserToken(context.Context,
 func (UnimplementedLiveUserRpcServiceServer) GetUserBalance(context.Context, *GetUserBalanceReq) (*GetUserBalanceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserBalance not implemented")
 }
-func (UnimplementedLiveUserRpcServiceServer) GetUserInfoById(context.Context, *GetUserInfoByIdReq) (*UserDetailsInfoReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfoById not implemented")
+func (UnimplementedLiveUserRpcServiceServer) UpdateUserBalance(context.Context, *UpdateUserBalanceReq) (*UpdateUserBalanceResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserBalance not implemented")
 }
 func (UnimplementedLiveUserRpcServiceServer) mustEmbedUnimplementedLiveUserRpcServiceServer() {}
 func (UnimplementedLiveUserRpcServiceServer) testEmbeddedByValue()                            {}
@@ -154,20 +160,20 @@ func _LiveUserRpcService_GetUserBalance_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LiveUserRpcService_GetUserInfoById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserInfoByIdReq)
+func _LiveUserRpcService_UpdateUserBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserBalanceReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LiveUserRpcServiceServer).GetUserInfoById(ctx, in)
+		return srv.(LiveUserRpcServiceServer).UpdateUserBalance(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LiveUserRpcService_GetUserInfoById_FullMethodName,
+		FullMethod: LiveUserRpcService_UpdateUserBalance_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveUserRpcServiceServer).GetUserInfoById(ctx, req.(*GetUserInfoByIdReq))
+		return srv.(LiveUserRpcServiceServer).UpdateUserBalance(ctx, req.(*UpdateUserBalanceReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,8 +194,8 @@ var LiveUserRpcService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LiveUserRpcService_GetUserBalance_Handler,
 		},
 		{
-			MethodName: "GetUserInfoById",
-			Handler:    _LiveUserRpcService_GetUserInfoById_Handler,
+			MethodName: "UpdateUserBalance",
+			Handler:    _LiveUserRpcService_UpdateUserBalance_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
