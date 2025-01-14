@@ -141,7 +141,7 @@ message GetGameTransferOrderStatusReply{
     int64  user_id = 1;         //用户ID
     string order_no = 3;        //订单编号
     int64 transfer_type = 4;    //交易类型：1:转入 2:转出
-    int64  status = 5 ; //转账状态， 0:处理中 1:处理成功 2:处理失败
+    int64  status = 5 ; //转账状态， 1:处理中 2:处理成功 3:处理失败
     string amounts = 6;         //订单金额
     string msg = 7;             //信息
   }
@@ -316,7 +316,7 @@ message GetCategoryListByCurrReq {
 }
 
 message GetCategoryListByCurrReply {
-  repeated GameCategoryDetail list = 20;
+  repeated GameCategoryDetail rows = 20;
 }
 
 message GameCategoryDetail {
@@ -369,7 +369,7 @@ message GetPlatformListByCurrReq {
 }
 // 通过货币获取平台响应参数
 message GetPlatformListByCurrReply {
-  repeated GamePlatformDetail list = 20;
+  repeated GamePlatformDetail rows = 20;
 }
 
 // 游戏平台详情
@@ -425,7 +425,7 @@ message GetGameDetailsListReply {
   int64 page = 1;
   int64 page_size = 2;
   int64 total = 3;
-  repeated GameDetails list = 4;
+  repeated GameDetails rows = 4;
 }
 
 
@@ -473,7 +473,7 @@ message GetHotPlatformListReq {
   string currency_code = 1;
 }
 message GetHotPlatformListReply {
-  repeated GamePlatformDetail list = 1;
+  repeated GamePlatformDetail rows = 1;
 }
 
 message GameDetailsReq {
@@ -511,18 +511,39 @@ message AddTripartiteTransferRecordReq {
   int64 game_id = 3;                      // 游戏ID
   int64 game_platform_id = 4;             // 平台ID
   string currency_code = 5;              // 货币代码
-  int64 transfer_in_money = 6;           // 转入金额(分)
-  int64 transfer_in_time = 7;            // 转入时间(Unix时间戳，秒)
-  string tripartite_in_order = 8;        // 第三方转入订单号
-  int64 transfer_out_money = 9;          // 转出金额(分)
-  int64 transfer_out_time = 10;           // 转出时间(Unix时间戳，秒)
-  string tripartite_out_order = 11;       // 第三方转出订单号
+  int64 amount = 6;   // 操作金额
   string remark = 12;                     // 备注说明
+  int64 transfer_type = 13;                     // 交易类型：1:转入 2:转出
 }
 
 message AddTripartiteTransferRecordStatusReq {
   string order_id = 1;               // 关联的转账订单号
-  int64 transfer_type = 2;           // 转账类型（1:转入, 2:转出）
+  int64 game_platform_id = 2;             // 平台ID
+}
+
+message TripartiteTransferRecordStatusReq{
+  string order_id = 1;                    // 内部转账订单号
+  int64 user_id = 2;                      // 用户ID
+  int64 game_id = 3;                      // 游戏ID
+  int64 game_platform_id = 4;             // 平台ID
+}
+
+message TripartiteTransferRecord {
+  string order_id = 1;                    // 内部转账订单号
+  int64 user_id = 2;                      // 用户ID
+  int64 game_id = 3;                      // 游戏ID
+  int64 tripartite_game_id = 4;                      // 游戏ID
+  string game_name = 5;                      // 游戏ID
+  int64 game_platform_id = 6;             // 平台ID
+  int64 tripartite_game_platform_id = 7;             // 平台ID
+  string game_platform_name = 8;             // 平台ID
+  string currency_code = 9;              // 货币代码
+  int64 transfer_money = 10;             // 转入/转出的金额
+  string remark = 11;                     // 备注说明
+  int64 transfer_type = 12;                     // 交易类型：1:转入 2:转出
+  int64 transfer_status = 13;                     //转账状态， 1:处理中 2:处理成功 3:处理失败
+  int64 transfer_time = 14;
+  int64 event_time = 15;
 }
 
 service LiveGameRpcInnerService{
@@ -530,4 +551,6 @@ service LiveGameRpcInnerService{
   rpc AddTripartiteTransferRecord(AddTripartiteTransferRecordReq) returns (GameReply);
   // 变更三方转账记录状态
   rpc AddTripartiteTransferRecordStatus(AddTripartiteTransferRecordStatusReq) returns (GameReply);
+  // 查询某一条的状态数据
+  rpc TripartiteTransferRecordStatus(TripartiteTransferRecordStatusReq) returns (TripartiteTransferRecord);
 }

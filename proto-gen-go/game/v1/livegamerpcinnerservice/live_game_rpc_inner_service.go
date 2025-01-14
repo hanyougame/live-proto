@@ -63,6 +63,8 @@ type (
 	TransferCallbackReq                      = v1.TransferCallbackReq
 	TransferEnterGameReply                   = v1.TransferEnterGameReply
 	TransferEnterGameReq                     = v1.TransferEnterGameReq
+	TripartiteTransferRecord                 = v1.TripartiteTransferRecord
+	TripartiteTransferRecordStatusReq        = v1.TripartiteTransferRecordStatusReq
 	WalletTransferInGameReply                = v1.WalletTransferInGameReply
 	WalletTransferInGameReq                  = v1.WalletTransferInGameReq
 	WalletTransferOutGameReply               = v1.WalletTransferOutGameReply
@@ -73,6 +75,8 @@ type (
 		AddTripartiteTransferRecord(ctx context.Context, in *AddTripartiteTransferRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 变更三方转账记录状态
 		AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 查询某一条的状态数据
+		TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -96,4 +100,10 @@ func (m *defaultLiveGameRpcInnerService) AddTripartiteTransferRecord(ctx context
 func (m *defaultLiveGameRpcInnerService) AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddTripartiteTransferRecordStatus(ctx, in, opts...)
+}
+
+// 查询某一条的状态数据
+func (m *defaultLiveGameRpcInnerService) TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.TripartiteTransferRecordStatus(ctx, in, opts...)
 }
