@@ -35,17 +35,6 @@ message GetUserBalanceReply{
   int64 balance = 2;         //用户余额
 }
 
-//用户钱包信息
-message UserWalletInfo{
-  int64 user_id = 1;         // 用户ID
-  int64 balance = 2;         //用户余额
-  int64 lock_balance = 3;    //锁定余额
-  int64 currency_id = 4;        //货币ID
-  string currency_code = 5;   //当前货币编码
-  string currency_symbol = 6; //当前获取符号
-  int64 gold_balance = 7;    //金币余额
-  int64 currency_status = 8;  //货币状态
-}
 
 // 修改用户余额请求结构
 message UpdateUserBalanceReq{
