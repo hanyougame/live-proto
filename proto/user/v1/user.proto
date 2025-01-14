@@ -27,10 +27,11 @@ message UserDetailsInfoReply {
 
 message GetUserBalanceReq{
   int64 user_id = 1;         // 用户ID
-  int64 wallet_type = 2 ; // 钱包类型 todo 待定
+  int64 wallet_type = 2 ; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
 }
+
 message GetUserBalanceReply{
-  int64 wallet_type = 1; // 钱包类型 todo 待定
+  int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
   int64 balance = 2;         //用户余额
 }
 
@@ -72,6 +73,10 @@ message UpdateUserBalanceResp{
   int64 status = 3; // 状态 0 失败,1 处理成功,2 余额不足
 }
 
+message GetUserInfoByIdReq{
+  int64 user_id = 1;         // 用户ID
+}
+
 service LiveUserRpcService {
   // 根据token获取用户信息
   rpc GetInfoByUserToken(GetInfoByUserTokenReq) returns(UserDetailsInfoReply);
@@ -79,4 +84,5 @@ service LiveUserRpcService {
   rpc GetUserBalance(GetUserBalanceReq) returns(GetUserBalanceReply);
   // 修改用户余额
   rpc UpdateUserBalance(UpdateUserBalanceReq)returns (UpdateUserBalanceResp);
+  rpc GetUserInfoById(GetUserInfoByIdReq) returns(UserDetailsInfoReply);
 }
