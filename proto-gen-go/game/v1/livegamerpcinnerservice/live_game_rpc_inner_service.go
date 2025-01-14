@@ -2,7 +2,7 @@
 // goctl 1.7.2
 // Source: game.proto
 
-package livegameexternalsingleservice
+package livegamerpcinnerservice
 
 import (
 	"context"
@@ -68,32 +68,32 @@ type (
 	WalletTransferOutGameReply               = v1.WalletTransferOutGameReply
 	WalletTransferOutGameReq                 = v1.WalletTransferOutGameReq
 
-	LiveGameExternalSingleService interface {
-		// 进入游戏
-		EnterGame(ctx context.Context, in *SingleEnterGameReq, opts ...grpc.CallOption) (*SingleEnterGameReply, error)
-		// 进入游戏试玩
-		EnterGameTry(ctx context.Context, in *SingleEnterGameTryReq, opts ...grpc.CallOption) (*SingleEnterGameTryReply, error)
+	LiveGameRpcInnerService interface {
+		// 添加三方转账记录
+		AddTripartiteTransferRecord(ctx context.Context, in *AddTripartiteTransferRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 变更三方转账记录状态
+		AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
 	}
 
-	defaultLiveGameExternalSingleService struct {
+	defaultLiveGameRpcInnerService struct {
 		cli zrpc.Client
 	}
 )
 
-func NewLiveGameExternalSingleService(cli zrpc.Client) LiveGameExternalSingleService {
-	return &defaultLiveGameExternalSingleService{
+func NewLiveGameRpcInnerService(cli zrpc.Client) LiveGameRpcInnerService {
+	return &defaultLiveGameRpcInnerService{
 		cli: cli,
 	}
 }
 
-// 进入游戏
-func (m *defaultLiveGameExternalSingleService) EnterGame(ctx context.Context, in *SingleEnterGameReq, opts ...grpc.CallOption) (*SingleEnterGameReply, error) {
-	client := v1.NewLiveGameExternalSingleServiceClient(m.cli.Conn())
-	return client.EnterGame(ctx, in, opts...)
+// 添加三方转账记录
+func (m *defaultLiveGameRpcInnerService) AddTripartiteTransferRecord(ctx context.Context, in *AddTripartiteTransferRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddTripartiteTransferRecord(ctx, in, opts...)
 }
 
-// 进入游戏试玩
-func (m *defaultLiveGameExternalSingleService) EnterGameTry(ctx context.Context, in *SingleEnterGameTryReq, opts ...grpc.CallOption) (*SingleEnterGameTryReply, error) {
-	client := v1.NewLiveGameExternalSingleServiceClient(m.cli.Conn())
-	return client.EnterGameTry(ctx, in, opts...)
+// 变更三方转账记录状态
+func (m *defaultLiveGameRpcInnerService) AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddTripartiteTransferRecordStatus(ctx, in, opts...)
 }

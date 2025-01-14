@@ -504,3 +504,30 @@ service LiveGameRpcService{
   // 根据游戏ID获取游戏详情
   rpc GetGameDetails(GameDetailsReq) returns (GameDetails);
 }
+
+message AddTripartiteTransferRecordReq {
+  string order_id = 1;                    // 内部转账订单号
+  int64 user_id = 2;                      // 用户ID
+  int64 game_id = 3;                      // 游戏ID
+  int64 game_platform_id = 4;             // 平台ID
+  string currency_code = 5;              // 货币代码
+  int64 transfer_in_money = 6;           // 转入金额(分)
+  int64 transfer_in_time = 7;            // 转入时间(Unix时间戳，秒)
+  string tripartite_in_order = 8;        // 第三方转入订单号
+  int64 transfer_out_money = 9;          // 转出金额(分)
+  int64 transfer_out_time = 10;           // 转出时间(Unix时间戳，秒)
+  string tripartite_out_order = 11;       // 第三方转出订单号
+  string remark = 12;                     // 备注说明
+}
+
+message AddTripartiteTransferRecordStatusReq {
+  string order_id = 1;               // 关联的转账订单号
+  int64 transfer_type = 2;           // 转账类型（1:转入, 2:转出）
+}
+
+service LiveGameRpcInnerService{
+  // 添加三方转账记录
+  rpc AddTripartiteTransferRecord(AddTripartiteTransferRecordReq) returns (GameReply);
+  // 变更三方转账记录状态
+  rpc AddTripartiteTransferRecordStatus(AddTripartiteTransferRecordStatusReq) returns (GameReply);
+}

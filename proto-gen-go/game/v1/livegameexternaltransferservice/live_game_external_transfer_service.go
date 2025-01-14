@@ -14,6 +14,8 @@ import (
 )
 
 type (
+	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
+	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameDetails                              = v1.GameDetails
