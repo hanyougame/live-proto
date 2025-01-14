@@ -54,7 +54,7 @@ message UpdateUserBalanceReq{
   string order_no = 3; // 订单号
   string parent_agent_username = 4; // 上级代理用户账号
   string register_source = 5; // 用户注册来源
-  int64 wallet_type = 6 ; // 钱包类型 todo 待定
+  int64 wallet_type = 6 ; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
   int64 category = 7 ; // 账变大类
   int64 sub_category = 8; // 账变小类
   string frontend_remark = 9;// 前台备注
@@ -69,7 +69,7 @@ message UpdateUserBalanceReq{
 // 修改用户余额返回结构
 message UpdateUserBalanceResp{
   int64 balance = 1; // 修改后余额
-  int64 wallet_type = 2; // 钱包类型  todo 待定
+  int64 wallet_type = 2; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
   int64 status = 3; // 状态 0 失败,1 处理成功,2 余额不足
 }
 
