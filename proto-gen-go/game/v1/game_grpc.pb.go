@@ -1386,6 +1386,7 @@ const (
 	LiveGameRpcInnerService_AddTripartiteTransferRecord_FullMethodName       = "/game.v1.LiveGameRpcInnerService/AddTripartiteTransferRecord"
 	LiveGameRpcInnerService_AddTripartiteTransferRecordStatus_FullMethodName = "/game.v1.LiveGameRpcInnerService/AddTripartiteTransferRecordStatus"
 	LiveGameRpcInnerService_TripartiteTransferRecordStatus_FullMethodName    = "/game.v1.LiveGameRpcInnerService/TripartiteTransferRecordStatus"
+	LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName    = "/game.v1.LiveGameRpcInnerService/CreateCompensationFailedRecord"
 )
 
 // LiveGameRpcInnerServiceClient is the client API for LiveGameRpcInnerService service.
@@ -1398,6 +1399,8 @@ type LiveGameRpcInnerServiceClient interface {
 	AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
 	// 查询某一条的状态数据
 	TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
+	// 创建补偿失败记录
+	CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
 }
 
 type liveGameRpcInnerServiceClient struct {
@@ -1438,6 +1441,16 @@ func (c *liveGameRpcInnerServiceClient) TripartiteTransferRecordStatus(ctx conte
 	return out, nil
 }
 
+func (c *liveGameRpcInnerServiceClient) CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateCompensationRecordResp)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcInnerServiceServer is the server API for LiveGameRpcInnerService service.
 // All implementations must embed UnimplementedLiveGameRpcInnerServiceServer
 // for forward compatibility.
@@ -1448,6 +1461,8 @@ type LiveGameRpcInnerServiceServer interface {
 	AddTripartiteTransferRecordStatus(context.Context, *AddTripartiteTransferRecordStatusReq) (*GameReply, error)
 	// 查询某一条的状态数据
 	TripartiteTransferRecordStatus(context.Context, *TripartiteTransferRecordStatusReq) (*TripartiteTransferRecord, error)
+	// 创建补偿失败记录
+	CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error)
 	mustEmbedUnimplementedLiveGameRpcInnerServiceServer()
 }
 
@@ -1466,6 +1481,9 @@ func (UnimplementedLiveGameRpcInnerServiceServer) AddTripartiteTransferRecordSta
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) TripartiteTransferRecordStatus(context.Context, *TripartiteTransferRecordStatusReq) (*TripartiteTransferRecord, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TripartiteTransferRecordStatus not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCompensationFailedRecord not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) mustEmbedUnimplementedLiveGameRpcInnerServiceServer() {
 }
@@ -1543,6 +1561,24 @@ func _LiveGameRpcInnerService_TripartiteTransferRecordStatus_Handler(srv interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcInnerService_CreateCompensationFailedRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCompensationRecordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).CreateCompensationFailedRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).CreateCompensationFailedRecord(ctx, req.(*CreateCompensationRecordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcInnerService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1561,6 +1597,10 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TripartiteTransferRecordStatus",
 			Handler:    _LiveGameRpcInnerService_TripartiteTransferRecordStatus_Handler,
+		},
+		{
+			MethodName: "CreateCompensationFailedRecord",
+			Handler:    _LiveGameRpcInnerService_CreateCompensationFailedRecord_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

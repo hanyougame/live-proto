@@ -17,6 +17,8 @@ type (
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
+	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
+	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameDetails                              = v1.GameDetails
 	GameDetailsReq                           = v1.GameDetailsReq
@@ -77,6 +79,8 @@ type (
 		AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 查询某一条的状态数据
 		TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
+		// 创建补偿失败记录
+		CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -106,4 +110,10 @@ func (m *defaultLiveGameRpcInnerService) AddTripartiteTransferRecordStatus(ctx c
 func (m *defaultLiveGameRpcInnerService) TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.TripartiteTransferRecordStatus(ctx, in, opts...)
+}
+
+// 创建补偿失败记录
+func (m *defaultLiveGameRpcInnerService) CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.CreateCompensationFailedRecord(ctx, in, opts...)
 }

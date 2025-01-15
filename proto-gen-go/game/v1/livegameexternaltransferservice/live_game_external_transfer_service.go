@@ -17,6 +17,8 @@ type (
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
+	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
+	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameDetails                              = v1.GameDetails
 	GameDetailsReq                           = v1.GameDetailsReq

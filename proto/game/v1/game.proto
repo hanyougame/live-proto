@@ -84,9 +84,9 @@ message WalletTransferInGameReq{
   int64 platform_key = 1;    //游戏平台key  唯一标识
   int64 game_key = 2;        //游戏标志
   int64  user_id = 3;         //用户ID
-  string bill_no = 4;         //转入账单编号
-  string currency_code = 5;   //货币Code
-  int64 amount = 6;          //金额  整数且大于0
+  string currency_code = 4;   //货币Code
+  int64 amount = 5;          //金额  整数且大于0
+  string game_order_no = 6;        // 订单号
 }
 
 message WalletTransferInGameReply{
@@ -102,9 +102,10 @@ message WalletTransferOutGameReq{
   int64 platform_key = 1;    //游戏平台key  唯一标识
   int64 game_key = 2;        //游戏标志
   int64  user_id = 3;         //用户ID
-  string game_order_no = 4; //转入订单编号
-  string currency_code = 5;     //货币Code
-  string amount = 6;        //金额
+  string currency_code = 4;     //货币Code
+  string amount = 5;        //金额
+  string game_order_no = 6;        // 订单号
+
 }
 
 message WalletTransferOutGameReply{
@@ -410,6 +411,7 @@ message GameDetails {
   int64 game_platform_id = 5;
   int64 game_category_id = 6;
   string game_name = 7;
+  int64 is_favorite = 8; //  收藏状态(1:普通，2：收藏)
   int64 wallet_model = 13;
   int64 horizontal_support = 14;
   int64 vertical_support = 15;
@@ -546,6 +548,21 @@ message TripartiteTransferRecord {
   int64 event_time = 15;
 }
 
+// 创建补偿失败的记录请求
+message CreateCompensationRecordReq {
+  int64 user_id = 1;        // 用户ID
+  int64 amount = 2;         // 金额（分）
+  string order_no = 3;      // 原始订单号
+  int64 game_id = 4;     // 游戏ID
+  string game_order_no = 5;  // 游戏方订单号（可选）
+  string error_message = 6;  // 错误信息
+  string currency_code = 7;  // 货币代码
+}
+
+message CreateCompensationRecordResp {
+  int64 id = 1;  // 补偿记录ID
+}
+
 service LiveGameRpcInnerService{
   // 添加三方转账记录
   rpc AddTripartiteTransferRecord(AddTripartiteTransferRecordReq) returns (GameReply);
@@ -553,4 +570,6 @@ service LiveGameRpcInnerService{
   rpc AddTripartiteTransferRecordStatus(AddTripartiteTransferRecordStatusReq) returns (GameReply);
   // 查询某一条的状态数据
   rpc TripartiteTransferRecordStatus(TripartiteTransferRecordStatusReq) returns (TripartiteTransferRecord);
+  // 创建补偿失败记录
+  rpc CreateCompensationFailedRecord(CreateCompensationRecordReq) returns (CreateCompensationRecordResp);
 }
