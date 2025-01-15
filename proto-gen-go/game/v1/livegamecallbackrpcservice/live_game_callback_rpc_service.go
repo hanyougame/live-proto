@@ -63,6 +63,8 @@ type (
 	TransferCallbackReq                      = v1.TransferCallbackReq
 	TransferEnterGameReply                   = v1.TransferEnterGameReply
 	TransferEnterGameReq                     = v1.TransferEnterGameReq
+	TripartiteTransferRecord                 = v1.TripartiteTransferRecord
+	TripartiteTransferRecordStatusReq        = v1.TripartiteTransferRecordStatusReq
 	WalletTransferInGameReply                = v1.WalletTransferInGameReply
 	WalletTransferInGameReq                  = v1.WalletTransferInGameReq
 	WalletTransferOutGameReply               = v1.WalletTransferOutGameReply
