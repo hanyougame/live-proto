@@ -360,6 +360,7 @@ message GetGameListByCategoryReq {
   int64 page_size = 2;
   int64 game_category_id = 3;
   string currency_code = 4;
+  int64 user_id = 5;
 }
 
 
@@ -437,6 +438,7 @@ message GetGameListByPlatformReq {
   int64 page_size = 2;
   int64 game_platform_id = 3;
   string currency_code = 4;
+  int64 user_id = 5;
 }
 
 
@@ -446,6 +448,7 @@ message GetGameListBySearchReq {
   int64 page_size = 2;
   string search_value = 3;
   string currency_code = 4;
+  int64 user_id = 5;
 }
 
 // 添加收藏
@@ -462,12 +465,21 @@ message GetGameFavoriteListReq {
   int64 game_platform_id = 4;
 }
 
+message GetUserFavoriteIdsReq {
+  int64 user_id = 1;
+}
+message GetUserFavoriteIdsReply {
+  map<int64, bool> favoriteIds  = 1;
+}
+
+
 // 热门游戏列表
 message GetHotGameListReq {
   int64 page = 1;
   int64 page_size = 2;
   int64 game_platform_id = 3;
   string currency_code = 4;
+  int64 user_id = 5;
 }
 
 // 热门平台列表
@@ -480,6 +492,7 @@ message GetHotPlatformListReply {
 
 message GameDetailsReq {
   int64 game_id = 1;
+  int64 user_id = 2;
 }
 
 service LiveGameRpcService{
@@ -505,6 +518,8 @@ service LiveGameRpcService{
   rpc GetHotPlatformList(GetHotPlatformListReq) returns (GetHotPlatformListReply);
   // 根据游戏ID获取游戏详情
   rpc GetGameDetails(GameDetailsReq) returns (GameDetails);
+  // 获取用户收藏ID
+  rpc GetUserFavoriteIds(GetUserFavoriteIdsReq) returns (GetUserFavoriteIdsReply);
 }
 
 message AddTripartiteTransferRecordReq {

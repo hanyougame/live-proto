@@ -54,6 +54,8 @@ type (
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
+	GetUserFavoriteIdsReply                  = v1.GetUserFavoriteIdsReply
+	GetUserFavoriteIdsReq                    = v1.GetUserFavoriteIdsReq
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
