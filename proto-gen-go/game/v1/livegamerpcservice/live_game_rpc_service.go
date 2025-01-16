@@ -17,6 +17,8 @@ type (
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
+	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
+	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameDetails                              = v1.GameDetails
 	GameDetailsReq                           = v1.GameDetailsReq
@@ -52,6 +54,8 @@ type (
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
+	GetUserFavoriteIdsReply                  = v1.GetUserFavoriteIdsReply
+	GetUserFavoriteIdsReq                    = v1.GetUserFavoriteIdsReq
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
@@ -93,6 +97,8 @@ type (
 		GetHotPlatformList(ctx context.Context, in *GetHotPlatformListReq, opts ...grpc.CallOption) (*GetHotPlatformListReply, error)
 		// 根据游戏ID获取游戏详情
 		GetGameDetails(ctx context.Context, in *GameDetailsReq, opts ...grpc.CallOption) (*GameDetails, error)
+		// 获取用户收藏ID
+		GetUserFavoriteIds(ctx context.Context, in *GetUserFavoriteIdsReq, opts ...grpc.CallOption) (*GetUserFavoriteIdsReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -170,4 +176,10 @@ func (m *defaultLiveGameRpcService) GetHotPlatformList(ctx context.Context, in *
 func (m *defaultLiveGameRpcService) GetGameDetails(ctx context.Context, in *GameDetailsReq, opts ...grpc.CallOption) (*GameDetails, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetGameDetails(ctx, in, opts...)
+}
+
+// 获取用户收藏ID
+func (m *defaultLiveGameRpcService) GetUserFavoriteIds(ctx context.Context, in *GetUserFavoriteIdsReq, opts ...grpc.CallOption) (*GetUserFavoriteIdsReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetUserFavoriteIds(ctx, in, opts...)
 }
