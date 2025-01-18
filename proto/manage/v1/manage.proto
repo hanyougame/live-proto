@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package manage.v1;
+option go_package = "./pb/v1";
+
+
+message ManageReq{
+
+}
+message ManageReply{
+
+}
+
+
+message CurrencyDetailReply {
+  int64 currency_id = 1;                          // 自增主键，唯一标识每条记录
+  int64 rank = 2;                        // 排名，表示货币在列表中的排序位置
+  string currency_name = 3;              // 货币名称，例如“印度卢比”
+  string country_name = 4;               // 所属国家，例如“印度”，允许为空（如“波场”）
+  string currency_code = 5;              // 货币代码，例如“INR”
+  string currency_flag_url = 6;          // 货币国旗图标的 URL，保存图片的路径或链接
+  string thousand_separator = 7;         // 千分位符号，例如“,”，表示格式化显示
+  string currency_symbol = 8;            // 货币符号，例如“₹”
+  string exchange_rate = 9;              // 货币兑换比例，默认值为 1:1
+  int64 currency_type = 10;             // 货币类型，例如“法定货币”或“数字货币”
+  int64 is_enabled = 11;                 // 是否启用，默认启用
+  int64 is_visible = 12;                 // 大厅显示开关，表示是否在用户界面显示
+}
+message CurrencyDetailReplyList {
+  repeated CurrencyDetailReply list = 1;
+}
+
+message GetCurrInfoByIDReq {
+  int64 id = 1;                          // 自增主键，唯一标识每条记录
+}
+
+service LiveManageRpcService{
+  // 获取法定货币信息
+  rpc GetLegalTenderInfo (ManageReq) returns (CurrencyDetailReplyList);
+  // 通过货币ID获取货币信息
+  rpc GetCurrInfoById (GetCurrInfoByIDReq) returns (CurrencyDetailReply);
+}

@@ -9,7 +9,7 @@ fi
 
 SERVICE=$1
 TARGET_DIR="../live-rpc-server/app"
-
+RPC_CLIENT_DIR="./proto-gen-go/${SERVICE}/v1"
 # 检查目标目录是否存在，不存在则创建
 mkdir -p ${TARGET_DIR}/${SERVICE}
 
@@ -27,3 +27,20 @@ goctl rpc protoc ./proto/${SERVICE}/v1/${SERVICE}.proto \
     --zrpc_out=${TARGET_DIR}/${SERVICE} \
     --client=true \
     --style=go_zero -m
+
+
+cp -rf ${TARGET_DIR}/${SERVICE}/client/* ${RPC_CLIENT_DIR}/
+# 删除源文件
+rm -rf ${TARGET_DIR}/${SERVICE}/client
+# 替换导入路径 - 使用变量实现动态替换
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # MacOS
+    find ${RPC_CLIENT_DIR} -type f -name "*.go" -exec sed -i '' \
+        "s|live-server-rpc/app/${SERVICE}/pb/v1|github.com/hanyougame/live-proto/proto-gen-go/${SERVICE}/v1|g" \
+        {} \;
+else
+    # Linux
+    find ${RPC_CLIENT_DIR} -type f -name "*.go" -exec sed -i \
+        "s|live-server-rpc/app/${SERVICE}/pb/v1|github.com/hanyougame/live-proto/proto-gen-go/${SERVICE}/v1|g" \
+        {} \;
+fi
