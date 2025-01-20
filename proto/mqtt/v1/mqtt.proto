@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package mqtt.v1;
+option go_package = "./pb/v1";
+
+message PushRequest {
+  bytes message = 1;
+}
+
+message PushToUserRequest {
+  string user_id = 1;
+  bytes message = 2;
+}
+
+message PushToUsersRequest {
+  repeated string user_ids = 1;
+  bytes message = 2;
+}
+
+message PushResponse {
+  int64 code = 1;
+  string err_msg = 2;
+}
+
+service PushService {
+  rpc PushToAll(PushRequest) returns (PushResponse) {}
+  rpc PushToAuthUsers(PushRequest) returns (PushResponse) {}
+  rpc PushToUnauthUsers(PushRequest) returns (PushResponse) {}
+  rpc PushToUser(PushToUserRequest) returns (PushResponse) {}
+  rpc PushToUsers(PushToUsersRequest) returns (PushResponse) {}
+}
