@@ -29,3 +29,25 @@ service PushService {
   rpc PushToUser(PushToUserRequest) returns (PushResponse) {}
   rpc PushToUsers(PushToUsersRequest) returns (PushResponse) {}
 }
+
+
+
+
+
+// EnterGameDelReply 进入游戏转账信息
+message EnterGameDelReply  {
+  int64 code = 1;
+  int64 timestamp = 2;
+  int64 user_id = 3;
+  int64 game_id = 4;
+  int64 balance = 5;
+}
+
+// QuitGameWdlReply 退出游戏转账信息
+message QuitGameWdlReply  {
+  int64 code = 1;
+  int64 timestamp = 2;
+  int64 user_id = 3;
+  int64 game_id = 4;
+  int64 balance = 5;
+}
