@@ -24,8 +24,6 @@ message PushResponse {
 
 service PushService {
   rpc PushToAll(PushRequest) returns (PushResponse) {}
-  rpc PushToAuthUsers(PushRequest) returns (PushResponse) {}
-  rpc PushToUnauthUsers(PushRequest) returns (PushResponse) {}
   rpc PushToUser(PushToUserRequest) returns (PushResponse) {}
   rpc PushToUsers(PushToUsersRequest) returns (PushResponse) {}
 }
