@@ -1,0 +1,388 @@
+syntax = "proto3";
+
+package finance.v1;
+option go_package = "./pb/v1";
+
+message PayInReq {
+  int64 user_id = 1; // 用户Id
+  string order_id = 2; // 订单Id
+  string order_number = 3; // 订单编号
+  string amount = 4; // 金额
+  string phone = 5; // 手机号
+  string real_name = 6; // 姓名
+  int64 recharge_category_id = 7; // 充值大类Id
+  int64 recharge_merchant_id = 8; // 代收商户Id
+  string currency_code = 9; // 币种
+  string recharge_channel_code = 10; // 通道编码
+  string extra = 11; // 扩展字段
+}
+
+message PayInResp {
+  int64 status = 1; // 状态 1-Success 2-Fail
+  string msg = 2;   // 消息
+  string third_order_number = 3; // 三方单号
+  string amount = 4; // 充值金额
+  string payUrl = 5; // 支付链接
+  bool test = 6; // 支付测试
+}
+
+message  PayOutReq {
+  int64 user_id = 1; // 用户Id
+  string order_id = 2; // 订单Id
+  string order_number = 3; // 订单编号
+  string amount = 4; // 金额
+  string phone = 5; // 手机号
+  string real_name = 6; // 姓名
+  int64 withdraw_merchant_id = 7; // 代付商户Id
+  string bank_code = 8; // 银行编码
+  string currency_code = 9; // 币种
+  int64 withdraw_type_id = 10; // 提现方式
+  string extra = 11; // 扩展字段
+}
+
+message PayOutResp {
+  int64 status = 1; // 状态 1-Success 2-Fail
+  string msg = 2;   // 消息
+  string third_order_number = 3; // 三方单号
+}
+
+message PayInStatusReq {
+  int64 recharge_merchant_id = 1; // 代付商户Id
+  string order_number = 2; // 订单Id
+  string third_order_number = 3; // 三方订单号
+}
+
+message PayInStatusResp {
+  PayInStatus status = 1; // 状态
+  string msg = 2;   // 消息
+}
+
+enum PayInStatus {
+  // none
+  PAY_IN_NONE = 0;
+  // 支付成功
+  PAY_IN_SUCCESS = 1;
+  // 支付失败
+  PAY_IN_FAIL = 2;
+  // 支付超时
+  PAY_IN_TIMEOUT = 3;
+  // 待支付
+  PAY_IN_WAIT = 4;
+}
+
+message PayOutStatusReq {
+  int64 withdraw_merchant_id = 1; // 代付商户Id
+  string order_number = 2; // 订单Id
+  string third_order_number = 3; // 三方订单号
+}
+
+message PayOutStatusResp {
+  PayOutStatus status = 1; // 状态
+  string msg = 2;   // 消息
+}
+
+enum PayOutStatus {
+  // none
+  PAY_OUT_NONE = 0;
+  // 出款成功
+  PAY_OUT_SUCCESS = 1;
+  // 出款失败
+  PAY_OUT_FAIL = 2;
+  // 出款超时
+  PAY_OUT_TIMEOUT = 3;
+  // 待出款
+  PAY_OUT_WAIT = 4;
+}
+
+message BalanceReq {
+  int64 withdraw_merchant_id = 1; // 代付商户Id
+}
+
+message BalanceResp {
+  int64 balance = 1; // 余额（元）
+  string currency_code = 2; // 币种
+  int64 status = 3; // 状态 1-Success 2-Fail
+}
+
+message RechargeReq {
+  int64 order_type = 1;// 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
+  int64 recharge_category_id = 2; // 充值大类Id （必填）
+  int64 recharge_merchant_id = 3; // 充值商户Id （在线充值）
+//  int64 recharge_channel_id = 4; // 充值通道Id （必填）
+  int64 user_id = 5; // 用户Id （必填）
+  string username = 6; // 用户账号 （必填）
+  string recharge_amount = 7; // 充值金额 （必填）
+  string order_amount = 8; // 订单金额 （必填）
+  string gift_amount = 9; // 赠送金额 （必填）
+  string exchange_rate = 10; // 汇率 （必填）
+  string recharge_currency_code = 11; // 充值币种 （必填）
+  string user_currency_code = 12; // 用户币种 （必填）
+  string fee_amount = 13; // 手续费 （必填）
+  string auditMulti = 14; // 稽核倍数 （必填）
+  string receive_account = 15; // 收款账户地址 （转账充值）
+  string receive_name = 16; // 收款人姓名 （转账充值）
+  string transfer_voucher = 17; // 转账凭证 （转账充值）
+  string real_name = 18; // 姓名
+  string utr = 20; //utr  (暂时不适用)
+}
+message RechargeResp {
+  int64 status = 1; // 状态 1-Success 2-Fail
+  string msg = 2;   // 消息
+  string order_number = 3; // 订单号
+  string third_order_number = 4; // 三方单号
+  string amount = 5; // 充值金额
+  string payUrl = 6; // 支付链接
+}
+
+service LivePaymentRpcService {
+  rpc PayIn(PayInReq) returns (PayInResp);
+  rpc PayOut(PayOutReq) returns (PayOutResp);
+  rpc PayInStatus(PayInStatusReq) returns (PayInStatusResp);
+  rpc PayOutStatus(PayOutStatusReq) returns (PayOutStatusResp);
+  rpc Balance(BalanceReq) returns (BalanceResp);
+  rpc Recharge(RechargeReq) returns (RechargeResp);
+}
+
+
+enum AuditType {
+  AuditTypeNone = 0;
+  AuditTypeRecharge = 1; // 充值
+  AuditTypeWithdraw = 2; // 提现
+  AuditTypeSettlement = 3; // 银商结算
+  AuditTypeCorrect = 4; // 资金修正
+  AuditTypeActivity = 5; // 优惠活动
+  AuditTypeRefund = 6; // 返水
+  AuditTypeCommission = 7; // 返佣
+  AuditTypeInterest = 8; // 利息宝
+  AuditTypeTask = 9; // 任务
+  AuditTypeVip = 10; // VIP奖励
+  AuditTypeRechargeDiscount = 11; // 充值优惠
+  AuditTypeClub = 12; // 俱乐部
+  AuditTypeGuarantee = 13; // 担保理赔
+  AuditTypeSystem = 14; // 系统稽核
+  AuditTypeAccumulationFund = 15; // 公积金
+  AuditSubTypeBox = 16; // 盲盒抽奖
+}
+
+enum AuditSubType {
+  AuditSubTypeNone = 0; // 无
+  AuditSubTypeUalaTransfer = 1; // Ualá转账
+  AuditSubTypeMercadoPagoTransfer = 2; // Mercado Pago转账
+  AuditSubTypeUpdayTransfer = 3; // UPDAY转账
+  AuditSubTypeQQWallet = 4; // QQ钱包
+  AuditSubTypeWalletRecharge = 5; // 钱包充值
+  AuditSubTypeNagadTransfer = 6; // Nagad转账
+  AuditSubTypeBankCardTransfer = 7; // 银行卡转账
+  AuditSubTypeUpiTransfer = 8; // UPI转账
+  AuditSubTypeGrabPayTransfer = 9; // GrabPay转账
+  AuditSubTypeLinkajaTransfer = 10; // LINKAJA转账
+  AuditSubTypePagaTransfer = 11; // Paga转账
+  AuditSubTypeFlutterwaveTransfer = 12; // Flutterwave转账
+  AuditSubTypePaystackTransfer = 13; // Paystack转账
+  AuditSubTypeInterswitchTransfer = 14; // Interswitch转账
+  AuditSubTypeOpayTransfer = 15; // Opay转账
+  AuditSubTypeCellulantTransfer = 16; // Cellulant转账
+  AuditSubTypeKongapayTransfer = 17; // Kongapay转账
+  AuditSubTypeLinePayTransfer = 18; // LinePay转账
+  AuditSubTypeApplePayTransfer = 19; // ApplePay转账
+  AuditSubTypeAlipayRecharge = 20; // 支付宝充值
+  AuditSubTypeAlipayApp = 21; // 支付宝app
+  AuditSubTypeUpaisaTransfer = 22; // Upaisa转账
+  AuditSubTypeKbzPayTransfer = 23; // KBZPay转账
+  AuditSubTypeWeChatTransfer = 24; // 微信转账
+  AuditSubTypeWeChatRecharge = 25; // 微信充值
+  AuditSubTypeGcashTransfer = 26; // GCASH转账
+  AuditSubTypeClabeTransfer = 27; // CLABE转账
+  AuditSubTypeTossTransfer = 28; // Toss转账
+  AuditSubTypeDokuTransfer = 29; // DOKU转账
+  AuditSubTypeJDWallet = 30; // 京东钱包
+  AuditSubTypeCardRecharge = 31; // 点卡充值
+  AuditSubTypePixTransfer = 32; // PIX转账
+  AuditSubTypeHuiWangTransfer = 33; // 汇旺转账
+  AuditSubTypeOvoTransfer = 34; // OVO转账
+  AuditSubTypeMomoTransfer = 35; // MoMo转账
+  AuditSubTypeThirdPartyWalletTransfer = 36; // 三方钱包转账
+  AuditSubTypeEasypaisaTransfer = 37; // Easypaisa转账
+  AuditSubTypeAlipayTransfer = 38; // 支付宝转账
+  AuditSubTypeVirtualCurrencyTransfer = 39; // 虚拟币转账
+  AuditSubTypeGopayTransfer = 40; // GOPAY转账
+  AuditSubTypeJazzCashTransfer = 41; // JazzCash转账
+  AuditSubTypeBaiduWallet = 42; // 百度钱包
+  AuditSubTypeZaloTransfer = 43; // ZaLo转账
+  AuditSubTypeRocketTransfer = 44; // Rocket转账
+  AuditSubTypeBkashTransfer = 45; // bKash转账
+  AuditSubTypePalmPayTransfer = 46; // PalmPay转账
+  AuditSubTypeMaximumMobileTransfer = 47; // MaximumMobile转账
+  AuditSubTypeBkmExpressTransfer = 48; // BKMExpress转账
+  AuditSubTypeFastPayTransfer = 49; // FastPay转账
+  AuditSubTypeKakaoPayTransfer = 50; // KakaoPay转账
+  AuditSubTypePaycoTransfer = 51; // Payco转账
+  AuditSubTypeSureCashTransfer = 52; // SureCash转账
+  AuditSubTypeCustomerServiceRecharge = 53; // 客服充值
+  AuditSubTypeOnlineRecharge = 54; // 在线充值
+  AuditSubTypeGotymeBankTransfer = 55; // GoTyme Bank转账
+  AuditSubTypeWaveMoneyTransfer = 56; // Wave Money转账
+  AuditSubTypeBankRecharge = 57; // 银行充值
+  AuditSubTypePaymayaTransfer = 58; // PayMaya转账
+  AuditSubTypeSamsungPayTransfer = 59; // SamsungPay转账
+  AuditSubTypeNaverPayTransfer = 60; // NaverPay转账
+  AuditSubTypeSmilePayTransfer = 61; // SmilePay转账
+  AuditSubTypeDanaTransfer = 62; // DANA转账
+  AuditSubTypeTodoPagoTransfer = 63; // Todo Pago转账
+  AuditSubTypeWithdrawalFreeze = 64; // 提现冻结
+  AuditSubTypeWithdrawalRejection = 65; // 提现拒绝
+  AuditSubTypeWithdrawalUnfreeze = 66; // 提现解冻
+  AuditSubTypeWithdrawalSuccess = 67; // 提现成功
+  AuditSubTypeTransferToOthers = 68; // 转账给他人
+  AuditSubTypeSilverMerchantAddFunds = 69; // 银商加款
+  AuditSubTypeSilverMerchantRecharge = 70; // 银商充值
+  AuditSubTypeSilverMerchantGiftMembershipAmount = 71; // 银商赠送会员金额
+  AuditSubTypeSilverMerchantDeduction = 72; // 银商扣款
+  AuditSubTypeManualAddFunds = 73; // 人工加款
+  AuditSubTypeManualOrderCompletion = 74; // 手动补单
+  AuditSubTypeNegativeBalanceCorrection = 75; // 修正负数余额
+  AuditSubTypeRewardManualAddFunds = 76; // 奖励手动加款
+  AuditSubTypeManualDeduction = 77; // 手动扣款
+  AuditSubTypeDeductionOfAllAssets = 78; // 扣除全部资产
+  AuditSubTypeRecoveryDeduction = 79; // 追缴扣除
+  AuditSubTypeManualPullBack = 80; // 人工拉回
+  AuditSubTypeDeductionOfExcessProfit = 81; // 扣除超额盈利
+  AuditSubTypeAgentActivity = 82; // 代理活动
+  AuditSubTypeLuckyBetActivity = 83; // 幸运注单活动
+  AuditSubTypeInvestmentActivity = 84; // 投资活动
+  AuditSubTypeNewMemberBonus = 85; // 新人彩金
+  AuditSubTypeRescueFundActivity = 86; // 救援金活动
+  AuditSubTypePromotionActivity = 87; // 推广活动
+  AuditSubTypeRewardFeedback = 88; // 有奖反馈
+  AuditSubTypeRedPacketActivity = 89; // 红包活动
+  AuditSubTypeInvestmentDeduction = 90; // 投资扣款
+  AuditSubTypeSigninActivity = 91; // 签到活动
+  AuditSubTypeRechargeActivity = 92; // 充值活动
+  AuditSubTypeCuttingActivity = 93; // 打码活动
+  AuditSubTypeLotteryAssistanceActivity = 94; // 抽奖助力活动
+  AuditSubTypeRankingActivity = 95; // 排行榜活动
+  AuditSubTypeCustomActivity = 96; // 自定义活动
+  AuditSubTypeCutOne = 97; // 砍一刀
+  AuditSubTypeLotteryWheelActivity = 98; // 转盘活动
+  AuditSubTypeChannelReward = 99; // 渠道奖励
+  AuditSubTypeWordCollectionActivity = 100; // 集字活动
+  AuditSubTypeGuessActivity = 101; // 竞猜活动
+  AuditSubTypeWaterReturn = 102; // 返水领取
+  AuditSubTypeCommissionIssuance = 103; // 发放佣金
+  AuditSubTypeCommissionCollection = 104; // 领取佣金
+  AuditSubTypeInterestTreasureIncome = 105; // 利息宝收益
+  AuditSubTypeHallToInterestTreasure = 106; // 大厅转入利息宝
+  AuditSubTypeManualPullBackInterestTreasure = 107; // 手动拉回-利息宝
+  AuditSubTypeInterestTreasureToHall = 108; // 利息宝转到大厅
+  AuditSubTypeDailyTask = 109; // 每日任务
+  AuditSubTypeWeeklyTask = 110; // 每周任务
+  AuditSubTypeNewbieWelfare = 111; // 新人福利
+  AuditSubTypeActivityBox = 112; // 活跃度宝箱
+  AuditSubTypeMysteriousTask = 113; // 神秘任务
+  AuditSubTypeVipMonthlyBonus = 114; // VIP月奖金
+  AuditSubTypeVipDailyReward = 115; // VIP日奖励
+  AuditSubTypeVipWeeklyBonus = 116; // VIP周奖金
+  AuditSubTypeVipPromotionBonus = 117; // VIP晋级奖金
+  AuditSubTypeDiscount = 118; // 优惠
+  AuditSubTypeManualPullBackClub = 119; // 手动拉回-俱乐部
+  AuditSubTypeHallToClub = 120; // 大厅转入俱乐部
+  AuditSubTypeClubToHall = 121; // 俱乐部转到大厅
+  AuditSubTypeClaimFreeze = 122; // 理赔冻结
+  AuditSubTypeClaimUnfreeze = 123; // 理赔解冻
+  AuditSubTypeClaimFee = 124; // 理赔手续费
+  AuditSubTypeClaimAddPoints = 125; // 理赔上分
+  AuditSubTypeClaimSubtractPoints = 126; // 理赔下分
+  AuditSubTypeAudit = 127; // 稽核
+  AuditSubTypePublicFundCollection = 128; // 公积金领取
+  AuditSubTypeBlindBoxLotteryDeduction = 129; // 盲盒抽奖扣除
+  AuditSubTypeBlindBoxLotteryReward = 130; // 盲盒抽奖奖励
+}
+
+enum AutoReleaseType {
+  AutoReleaseTypeNone = 0; // none
+  AutoReleaseTypeYes = 1; // 输光自动解除稽核
+  AutoReleaseTypeNo = 2; // 输光不自动解除稽核
+}
+
+enum AuditWithdrawType {
+  AuditWithdrawTypeNone = 0;           // none
+  AuditWithdrawTypeMustAudit = 1;       // 必须稽核
+  AuditWithdrawTypeCanWithdraw = 2;     // 可直接提现
+  AuditWithdrawTypeMustBet = 3;         // 必须投注一次
+}
+
+// 添加用户稽核
+message AddAuditReq {
+  int64 user_id = 1; // 用户Id
+  string username = 2; // 用户名
+  string currency_code = 3; // 币种
+  AutoReleaseType auto_release_type = 4; // 自动解除稽核类型
+  AuditType audit_type = 5; // 稽核类型
+  AuditSubType audit_sub_type = 6; // 稽核子类型
+  string target_name = 7; // 优惠名称
+  string amount = 8; // 交易金额（单位：元）
+  string multiple = 9; // 倍数
+  string audit_amount = 10; // 稽核金额（单位:元）
+  AuditWithdrawType audit_withdraw_type = 11; // 稽核模式
+  repeated int64 game_platform_ids = 12; // 游戏平台Id
+}
+
+message AddAuditResp {
+  int64 audit_id = 1; // 稽核Id
+}
+
+// 更新稽核金额（打稽核）
+message UpdateAuditAmountReq {
+  int64 user_id = 1; // 用户Id
+  string audit_amount = 2; // 稽核金额(投注金额)（单位:元）
+  string currency_code = 3; // 币种
+  int64 game_platform_id = 4; // 游戏平台Id
+}
+
+message UpdateAuditAmountResp {
+}
+
+
+service LiveAuditRpcService {
+  // 添加稽核 传递用户币种和金额
+  rpc AddAudit(AddAuditReq) returns (AddAuditResp);
+  // 更新稽核金额（打稽核） 传递用户币种和金额
+  rpc UpdateAuditAmount(UpdateAuditAmountReq) returns (UpdateAuditAmountResp);
+}
+
+// 提现限制类型
+enum WithdrawLimitType {
+  WithdrawLimitTypeNone = 0; // none
+  WithdrawLimitTypeActivity = 1; //活动
+  WithdrawLimitTypeTask = 2; // 任务
+}
+
+message AddWithdrawLimitReq {
+  int64 user_id = 1; // 用户Id
+  string username = 2; // 用户账号
+  WithdrawLimitType withdraw_limit_type = 3; // 提现限制类型
+  int64 target_id = 4; // 活动/任务Id
+  string target_name = 5; // 活动/任务名称
+  string currency_code = 6; // 币种
+  string amount = 7; // 需要充值金额（单位：元）
+}
+
+message AddWithdrawLimitResp {
+  int64 withdraw_limit_id = 1; // 提现限制Id
+}
+
+message UpdateWithdrawLimitAmountReq {
+  int64 user_id = 1; // 用户Id
+  string amount = 2; // 金额
+  string currency_code = 3; // 币种
+}
+
+message UpdateWithdrawLimitAmountResp {
+}
+
+service LiveWithdrawLimitRpcService {
+  // 添加提现限制 传递用户币种和金额
+  rpc AddWithdrawLimit(AddWithdrawLimitReq) returns (AddWithdrawLimitResp);
+  // 更新提现限制金额 传递用户币种和金额
+  rpc UpdateWithdrawLimitAmount(UpdateWithdrawLimitAmountReq) returns (UpdateWithdrawLimitAmountResp);
+}

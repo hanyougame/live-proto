@@ -536,6 +536,11 @@ message AddTripartiteTransferRecordReq {
 message AddTripartiteTransferRecordStatusReq {
   string order_id = 1;               // 关联的转账订单号
   int64 game_platform_id = 2;             // 平台ID
+  int64  user_id = 3;         //用户ID
+  int64 transfer_type = 5;    //交易类型：1:转入 2:转出
+  int64  status = 6 ; //转账状态， 1:处理中 2:处理成功 3:处理失败
+  string amounts = 7;         //订单金额
+  string msg = 8;             //信息
 }
 
 message TripartiteTransferRecordStatusReq{
