@@ -52,6 +52,7 @@ message UpdateUserBalanceReq{
   int64 gift_category = 12 ; // 赠送账变大类
   int64 gift_sub_category = 13; // 赠送账变小类
   int64 gift_amount = 14; // 赠送金额
+  int64 gift_order_no = 15; // 赠送金额订单号
 }
 
 // 修改用户余额返回结构
