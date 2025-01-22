@@ -14,13 +14,16 @@ import (
 )
 
 type (
-	GetInfoByUserTokenReq = v1.GetInfoByUserTokenReq
-	GetUserBalanceReply   = v1.GetUserBalanceReply
-	GetUserBalanceReq     = v1.GetUserBalanceReq
-	GetUserInfoByIdReq    = v1.GetUserInfoByIdReq
-	UpdateUserBalanceReq  = v1.UpdateUserBalanceReq
-	UpdateUserBalanceResp = v1.UpdateUserBalanceResp
-	UserDetailsInfoReply  = v1.UserDetailsInfoReply
+	GetInfoByUserTokenReq    = v1.GetInfoByUserTokenReq
+	GetUserBalanceReply      = v1.GetUserBalanceReply
+	GetUserBalanceReq        = v1.GetUserBalanceReq
+	GetUserFullInfoByIdReply = v1.GetUserFullInfoByIdReply
+	GetUserFullInfoByIdReq   = v1.GetUserFullInfoByIdReq
+	GetUserInfoByIdReq       = v1.GetUserInfoByIdReq
+	UpdateUserBalanceReq     = v1.UpdateUserBalanceReq
+	UpdateUserBalanceResp    = v1.UpdateUserBalanceResp
+	UserDetailsInfoReply     = v1.UserDetailsInfoReply
+	UserWalletInfo           = v1.UserWalletInfo
 
 	LiveUserRpcService interface {
 		// 根据token获取用户信息
@@ -29,7 +32,10 @@ type (
 		GetUserBalance(ctx context.Context, in *GetUserBalanceReq, opts ...grpc.CallOption) (*GetUserBalanceReply, error)
 		// 修改用户余额
 		UpdateUserBalance(ctx context.Context, in *UpdateUserBalanceReq, opts ...grpc.CallOption) (*UpdateUserBalanceResp, error)
+		// 根据用户id获取部分用户信息
 		GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
+		// 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
+		GetUserFullInfoById(ctx context.Context, in *GetUserFullInfoByIdReq, opts ...grpc.CallOption) (*GetUserFullInfoByIdReply, error)
 	}
 
 	defaultLiveUserRpcService struct {
@@ -61,7 +67,14 @@ func (m *defaultLiveUserRpcService) UpdateUserBalance(ctx context.Context, in *U
 	return client.UpdateUserBalance(ctx, in, opts...)
 }
 
+// 根据用户id获取部分用户信息
 func (m *defaultLiveUserRpcService) GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error) {
 	client := v1.NewLiveUserRpcServiceClient(m.cli.Conn())
 	return client.GetUserInfoById(ctx, in, opts...)
+}
+
+// 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
+func (m *defaultLiveUserRpcService) GetUserFullInfoById(ctx context.Context, in *GetUserFullInfoByIdReq, opts ...grpc.CallOption) (*GetUserFullInfoByIdReply, error) {
+	client := v1.NewLiveUserRpcServiceClient(m.cli.Conn())
+	return client.GetUserFullInfoById(ctx, in, opts...)
 }

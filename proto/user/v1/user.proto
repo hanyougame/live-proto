@@ -11,7 +11,7 @@ message GetInfoByUserTokenReq {
 // 用户基础信息
 message UserDetailsInfoReply {
   int64  user_id = 1; // 用户ID
-  string  username = 2; // 用户账号
+  string username = 2; // 用户账号
   string real_name = 3; // 真实姓名
   string nickname = 4; // 昵称
   int64  gender = 5;                     //性别：1-男；2-女；3-未知
@@ -66,6 +66,33 @@ message GetUserInfoByIdReq{
   int64 user_id = 1;         // 用户ID
 }
 
+message GetUserFullInfoByIdReq {
+  int64 user_id = 1;         // 用户ID
+}
+
+message GetUserFullInfoByIdReply{
+  int64  user_id = 1; // 用户ID
+  string username = 2; // 用户账号
+  string real_name = 3; // 真实姓名
+  string nickname = 4; // 昵称
+  int64  gender = 5;                     //性别：1-男；2-女；3-未知
+  string avatar = 6;  // 头像
+  string country_code = 7; // 国家code
+  string currency_code = 8;   // 货币code
+  string phone = 9;                      //手机号码
+  string email = 10;                      //邮箱
+  string birthday = 11;                      //生日
+  int64 vip_level = 12;                      //vip等级
+  int64 parent_agent_id = 13; // 上级代理id
+  repeated UserWalletInfo wallet_info = 14; // 钱包信息
+}
+message UserWalletInfo {
+  int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
+  int64 balance = 2;         //用户余额
+}
+
+
+
 service LiveUserRpcService {
   // 根据token获取用户信息
   rpc GetInfoByUserToken(GetInfoByUserTokenReq) returns(UserDetailsInfoReply);
@@ -73,5 +100,8 @@ service LiveUserRpcService {
   rpc GetUserBalance(GetUserBalanceReq) returns(GetUserBalanceReply);
   // 修改用户余额
   rpc UpdateUserBalance(UpdateUserBalanceReq)returns (UpdateUserBalanceResp);
+  // 根据用户id获取部分用户信息
   rpc GetUserInfoById(GetUserInfoByIdReq) returns(UserDetailsInfoReply);
+  // 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
+  rpc GetUserFullInfoById(GetUserFullInfoByIdReq) returns(GetUserFullInfoByIdReply);
 }

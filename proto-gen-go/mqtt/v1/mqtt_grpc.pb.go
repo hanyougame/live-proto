@@ -19,11 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PushService_PushToAll_FullMethodName         = "/mqtt.v1.PushService/PushToAll"
-	PushService_PushToAuthUsers_FullMethodName   = "/mqtt.v1.PushService/PushToAuthUsers"
-	PushService_PushToUnauthUsers_FullMethodName = "/mqtt.v1.PushService/PushToUnauthUsers"
-	PushService_PushToUser_FullMethodName        = "/mqtt.v1.PushService/PushToUser"
-	PushService_PushToUsers_FullMethodName       = "/mqtt.v1.PushService/PushToUsers"
+	PushService_PushToAll_FullMethodName   = "/mqtt.v1.PushService/PushToAll"
+	PushService_PushToUser_FullMethodName  = "/mqtt.v1.PushService/PushToUser"
+	PushService_PushToUsers_FullMethodName = "/mqtt.v1.PushService/PushToUsers"
 )
 
 // PushServiceClient is the client API for PushService service.
@@ -31,8 +29,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PushServiceClient interface {
 	PushToAll(ctx context.Context, in *PushRequest, opts ...grpc.CallOption) (*PushResponse, error)
-	PushToAuthUsers(ctx context.Context, in *PushRequest, opts ...grpc.CallOption) (*PushResponse, error)
-	PushToUnauthUsers(ctx context.Context, in *PushRequest, opts ...grpc.CallOption) (*PushResponse, error)
 	PushToUser(ctx context.Context, in *PushToUserRequest, opts ...grpc.CallOption) (*PushResponse, error)
 	PushToUsers(ctx context.Context, in *PushToUsersRequest, opts ...grpc.CallOption) (*PushResponse, error)
 }
@@ -49,26 +45,6 @@ func (c *pushServiceClient) PushToAll(ctx context.Context, in *PushRequest, opts
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PushResponse)
 	err := c.cc.Invoke(ctx, PushService_PushToAll_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *pushServiceClient) PushToAuthUsers(ctx context.Context, in *PushRequest, opts ...grpc.CallOption) (*PushResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PushResponse)
-	err := c.cc.Invoke(ctx, PushService_PushToAuthUsers_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *pushServiceClient) PushToUnauthUsers(ctx context.Context, in *PushRequest, opts ...grpc.CallOption) (*PushResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PushResponse)
-	err := c.cc.Invoke(ctx, PushService_PushToUnauthUsers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -100,8 +76,6 @@ func (c *pushServiceClient) PushToUsers(ctx context.Context, in *PushToUsersRequ
 // for forward compatibility.
 type PushServiceServer interface {
 	PushToAll(context.Context, *PushRequest) (*PushResponse, error)
-	PushToAuthUsers(context.Context, *PushRequest) (*PushResponse, error)
-	PushToUnauthUsers(context.Context, *PushRequest) (*PushResponse, error)
 	PushToUser(context.Context, *PushToUserRequest) (*PushResponse, error)
 	PushToUsers(context.Context, *PushToUsersRequest) (*PushResponse, error)
 	mustEmbedUnimplementedPushServiceServer()
@@ -116,12 +90,6 @@ type UnimplementedPushServiceServer struct{}
 
 func (UnimplementedPushServiceServer) PushToAll(context.Context, *PushRequest) (*PushResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PushToAll not implemented")
-}
-func (UnimplementedPushServiceServer) PushToAuthUsers(context.Context, *PushRequest) (*PushResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PushToAuthUsers not implemented")
-}
-func (UnimplementedPushServiceServer) PushToUnauthUsers(context.Context, *PushRequest) (*PushResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PushToUnauthUsers not implemented")
 }
 func (UnimplementedPushServiceServer) PushToUser(context.Context, *PushToUserRequest) (*PushResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PushToUser not implemented")
@@ -164,42 +132,6 @@ func _PushService_PushToAll_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PushServiceServer).PushToAll(ctx, req.(*PushRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PushService_PushToAuthUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PushRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PushServiceServer).PushToAuthUsers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PushService_PushToAuthUsers_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PushServiceServer).PushToAuthUsers(ctx, req.(*PushRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PushService_PushToUnauthUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PushRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PushServiceServer).PushToUnauthUsers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PushService_PushToUnauthUsers_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PushServiceServer).PushToUnauthUsers(ctx, req.(*PushRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -250,14 +182,6 @@ var PushService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PushToAll",
 			Handler:    _PushService_PushToAll_Handler,
-		},
-		{
-			MethodName: "PushToAuthUsers",
-			Handler:    _PushService_PushToAuthUsers_Handler,
-		},
-		{
-			MethodName: "PushToUnauthUsers",
-			Handler:    _PushService_PushToUnauthUsers_Handler,
 		},
 		{
 			MethodName: "PushToUser",
