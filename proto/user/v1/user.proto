@@ -35,7 +35,6 @@ message GetUserBalanceReply{
   int64 balance = 2;         //用户余额
 }
 
-
 // 修改用户余额请求结构
 message UpdateUserBalanceReq{
   int64 user_id = 1; // 用户ID
@@ -93,6 +92,16 @@ message UserWalletInfo {
 
 
 
+
+message BatchGetUserBalanceReq{
+  repeated int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
+  int64 user_id = 2; // 用户id
+}
+
+message BatchGetUserBalanceResp{
+  map<int64, int64> wallet_info = 1; // 钱包信息
+}
+
 service LiveUserRpcService {
   // 根据token获取用户信息
   rpc GetInfoByUserToken(GetInfoByUserTokenReq) returns(UserDetailsInfoReply);
@@ -104,4 +113,6 @@ service LiveUserRpcService {
   rpc GetUserInfoById(GetUserInfoByIdReq) returns(UserDetailsInfoReply);
   // 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
   rpc GetUserFullInfoById(GetUserFullInfoByIdReq) returns(GetUserFullInfoByIdReply);
+  // 批量查询用户余额
+  rpc BatchGetUserBalance(BatchGetUserBalanceReq)returns (BatchGetUserBalanceResp);
 }
