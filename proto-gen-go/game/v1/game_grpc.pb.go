@@ -1427,6 +1427,8 @@ const (
 	LiveGameRpcInnerService_AddTripartiteTransferRecordStatus_FullMethodName = "/game.v1.LiveGameRpcInnerService/AddTripartiteTransferRecordStatus"
 	LiveGameRpcInnerService_TripartiteTransferRecordStatus_FullMethodName    = "/game.v1.LiveGameRpcInnerService/TripartiteTransferRecordStatus"
 	LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName    = "/game.v1.LiveGameRpcInnerService/CreateCompensationFailedRecord"
+	LiveGameRpcInnerService_AddGameBetRecord_FullMethodName                  = "/game.v1.LiveGameRpcInnerService/AddGameBetRecord"
+	LiveGameRpcInnerService_AddGameRecordStatus_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddGameRecordStatus"
 )
 
 // LiveGameRpcInnerServiceClient is the client API for LiveGameRpcInnerService service.
@@ -1441,6 +1443,10 @@ type LiveGameRpcInnerServiceClient interface {
 	TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
 	CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
+	// 添加游戏下注记录
+	AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
+	// 变更游戏下注记录状态
+	AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
 }
 
 type liveGameRpcInnerServiceClient struct {
@@ -1491,6 +1497,26 @@ func (c *liveGameRpcInnerServiceClient) CreateCompensationFailedRecord(ctx conte
 	return out, nil
 }
 
+func (c *liveGameRpcInnerServiceClient) AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddGameBetRecordReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameBetRecord_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcInnerServiceClient) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GameReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameRecordStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcInnerServiceServer is the server API for LiveGameRpcInnerService service.
 // All implementations must embed UnimplementedLiveGameRpcInnerServiceServer
 // for forward compatibility.
@@ -1503,6 +1529,10 @@ type LiveGameRpcInnerServiceServer interface {
 	TripartiteTransferRecordStatus(context.Context, *TripartiteTransferRecordStatusReq) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
 	CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error)
+	// 添加游戏下注记录
+	AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error)
+	// 变更游戏下注记录状态
+	AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*GameReply, error)
 	mustEmbedUnimplementedLiveGameRpcInnerServiceServer()
 }
 
@@ -1524,6 +1554,12 @@ func (UnimplementedLiveGameRpcInnerServiceServer) TripartiteTransferRecordStatus
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCompensationFailedRecord not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGameBetRecord not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*GameReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGameRecordStatus not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) mustEmbedUnimplementedLiveGameRpcInnerServiceServer() {
 }
@@ -1619,6 +1655,42 @@ func _LiveGameRpcInnerService_CreateCompensationFailedRecord_Handler(srv interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcInnerService_AddGameBetRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGameBetRecordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameBetRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_AddGameBetRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameBetRecord(ctx, req.(*AddGameBetRecordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcInnerService_AddGameRecordStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGameRecordStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameRecordStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_AddGameRecordStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameRecordStatus(ctx, req.(*AddGameRecordStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcInnerService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1641,6 +1713,14 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCompensationFailedRecord",
 			Handler:    _LiveGameRpcInnerService_CreateCompensationFailedRecord_Handler,
+		},
+		{
+			MethodName: "AddGameBetRecord",
+			Handler:    _LiveGameRpcInnerService_AddGameBetRecord_Handler,
+		},
+		{
+			MethodName: "AddGameRecordStatus",
+			Handler:    _LiveGameRpcInnerService_AddGameRecordStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

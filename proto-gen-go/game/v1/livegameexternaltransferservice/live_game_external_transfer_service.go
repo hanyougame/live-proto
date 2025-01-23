@@ -14,6 +14,9 @@ import (
 )
 
 type (
+	AddGameBetRecordReply                    = v1.AddGameBetRecordReply
+	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
+	AddGameRecordStatusReq                   = v1.AddGameRecordStatusReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
