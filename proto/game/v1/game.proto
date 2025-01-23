@@ -395,8 +395,6 @@ message GamePlatformDetail{
 }
 
 
-
-
 // 平台跳转方式的基础类型
 message PlatformRedirectionBase {
   int64 platform_os_type = 1;
@@ -449,6 +447,8 @@ message GetGameListBySearchReq {
   string search_value = 3;
   string currency_code = 4;
   int64 user_id = 5;
+  int64 game_platform_id = 6;
+  int64 game_category_id = 7;
 }
 
 // 添加收藏
