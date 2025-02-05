@@ -219,8 +219,8 @@ message GameUserBetReq{
 message GameUserBetReply{
   string balance = 1;         //用户余额
   string currency_code = 2;   //货币代码
-  string order_no = 3;        //订单编号(数据表的order_id)
-  string order_id = 4;         //订单ID(数据表主键ID)
+  string order_id = 3;                    // 投注记录表内部订单号(数据表的order_id)
+  string bet_record_id = 4;                   // 投注记录表ID(数据表的ID)
 }
 
 // 游戏订单派奖创建
@@ -395,8 +395,6 @@ message GamePlatformDetail{
 }
 
 
-
-
 // 平台跳转方式的基础类型
 message PlatformRedirectionBase {
   int64 platform_os_type = 1;
@@ -449,6 +447,8 @@ message GetGameListBySearchReq {
   string search_value = 3;
   string currency_code = 4;
   int64 user_id = 5;
+  int64 game_platform_id = 6;
+  int64 game_category_id = 7;
 }
 
 // 添加收藏
@@ -469,7 +469,7 @@ message GetUserFavoriteIdsReq {
   int64 user_id = 1;
 }
 message GetUserFavoriteIdsReply {
-  map<int64, bool> favoriteIds  = 1;
+  map<int64, bool> favoriteIds = 1;
 }
 
 
@@ -583,6 +583,32 @@ message CreateCompensationRecordResp {
   int64 id = 1;  // 补偿记录ID
 }
 
+message AddGameBetRecordReq{
+  string order_id = 1;                    // 内部订单号
+  int64 user_id = 2;                      // 用户ID
+  int64 game_id = 3;                      // 游戏ID
+  int64 game_platform_id = 4;             // 平台ID
+  int64 game_category_id = 5;             // 分类ID
+  int64 bet_amount = 6; // 下注金额（处理之后的数据）
+  string tripartite_order_id = 7; // 订单ID（三方）
+  string round_id = 8; // 下注牌局ID（三方）
+  int64 bet_time = 9; // 下注时间毫秒
+  string tripartite_original_data = 10; // 三方原始数据
+}
+
+message  AddGameBetRecordReply {
+  int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
+  int64 balance = 2;         //用户余额
+  string order_id = 3;                    // 投注记录表内部订单号(order_id)
+  string bet_record_id = 4;                   // 投注记录表ID
+  string currency_code = 7;  // 货币代码
+  int64 user_id = 5;
+}
+
+message AddGameRecordStatusReq{
+
+}
+
 service LiveGameRpcInnerService{
   // 添加三方转账记录
   rpc AddTripartiteTransferRecord(AddTripartiteTransferRecordReq) returns (GameReply);
@@ -592,4 +618,8 @@ service LiveGameRpcInnerService{
   rpc TripartiteTransferRecordStatus(TripartiteTransferRecordStatusReq) returns (TripartiteTransferRecord);
   // 创建补偿失败记录
   rpc CreateCompensationFailedRecord(CreateCompensationRecordReq) returns (CreateCompensationRecordResp);
+  // 添加游戏下注记录
+  rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
+  // 变更游戏下注记录状态
+  rpc AddGameRecordStatus(AddGameRecordStatusReq) returns (GameReply);
 }

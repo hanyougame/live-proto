@@ -14,6 +14,9 @@ import (
 )
 
 type (
+	AddGameBetRecordReply                    = v1.AddGameBetRecordReply
+	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
+	AddGameRecordStatusReq                   = v1.AddGameRecordStatusReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
@@ -83,6 +86,10 @@ type (
 		TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
 		// 创建补偿失败记录
 		CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
+		// 添加游戏下注记录
+		AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
+		// 变更游戏下注记录状态
+		AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -118,4 +125,16 @@ func (m *defaultLiveGameRpcInnerService) TripartiteTransferRecordStatus(ctx cont
 func (m *defaultLiveGameRpcInnerService) CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.CreateCompensationFailedRecord(ctx, in, opts...)
+}
+
+// 添加游戏下注记录
+func (m *defaultLiveGameRpcInnerService) AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddGameBetRecord(ctx, in, opts...)
+}
+
+// 变更游戏下注记录状态
+func (m *defaultLiveGameRpcInnerService) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddGameRecordStatus(ctx, in, opts...)
 }
