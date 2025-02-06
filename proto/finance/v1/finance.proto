@@ -386,3 +386,42 @@ service LiveWithdrawLimitRpcService {
   // 更新提现限制金额 传递用户币种和金额
   rpc UpdateWithdrawLimitAmount(UpdateWithdrawLimitAmountReq) returns (UpdateWithdrawLimitAmountResp);
 }
+
+message WithdrawReq {
+  int64 user_id = 1; // 用户ID
+  string username = 2; // 用户名
+  int64 withdraw_type = 3; // 提现方式
+  int64 amount = 4; // 提现金额
+  string real_name = 5; // 真实姓名
+  string account = 6; // 收款账号
+  int64 bank_id = 7; // 银行Id
+  string ifsc = 8; // IFSC
+  string ip = 9; // IP
+  string currency_code = 10; // 币种
+}
+message WithdrawResp {
+
+}
+
+service LiveWithdrawRpcService {
+  // 添加提现
+  rpc Withdraw(WithdrawReq) returns (WithdrawResp);
+}
+
+message ExchangeRateReq {
+  string source_currency_code = 1; // 当前币种
+  string target_currency_code = 2; // 目标币种
+  int64 amount = 3; // 金额
+}
+message ExchangeRateResp {
+  string source_currency_code = 1; // 当前币种
+  string target_currency_code = 2; // 目标币种
+  int64 source_amount = 3; // 源币种金额
+  int64 target_amount = 4; // 目标币种金额
+  string rate = 5; // 汇率
+}
+
+service LiveExchangeRateRpcService {
+  // 获取汇率
+  rpc GetExchangeRate(ExchangeRateReq) returns (ExchangeRateResp);
+}
