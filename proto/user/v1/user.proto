@@ -23,6 +23,7 @@ message UserDetailsInfoReply {
   string birthday = 11;                      //生日
   int64 vip_level = 12;                      //vip等级
   int64 user_level = 13; // 用户等级
+  repeated int64 tags = 14; // 用户标签
 }
 
 
