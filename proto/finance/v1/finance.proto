@@ -108,7 +108,7 @@ message RechargeReq {
   int64 order_type = 1;// 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
   int64 recharge_category_id = 2; // 充值大类Id （必填）
   int64 recharge_merchant_id = 3; // 充值商户Id （在线充值）
-//  int64 recharge_channel_id = 4; // 充值通道Id （必填）
+  //  int64 recharge_channel_id = 4; // 充值通道Id （必填）
   int64 user_id = 5; // 用户Id （必填）
   string username = 6; // 用户账号 （必填）
   int64 recharge_amount = 7; // 充值金额 （必填）
@@ -342,12 +342,28 @@ message UpdateAuditAmountReq {
 message UpdateAuditAmountResp {
 }
 
+message GetAuditInfoReq {
+  int64 user_id = 1; // 用户Id
+  string currency_code = 2; // 币种
+}
+
+message GetAuditInfoResp {
+  int64  NeedBetAmount = 1; // 需要投注金额
+  int64  NeedBetCount = 2; // 需要投注次数
+  int64  Balance = 3;     // 可用餘額
+  string CurrencyCode = 4;//货币代码
+  string Username = 5;   // 用户名
+  int64  UserId = 6;   // 用户Id
+}
+
 
 service LiveAuditRpcService {
   // 添加稽核 传递用户币种和金额
   rpc AddAudit(AddAuditReq) returns (AddAuditResp);
   // 更新稽核金额（打稽核） 传递用户币种和金额
   rpc UpdateAuditAmount(UpdateAuditAmountReq) returns (UpdateAuditAmountResp);
+  // 获取用户稽核信息
+  rpc GetAuditInfo(GetAuditInfoReq) returns (GetAuditInfoResp);
 }
 
 // 提现限制类型

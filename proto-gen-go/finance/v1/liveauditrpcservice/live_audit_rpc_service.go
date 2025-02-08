@@ -19,6 +19,10 @@ type (
 	AddWithdrawLimitResp          = v1.AddWithdrawLimitResp
 	BalanceReq                    = v1.BalanceReq
 	BalanceResp                   = v1.BalanceResp
+	ExchangeRateReq               = v1.ExchangeRateReq
+	ExchangeRateResp              = v1.ExchangeRateResp
+	GetAuditInfoReq               = v1.GetAuditInfoReq
+	GetAuditInfoResp              = v1.GetAuditInfoResp
 	PayInReq                      = v1.PayInReq
 	PayInResp                     = v1.PayInResp
 	PayInStatusReq                = v1.PayInStatusReq
@@ -33,12 +37,16 @@ type (
 	UpdateAuditAmountResp         = v1.UpdateAuditAmountResp
 	UpdateWithdrawLimitAmountReq  = v1.UpdateWithdrawLimitAmountReq
 	UpdateWithdrawLimitAmountResp = v1.UpdateWithdrawLimitAmountResp
+	WithdrawReq                   = v1.WithdrawReq
+	WithdrawResp                  = v1.WithdrawResp
 
 	LiveAuditRpcService interface {
 		// 添加稽核 传递用户币种和金额
 		AddAudit(ctx context.Context, in *AddAuditReq, opts ...grpc.CallOption) (*AddAuditResp, error)
 		// 更新稽核金额（打稽核） 传递用户币种和金额
 		UpdateAuditAmount(ctx context.Context, in *UpdateAuditAmountReq, opts ...grpc.CallOption) (*UpdateAuditAmountResp, error)
+		// 获取用户稽核信息
+		GetAuditInfo(ctx context.Context, in *GetAuditInfoReq, opts ...grpc.CallOption) (*GetAuditInfoResp, error)
 	}
 
 	defaultLiveAuditRpcService struct {
@@ -62,4 +70,10 @@ func (m *defaultLiveAuditRpcService) AddAudit(ctx context.Context, in *AddAuditR
 func (m *defaultLiveAuditRpcService) UpdateAuditAmount(ctx context.Context, in *UpdateAuditAmountReq, opts ...grpc.CallOption) (*UpdateAuditAmountResp, error) {
 	client := v1.NewLiveAuditRpcServiceClient(m.cli.Conn())
 	return client.UpdateAuditAmount(ctx, in, opts...)
+}
+
+// 获取用户稽核信息
+func (m *defaultLiveAuditRpcService) GetAuditInfo(ctx context.Context, in *GetAuditInfoReq, opts ...grpc.CallOption) (*GetAuditInfoResp, error) {
+	client := v1.NewLiveAuditRpcServiceClient(m.cli.Conn())
+	return client.GetAuditInfo(ctx, in, opts...)
 }
