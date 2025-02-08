@@ -140,7 +140,8 @@ service LivePaymentRpcService {
   rpc PayInStatus(PayInStatusReq) returns (PayInStatusResp);
   rpc PayOutStatus(PayOutStatusReq) returns (PayOutStatusResp);
   rpc Balance(BalanceReq) returns (BalanceResp);
-  rpc Recharge(RechargeReq) returns (RechargeResp);
+  rpc Recharge(RechargeReq) returns (RechargeResp); // 充值
+  rpc Withdraw(WithdrawReq) returns (WithdrawResp); // 提现
 }
 
 
@@ -419,10 +420,10 @@ message WithdrawResp {
 
 }
 
-service LiveWithdrawRpcService {
-  // 添加提现
-  rpc Withdraw(WithdrawReq) returns (WithdrawResp);
-}
+//service LiveWithdrawRpcService {
+//  // 添加提现
+//  rpc Withdraw(WithdrawReq) returns (WithdrawResp);
+//}
 
 message ExchangeRateReq {
   string source_currency_code = 1; // 当前币种

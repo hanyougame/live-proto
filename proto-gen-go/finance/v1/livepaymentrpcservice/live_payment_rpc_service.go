@@ -6,7 +6,6 @@ package livepaymentrpcservice
 
 import (
 	"context"
-
 	"github.com/hanyougame/live-proto/proto-gen-go/finance/v1"
 
 	"github.com/zeromicro/go-zero/zrpc"
@@ -20,6 +19,10 @@ type (
 	AddWithdrawLimitResp          = v1.AddWithdrawLimitResp
 	BalanceReq                    = v1.BalanceReq
 	BalanceResp                   = v1.BalanceResp
+	ExchangeRateReq               = v1.ExchangeRateReq
+	ExchangeRateResp              = v1.ExchangeRateResp
+	GetAuditInfoReq               = v1.GetAuditInfoReq
+	GetAuditInfoResp              = v1.GetAuditInfoResp
 	PayInReq                      = v1.PayInReq
 	PayInResp                     = v1.PayInResp
 	PayInStatusReq                = v1.PayInStatusReq
@@ -34,6 +37,8 @@ type (
 	UpdateAuditAmountResp         = v1.UpdateAuditAmountResp
 	UpdateWithdrawLimitAmountReq  = v1.UpdateWithdrawLimitAmountReq
 	UpdateWithdrawLimitAmountResp = v1.UpdateWithdrawLimitAmountResp
+	WithdrawReq                   = v1.WithdrawReq
+	WithdrawResp                  = v1.WithdrawResp
 
 	LivePaymentRpcService interface {
 		PayIn(ctx context.Context, in *PayInReq, opts ...grpc.CallOption) (*PayInResp, error)
@@ -42,6 +47,7 @@ type (
 		PayOutStatus(ctx context.Context, in *PayOutStatusReq, opts ...grpc.CallOption) (*PayOutStatusResp, error)
 		Balance(ctx context.Context, in *BalanceReq, opts ...grpc.CallOption) (*BalanceResp, error)
 		Recharge(ctx context.Context, in *RechargeReq, opts ...grpc.CallOption) (*RechargeResp, error)
+		Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error)
 	}
 
 	defaultLivePaymentRpcService struct {
@@ -83,4 +89,9 @@ func (m *defaultLivePaymentRpcService) Balance(ctx context.Context, in *BalanceR
 func (m *defaultLivePaymentRpcService) Recharge(ctx context.Context, in *RechargeReq, opts ...grpc.CallOption) (*RechargeResp, error) {
 	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
 	return client.Recharge(ctx, in, opts...)
+}
+
+func (m *defaultLivePaymentRpcService) Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error) {
+	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
+	return client.Withdraw(ctx, in, opts...)
 }

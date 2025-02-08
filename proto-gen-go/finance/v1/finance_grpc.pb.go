@@ -25,6 +25,7 @@ const (
 	LivePaymentRpcService_PayOutStatus_FullMethodName = "/finance.v1.LivePaymentRpcService/PayOutStatus"
 	LivePaymentRpcService_Balance_FullMethodName      = "/finance.v1.LivePaymentRpcService/Balance"
 	LivePaymentRpcService_Recharge_FullMethodName     = "/finance.v1.LivePaymentRpcService/Recharge"
+	LivePaymentRpcService_Withdraw_FullMethodName     = "/finance.v1.LivePaymentRpcService/Withdraw"
 )
 
 // LivePaymentRpcServiceClient is the client API for LivePaymentRpcService service.
@@ -37,6 +38,7 @@ type LivePaymentRpcServiceClient interface {
 	PayOutStatus(ctx context.Context, in *PayOutStatusReq, opts ...grpc.CallOption) (*PayOutStatusResp, error)
 	Balance(ctx context.Context, in *BalanceReq, opts ...grpc.CallOption) (*BalanceResp, error)
 	Recharge(ctx context.Context, in *RechargeReq, opts ...grpc.CallOption) (*RechargeResp, error)
+	Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error)
 }
 
 type livePaymentRpcServiceClient struct {
@@ -107,6 +109,16 @@ func (c *livePaymentRpcServiceClient) Recharge(ctx context.Context, in *Recharge
 	return out, nil
 }
 
+func (c *livePaymentRpcServiceClient) Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WithdrawResp)
+	err := c.cc.Invoke(ctx, LivePaymentRpcService_Withdraw_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LivePaymentRpcServiceServer is the server API for LivePaymentRpcService service.
 // All implementations must embed UnimplementedLivePaymentRpcServiceServer
 // for forward compatibility.
@@ -117,6 +129,7 @@ type LivePaymentRpcServiceServer interface {
 	PayOutStatus(context.Context, *PayOutStatusReq) (*PayOutStatusResp, error)
 	Balance(context.Context, *BalanceReq) (*BalanceResp, error)
 	Recharge(context.Context, *RechargeReq) (*RechargeResp, error)
+	Withdraw(context.Context, *WithdrawReq) (*WithdrawResp, error)
 	mustEmbedUnimplementedLivePaymentRpcServiceServer()
 }
 
@@ -144,6 +157,9 @@ func (UnimplementedLivePaymentRpcServiceServer) Balance(context.Context, *Balanc
 }
 func (UnimplementedLivePaymentRpcServiceServer) Recharge(context.Context, *RechargeReq) (*RechargeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Recharge not implemented")
+}
+func (UnimplementedLivePaymentRpcServiceServer) Withdraw(context.Context, *WithdrawReq) (*WithdrawResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Withdraw not implemented")
 }
 func (UnimplementedLivePaymentRpcServiceServer) mustEmbedUnimplementedLivePaymentRpcServiceServer() {}
 func (UnimplementedLivePaymentRpcServiceServer) testEmbeddedByValue()                               {}
@@ -274,6 +290,24 @@ func _LivePaymentRpcService_Recharge_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LivePaymentRpcService_Withdraw_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WithdrawReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LivePaymentRpcServiceServer).Withdraw(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LivePaymentRpcService_Withdraw_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LivePaymentRpcServiceServer).Withdraw(ctx, req.(*WithdrawReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LivePaymentRpcService_ServiceDesc is the grpc.ServiceDesc for LivePaymentRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +338,10 @@ var LivePaymentRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Recharge",
 			Handler:    _LivePaymentRpcService_Recharge_Handler,
+		},
+		{
+			MethodName: "Withdraw",
+			Handler:    _LivePaymentRpcService_Withdraw_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -633,111 +671,6 @@ var LiveWithdrawLimitRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateWithdrawLimitAmount",
 			Handler:    _LiveWithdrawLimitRpcService_UpdateWithdrawLimitAmount_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/finance/v1/finance.proto",
-}
-
-const (
-	LiveWithdrawRpcService_Withdraw_FullMethodName = "/finance.v1.LiveWithdrawRpcService/Withdraw"
-)
-
-// LiveWithdrawRpcServiceClient is the client API for LiveWithdrawRpcService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type LiveWithdrawRpcServiceClient interface {
-	// 添加提现
-	Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error)
-}
-
-type liveWithdrawRpcServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewLiveWithdrawRpcServiceClient(cc grpc.ClientConnInterface) LiveWithdrawRpcServiceClient {
-	return &liveWithdrawRpcServiceClient{cc}
-}
-
-func (c *liveWithdrawRpcServiceClient) Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(WithdrawResp)
-	err := c.cc.Invoke(ctx, LiveWithdrawRpcService_Withdraw_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// LiveWithdrawRpcServiceServer is the server API for LiveWithdrawRpcService service.
-// All implementations must embed UnimplementedLiveWithdrawRpcServiceServer
-// for forward compatibility.
-type LiveWithdrawRpcServiceServer interface {
-	// 添加提现
-	Withdraw(context.Context, *WithdrawReq) (*WithdrawResp, error)
-	mustEmbedUnimplementedLiveWithdrawRpcServiceServer()
-}
-
-// UnimplementedLiveWithdrawRpcServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedLiveWithdrawRpcServiceServer struct{}
-
-func (UnimplementedLiveWithdrawRpcServiceServer) Withdraw(context.Context, *WithdrawReq) (*WithdrawResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Withdraw not implemented")
-}
-func (UnimplementedLiveWithdrawRpcServiceServer) mustEmbedUnimplementedLiveWithdrawRpcServiceServer() {
-}
-func (UnimplementedLiveWithdrawRpcServiceServer) testEmbeddedByValue() {}
-
-// UnsafeLiveWithdrawRpcServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to LiveWithdrawRpcServiceServer will
-// result in compilation errors.
-type UnsafeLiveWithdrawRpcServiceServer interface {
-	mustEmbedUnimplementedLiveWithdrawRpcServiceServer()
-}
-
-func RegisterLiveWithdrawRpcServiceServer(s grpc.ServiceRegistrar, srv LiveWithdrawRpcServiceServer) {
-	// If the following call pancis, it indicates UnimplementedLiveWithdrawRpcServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&LiveWithdrawRpcService_ServiceDesc, srv)
-}
-
-func _LiveWithdrawRpcService_Withdraw_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WithdrawReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveWithdrawRpcServiceServer).Withdraw(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveWithdrawRpcService_Withdraw_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveWithdrawRpcServiceServer).Withdraw(ctx, req.(*WithdrawReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// LiveWithdrawRpcService_ServiceDesc is the grpc.ServiceDesc for LiveWithdrawRpcService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var LiveWithdrawRpcService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "finance.v1.LiveWithdrawRpcService",
-	HandlerType: (*LiveWithdrawRpcServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Withdraw",
-			Handler:    _LiveWithdrawRpcService_Withdraw_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
