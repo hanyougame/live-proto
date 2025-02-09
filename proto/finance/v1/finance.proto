@@ -359,19 +359,11 @@ message GetAuditInfoResp {
 
 message GetAuditListReq {
   int64 user_id = 1; // 用户Id
-  repeated AuditStatus status = 2; // 稽核状态
+  repeated int64 status = 2; // 稽核状态
   int64 page = 3; // 页码
   int64 page_size = 4; // 页大小
 }
-enum AuditStatus {
-  AuditStatus_ = 0; // _
-  AuditStatusNotStart = 1;              // 未开始
-  AuditStatusDoing = 2;              // 进行中
-  AuditStatusFinished = 3;             // 已完成
-  AuditStatusManualRelease = 4;         // 人工解除
-  AuditStatusSystemRelease = 5;         // 系统解除
-  AuditStatusGiveUp = 6;                // 已放弃
-}
+
 message AuditInfo {
   int64 id = 1; // 稽核id
   int64 user_id = 2; // 用户Id
