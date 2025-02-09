@@ -357,6 +357,37 @@ message GetAuditInfoResp {
   int64  UserId = 6;   // 用户Id
 }
 
+message GetAuditListReq {
+  int64 user_id = 1; // 用户Id
+  repeated AuditStatus status = 2; // 稽核状态
+  int64 page = 3; // 页码
+  int64 page_size = 4; // 页大小
+}
+enum AuditStatus {
+  AuditStatus_ = 0; // _
+  AuditStatusNotStart = 1;              // 未开始
+  AuditStatusDoing = 2;              // 进行中
+  AuditStatusFinished = 3;             // 已完成
+  AuditStatusManualRelease = 4;         // 人工解除
+  AuditStatusSystemRelease = 5;         // 系统解除
+  AuditStatusGiveUp = 6;                // 已放弃
+}
+message AuditInfo {
+  int64 id = 1; // 稽核id
+  int64 user_id = 2; // 用户Id
+  int64 audit_manage_type = 3; // 稽核类型
+  string  multiple = 4; // 稽核倍数
+  int64 status = 5; // 状态
+  int64 created_at = 6; // 创建时间
+  int64 need_amount = 7; // 需要稽核金额
+  int64 finish_amount = 8; // 完成稽核金额
+  int64 un_finish_amount = 9; // 未完成稽核金额
+}
+message GetAuditListResp {
+  int64 total = 1; // 总数
+  repeated AuditInfo audit_list = 2; // 稽核列表
+}
+
 
 service LiveAuditRpcService {
   // 添加稽核 传递用户币种和金额
@@ -365,6 +396,8 @@ service LiveAuditRpcService {
   rpc UpdateAuditAmount(UpdateAuditAmountReq) returns (UpdateAuditAmountResp);
   // 获取用户稽核信息
   rpc GetAuditInfo(GetAuditInfoReq) returns (GetAuditInfoResp);
+  // 获取指定用户稽核列表
+  rpc GetAuditList(GetAuditListReq) returns (GetAuditListResp);
 }
 
 // 提现限制类型
@@ -415,15 +448,11 @@ message WithdrawReq {
   string ifsc = 8; // IFSC
   string ip = 9; // IP
   string currency_code = 10; // 币种
+  int64 withdraw_category = 11; // 提现大类
 }
 message WithdrawResp {
 
 }
-
-//service LiveWithdrawRpcService {
-//  // 添加提现
-//  rpc Withdraw(WithdrawReq) returns (WithdrawResp);
-//}
 
 message ExchangeRateReq {
   string source_currency_code = 1; // 当前币种
