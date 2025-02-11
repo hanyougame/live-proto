@@ -1446,7 +1446,7 @@ type LiveGameRpcInnerServiceClient interface {
 	// 添加游戏下注记录
 	AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
 	// 变更游戏下注记录状态
-	AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
+	AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error)
 }
 
 type liveGameRpcInnerServiceClient struct {
@@ -1507,9 +1507,9 @@ func (c *liveGameRpcInnerServiceClient) AddGameBetRecord(ctx context.Context, in
 	return out, nil
 }
 
-func (c *liveGameRpcInnerServiceClient) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error) {
+func (c *liveGameRpcInnerServiceClient) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GameReply)
+	out := new(AddGameRecordStatusReply)
 	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameRecordStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -1532,7 +1532,7 @@ type LiveGameRpcInnerServiceServer interface {
 	// 添加游戏下注记录
 	AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error)
 	// 变更游戏下注记录状态
-	AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*GameReply, error)
+	AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*AddGameRecordStatusReply, error)
 	mustEmbedUnimplementedLiveGameRpcInnerServiceServer()
 }
 
@@ -1558,7 +1558,7 @@ func (UnimplementedLiveGameRpcInnerServiceServer) CreateCompensationFailedRecord
 func (UnimplementedLiveGameRpcInnerServiceServer) AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGameBetRecord not implemented")
 }
-func (UnimplementedLiveGameRpcInnerServiceServer) AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*GameReply, error) {
+func (UnimplementedLiveGameRpcInnerServiceServer) AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*AddGameRecordStatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGameRecordStatus not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) mustEmbedUnimplementedLiveGameRpcInnerServiceServer() {

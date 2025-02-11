@@ -16,6 +16,7 @@ import (
 type (
 	AddGameBetRecordReply                    = v1.AddGameBetRecordReply
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
+	AddGameRecordStatusReply                 = v1.AddGameRecordStatusReply
 	AddGameRecordStatusReq                   = v1.AddGameRecordStatusReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
@@ -89,7 +90,7 @@ type (
 		// 添加游戏下注记录
 		AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
 		// 变更游戏下注记录状态
-		AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
+		AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -134,7 +135,7 @@ func (m *defaultLiveGameRpcInnerService) AddGameBetRecord(ctx context.Context, i
 }
 
 // 变更游戏下注记录状态
-func (m *defaultLiveGameRpcInnerService) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error) {
+func (m *defaultLiveGameRpcInnerService) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddGameRecordStatus(ctx, in, opts...)
 }
