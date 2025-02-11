@@ -238,27 +238,29 @@ message GameUserRewardReq{
 message GameUserRewardReply{
   string balance = 1;         //余额
   string currency_code = 2;   //货币代码
-  string order_no = 3;        //订单编号
-  int64 order_id = 4;         //订单ID
-  bool repeated = 5;          //是否重复
+  string order_id = 4;         //订单ID
 }
 
 //游戏投注撤销
 message GameUserBetCancelReq {
-  string platform_key = 1;      // 游戏平台key  唯一标识
-  string game_key = 2;          //游戏标志
-  uint64 user_id = 3;
-  string trade_id = 4;          // 交易ID
-  string trade_amounts = 5;     //交易金额，非负值
-  string original_trade_id = 6; //原订单交易ID
+  int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
+  int64 user_id = 2;  // 用户ID
+  int64 tripartite_game_id = 3;      // 三方游戏id
+  string round_id = 4;      // 牌局 ID
+  string order_no = 5;    // 订单号(每笔记录唯一)
+  string cancel_order_no = 6;  //撤消投注/派奖的原商户订单号
+  string cancel_plat_order_no = 7;  //撤消投注/派奖的原平台订单号
+  string order_amount = 8;   //撤单金额(6 位小数)
+  string currency_code = 9; // 玩家货币code
+  int64 timestamp = 10; //时间戳（毫秒）
+  string order_desc = 11; //撤单说明
+  int64 cancel_type = 12; //撤单类型：1 投注撤单，2 派奖撤单
 }
 //游戏投注撤销响应
 message GameUserBetCancelReply {
-  string balance = 1;         //余额，非负值
-  string currency_code = 2;   // 货币代码
-  string order_no = 3;        //订单编号
-  int64 order_id = 4;         //订单ID
-  bool repeated = 5;          //是否重复
+  string balance = 1;         //余额
+  string currency_code = 2;   //货币代码
+  string order_id = 4;         //订单ID
 }
 
 //游戏调整玩家余额(订单、活动等调整) 请求
@@ -607,8 +609,23 @@ message  AddGameBetRecordReply {
 }
 
 message AddGameRecordStatusReq{
-
+  string round_id = 1;                    // 牌局ID（三方)
+  int64 reward_amount = 2; // 派奖金额（处理之后的数据）
+  string tripartite_order_id = 3; // 订单ID（三方）
+  int64 settle_time = 4; // 结算时间毫秒
+  int64 user_id = 5;                      // 用户ID
+  string bet_id = 6;                    // 对应的投注 ID，如果没有就会取牌局 ID（三方)
 }
+
+
+message AddGameRecordStatusReply{
+  int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
+  int64 balance = 2;         //用户余额
+  string order_id = 3;                    // 投注记录表内部订单号(order_id)
+  string currency_code = 4;  // 货币代码
+  int64 user_id = 5;
+}
+
 
 service LiveGameRpcInnerService{
   // 添加三方转账记录
@@ -622,5 +639,5 @@ service LiveGameRpcInnerService{
   // 添加游戏下注记录
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
   // 变更游戏下注记录状态
-  rpc AddGameRecordStatus(AddGameRecordStatusReq) returns (GameReply);
+  rpc AddGameRecordStatus(AddGameRecordStatusReq) returns (AddGameRecordStatusReply);
 }
