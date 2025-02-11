@@ -162,7 +162,7 @@ enum AuditType {
   AuditTypeGuarantee = 13; // 担保理赔
   AuditTypeSystem = 14; // 系统稽核
   AuditTypeAccumulationFund = 15; // 公积金
-  AuditSubTypeBox = 16; // 盲盒抽奖
+  AuditTypeBox = 16; // 盲盒抽奖
 }
 
 enum AuditSubType {
@@ -317,7 +317,7 @@ message AddAuditReq {
   int64 user_id = 1; // 用户Id
   string username = 2; // 用户名
   string currency_code = 3; // 币种
-  AutoReleaseType auto_release_type = 4; // 自动解除稽核类型
+  AutoReleaseType auto_release_type = 4; // 自动解除稽核类型 1-输光自动解除 2-输光不自动解除
   AuditType audit_type = 5; // 稽核类型
   AuditSubType audit_sub_type = 6; // 稽核子类型
   string target_name = 7; // 优惠名称
@@ -326,6 +326,7 @@ message AddAuditReq {
   int64 audit_amount = 10; // 稽核金额（单位:元）
   AuditWithdrawType audit_withdraw_type = 11; // 稽核模式
   repeated int64 game_platform_ids = 12; // 游戏平台Id
+  string order_no = 13; // 订单号
 }
 
 message AddAuditResp {
@@ -374,12 +375,34 @@ message AuditInfo {
   int64 need_amount = 7; // 需要稽核金额
   int64 finish_amount = 8; // 完成稽核金额
   int64 un_finish_amount = 9; // 未完成稽核金额
+  string order_no = 10; // 订单号
 }
 message GetAuditListResp {
   int64 total = 1; // 总数
   repeated AuditInfo audit_list = 2; // 稽核列表
 }
 
+message AddAudit {
+  AutoReleaseType auto_release_type = 1; // 自动解除稽核类型 1-输光自动解除 2-输光不自动解除
+  AuditType audit_type = 2; // 稽核类型
+  AuditSubType audit_sub_type = 3; // 稽核子类型
+  string target_name = 4; // 优惠名称
+  int64 amount = 5; // 交易金额（单位：元）
+  string multiple = 6; // 倍数
+  int64 audit_amount = 7; // 稽核金额（单位:元）
+  AuditWithdrawType audit_withdraw_type = 8; // 稽核模式
+  repeated int64 game_platform_ids = 9; // 游戏平台Id
+  string order_no = 10; // 订单号
+}
+message BatchAddAuditReq {
+  int64 user_id = 1; // 用户Id
+  string username = 2; // 用户名
+  string currency_code = 3; // 币种
+  repeated AddAudit audit_list = 4; // 稽核列表
+}
+message BatchAddAuditResp {
+
+}
 
 service LiveAuditRpcService {
   // 添加稽核 传递用户币种和金额
@@ -390,6 +413,8 @@ service LiveAuditRpcService {
   rpc GetAuditInfo(GetAuditInfoReq) returns (GetAuditInfoResp);
   // 获取指定用户稽核列表
   rpc GetAuditList(GetAuditListReq) returns (GetAuditListResp);
+  // 批量添加稽核信息
+  rpc BatchAddAudit(BatchAddAuditReq) returns (BatchAddAuditResp);
 }
 
 // 提现限制类型

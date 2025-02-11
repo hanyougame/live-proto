@@ -7,12 +7,12 @@ package liveauditrpcservice
 import (
 	"context"
 	"github.com/hanyougame/live-proto/proto-gen-go/finance/v1"
-
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
+	AddAudit                      = v1.AddAudit
 	AddAuditReq                   = v1.AddAuditReq
 	AddAuditResp                  = v1.AddAuditResp
 	AddWithdrawLimitReq           = v1.AddWithdrawLimitReq
@@ -20,6 +20,8 @@ type (
 	AuditInfo                     = v1.AuditInfo
 	BalanceReq                    = v1.BalanceReq
 	BalanceResp                   = v1.BalanceResp
+	BatchAddAuditReq              = v1.BatchAddAuditReq
+	BatchAddAuditResp             = v1.BatchAddAuditResp
 	ExchangeRateReq               = v1.ExchangeRateReq
 	ExchangeRateResp              = v1.ExchangeRateResp
 	GetAuditInfoReq               = v1.GetAuditInfoReq
@@ -52,6 +54,8 @@ type (
 		GetAuditInfo(ctx context.Context, in *GetAuditInfoReq, opts ...grpc.CallOption) (*GetAuditInfoResp, error)
 		// 获取指定用户稽核列表
 		GetAuditList(ctx context.Context, in *GetAuditListReq, opts ...grpc.CallOption) (*GetAuditListResp, error)
+		// 批量添加稽核信息
+		BatchAddAudit(ctx context.Context, in *BatchAddAuditReq, opts ...grpc.CallOption) (*BatchAddAuditResp, error)
 	}
 
 	defaultLiveAuditRpcService struct {
@@ -87,4 +91,10 @@ func (m *defaultLiveAuditRpcService) GetAuditInfo(ctx context.Context, in *GetAu
 func (m *defaultLiveAuditRpcService) GetAuditList(ctx context.Context, in *GetAuditListReq, opts ...grpc.CallOption) (*GetAuditListResp, error) {
 	client := v1.NewLiveAuditRpcServiceClient(m.cli.Conn())
 	return client.GetAuditList(ctx, in, opts...)
+}
+
+// 批量添加稽核信息
+func (m *defaultLiveAuditRpcService) BatchAddAudit(ctx context.Context, in *BatchAddAuditReq, opts ...grpc.CallOption) (*BatchAddAuditResp, error) {
+	client := v1.NewLiveAuditRpcServiceClient(m.cli.Conn())
+	return client.BatchAddAudit(ctx, in, opts...)
 }

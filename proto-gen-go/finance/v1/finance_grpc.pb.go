@@ -353,6 +353,7 @@ const (
 	LiveAuditRpcService_UpdateAuditAmount_FullMethodName = "/finance.v1.LiveAuditRpcService/UpdateAuditAmount"
 	LiveAuditRpcService_GetAuditInfo_FullMethodName      = "/finance.v1.LiveAuditRpcService/GetAuditInfo"
 	LiveAuditRpcService_GetAuditList_FullMethodName      = "/finance.v1.LiveAuditRpcService/GetAuditList"
+	LiveAuditRpcService_BatchAddAudit_FullMethodName     = "/finance.v1.LiveAuditRpcService/BatchAddAudit"
 )
 
 // LiveAuditRpcServiceClient is the client API for LiveAuditRpcService service.
@@ -367,6 +368,8 @@ type LiveAuditRpcServiceClient interface {
 	GetAuditInfo(ctx context.Context, in *GetAuditInfoReq, opts ...grpc.CallOption) (*GetAuditInfoResp, error)
 	// 获取指定用户稽核列表
 	GetAuditList(ctx context.Context, in *GetAuditListReq, opts ...grpc.CallOption) (*GetAuditListResp, error)
+	// 批量添加稽核信息
+	BatchAddAudit(ctx context.Context, in *BatchAddAuditReq, opts ...grpc.CallOption) (*BatchAddAuditResp, error)
 }
 
 type liveAuditRpcServiceClient struct {
@@ -417,6 +420,16 @@ func (c *liveAuditRpcServiceClient) GetAuditList(ctx context.Context, in *GetAud
 	return out, nil
 }
 
+func (c *liveAuditRpcServiceClient) BatchAddAudit(ctx context.Context, in *BatchAddAuditReq, opts ...grpc.CallOption) (*BatchAddAuditResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BatchAddAuditResp)
+	err := c.cc.Invoke(ctx, LiveAuditRpcService_BatchAddAudit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveAuditRpcServiceServer is the server API for LiveAuditRpcService service.
 // All implementations must embed UnimplementedLiveAuditRpcServiceServer
 // for forward compatibility.
@@ -429,6 +442,8 @@ type LiveAuditRpcServiceServer interface {
 	GetAuditInfo(context.Context, *GetAuditInfoReq) (*GetAuditInfoResp, error)
 	// 获取指定用户稽核列表
 	GetAuditList(context.Context, *GetAuditListReq) (*GetAuditListResp, error)
+	// 批量添加稽核信息
+	BatchAddAudit(context.Context, *BatchAddAuditReq) (*BatchAddAuditResp, error)
 	mustEmbedUnimplementedLiveAuditRpcServiceServer()
 }
 
@@ -450,6 +465,9 @@ func (UnimplementedLiveAuditRpcServiceServer) GetAuditInfo(context.Context, *Get
 }
 func (UnimplementedLiveAuditRpcServiceServer) GetAuditList(context.Context, *GetAuditListReq) (*GetAuditListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAuditList not implemented")
+}
+func (UnimplementedLiveAuditRpcServiceServer) BatchAddAudit(context.Context, *BatchAddAuditReq) (*BatchAddAuditResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchAddAudit not implemented")
 }
 func (UnimplementedLiveAuditRpcServiceServer) mustEmbedUnimplementedLiveAuditRpcServiceServer() {}
 func (UnimplementedLiveAuditRpcServiceServer) testEmbeddedByValue()                             {}
@@ -544,6 +562,24 @@ func _LiveAuditRpcService_GetAuditList_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveAuditRpcService_BatchAddAudit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchAddAuditReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveAuditRpcServiceServer).BatchAddAudit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveAuditRpcService_BatchAddAudit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveAuditRpcServiceServer).BatchAddAudit(ctx, req.(*BatchAddAuditReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveAuditRpcService_ServiceDesc is the grpc.ServiceDesc for LiveAuditRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +602,10 @@ var LiveAuditRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAuditList",
 			Handler:    _LiveAuditRpcService_GetAuditList_Handler,
+		},
+		{
+			MethodName: "BatchAddAudit",
+			Handler:    _LiveAuditRpcService_BatchAddAudit_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
