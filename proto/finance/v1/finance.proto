@@ -13,7 +13,7 @@ message PayInReq {
   int64 recharge_category_id = 7; // 充值大类Id
   int64 recharge_merchant_id = 8; // 代收商户Id
   string currency_code = 9; // 币种
-  string recharge_channel_code = 10; // 通道编码
+  int64 recharge_channel_id = 10; // 充值通道id
   string extra = 11; // 扩展字段
 }
 
@@ -108,7 +108,7 @@ message RechargeReq {
   int64 order_type = 1;// 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
   int64 recharge_category_id = 2; // 充值大类Id （必填）
   int64 recharge_merchant_id = 3; // 充值商户Id （在线充值）
-  //  int64 recharge_channel_id = 4; // 充值通道Id （必填）
+  int64 recharge_channel_id = 4; // 充值通道Id （必填）
   int64 user_id = 5; // 用户Id （必填）
   string username = 6; // 用户账号 （必填）
   int64 recharge_amount = 7; // 充值金额 （必填）

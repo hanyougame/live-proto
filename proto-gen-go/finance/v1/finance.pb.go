@@ -1536,26 +1536,26 @@ func (x *BalanceResp) GetStatus() int64 {
 }
 
 type RechargeReq struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	OrderType          int64                  `protobuf:"varint,1,opt,name=order_type,json=orderType,proto3" json:"order_type,omitempty"`                              // 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
-	RechargeCategoryId int64                  `protobuf:"varint,2,opt,name=recharge_category_id,json=rechargeCategoryId,proto3" json:"recharge_category_id,omitempty"` // 充值大类Id （必填）
-	RechargeMerchantId int64                  `protobuf:"varint,3,opt,name=recharge_merchant_id,json=rechargeMerchantId,proto3" json:"recharge_merchant_id,omitempty"` // 充值商户Id （在线充值）
-	// int64 recharge_channel_id = 4; // 充值通道Id （必填）
-	UserId               int64  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                             // 用户Id （必填）
-	Username             string `protobuf:"bytes,6,opt,name=username,proto3" json:"username,omitempty"`                                                        // 用户账号 （必填）
-	RechargeAmount       int64  `protobuf:"varint,7,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"`                     // 充值金额 （必填）
-	OrderAmount          int64  `protobuf:"varint,8,opt,name=order_amount,json=orderAmount,proto3" json:"order_amount,omitempty"`                              // 订单金额 （必填）
-	GiftAmount           int64  `protobuf:"varint,9,opt,name=gift_amount,json=giftAmount,proto3" json:"gift_amount,omitempty"`                                 // 赠送金额 （必填）
-	ExchangeRate         string `protobuf:"bytes,10,opt,name=exchange_rate,json=exchangeRate,proto3" json:"exchange_rate,omitempty"`                           // 汇率 （必填）
-	RechargeCurrencyCode string `protobuf:"bytes,11,opt,name=recharge_currency_code,json=rechargeCurrencyCode,proto3" json:"recharge_currency_code,omitempty"` // 充值币种 （必填）
-	UserCurrencyCode     string `protobuf:"bytes,12,opt,name=user_currency_code,json=userCurrencyCode,proto3" json:"user_currency_code,omitempty"`             // 用户币种 （必填）
-	FeeAmount            int64  `protobuf:"varint,13,opt,name=fee_amount,json=feeAmount,proto3" json:"fee_amount,omitempty"`                                   // 手续费 （必填）
-	AuditMulti           string `protobuf:"bytes,14,opt,name=auditMulti,proto3" json:"auditMulti,omitempty"`                                                   // 稽核倍数 （必填）
-	ReceiveAccount       string `protobuf:"bytes,15,opt,name=receive_account,json=receiveAccount,proto3" json:"receive_account,omitempty"`                     // 收款账户地址 （转账充值）
-	ReceiveName          string `protobuf:"bytes,16,opt,name=receive_name,json=receiveName,proto3" json:"receive_name,omitempty"`                              // 收款人姓名 （转账充值）
-	TransferVoucher      string `protobuf:"bytes,17,opt,name=transfer_voucher,json=transferVoucher,proto3" json:"transfer_voucher,omitempty"`                  // 转账凭证 （转账充值）
-	RealName             string `protobuf:"bytes,18,opt,name=real_name,json=realName,proto3" json:"real_name,omitempty"`                                       // 姓名
-	Utr                  string `protobuf:"bytes,20,opt,name=utr,proto3" json:"utr,omitempty"`                                                                 //utr  (暂时不适用)
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	OrderType            int64                  `protobuf:"varint,1,opt,name=order_type,json=orderType,proto3" json:"order_type,omitempty"`                                    // 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
+	RechargeCategoryId   int64                  `protobuf:"varint,2,opt,name=recharge_category_id,json=rechargeCategoryId,proto3" json:"recharge_category_id,omitempty"`       // 充值大类Id （必填）
+	RechargeMerchantId   int64                  `protobuf:"varint,3,opt,name=recharge_merchant_id,json=rechargeMerchantId,proto3" json:"recharge_merchant_id,omitempty"`       // 充值商户Id （在线充值）
+	RechargeChannelId    int64                  `protobuf:"varint,4,opt,name=recharge_channel_id,json=rechargeChannelId,proto3" json:"recharge_channel_id,omitempty"`          // 充值通道Id （必填）
+	UserId               int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                             // 用户Id （必填）
+	Username             string                 `protobuf:"bytes,6,opt,name=username,proto3" json:"username,omitempty"`                                                        // 用户账号 （必填）
+	RechargeAmount       int64                  `protobuf:"varint,7,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"`                     // 充值金额 （必填）
+	OrderAmount          int64                  `protobuf:"varint,8,opt,name=order_amount,json=orderAmount,proto3" json:"order_amount,omitempty"`                              // 订单金额 （必填）
+	GiftAmount           int64                  `protobuf:"varint,9,opt,name=gift_amount,json=giftAmount,proto3" json:"gift_amount,omitempty"`                                 // 赠送金额 （必填）
+	ExchangeRate         string                 `protobuf:"bytes,10,opt,name=exchange_rate,json=exchangeRate,proto3" json:"exchange_rate,omitempty"`                           // 汇率 （必填）
+	RechargeCurrencyCode string                 `protobuf:"bytes,11,opt,name=recharge_currency_code,json=rechargeCurrencyCode,proto3" json:"recharge_currency_code,omitempty"` // 充值币种 （必填）
+	UserCurrencyCode     string                 `protobuf:"bytes,12,opt,name=user_currency_code,json=userCurrencyCode,proto3" json:"user_currency_code,omitempty"`             // 用户币种 （必填）
+	FeeAmount            int64                  `protobuf:"varint,13,opt,name=fee_amount,json=feeAmount,proto3" json:"fee_amount,omitempty"`                                   // 手续费 （必填）
+	AuditMulti           string                 `protobuf:"bytes,14,opt,name=auditMulti,proto3" json:"auditMulti,omitempty"`                                                   // 稽核倍数 （必填）
+	ReceiveAccount       string                 `protobuf:"bytes,15,opt,name=receive_account,json=receiveAccount,proto3" json:"receive_account,omitempty"`                     // 收款账户地址 （转账充值）
+	ReceiveName          string                 `protobuf:"bytes,16,opt,name=receive_name,json=receiveName,proto3" json:"receive_name,omitempty"`                              // 收款人姓名 （转账充值）
+	TransferVoucher      string                 `protobuf:"bytes,17,opt,name=transfer_voucher,json=transferVoucher,proto3" json:"transfer_voucher,omitempty"`                  // 转账凭证 （转账充值）
+	RealName             string                 `protobuf:"bytes,18,opt,name=real_name,json=realName,proto3" json:"real_name,omitempty"`                                       // 姓名
+	Utr                  string                 `protobuf:"bytes,20,opt,name=utr,proto3" json:"utr,omitempty"`                                                                 //utr  (暂时不适用)
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1607,6 +1607,13 @@ func (x *RechargeReq) GetRechargeCategoryId() int64 {
 func (x *RechargeReq) GetRechargeMerchantId() int64 {
 	if x != nil {
 		return x.RechargeMerchantId
+	}
+	return 0
+}
+
+func (x *RechargeReq) GetRechargeChannelId() int64 {
+	if x != nil {
+		return x.RechargeChannelId
 	}
 	return 0
 }
@@ -3319,7 +3326,7 @@ var file_proto_finance_v1_finance_proto_rawDesc = []byte{
 	0x63, 0x79, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63,
 	0x75, 0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x73,
 	0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x73, 0x74, 0x61,
-	0x74, 0x75, 0x73, 0x22, 0xa0, 0x05, 0x0a, 0x0b, 0x52, 0x65, 0x63, 0x68, 0x61, 0x72, 0x67, 0x65,
+	0x74, 0x75, 0x73, 0x22, 0xd0, 0x05, 0x0a, 0x0b, 0x52, 0x65, 0x63, 0x68, 0x61, 0x72, 0x67, 0x65,
 	0x52, 0x65, 0x71, 0x12, 0x1d, 0x0a, 0x0a, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70,
 	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x54, 0x79,
 	0x70, 0x65, 0x12, 0x30, 0x0a, 0x14, 0x72, 0x65, 0x63, 0x68, 0x61, 0x72, 0x67, 0x65, 0x5f, 0x63,
@@ -3328,7 +3335,10 @@ var file_proto_finance_v1_finance_proto_rawDesc = []byte{
 	0x72, 0x79, 0x49, 0x64, 0x12, 0x30, 0x0a, 0x14, 0x72, 0x65, 0x63, 0x68, 0x61, 0x72, 0x67, 0x65,
 	0x5f, 0x6d, 0x65, 0x72, 0x63, 0x68, 0x61, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01,
 	0x28, 0x03, 0x52, 0x12, 0x72, 0x65, 0x63, 0x68, 0x61, 0x72, 0x67, 0x65, 0x4d, 0x65, 0x72, 0x63,
-	0x68, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
+	0x68, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x72, 0x65, 0x63, 0x68, 0x61, 0x72,
+	0x67, 0x65, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x11, 0x72, 0x65, 0x63, 0x68, 0x61, 0x72, 0x67, 0x65, 0x43, 0x68, 0x61,
+	0x6e, 0x6e, 0x65, 0x6c, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
 	0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12,
 	0x1a, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x27, 0x0a, 0x0f, 0x72,
