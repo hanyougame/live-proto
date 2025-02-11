@@ -225,14 +225,15 @@ message GameUserBetReply{
 
 // 游戏订单派奖创建
 message GameUserRewardReq{
-  string platform_key = 1;  // 游戏平台key  唯一标识
-  string game_key = 2;  //游戏标志，如果不属于某个游戏，传入platform_key
-  string trade_id = 3;  // 交易ID
-  uint64 user_id = 4;
-  string trade_amounts = 5;   //交易金额，非负值
-  string bet_session_id = 6;  //投注会话ID，没有可不填
-  string order_desc = 7;      //订单描述
-  string currency_code = 8; //货币Code
+  int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
+  int64 user_id = 2;  // 用户ID
+  int64 tripartite_game_id = 3;      // 三方游戏id
+  string round_id = 4;      // 牌局 ID
+  string order_no = 5;    // 派奖订单号(每笔记录唯一)
+  string bet_id = 6;  //对应的投注 ID，如果没有就会取牌局 ID
+  string reward_amount = 7;   //交易金额，非负值
+  string currency_code = 8; // 玩家货币code
+  int64 timestamp = 9; //时间戳（毫秒）
 }
 message GameUserRewardReply{
   string balance = 1;         //余额
