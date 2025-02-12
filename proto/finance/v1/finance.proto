@@ -37,7 +37,8 @@ message  PayOutReq {
   string bank_code = 8; // 银行编码
   string currency_code = 9; // 币种
   int64 withdraw_type_id = 10; // 提现方式
-  string extra = 11; // 扩展字段
+  string account = 12; // 提现账号
+  string extra = 13; // 扩展字段
 }
 
 message PayOutResp {
@@ -124,6 +125,7 @@ message RechargeReq {
   string transfer_voucher = 17; // 转账凭证 （转账充值）
   string real_name = 18; // 姓名
   string utr = 20; //utr  (暂时不适用)
+  string phone = 21; // 手机号（必填）
 }
 message RechargeResp {
   int64 status = 1; // 状态 1-Success 2-Fail
@@ -356,6 +358,7 @@ message GetAuditInfoResp {
   string CurrencyCode = 4;//货币代码
   string Username = 5;   // 用户名
   int64  UserId = 6;   // 用户Id
+  bool CanWithdraw = 7; // 是否可提现 true 可以 false 不可以
 }
 
 message GetAuditListReq {
