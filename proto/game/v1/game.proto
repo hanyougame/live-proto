@@ -265,22 +265,21 @@ message GameUserBetCancelReply {
 
 //游戏调整玩家余额(订单、活动等调整) 请求
 message GameUserAdjustmentReq {
-  string platform_key = 1;      // 游戏平台key  唯一标识
-  string game_key = 2;      // 游戏key  唯一标识 可以为空
-  uint64 user_id = 3;
-  string trade_id = 4;          // 交易ID
-  string adjust_amounts = 5;    //交易金额，加：正数，减：负数
-  string bet_session_id = 6;    //投注会话ID
+  int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
+  int64 user_id = 2;  // 用户ID
+  int64 tripartite_platform_id = 3;      // 三方产商id
+  int64 tripartite_game_id = 4;      // 三方游戏id （可以为空）
+  string order_no = 5;    // 订单号(每笔记录唯一)
+  string adjust_amounts = 6;    //交易金额，加：正数，减：负数
   string adjust_desc = 7;       //调整描述
   string currency_code = 8; //货币Code
+  int64 timestamp = 10; //时间戳（毫秒）
 }
 //游戏调整玩家余额(订单、活动等调整) 响应
 message GameUserAdjustmentReply {
   string balance = 1;         //余额
-  string currency_code = 2;   // 货币代码
-  string order_no = 3;        //订单编号
-  int64 order_id = 4;         //订单ID
-  bool repeated = 5;          //是否重复
+  string currency_code = 2;   //货币代码
+  string order_id = 4;         //订单ID
 }
 
 // 游戏转账订单回调
@@ -586,6 +585,15 @@ message CreateCompensationRecordResp {
   int64 id = 1;  // 补偿记录ID
 }
 
+
+message AddGameBetBaseReply {
+  int64 user_id = 1;
+  int64 wallet_type = 2; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
+  int64 balance = 3;         //用户余额
+  string order_id = 4;                    // 投注记录表内部订单号(order_id)
+  string currency_code = 5;  // 货币代码
+}
+
 message AddGameBetRecordReq{
   string order_id = 1;                    // 内部订单号
   int64 user_id = 2;                      // 用户ID
@@ -608,7 +616,7 @@ message  AddGameBetRecordReply {
   int64 user_id = 5;
 }
 
-message AddGameRecordStatusReq{
+message AddGameSettledRecordReq{
   string round_id = 1;                    // 牌局ID（三方)
   int64 reward_amount = 2; // 派奖金额（处理之后的数据）
   string tripartite_order_id = 3; // 订单ID（三方）
@@ -617,13 +625,32 @@ message AddGameRecordStatusReq{
   string bet_id = 6;                    // 对应的投注 ID，如果没有就会取牌局 ID（三方)
 }
 
+message AddGameCancelRecordReq {
+  int64 user_id = 2;  // 用户ID
+  int64 game_id = 3;                      // 游戏ID
+  int64 tripartite_game_id = 4;             // 三方游戏ID
+  string round_id = 6;      // 牌局 ID
+  string order_no = 7;    // 订单号(每笔记录唯一)
+  string cancel_order_no = 8;  //撤消投注/派奖的原商户订单号
+  string cancel_plat_order_no = 9;  //撤消投注/派奖的原平台订单号
+  int64 order_amount = 10;   //撤单金额（处理之后的数据）
+  string currency_code = 11; // 玩家货币code
+  int64 timestamp = 12; //时间戳（毫秒）
+  string order_desc = 13; //撤单说明
+  int64 cancel_type = 14; //撤单类型：1 投注撤单，2 派奖撤单
+  int64 game_platform_id = 15; //游戏厂商ID
+  int64 tripartite_platform_id = 16; //第三方游戏厂商ID
+}
 
-message AddGameRecordStatusReply{
-  int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
-  int64 balance = 2;         //用户余额
-  string order_id = 3;                    // 投注记录表内部订单号(order_id)
-  string currency_code = 4;  // 货币代码
-  int64 user_id = 5;
+message AddGameAdjustmentRecordReq {
+  int64 user_id = 2;  // 用户ID
+  int64 game_platform_id = 3; //游戏厂商ID
+  int64 tripartite_platform_id = 4; //第三方游戏厂商ID
+  string order_no = 5;    // 订单号(每笔记录唯一)
+  int64 adjust_amount = 6;   //调整金额（处理之后的数据）
+  string currency_code = 7; // 玩家货币code
+  int64 timestamp = 8; //时间戳（毫秒）
+  string adjust_desc = 9; //调整说明
 }
 
 
@@ -638,6 +665,10 @@ service LiveGameRpcInnerService{
   rpc CreateCompensationFailedRecord(CreateCompensationRecordReq) returns (CreateCompensationRecordResp);
   // 添加游戏下注记录
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
-  // 变更游戏下注记录状态
-  rpc AddGameRecordStatus(AddGameRecordStatusReq) returns (AddGameRecordStatusReply);
+  // 变更游戏下注记录结算状态
+  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
+  // 变更游戏取消记录状态
+  rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
+  // 变更游戏调整记录状态
+  rpc AddGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (AddGameBetBaseReply);
 }
