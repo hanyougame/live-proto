@@ -1428,7 +1428,9 @@ const (
 	LiveGameRpcInnerService_TripartiteTransferRecordStatus_FullMethodName    = "/game.v1.LiveGameRpcInnerService/TripartiteTransferRecordStatus"
 	LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName    = "/game.v1.LiveGameRpcInnerService/CreateCompensationFailedRecord"
 	LiveGameRpcInnerService_AddGameBetRecord_FullMethodName                  = "/game.v1.LiveGameRpcInnerService/AddGameBetRecord"
-	LiveGameRpcInnerService_AddGameRecordStatus_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddGameRecordStatus"
+	LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName              = "/game.v1.LiveGameRpcInnerService/AddGameSettledRecord"
+	LiveGameRpcInnerService_AddGameCancelRecord_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddGameCancelRecord"
+	LiveGameRpcInnerService_AddGameAdjustmentRecord_FullMethodName           = "/game.v1.LiveGameRpcInnerService/AddGameAdjustmentRecord"
 )
 
 // LiveGameRpcInnerServiceClient is the client API for LiveGameRpcInnerService service.
@@ -1445,8 +1447,12 @@ type LiveGameRpcInnerServiceClient interface {
 	CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
 	// 添加游戏下注记录
 	AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
-	// 变更游戏下注记录状态
-	AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error)
+	// 变更游戏下注记录结算状态
+	AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
+	// 变更游戏取消记录状态
+	AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
+	// 变更游戏调整记录状态
+	AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 }
 
 type liveGameRpcInnerServiceClient struct {
@@ -1507,10 +1513,30 @@ func (c *liveGameRpcInnerServiceClient) AddGameBetRecord(ctx context.Context, in
 	return out, nil
 }
 
-func (c *liveGameRpcInnerServiceClient) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error) {
+func (c *liveGameRpcInnerServiceClient) AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddGameRecordStatusReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameRecordStatus_FullMethodName, in, out, cOpts...)
+	out := new(AddGameBetBaseReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcInnerServiceClient) AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddGameBetBaseReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameCancelRecord_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcInnerServiceClient) AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddGameBetBaseReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameAdjustmentRecord_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1531,8 +1557,12 @@ type LiveGameRpcInnerServiceServer interface {
 	CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error)
 	// 添加游戏下注记录
 	AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error)
-	// 变更游戏下注记录状态
-	AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*AddGameRecordStatusReply, error)
+	// 变更游戏下注记录结算状态
+	AddGameSettledRecord(context.Context, *AddGameSettledRecordReq) (*AddGameBetBaseReply, error)
+	// 变更游戏取消记录状态
+	AddGameCancelRecord(context.Context, *AddGameCancelRecordReq) (*AddGameBetBaseReply, error)
+	// 变更游戏调整记录状态
+	AddGameAdjustmentRecord(context.Context, *AddGameAdjustmentRecordReq) (*AddGameBetBaseReply, error)
 	mustEmbedUnimplementedLiveGameRpcInnerServiceServer()
 }
 
@@ -1558,8 +1588,14 @@ func (UnimplementedLiveGameRpcInnerServiceServer) CreateCompensationFailedRecord
 func (UnimplementedLiveGameRpcInnerServiceServer) AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGameBetRecord not implemented")
 }
-func (UnimplementedLiveGameRpcInnerServiceServer) AddGameRecordStatus(context.Context, *AddGameRecordStatusReq) (*AddGameRecordStatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddGameRecordStatus not implemented")
+func (UnimplementedLiveGameRpcInnerServiceServer) AddGameSettledRecord(context.Context, *AddGameSettledRecordReq) (*AddGameBetBaseReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGameSettledRecord not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) AddGameCancelRecord(context.Context, *AddGameCancelRecordReq) (*AddGameBetBaseReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGameCancelRecord not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) AddGameAdjustmentRecord(context.Context, *AddGameAdjustmentRecordReq) (*AddGameBetBaseReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGameAdjustmentRecord not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) mustEmbedUnimplementedLiveGameRpcInnerServiceServer() {
 }
@@ -1673,20 +1709,56 @@ func _LiveGameRpcInnerService_AddGameBetRecord_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LiveGameRpcInnerService_AddGameRecordStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddGameRecordStatusReq)
+func _LiveGameRpcInnerService_AddGameSettledRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGameSettledRecordReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LiveGameRpcInnerServiceServer).AddGameRecordStatus(ctx, in)
+		return srv.(LiveGameRpcInnerServiceServer).AddGameSettledRecord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LiveGameRpcInnerService_AddGameRecordStatus_FullMethodName,
+		FullMethod: LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcInnerServiceServer).AddGameRecordStatus(ctx, req.(*AddGameRecordStatusReq))
+		return srv.(LiveGameRpcInnerServiceServer).AddGameSettledRecord(ctx, req.(*AddGameSettledRecordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcInnerService_AddGameCancelRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGameCancelRecordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameCancelRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_AddGameCancelRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameCancelRecord(ctx, req.(*AddGameCancelRecordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcInnerService_AddGameAdjustmentRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGameAdjustmentRecordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameAdjustmentRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_AddGameAdjustmentRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).AddGameAdjustmentRecord(ctx, req.(*AddGameAdjustmentRecordReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1719,8 +1791,16 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LiveGameRpcInnerService_AddGameBetRecord_Handler,
 		},
 		{
-			MethodName: "AddGameRecordStatus",
-			Handler:    _LiveGameRpcInnerService_AddGameRecordStatus_Handler,
+			MethodName: "AddGameSettledRecord",
+			Handler:    _LiveGameRpcInnerService_AddGameSettledRecord_Handler,
+		},
+		{
+			MethodName: "AddGameCancelRecord",
+			Handler:    _LiveGameRpcInnerService_AddGameCancelRecord_Handler,
+		},
+		{
+			MethodName: "AddGameAdjustmentRecord",
+			Handler:    _LiveGameRpcInnerService_AddGameAdjustmentRecord_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

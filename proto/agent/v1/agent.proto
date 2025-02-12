@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package agent.v1;
+
+option go_package = "./pb/v1";
+
+
+message AgentSettleTaskExecuteReq {
+  string settle_day = 1; // 结算日期, Y-m-d格式，如：2024-01-01
+}
+
+message AgentSettleTaskExecuteResp {
+
+}
+
+message AgentDataCountTaskExecuteReq {
+  string date_time = 1; // 日期，Y-m-d格式，如：2024-01-01
+}
+
+message AgentDataCountTaskExecuteResp {
+
+}
+
+service LiveAgentRpcService {
+    // 执行代理结算任务
+    rpc AgentSettleTaskExecute (AgentSettleTaskExecuteReq) returns (AgentSettleTaskExecuteResp);
+
+   // 执行代理数据统计任务
+    rpc AgentDataCountTaskExecute (AgentDataCountTaskExecuteReq) returns (AgentDataCountTaskExecuteResp);
+}

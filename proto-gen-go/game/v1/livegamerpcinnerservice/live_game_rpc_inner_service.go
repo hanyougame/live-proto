@@ -14,10 +14,12 @@ import (
 )
 
 type (
+	AddGameAdjustmentRecordReq               = v1.AddGameAdjustmentRecordReq
+	AddGameBetBaseReply                      = v1.AddGameBetBaseReply
 	AddGameBetRecordReply                    = v1.AddGameBetRecordReply
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
-	AddGameRecordStatusReply                 = v1.AddGameRecordStatusReply
-	AddGameRecordStatusReq                   = v1.AddGameRecordStatusReq
+	AddGameCancelRecordReq                   = v1.AddGameCancelRecordReq
+	AddGameSettledRecordReq                  = v1.AddGameSettledRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
@@ -89,8 +91,12 @@ type (
 		CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
 		// 添加游戏下注记录
 		AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
-		// 变更游戏下注记录状态
-		AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error)
+		// 变更游戏下注记录结算状态
+		AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
+		// 变更游戏取消记录状态
+		AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
+		// 变更游戏调整记录状态
+		AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -134,8 +140,20 @@ func (m *defaultLiveGameRpcInnerService) AddGameBetRecord(ctx context.Context, i
 	return client.AddGameBetRecord(ctx, in, opts...)
 }
 
-// 变更游戏下注记录状态
-func (m *defaultLiveGameRpcInnerService) AddGameRecordStatus(ctx context.Context, in *AddGameRecordStatusReq, opts ...grpc.CallOption) (*AddGameRecordStatusReply, error) {
+// 变更游戏下注记录结算状态
+func (m *defaultLiveGameRpcInnerService) AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
-	return client.AddGameRecordStatus(ctx, in, opts...)
+	return client.AddGameSettledRecord(ctx, in, opts...)
+}
+
+// 变更游戏取消记录状态
+func (m *defaultLiveGameRpcInnerService) AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddGameCancelRecord(ctx, in, opts...)
+}
+
+// 变更游戏调整记录状态
+func (m *defaultLiveGameRpcInnerService) AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddGameAdjustmentRecord(ctx, in, opts...)
 }

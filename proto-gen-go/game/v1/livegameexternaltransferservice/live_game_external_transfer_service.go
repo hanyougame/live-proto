@@ -14,10 +14,12 @@ import (
 )
 
 type (
+	AddGameAdjustmentRecordReq               = v1.AddGameAdjustmentRecordReq
+	AddGameBetBaseReply                      = v1.AddGameBetBaseReply
 	AddGameBetRecordReply                    = v1.AddGameBetRecordReply
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
-	AddGameRecordStatusReply                 = v1.AddGameRecordStatusReply
-	AddGameRecordStatusReq                   = v1.AddGameRecordStatusReq
+	AddGameCancelRecordReq                   = v1.AddGameCancelRecordReq
+	AddGameSettledRecordReq                  = v1.AddGameSettledRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
