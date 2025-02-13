@@ -315,7 +315,7 @@ service LiveGameCallbackRpcService{
 }
 
 
-// 通过货币获取游戏类型请求参数
+// 通过货币获取游戏类型请求参数--
 message GetCategoryListByCurrReq {
   int64 currency_id = 1;
   string currency_code = 2;
