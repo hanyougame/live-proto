@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LiveGameExternalService_K9GameResourceListSync_FullMethodName = "/game.v1.LiveGameExternalService/K9GameResourceListSync"
+	LiveGameExternalService_K9GameResourceListSync_FullMethodName          = "/game.v1.LiveGameExternalService/K9GameResourceListSync"
+	LiveGameExternalService_K9GameTransferBetRecordListSync_FullMethodName = "/game.v1.LiveGameExternalService/K9GameTransferBetRecordListSync"
 )
 
 // LiveGameExternalServiceClient is the client API for LiveGameExternalService service.
@@ -28,6 +29,8 @@ const (
 type LiveGameExternalServiceClient interface {
 	// 获取游戏资源信息
 	K9GameResourceListSync(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error)
+	// 转账钱包投注记录同步
+	K9GameTransferBetRecordListSync(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error)
 }
 
 type liveGameExternalServiceClient struct {
@@ -48,12 +51,24 @@ func (c *liveGameExternalServiceClient) K9GameResourceListSync(ctx context.Conte
 	return out, nil
 }
 
+func (c *liveGameExternalServiceClient) K9GameTransferBetRecordListSync(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GameReply)
+	err := c.cc.Invoke(ctx, LiveGameExternalService_K9GameTransferBetRecordListSync_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameExternalServiceServer is the server API for LiveGameExternalService service.
 // All implementations must embed UnimplementedLiveGameExternalServiceServer
 // for forward compatibility.
 type LiveGameExternalServiceServer interface {
 	// 获取游戏资源信息
 	K9GameResourceListSync(context.Context, *GameReq) (*GameReply, error)
+	// 转账钱包投注记录同步
+	K9GameTransferBetRecordListSync(context.Context, *GameReq) (*GameReply, error)
 	mustEmbedUnimplementedLiveGameExternalServiceServer()
 }
 
@@ -66,6 +81,9 @@ type UnimplementedLiveGameExternalServiceServer struct{}
 
 func (UnimplementedLiveGameExternalServiceServer) K9GameResourceListSync(context.Context, *GameReq) (*GameReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method K9GameResourceListSync not implemented")
+}
+func (UnimplementedLiveGameExternalServiceServer) K9GameTransferBetRecordListSync(context.Context, *GameReq) (*GameReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method K9GameTransferBetRecordListSync not implemented")
 }
 func (UnimplementedLiveGameExternalServiceServer) mustEmbedUnimplementedLiveGameExternalServiceServer() {
 }
@@ -107,6 +125,24 @@ func _LiveGameExternalService_K9GameResourceListSync_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameExternalService_K9GameTransferBetRecordListSync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameExternalServiceServer).K9GameTransferBetRecordListSync(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameExternalService_K9GameTransferBetRecordListSync_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameExternalServiceServer).K9GameTransferBetRecordListSync(ctx, req.(*GameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameExternalService_ServiceDesc is the grpc.ServiceDesc for LiveGameExternalService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -117,6 +153,10 @@ var LiveGameExternalService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "K9GameResourceListSync",
 			Handler:    _LiveGameExternalService_K9GameResourceListSync_Handler,
+		},
+		{
+			MethodName: "K9GameTransferBetRecordListSync",
+			Handler:    _LiveGameExternalService_K9GameTransferBetRecordListSync_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1433,6 +1473,7 @@ const (
 	LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName              = "/game.v1.LiveGameRpcInnerService/AddGameSettledRecord"
 	LiveGameRpcInnerService_AddGameCancelRecord_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddGameCancelRecord"
 	LiveGameRpcInnerService_AddGameAdjustmentRecord_FullMethodName           = "/game.v1.LiveGameRpcInnerService/AddGameAdjustmentRecord"
+	LiveGameRpcInnerService_AddTransferGameBetRecord_FullMethodName          = "/game.v1.LiveGameRpcInnerService/AddTransferGameBetRecord"
 )
 
 // LiveGameRpcInnerServiceClient is the client API for LiveGameRpcInnerService service.
@@ -1450,7 +1491,7 @@ type LiveGameRpcInnerServiceClient interface {
 	TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
 	CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
-	// 添加游戏下注记录
+	// 添加游戏下注记录(单一钱包)
 	AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
 	// 变更游戏下注记录结算状态
 	AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
@@ -1458,6 +1499,8 @@ type LiveGameRpcInnerServiceClient interface {
 	AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 	// 变更游戏调整记录状态
 	AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
+	// 添加游戏下注记录(转账钱包)
+	AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 }
 
 type liveGameRpcInnerServiceClient struct {
@@ -1568,6 +1611,16 @@ func (c *liveGameRpcInnerServiceClient) AddGameAdjustmentRecord(ctx context.Cont
 	return out, nil
 }
 
+func (c *liveGameRpcInnerServiceClient) AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GameReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddTransferGameBetRecord_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcInnerServiceServer is the server API for LiveGameRpcInnerService service.
 // All implementations must embed UnimplementedLiveGameRpcInnerServiceServer
 // for forward compatibility.
@@ -1583,7 +1636,7 @@ type LiveGameRpcInnerServiceServer interface {
 	TripartiteTransferRecordStatus(context.Context, *TripartiteTransferRecordStatusReq) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
 	CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error)
-	// 添加游戏下注记录
+	// 添加游戏下注记录(单一钱包)
 	AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error)
 	// 变更游戏下注记录结算状态
 	AddGameSettledRecord(context.Context, *AddGameSettledRecordReq) (*AddGameBetBaseReply, error)
@@ -1591,6 +1644,8 @@ type LiveGameRpcInnerServiceServer interface {
 	AddGameCancelRecord(context.Context, *AddGameCancelRecordReq) (*AddGameBetBaseReply, error)
 	// 变更游戏调整记录状态
 	AddGameAdjustmentRecord(context.Context, *AddGameAdjustmentRecordReq) (*AddGameBetBaseReply, error)
+	// 添加游戏下注记录(转账钱包)
+	AddTransferGameBetRecord(context.Context, *AddTransferGameBetRecordReq) (*GameReply, error)
 	mustEmbedUnimplementedLiveGameRpcInnerServiceServer()
 }
 
@@ -1630,6 +1685,9 @@ func (UnimplementedLiveGameRpcInnerServiceServer) AddGameCancelRecord(context.Co
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) AddGameAdjustmentRecord(context.Context, *AddGameAdjustmentRecordReq) (*AddGameBetBaseReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGameAdjustmentRecord not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) AddTransferGameBetRecord(context.Context, *AddTransferGameBetRecordReq) (*GameReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddTransferGameBetRecord not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) mustEmbedUnimplementedLiveGameRpcInnerServiceServer() {
 }
@@ -1833,6 +1891,24 @@ func _LiveGameRpcInnerService_AddGameAdjustmentRecord_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcInnerService_AddTransferGameBetRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddTransferGameBetRecordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).AddTransferGameBetRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_AddTransferGameBetRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).AddTransferGameBetRecord(ctx, req.(*AddTransferGameBetRecordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcInnerService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1879,6 +1955,10 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddGameAdjustmentRecord",
 			Handler:    _LiveGameRpcInnerService_AddGameAdjustmentRecord_Handler,
+		},
+		{
+			MethodName: "AddTransferGameBetRecord",
+			Handler:    _LiveGameRpcInnerService_AddTransferGameBetRecord_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -20,6 +20,7 @@ type (
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
 	AddGameCancelRecordReq                   = v1.AddGameCancelRecordReq
 	AddGameSettledRecordReq                  = v1.AddGameSettledRecordReq
+	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
@@ -48,7 +49,6 @@ type (
 	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
 	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
-	GetGameTransferBetOrderListReplyBetInfo  = v1.GetGameTransferBetOrderListReplyBetInfo
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply
 	GetGameTransferOrderStatusReplyOrderInfo = v1.GetGameTransferOrderStatusReplyOrderInfo
@@ -73,6 +73,7 @@ type (
 	SingleEnterGameReq                       = v1.SingleEnterGameReq
 	SingleEnterGameTryReply                  = v1.SingleEnterGameTryReply
 	SingleEnterGameTryReq                    = v1.SingleEnterGameTryReq
+	TransferBetRecord                        = v1.TransferBetRecord
 	TransferCallbackReply                    = v1.TransferCallbackReply
 	TransferCallbackReq                      = v1.TransferCallbackReq
 	TransferEnterGameReply                   = v1.TransferEnterGameReply
