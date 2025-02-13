@@ -357,7 +357,7 @@ message GameCategoryDetail {
 }
 
 message CategoryNameBase {
-  int64 language = 1;
+  string language_code = 1;
   string name = 2;
 }
 
