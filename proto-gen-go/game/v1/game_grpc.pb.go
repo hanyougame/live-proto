@@ -1425,6 +1425,8 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 const (
 	LiveGameRpcInnerService_AddTripartiteTransferRecord_FullMethodName       = "/game.v1.LiveGameRpcInnerService/AddTripartiteTransferRecord"
 	LiveGameRpcInnerService_AddTripartiteTransferRecordStatus_FullMethodName = "/game.v1.LiveGameRpcInnerService/AddTripartiteTransferRecordStatus"
+	LiveGameRpcInnerService_ProcessMessageTransferData_FullMethodName        = "/game.v1.LiveGameRpcInnerService/ProcessMessageTransferData"
+	LiveGameRpcInnerService_ProcessMessageTransferSend_FullMethodName        = "/game.v1.LiveGameRpcInnerService/ProcessMessageTransferSend"
 	LiveGameRpcInnerService_TripartiteTransferRecordStatus_FullMethodName    = "/game.v1.LiveGameRpcInnerService/TripartiteTransferRecordStatus"
 	LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName    = "/game.v1.LiveGameRpcInnerService/CreateCompensationFailedRecord"
 	LiveGameRpcInnerService_AddGameBetRecord_FullMethodName                  = "/game.v1.LiveGameRpcInnerService/AddGameBetRecord"
@@ -1441,6 +1443,9 @@ type LiveGameRpcInnerServiceClient interface {
 	AddTripartiteTransferRecord(ctx context.Context, in *AddTripartiteTransferRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 	// 变更三方转账记录状态
 	AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
+	// 转账钱包处理
+	ProcessMessageTransferData(ctx context.Context, in *ProcessMessageTransferDataReq, opts ...grpc.CallOption) (*ProcessMessageTransferDataReply, error)
+	ProcessMessageTransferSend(ctx context.Context, in *ProcessMessageTransferSendReq, opts ...grpc.CallOption) (*ProcessMessageTransferSendReply, error)
 	// 查询某一条的状态数据
 	TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
@@ -1477,6 +1482,26 @@ func (c *liveGameRpcInnerServiceClient) AddTripartiteTransferRecordStatus(ctx co
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GameReply)
 	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddTripartiteTransferRecordStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcInnerServiceClient) ProcessMessageTransferData(ctx context.Context, in *ProcessMessageTransferDataReq, opts ...grpc.CallOption) (*ProcessMessageTransferDataReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcessMessageTransferDataReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_ProcessMessageTransferData_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcInnerServiceClient) ProcessMessageTransferSend(ctx context.Context, in *ProcessMessageTransferSendReq, opts ...grpc.CallOption) (*ProcessMessageTransferSendReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcessMessageTransferSendReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_ProcessMessageTransferSend_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1551,6 +1576,9 @@ type LiveGameRpcInnerServiceServer interface {
 	AddTripartiteTransferRecord(context.Context, *AddTripartiteTransferRecordReq) (*GameReply, error)
 	// 变更三方转账记录状态
 	AddTripartiteTransferRecordStatus(context.Context, *AddTripartiteTransferRecordStatusReq) (*GameReply, error)
+	// 转账钱包处理
+	ProcessMessageTransferData(context.Context, *ProcessMessageTransferDataReq) (*ProcessMessageTransferDataReply, error)
+	ProcessMessageTransferSend(context.Context, *ProcessMessageTransferSendReq) (*ProcessMessageTransferSendReply, error)
 	// 查询某一条的状态数据
 	TripartiteTransferRecordStatus(context.Context, *TripartiteTransferRecordStatusReq) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
@@ -1578,6 +1606,12 @@ func (UnimplementedLiveGameRpcInnerServiceServer) AddTripartiteTransferRecord(co
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) AddTripartiteTransferRecordStatus(context.Context, *AddTripartiteTransferRecordStatusReq) (*GameReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddTripartiteTransferRecordStatus not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) ProcessMessageTransferData(context.Context, *ProcessMessageTransferDataReq) (*ProcessMessageTransferDataReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessMessageTransferData not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) ProcessMessageTransferSend(context.Context, *ProcessMessageTransferSendReq) (*ProcessMessageTransferSendReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessMessageTransferSend not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) TripartiteTransferRecordStatus(context.Context, *TripartiteTransferRecordStatusReq) (*TripartiteTransferRecord, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TripartiteTransferRecordStatus not implemented")
@@ -1651,6 +1685,42 @@ func _LiveGameRpcInnerService_AddTripartiteTransferRecordStatus_Handler(srv inte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LiveGameRpcInnerServiceServer).AddTripartiteTransferRecordStatus(ctx, req.(*AddTripartiteTransferRecordStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcInnerService_ProcessMessageTransferData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessMessageTransferDataReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).ProcessMessageTransferData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_ProcessMessageTransferData_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).ProcessMessageTransferData(ctx, req.(*ProcessMessageTransferDataReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcInnerService_ProcessMessageTransferSend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessMessageTransferSendReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).ProcessMessageTransferSend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_ProcessMessageTransferSend_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).ProcessMessageTransferSend(ctx, req.(*ProcessMessageTransferSendReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1777,6 +1847,14 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddTripartiteTransferRecordStatus",
 			Handler:    _LiveGameRpcInnerService_AddTripartiteTransferRecordStatus_Handler,
+		},
+		{
+			MethodName: "ProcessMessageTransferData",
+			Handler:    _LiveGameRpcInnerService_ProcessMessageTransferData_Handler,
+		},
+		{
+			MethodName: "ProcessMessageTransferSend",
+			Handler:    _LiveGameRpcInnerService_ProcessMessageTransferSend_Handler,
 		},
 		{
 			MethodName: "TripartiteTransferRecordStatus",

@@ -65,6 +65,10 @@ type (
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
+	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply
+	ProcessMessageTransferDataReq            = v1.ProcessMessageTransferDataReq
+	ProcessMessageTransferSendReply          = v1.ProcessMessageTransferSendReply
+	ProcessMessageTransferSendReq            = v1.ProcessMessageTransferSendReq
 	SingleEnterGameReply                     = v1.SingleEnterGameReply
 	SingleEnterGameReq                       = v1.SingleEnterGameReq
 	SingleEnterGameTryReply                  = v1.SingleEnterGameTryReply
