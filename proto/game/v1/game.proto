@@ -14,6 +14,8 @@ message GameReply{
 service LiveGameExternalService{
   //获取游戏资源信息
   rpc K9GameResourceListSync (GameReq) returns (GameReply);
+  // 转账钱包投注记录同步
+  rpc K9GameTransferBetRecordListSync (GameReq) returns (GameReply);
 }
 
 
@@ -155,29 +157,30 @@ message GetGameTransferBetOrderListReq{
   int64 page_number = 3;
 }
 
+message TransferBetRecord{
+  int64 id = 1;                          // 记录 ID
+  string merchant_key = 2;                // 商户 KEY
+  string user_id = 3;                     // 玩家唯一标识
+  int64 trilateral_platform_id = 4;                   // 厂商 ID
+  int64 trilateral_game_id = 5;                      // 游戏 ID
+  string game_name = 6;                   // 游戏名称
+  string bet_id = 7;                      // 投注 ID
+  string currency = 8;                   // 货币
+  int64 status = 9;                      // 投注状态（1 未结算 2 已结算 3 已取消 4 无效）
+  string bet_time = 10;                   // 投注时间（字符串）
+  string settle_time = 11;                // 结算时间（字符串）
+  string update_time = 12;                // 最后更新时间（字符串）
+  string bet_detail = 13;                 // 投注记录详细，JSON 字符串
+  string bet_amount = 14;                 // 投注金额（作为字符串）
+  string pay_amount = 15;                 // 赔付金额（作为字符串）
+  string profit_loss = 16;                // 输赢金额（作为字符串）
+}
+
 message GetGameTransferBetOrderListReply{
   int64 total_page = 1;        //总页数
   int64 current_page = 2;        //当前页数
   string lastUpdate_date = 3;       //本批次数据的最后更新时间
-  repeated bet_info bet_list = 4; //订单列表
-  message bet_info{
-    int64 id = 1;                          // 记录 ID
-    string merchant_key = 2;                // 商户 KEY
-    string user_id = 3;                     // 玩家唯一标识
-    int64 trilateral_platform_id = 4;                   // 厂商 ID
-    int64 trilateral_game_id = 5;                      // 游戏 ID
-    string game_name = 6;                   // 游戏名称
-    string bet_id = 7;                      // 投注 ID
-    string currency = 8;                   // 货币
-    int64 status = 9;                      // 投注状态（1 未结算 2 已结算 3 已取消 4 无效）
-    string bet_time = 10;                   // 投注时间（字符串）
-    string settle_time = 11;                // 结算时间（字符串）
-    string update_time = 12;                // 最后更新时间（字符串）
-    string bet_detail = 13;                 // 投注记录详细，JSON 字符串
-    string bet_amount = 14;                 // 投注金额（作为字符串）
-    string pay_amount = 15;                 // 赔付金额（作为字符串）
-    string profit_loss = 16;                // 输赢金额（作为字符串）
-  }
+  repeated TransferBetRecord bet_list = 4; //订单列表
 }
 
 service LiveGameExternalTransferService{
@@ -287,9 +290,9 @@ message TransferCallbackReq {
   int64 user_id = 1;
   string order_no = 3;        //订单编号
   int64 transfer_type = 4;    //交易类型：1:转入 2:转出
-  bool  status = 5 ;          //成功状态， true：成功，false 失败
-  string amounts = 6;         //订单金额
-  string msg = 7;             //信息描述
+  int64  status = 5 ;          //状态：100(处理中) 200(成功) -100(失败)
+  string amount = 6;         //订单金额
+  string description = 7;             //信息描述
 }
 //游戏转账订单回调响应
 message TransferCallbackReply {
@@ -312,10 +315,12 @@ service LiveGameCallbackRpcService{
 }
 
 
-// 通过货币获取游戏类型请求参数
+// 通过货币获取游戏类型请求参数--
 message GetCategoryListByCurrReq {
   int64 currency_id = 1;
   string currency_code = 2;
+  string language_code = 3;
+  string language_id = 4;
 }
 
 message GetCategoryListByCurrReply {
@@ -332,7 +337,7 @@ message GameCategoryDetail {
   // 货币代码（例如 "INR"）
   string currency_code = 4;
   // 类型名称（JSON 格式）
-  repeated CategoryNameBase category_name = 5;  // 如果需要，可以考虑存储 JSON 字符串或使用更详细的结构
+  string categoryName = 5;
   // 类型开关（启用/禁用标志）
   int64 category_switch = 6;
   // 链接类型（1: 外部链接，2: 其他）
@@ -352,7 +357,7 @@ message GameCategoryDetail {
 }
 
 message CategoryNameBase {
-  int64 language = 1;
+  string language_code = 1;
   string name = 2;
 }
 
@@ -541,7 +546,7 @@ message AddTripartiteTransferRecordStatusReq {
   int64  user_id = 3;         //用户ID
   int64 transfer_type = 5;    //交易类型：1:转入 2:转出
   int64  status = 6 ; //转账状态， 1:处理中 2:处理成功 3:处理失败
-  string amounts = 7;         //订单金额
+  int64 amount = 7;         //订单金额
   string msg = 8;             //信息
 }
 
@@ -550,6 +555,40 @@ message TripartiteTransferRecordStatusReq{
   int64 user_id = 2;                      // 用户ID
   int64 game_id = 3;                      // 游戏ID
   int64 game_platform_id = 4;             // 平台ID
+}
+
+
+message ProcessMessageTransferDataReq {
+  int64 user_id = 1;                      // 用户ID
+  string order_no = 2;                    // 订单号
+  int64 status = 3;   // 状态：1(处理中) 2(成功) 3(失败)
+  int64 transfer_type = 4;    //交易类型：1:转入 2:转出
+  int64 amount = 5;         //订单金额（处理之后的数据）
+  string description = 6; // 描述
+
+}
+
+message ProcessMessageTransferDataReply {
+  string order_id = 1;        //订单编号(内部)
+  int64  status = 2 ;          //状态：1(处理中) 2(成功) 3(失败)
+  int64 user_id = 3;
+  int64 wallet_type = 4; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
+  int64 balance = 5;         //用户余额
+  string currency_code = 6;  // 货币代码
+  int64 game_id = 7;  // 游戏Id
+
+}
+
+message ProcessMessageTransferSendReq {
+  int64 user_id = 1;
+  int64 balance = 2;         //用户余额
+  int64 game_id = 3;  // 游戏Id
+  string order_id = 4;        //订单编号
+}
+
+message ProcessMessageTransferSendReply {
+  int64 send_status = 1; // 是否发送，1：已发送，2：未发送
+  string order_id = 2;        //订单编号
 }
 
 message TripartiteTransferRecord {
@@ -653,17 +692,23 @@ message AddGameAdjustmentRecordReq {
   string adjust_desc = 9; //调整说明
 }
 
+message AddTransferGameBetRecordReq {
+  repeated TransferBetRecord record_list = 1; //下注订单列表
+}
 
 service LiveGameRpcInnerService{
   // 添加三方转账记录
   rpc AddTripartiteTransferRecord(AddTripartiteTransferRecordReq) returns (GameReply);
   // 变更三方转账记录状态
   rpc AddTripartiteTransferRecordStatus(AddTripartiteTransferRecordStatusReq) returns (GameReply);
+  // 转账钱包处理
+  rpc ProcessMessageTransferData(ProcessMessageTransferDataReq) returns(ProcessMessageTransferDataReply);
+  rpc ProcessMessageTransferSend(ProcessMessageTransferSendReq) returns(ProcessMessageTransferSendReply);
   // 查询某一条的状态数据
   rpc TripartiteTransferRecordStatus(TripartiteTransferRecordStatusReq) returns (TripartiteTransferRecord);
   // 创建补偿失败记录
   rpc CreateCompensationFailedRecord(CreateCompensationRecordReq) returns (CreateCompensationRecordResp);
-  // 添加游戏下注记录
+  // 添加游戏下注记录(单一钱包)
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
   // 变更游戏下注记录结算状态
   rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
@@ -671,4 +716,6 @@ service LiveGameRpcInnerService{
   rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏调整记录状态
   rpc AddGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (AddGameBetBaseReply);
+  // 添加游戏下注记录(转账钱包)
+  rpc AddTransferGameBetRecord(AddTransferGameBetRecordReq) returns (GameReply);
 }

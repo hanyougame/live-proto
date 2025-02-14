@@ -20,6 +20,7 @@ type (
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
 	AddGameCancelRecordReq                   = v1.AddGameCancelRecordReq
 	AddGameSettledRecordReq                  = v1.AddGameSettledRecordReq
+	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
@@ -48,7 +49,6 @@ type (
 	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
 	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
-	GetGameTransferBetOrderListReplyBetInfo  = v1.GetGameTransferBetOrderListReplyBetInfo
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply
 	GetGameTransferOrderStatusReplyOrderInfo = v1.GetGameTransferOrderStatusReplyOrderInfo
@@ -65,10 +65,15 @@ type (
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
+	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply
+	ProcessMessageTransferDataReq            = v1.ProcessMessageTransferDataReq
+	ProcessMessageTransferSendReply          = v1.ProcessMessageTransferSendReply
+	ProcessMessageTransferSendReq            = v1.ProcessMessageTransferSendReq
 	SingleEnterGameReply                     = v1.SingleEnterGameReply
 	SingleEnterGameReq                       = v1.SingleEnterGameReq
 	SingleEnterGameTryReply                  = v1.SingleEnterGameTryReply
 	SingleEnterGameTryReq                    = v1.SingleEnterGameTryReq
+	TransferBetRecord                        = v1.TransferBetRecord
 	TransferCallbackReply                    = v1.TransferCallbackReply
 	TransferCallbackReq                      = v1.TransferCallbackReq
 	TransferEnterGameReply                   = v1.TransferEnterGameReply
@@ -83,6 +88,8 @@ type (
 	LiveGameExternalService interface {
 		// 获取游戏资源信息
 		K9GameResourceListSync(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 转账钱包投注记录同步
+		K9GameTransferBetRecordListSync(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error)
 	}
 
 	defaultLiveGameExternalService struct {
@@ -100,4 +107,10 @@ func NewLiveGameExternalService(cli zrpc.Client) LiveGameExternalService {
 func (m *defaultLiveGameExternalService) K9GameResourceListSync(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error) {
 	client := v1.NewLiveGameExternalServiceClient(m.cli.Conn())
 	return client.K9GameResourceListSync(ctx, in, opts...)
+}
+
+// 转账钱包投注记录同步
+func (m *defaultLiveGameExternalService) K9GameTransferBetRecordListSync(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameExternalServiceClient(m.cli.Conn())
+	return client.K9GameTransferBetRecordListSync(ctx, in, opts...)
 }

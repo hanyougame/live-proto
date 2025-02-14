@@ -20,6 +20,7 @@ type (
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
 	AddGameCancelRecordReq                   = v1.AddGameCancelRecordReq
 	AddGameSettledRecordReq                  = v1.AddGameSettledRecordReq
+	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	CategoryNameBase                         = v1.CategoryNameBase
@@ -48,7 +49,6 @@ type (
 	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
 	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
-	GetGameTransferBetOrderListReplyBetInfo  = v1.GetGameTransferBetOrderListReplyBetInfo
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply
 	GetGameTransferOrderStatusReplyOrderInfo = v1.GetGameTransferOrderStatusReplyOrderInfo
@@ -65,10 +65,15 @@ type (
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
+	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply
+	ProcessMessageTransferDataReq            = v1.ProcessMessageTransferDataReq
+	ProcessMessageTransferSendReply          = v1.ProcessMessageTransferSendReply
+	ProcessMessageTransferSendReq            = v1.ProcessMessageTransferSendReq
 	SingleEnterGameReply                     = v1.SingleEnterGameReply
 	SingleEnterGameReq                       = v1.SingleEnterGameReq
 	SingleEnterGameTryReply                  = v1.SingleEnterGameTryReply
 	SingleEnterGameTryReq                    = v1.SingleEnterGameTryReq
+	TransferBetRecord                        = v1.TransferBetRecord
 	TransferCallbackReply                    = v1.TransferCallbackReply
 	TransferCallbackReq                      = v1.TransferCallbackReq
 	TransferEnterGameReply                   = v1.TransferEnterGameReply
@@ -85,11 +90,14 @@ type (
 		AddTripartiteTransferRecord(ctx context.Context, in *AddTripartiteTransferRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 变更三方转账记录状态
 		AddTripartiteTransferRecordStatus(ctx context.Context, in *AddTripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 转账钱包处理
+		ProcessMessageTransferData(ctx context.Context, in *ProcessMessageTransferDataReq, opts ...grpc.CallOption) (*ProcessMessageTransferDataReply, error)
+		ProcessMessageTransferSend(ctx context.Context, in *ProcessMessageTransferSendReq, opts ...grpc.CallOption) (*ProcessMessageTransferSendReply, error)
 		// 查询某一条的状态数据
 		TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
 		// 创建补偿失败记录
 		CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
-		// 添加游戏下注记录
+		// 添加游戏下注记录(单一钱包)
 		AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
 		// 变更游戏下注记录结算状态
 		AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
@@ -97,6 +105,8 @@ type (
 		AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 		// 变更游戏调整记录状态
 		AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
+		// 添加游戏下注记录(转账钱包)
+		AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -122,6 +132,17 @@ func (m *defaultLiveGameRpcInnerService) AddTripartiteTransferRecordStatus(ctx c
 	return client.AddTripartiteTransferRecordStatus(ctx, in, opts...)
 }
 
+// 转账钱包处理
+func (m *defaultLiveGameRpcInnerService) ProcessMessageTransferData(ctx context.Context, in *ProcessMessageTransferDataReq, opts ...grpc.CallOption) (*ProcessMessageTransferDataReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.ProcessMessageTransferData(ctx, in, opts...)
+}
+
+func (m *defaultLiveGameRpcInnerService) ProcessMessageTransferSend(ctx context.Context, in *ProcessMessageTransferSendReq, opts ...grpc.CallOption) (*ProcessMessageTransferSendReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.ProcessMessageTransferSend(ctx, in, opts...)
+}
+
 // 查询某一条的状态数据
 func (m *defaultLiveGameRpcInnerService) TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
@@ -134,7 +155,7 @@ func (m *defaultLiveGameRpcInnerService) CreateCompensationFailedRecord(ctx cont
 	return client.CreateCompensationFailedRecord(ctx, in, opts...)
 }
 
-// 添加游戏下注记录
+// 添加游戏下注记录(单一钱包)
 func (m *defaultLiveGameRpcInnerService) AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddGameBetRecord(ctx, in, opts...)
@@ -156,4 +177,10 @@ func (m *defaultLiveGameRpcInnerService) AddGameCancelRecord(ctx context.Context
 func (m *defaultLiveGameRpcInnerService) AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddGameAdjustmentRecord(ctx, in, opts...)
+}
+
+// 添加游戏下注记录(转账钱包)
+func (m *defaultLiveGameRpcInnerService) AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddTransferGameBetRecord(ctx, in, opts...)
 }
