@@ -705,6 +705,7 @@ message GetUserBetRecordListReq {
   int64 game_id = 8;           // 游戏ID
   int64 status = 9;            // 状态: 0-全部，1-未结算，2-已结算，3-已撤单，4-无效
   int64 sort_order = 10;        // 排序方式: 1-正序，2-倒序(有效投注金额)
+  string currency_code = 11;
 }
 // 通过类型获取游戏列表响应参数
 message GetUserBetRecordListReply {
@@ -728,7 +729,7 @@ message BetRecordInfo {
   string order_count = 10;             // 注单数量
   int64 bet_amount = 11;               // 投注金额
   int64 valid_bet_amount = 12;         // 有效投注金额
-  int64 lose_win_amount = 13;          // 输赢金额
+  int64 user_win_loss = 13;          // 输赢金额
 }
 
 message GetUserBetRecordSummaryReq {
@@ -738,12 +739,13 @@ message GetUserBetRecordSummaryReq {
   int64 game_platform_id = 6;  // 游戏平台ID
   int64 game_category_id = 7;  // 游戏类别ID
   int64 sort_order = 10;        // 排序方式: 1-正序，2-倒序(投注金额)
+  string currency_code = 11;
 }
 
 
 message GetUserBetRecordSummaryReply {
   repeated BetSummaryInfo bet_summary_list = 1;     // 注单详情列表
-  string total_order_count = 2;                      // 注单数量
+  int64 total_order_count = 2;                      // 注单数量
   int64 total_valid_bet_amount = 3;                  // 有效投注金额
   int64 total_lose_win_amount = 4;                   // 输赢金额
 }
@@ -756,9 +758,9 @@ message BetSummaryInfo {
   string game_category_name = 5;                    // 游戏类别名称
   int64 game_id = 6;                                // 游戏ID
   string game_name = 7;                             // 游戏名称
-  string order_count = 8;                           // 注单数量
+  int64 order_count = 8;                           // 注单数量
   int64 bet_amount = 9;                             // 投注金额
-  int64 lose_win_amount = 10;                       // 输赢金额
+  int64 user_win_loss = 10;                       // 输赢金额
 }
 
 
