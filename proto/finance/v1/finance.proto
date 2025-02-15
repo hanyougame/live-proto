@@ -329,6 +329,7 @@ message AddAuditReq {
   AuditWithdrawType audit_withdraw_type = 11; // 稽核模式
   repeated int64 game_platform_ids = 12; // 游戏平台Id
   string order_no = 13; // 订单号
+  int64 wallet_type = 14; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
 }
 
 message AddAuditResp {
@@ -398,6 +399,7 @@ message AddAudit {
   AuditWithdrawType audit_withdraw_type = 8; // 稽核模式
   repeated int64 game_platform_ids = 9; // 游戏平台Id
   string order_no = 10; // 订单号
+  int64 wallet_type = 11; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
 }
 message BatchAddAuditReq {
   int64 user_id = 1; // 用户Id
