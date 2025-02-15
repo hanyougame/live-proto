@@ -23,6 +23,8 @@ type (
 	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
+	BetRecordInfo                            = v1.BetRecordInfo
+	BetSummaryInfo                           = v1.BetSummaryInfo
 	CategoryNameBase                         = v1.CategoryNameBase
 	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
@@ -60,6 +62,10 @@ type (
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
+	GetUserBetRecordListReply                = v1.GetUserBetRecordListReply
+	GetUserBetRecordListReq                  = v1.GetUserBetRecordListReq
+	GetUserBetRecordSummaryReply             = v1.GetUserBetRecordSummaryReply
+	GetUserBetRecordSummaryReq               = v1.GetUserBetRecordSummaryReq
 	GetUserFavoriteIdsReply                  = v1.GetUserFavoriteIdsReply
 	GetUserFavoriteIdsReq                    = v1.GetUserFavoriteIdsReq
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply

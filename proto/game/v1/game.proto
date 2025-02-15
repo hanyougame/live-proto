@@ -315,220 +315,6 @@ service LiveGameCallbackRpcService{
 }
 
 
-// 通过货币获取游戏类型请求参数--
-message GetCategoryListByCurrReq {
-  int64 currency_id = 1;
-  string currency_code = 2;
-  string language_code = 3;
-  string language_id = 4;
-}
-
-message GetCategoryListByCurrReply {
-  repeated GameCategoryDetail rows = 20;
-}
-
-message GameCategoryDetail {
-  // 主键（自增 ID）
-  int64 game_category_id = 1;
-  // 三方游戏类型 ID
-  int64 tripartite_category_id = 2;
-  // 排名（表示货币在列表中的排序位置）
-  int64 rank = 3;
-  // 货币代码（例如 "INR"）
-  string currency_code = 4;
-  // 类型名称（JSON 格式）
-  string categoryName = 5;
-  // 类型开关（启用/禁用标志）
-  int64 category_switch = 6;
-  // 链接类型（1: 外部链接，2: 其他）
-  int64 link_type = 7;
-  // 链接地址
-  string link_url = 8;
-  // 打开方式（1: 默认，2: 外部 URL）
-  int64 open_method = 9;
-  // 图标地址
-  string icon_url = 10;
-  // 首页显示行数
-  int64 home_display_count = 11;
-  // 二级页面显示行数
-  int64 second_page_display_count = 12;
-  // 备注
-  string remark = 13;
-}
-
-message CategoryNameBase {
-  string language_code = 1;
-  string name = 2;
-}
-
-// 通过类型获取游戏列表请求参数
-message GetGameListByCategoryReq {
-  int64 page = 1;
-  int64 page_size = 2;
-  int64 game_category_id = 3;
-  string currency_code = 4;
-  int64 user_id = 5;
-}
-
-
-// 通过货币获取平台请求参数
-message GetPlatformListByCurrReq {
-  int64 currency_id = 1;
-  string currency_code = 2;
-}
-// 通过货币获取平台响应参数
-message GetPlatformListByCurrReply {
-  repeated GamePlatformDetail rows = 20;
-}
-
-// 游戏平台详情
-message GamePlatformDetail{
-  int64 game_platform_id = 1;                                // 自增主键，唯一标识每条记录
-  int64 rank = 2;                              // 排名，表示货币在列表中的排序位置
-  int64 tripartite_platform_id = 3;            // 三方的游戏厂商ID
-  int64 game_category_id = 4;                  // 游戏类型ID
-  string platform_name = 5;                    // 平台名称
-  string currency_code = 6;                    // 货币代码，例如“INR”
-  string style = 7;                           // 版式风格
-  double minimum_entry = 8;                   // 最低准入
-  int64 promotion_style = 9;                  // 宣传图样式1：默认,2：自定义
-  string icon = 10;                            // 图标
-  string background_color = 11;                // 图片背景
-  string logo_url = 12;                        // 品牌LOGO
-  string promotion_image_url = 13;             // 宣传图URL
-  string hot_image_url = 14;                   // 热门图URL
-  repeated PlatformRedirectionBase platform_redirection = 15; // 平台跳转方式的展示
-  int64 game_num = 16;                         // 游戏数量
-}
-
-
-// 平台跳转方式的基础类型
-message PlatformRedirectionBase {
-  int64 platform_os_type = 1;
-  int64 open_method_type = 2;
-}
-
-// 游戏详情
-message GameDetails {
-  int64 game_id = 1;
-  int64 tripartite_game_id = 2;
-  int64 rank = 3;
-  string currency_code = 4;
-  int64 game_platform_id = 5;
-  int64 game_category_id = 6;
-  string game_name = 7;
-  int64 is_favorite = 8; //  收藏状态(1:普通，2：收藏)
-  int64 wallet_model = 13;
-  int64 horizontal_support = 14;
-  int64 vertical_support = 15;
-  int64 try_game_support = 16;
-  string style = 17;
-  int64 icon_style = 18;
-  string logo_url = 19;
-  string icon_image_url = 20;
-}
-
-// 通过类型获取游戏列表响应参数
-message GetGameDetailsListReply {
-  int64 page = 1;
-  int64 page_size = 2;
-  int64 total = 3;
-  repeated GameDetails rows = 4;
-}
-
-
-// 通过平台获取游戏列表请求参数
-message GetGameListByPlatformReq {
-  int64 page = 1;
-  int64 page_size = 2;
-  int64 game_platform_id = 3;
-  string currency_code = 4;
-  int64 user_id = 5;
-}
-
-
-// 通过搜索获取游戏列表请求参数
-message GetGameListBySearchReq {
-  int64 page = 1;
-  int64 page_size = 2;
-  string search_value = 3;
-  string currency_code = 4;
-  int64 user_id = 5;
-  int64 game_platform_id = 6;
-  int64 game_category_id = 7;
-}
-
-// 添加收藏
-message GameHandelFavoriteReq {
-  int64 user_id = 1;
-  int64 game_id = 2;
-  string currency_code = 3;
-}
-// 通过搜索获取游戏列表请求参数
-message GetGameFavoriteListReq {
-  int64 page = 1;
-  int64 page_size = 2;
-  int64 user_id = 3;
-  int64 game_platform_id = 4;
-}
-
-message GetUserFavoriteIdsReq {
-  int64 user_id = 1;
-}
-message GetUserFavoriteIdsReply {
-  map<int64, bool> favoriteIds = 1;
-}
-
-
-// 热门游戏列表
-message GetHotGameListReq {
-  int64 page = 1;
-  int64 page_size = 2;
-  int64 game_platform_id = 3;
-  string currency_code = 4;
-  int64 user_id = 5;
-}
-
-// 热门平台列表
-message GetHotPlatformListReq {
-  string currency_code = 1;
-}
-message GetHotPlatformListReply {
-  repeated GamePlatformDetail rows = 1;
-}
-
-message GameDetailsReq {
-  int64 game_id = 1;
-  int64 user_id = 2;
-}
-
-service LiveGameRpcService{
-  // 通过货币获取游戏类型列表
-  rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
-  // 通过游戏类型获取游戏列表
-  rpc GetGameListByCategory(GetGameListByCategoryReq) returns (GetGameDetailsListReply);
-  // 通过货币获取平台列表
-  rpc GetPlatformListByCurr(GetPlatformListByCurrReq) returns (GetPlatformListByCurrReply);
-  // 通过平台获取游戏列表
-  rpc GetGameListByPlatform(GetGameListByPlatformReq) returns (GetGameDetailsListReply);
-  // 通过搜索获取游戏列表
-  rpc GetGameListBySearch(GetGameListBySearchReq) returns (GetGameDetailsListReply);
-  // 添加收藏
-  rpc GameAddFavorite(GameHandelFavoriteReq) returns (GameReply);
-  // 移除收藏
-  rpc GameRemoveFavorite(GameHandelFavoriteReq) returns (GameReply);
-  // 收藏列表
-  rpc GameFavoriteList(GetGameFavoriteListReq) returns (GetGameDetailsListReply);
-  // 热门游戏列表
-  rpc GetHotGameList(GetHotGameListReq) returns (GetGameDetailsListReply);
-  // 热门平台列表
-  rpc GetHotPlatformList(GetHotPlatformListReq) returns (GetHotPlatformListReply);
-  // 根据游戏ID获取游戏详情
-  rpc GetGameDetails(GameDetailsReq) returns (GameDetails);
-  // 获取用户收藏ID
-  rpc GetUserFavoriteIds(GetUserFavoriteIdsReq) returns (GetUserFavoriteIdsReply);
-}
-
 message AddTripartiteTransferRecordReq {
   string order_id = 1;                    // 内部转账订单号
   int64 user_id = 2;                      // 用户ID
@@ -718,4 +504,291 @@ service LiveGameRpcInnerService{
   rpc AddGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (AddGameBetBaseReply);
   // 添加游戏下注记录(转账钱包)
   rpc AddTransferGameBetRecord(AddTransferGameBetRecordReq) returns (GameReply);
+}
+
+
+// 通过货币获取游戏类型请求参数--
+message GetCategoryListByCurrReq {
+  int64 currency_id = 1;
+  string currency_code = 2;
+  string language_code = 3;
+  string language_id = 4;
+}
+
+message GetCategoryListByCurrReply {
+  repeated GameCategoryDetail rows = 20;
+}
+
+message GameCategoryDetail {
+  // 主键（自增 ID）
+  int64 game_category_id = 1;
+  // 三方游戏类型 ID
+  int64 tripartite_category_id = 2;
+  // 排名（表示货币在列表中的排序位置）
+  int64 rank = 3;
+  // 货币代码（例如 "INR"）
+  string currency_code = 4;
+  // 类型名称（JSON 格式）
+  string categoryName = 5;
+  // 类型开关（启用/禁用标志）
+  int64 category_switch = 6;
+  // 链接类型（1: 外部链接，2: 其他）
+  int64 link_type = 7;
+  // 链接地址
+  string link_url = 8;
+  // 打开方式（1: 默认，2: 外部 URL）
+  int64 open_method = 9;
+  // 图标地址
+  string icon_url = 10;
+  // 首页显示行数
+  int64 home_display_count = 11;
+  // 二级页面显示行数
+  int64 second_page_display_count = 12;
+  // 备注
+  string remark = 13;
+}
+
+message CategoryNameBase {
+  string language_code = 1;
+  string name = 2;
+}
+
+// 通过类型获取游戏列表请求参数
+message GetGameListByCategoryReq {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 game_category_id = 3;
+  string currency_code = 4;
+  int64 user_id = 5;
+}
+
+
+// 通过货币获取平台请求参数
+message GetPlatformListByCurrReq {
+  int64 currency_id = 1;
+  string currency_code = 2;
+}
+// 通过货币获取平台响应参数
+message GetPlatformListByCurrReply {
+  repeated GamePlatformDetail rows = 20;
+}
+
+// 游戏平台详情
+message GamePlatformDetail{
+  int64 game_platform_id = 1;                                // 自增主键，唯一标识每条记录
+  int64 rank = 2;                              // 排名，表示货币在列表中的排序位置
+  int64 tripartite_platform_id = 3;            // 三方的游戏厂商ID
+  int64 game_category_id = 4;                  // 游戏类型ID
+  string platform_name = 5;                    // 平台名称
+  string currency_code = 6;                    // 货币代码，例如“INR”
+  string style = 7;                           // 版式风格
+  double minimum_entry = 8;                   // 最低准入
+  int64 promotion_style = 9;                  // 宣传图样式1：默认,2：自定义
+  string icon = 10;                            // 图标
+  string background_color = 11;                // 图片背景
+  string logo_url = 12;                        // 品牌LOGO
+  string promotion_image_url = 13;             // 宣传图URL
+  string hot_image_url = 14;                   // 热门图URL
+  repeated PlatformRedirectionBase platform_redirection = 15; // 平台跳转方式的展示
+  int64 game_num = 16;                         // 游戏数量
+}
+
+
+// 平台跳转方式的基础类型
+message PlatformRedirectionBase {
+  int64 platform_os_type = 1;
+  int64 open_method_type = 2;
+}
+
+// 游戏详情
+message GameDetails {
+  int64 game_id = 1;
+  int64 tripartite_game_id = 2;
+  int64 rank = 3;
+  string currency_code = 4;
+  int64 game_platform_id = 5;
+  int64 game_category_id = 6;
+  string game_name = 7;
+  int64 is_favorite = 8; //  收藏状态(1:普通，2：收藏)
+  int64 wallet_model = 13;
+  int64 horizontal_support = 14;
+  int64 vertical_support = 15;
+  int64 try_game_support = 16;
+  string style = 17;
+  int64 icon_style = 18;
+  string logo_url = 19;
+  string icon_image_url = 20;
+}
+
+// 通过类型获取游戏列表响应参数
+message GetGameDetailsListReply {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 total = 3;
+  repeated GameDetails rows = 4;
+}
+
+
+// 通过平台获取游戏列表请求参数
+message GetGameListByPlatformReq {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 game_platform_id = 3;
+  string currency_code = 4;
+  int64 user_id = 5;
+}
+
+
+// 通过搜索获取游戏列表请求参数
+message GetGameListBySearchReq {
+  int64 page = 1;
+  int64 page_size = 2;
+  string search_value = 3;
+  string currency_code = 4;
+  int64 user_id = 5;
+  int64 game_platform_id = 6;
+  int64 game_category_id = 7;
+}
+
+// 添加收藏
+message GameHandelFavoriteReq {
+  int64 user_id = 1;
+  int64 game_id = 2;
+  string currency_code = 3;
+}
+// 通过搜索获取游戏列表请求参数
+message GetGameFavoriteListReq {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 user_id = 3;
+  int64 game_platform_id = 4;
+}
+
+message GetUserFavoriteIdsReq {
+  int64 user_id = 1;
+}
+message GetUserFavoriteIdsReply {
+  map<int64, bool> favoriteIds = 1;
+}
+
+
+// 热门游戏列表
+message GetHotGameListReq {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 game_platform_id = 3;
+  string currency_code = 4;
+  int64 user_id = 5;
+}
+
+// 热门平台列表
+message GetHotPlatformListReq {
+  string currency_code = 1;
+}
+message GetHotPlatformListReply {
+  repeated GamePlatformDetail rows = 1;
+}
+
+message GameDetailsReq {
+  int64 game_id = 1;
+  int64 user_id = 2;
+}
+
+message GetUserBetRecordListReq {
+  int64 user_id = 1;
+  int64 page = 2;         // 页码
+  int64 page_size = 3 ;   // 每页数量
+  int64 start_time = 4;        // 查询下注开始时间
+  int64 end_time = 5;          // 查询下注结束时间
+  int64 game_platform_id = 6;  // 游戏平台ID
+  int64 game_category_id = 7;  // 游戏类别ID
+  int64 game_id = 8;           // 游戏ID
+  int64 status = 9;            // 状态: 0-全部，1-未结算，2-已结算，3-已撤单，4-无效
+  int64 sort_order = 10;        // 排序方式: 1-正序，2-倒序(有效投注金额)
+}
+// 通过类型获取游戏列表响应参数
+message GetUserBetRecordListReply {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 total = 3;
+  repeated BetRecordInfo rows = 4;
+}
+
+// 投注详情
+message BetRecordInfo {
+  string order_id = 1;                 // 注单编号
+  int64 bet_time = 2;                  // 投注时间
+  int64 status = 3;                    // 状态: 1-未结算，2-已结算，3-已撤单，4-无效
+  int64 game_platform_id = 4;          // 游戏平台ID
+  string game_platform_name = 5;       // 游戏平台名称
+  int64 game_category_id = 6;          // 游戏类别ID
+  string game_category_name = 7;       // 游戏类别名称
+  int64 game_id = 8;                   // 游戏ID
+  string game_name = 9;                // 游戏名称
+  string order_count = 10;             // 注单数量
+  int64 bet_amount = 11;               // 投注金额
+  int64 valid_bet_amount = 12;         // 有效投注金额
+  int64 lose_win_amount = 13;          // 输赢金额
+}
+
+message GetUserBetRecordSummaryReq {
+  int64 user_id = 1;
+  int64 start_time = 4;        // 查询下注开始时间
+  int64 end_time = 5;          // 查询下注结束时间
+  int64 game_platform_id = 6;  // 游戏平台ID
+  int64 game_category_id = 7;  // 游戏类别ID
+  int64 sort_order = 10;        // 排序方式: 1-正序，2-倒序(投注金额)
+}
+
+
+message GetUserBetRecordSummaryReply {
+  repeated BetSummaryInfo bet_summary_list = 1;     // 注单详情列表
+  string total_order_count = 2;                      // 注单数量
+  int64 total_valid_bet_amount = 3;                  // 有效投注金额
+  int64 total_lose_win_amount = 4;                   // 输赢金额
+}
+
+message BetSummaryInfo {
+  string bet_time = 1;                              // 投注时间
+  int64 game_platform_id = 2;                       // 游戏平台ID
+  string game_platform_name = 3;                    // 游戏平台名称
+  int64 game_category_id = 4;                       // 游戏类别ID
+  string game_category_name = 5;                    // 游戏类别名称
+  int64 game_id = 6;                                // 游戏ID
+  string game_name = 7;                             // 游戏名称
+  string order_count = 8;                           // 注单数量
+  int64 bet_amount = 9;                             // 投注金额
+  int64 lose_win_amount = 10;                       // 输赢金额
+}
+
+
+service LiveGameRpcService{
+  // 通过货币获取游戏类型列表
+  rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
+  // 通过游戏类型获取游戏列表
+  rpc GetGameListByCategory(GetGameListByCategoryReq) returns (GetGameDetailsListReply);
+  // 通过货币获取平台列表
+  rpc GetPlatformListByCurr(GetPlatformListByCurrReq) returns (GetPlatformListByCurrReply);
+  // 通过平台获取游戏列表
+  rpc GetGameListByPlatform(GetGameListByPlatformReq) returns (GetGameDetailsListReply);
+  // 通过搜索获取游戏列表
+  rpc GetGameListBySearch(GetGameListBySearchReq) returns (GetGameDetailsListReply);
+  // 添加收藏
+  rpc GameAddFavorite(GameHandelFavoriteReq) returns (GameReply);
+  // 移除收藏
+  rpc GameRemoveFavorite(GameHandelFavoriteReq) returns (GameReply);
+  // 收藏列表
+  rpc GameFavoriteList(GetGameFavoriteListReq) returns (GetGameDetailsListReply);
+  // 热门游戏列表
+  rpc GetHotGameList(GetHotGameListReq) returns (GetGameDetailsListReply);
+  // 热门平台列表
+  rpc GetHotPlatformList(GetHotPlatformListReq) returns (GetHotPlatformListReply);
+  // 根据游戏ID获取游戏详情
+  rpc GetGameDetails(GameDetailsReq) returns (GameDetails);
+  // 获取用户收藏ID
+  rpc GetUserFavoriteIds(GetUserFavoriteIdsReq) returns (GetUserFavoriteIdsReply);
+  // 获取用户投注记录
+  rpc GetUserBetRecordList(GetUserBetRecordListReq) returns (GetUserBetRecordListReply);
+  // 获取用户投注报表
+  rpc GetUserBetRecordSummary(GetUserBetRecordSummaryReq) returns (GetUserBetRecordSummaryReply);
 }
