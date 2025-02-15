@@ -370,6 +370,7 @@ message ProcessMessageTransferSendReq {
   int64 balance = 2;         //用户余额
   int64 game_id = 3;  // 游戏Id
   string order_id = 4;        //订单编号
+  int64 game_platform_id = 6;             // 平台ID
 }
 
 message ProcessMessageTransferSendReply {
@@ -593,6 +594,20 @@ message GamePlatformDetail{
   int64 game_num = 16;                         // 游戏数量
 }
 
+// 通过货币获取平台响应参数
+message GetPlatListSimpleByCurrReply {
+  repeated GamePlatformSimpleDetail rows = 20;
+}
+
+// 游戏平台详情
+message GamePlatformSimpleDetail{
+  int64 game_platform_id = 1;                                // 自增主键，唯一标识每条记录
+  int64 rank = 2;                              // 排名，表示货币在列表中的排序位置
+  int64 tripartite_platform_id = 3;            // 三方的游戏厂商ID
+  int64 game_category_id = 4;                  // 游戏类型ID
+  string platform_name = 5;                    // 平台名称
+  string currency_code = 6;                    // 货币代码，例如“INR”
+}
 
 // 平台跳转方式的基础类型
 message PlatformRedirectionBase {
@@ -771,6 +786,8 @@ service LiveGameRpcService{
   rpc GetGameListByCategory(GetGameListByCategoryReq) returns (GetGameDetailsListReply);
   // 通过货币获取平台列表
   rpc GetPlatformListByCurr(GetPlatformListByCurrReq) returns (GetPlatformListByCurrReply);
+  // 通过货币获取平台列表(简单信息)
+  rpc GetPlatListSimpleByCurr(GetPlatformListByCurrReq) returns (GetPlatListSimpleByCurrReply);
   // 通过平台获取游戏列表
   rpc GetGameListByPlatform(GetGameListByPlatformReq) returns (GetGameDetailsListReply);
   // 通过搜索获取游戏列表

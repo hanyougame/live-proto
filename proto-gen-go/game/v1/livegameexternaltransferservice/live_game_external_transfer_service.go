@@ -33,6 +33,7 @@ type (
 	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
 	GamePlatformDetail                       = v1.GamePlatformDetail
+	GamePlatformSimpleDetail                 = v1.GamePlatformSimpleDetail
 	GameReply                                = v1.GameReply
 	GameReq                                  = v1.GameReq
 	GameUserAdjustmentReply                  = v1.GameUserAdjustmentReply
@@ -60,6 +61,7 @@ type (
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
+	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
 	GetUserBetRecordListReply                = v1.GetUserBetRecordListReply

@@ -1425,6 +1425,7 @@ const (
 	LiveGameRpcService_GetGameCategoryListByCurr_FullMethodName = "/game.v1.LiveGameRpcService/GetGameCategoryListByCurr"
 	LiveGameRpcService_GetGameListByCategory_FullMethodName     = "/game.v1.LiveGameRpcService/GetGameListByCategory"
 	LiveGameRpcService_GetPlatformListByCurr_FullMethodName     = "/game.v1.LiveGameRpcService/GetPlatformListByCurr"
+	LiveGameRpcService_GetPlatListSimpleByCurr_FullMethodName   = "/game.v1.LiveGameRpcService/GetPlatListSimpleByCurr"
 	LiveGameRpcService_GetGameListByPlatform_FullMethodName     = "/game.v1.LiveGameRpcService/GetGameListByPlatform"
 	LiveGameRpcService_GetGameListBySearch_FullMethodName       = "/game.v1.LiveGameRpcService/GetGameListBySearch"
 	LiveGameRpcService_GameAddFavorite_FullMethodName           = "/game.v1.LiveGameRpcService/GameAddFavorite"
@@ -1448,6 +1449,8 @@ type LiveGameRpcServiceClient interface {
 	GetGameListByCategory(ctx context.Context, in *GetGameListByCategoryReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 	// 通过货币获取平台列表
 	GetPlatformListByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatformListByCurrReply, error)
+	// 通过货币获取平台列表(简单信息)
+	GetPlatListSimpleByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatListSimpleByCurrReply, error)
 	// 通过平台获取游戏列表
 	GetGameListByPlatform(ctx context.Context, in *GetGameListByPlatformReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 	// 通过搜索获取游戏列表
@@ -1504,6 +1507,16 @@ func (c *liveGameRpcServiceClient) GetPlatformListByCurr(ctx context.Context, in
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetPlatformListByCurrReply)
 	err := c.cc.Invoke(ctx, LiveGameRpcService_GetPlatformListByCurr_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcServiceClient) GetPlatListSimpleByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatListSimpleByCurrReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPlatListSimpleByCurrReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_GetPlatListSimpleByCurr_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1630,6 +1643,8 @@ type LiveGameRpcServiceServer interface {
 	GetGameListByCategory(context.Context, *GetGameListByCategoryReq) (*GetGameDetailsListReply, error)
 	// 通过货币获取平台列表
 	GetPlatformListByCurr(context.Context, *GetPlatformListByCurrReq) (*GetPlatformListByCurrReply, error)
+	// 通过货币获取平台列表(简单信息)
+	GetPlatListSimpleByCurr(context.Context, *GetPlatformListByCurrReq) (*GetPlatListSimpleByCurrReply, error)
 	// 通过平台获取游戏列表
 	GetGameListByPlatform(context.Context, *GetGameListByPlatformReq) (*GetGameDetailsListReply, error)
 	// 通过搜索获取游戏列表
@@ -1670,6 +1685,9 @@ func (UnimplementedLiveGameRpcServiceServer) GetGameListByCategory(context.Conte
 }
 func (UnimplementedLiveGameRpcServiceServer) GetPlatformListByCurr(context.Context, *GetPlatformListByCurrReq) (*GetPlatformListByCurrReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlatformListByCurr not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) GetPlatListSimpleByCurr(context.Context, *GetPlatformListByCurrReq) (*GetPlatListSimpleByCurrReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPlatListSimpleByCurr not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) GetGameListByPlatform(context.Context, *GetGameListByPlatformReq) (*GetGameDetailsListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGameListByPlatform not implemented")
@@ -1775,6 +1793,24 @@ func _LiveGameRpcService_GetPlatformListByCurr_Handler(srv interface{}, ctx cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LiveGameRpcServiceServer).GetPlatformListByCurr(ctx, req.(*GetPlatformListByCurrReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcService_GetPlatListSimpleByCurr_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPlatformListByCurrReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).GetPlatListSimpleByCurr(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_GetPlatListSimpleByCurr_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).GetPlatListSimpleByCurr(ctx, req.(*GetPlatformListByCurrReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1995,6 +2031,10 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPlatformListByCurr",
 			Handler:    _LiveGameRpcService_GetPlatformListByCurr_Handler,
+		},
+		{
+			MethodName: "GetPlatListSimpleByCurr",
+			Handler:    _LiveGameRpcService_GetPlatListSimpleByCurr_Handler,
 		},
 		{
 			MethodName: "GetGameListByPlatform",
