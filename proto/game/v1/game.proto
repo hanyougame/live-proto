@@ -698,8 +698,8 @@ message GetUserBetRecordListReq {
   int64 user_id = 1;
   int64 page = 2;         // 页码
   int64 page_size = 3 ;   // 每页数量
-  int64 start_time = 4;        // 查询下注开始时间
-  int64 end_time = 5;          // 查询下注结束时间
+  int64 start_time = 4;        // 查询下注开始时间(毫秒)
+  int64 end_time = 5;          // 查询下注结束时间(毫秒)
   int64 game_platform_id = 6;  // 游戏平台ID
   int64 game_category_id = 7;  // 游戏类别ID
   int64 game_id = 8;           // 游戏ID
@@ -734,8 +734,8 @@ message BetRecordInfo {
 
 message GetUserBetRecordSummaryReq {
   int64 user_id = 1;
-  int64 start_time = 4;        // 查询下注开始时间
-  int64 end_time = 5;          // 查询下注结束时间
+  int64 start_time = 4;        // 查询下注开始时间(毫秒)
+  int64 end_time = 5;          // 查询下注结束时间(毫秒)
   int64 game_platform_id = 6;  // 游戏平台ID
   int64 game_category_id = 7;  // 游戏类别ID
   int64 sort_order = 10;        // 排序方式: 1-正序，2-倒序(投注金额)

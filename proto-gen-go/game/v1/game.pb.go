@@ -5481,8 +5481,8 @@ type GetUserBetRecordListReq struct {
 	UserId         int64  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	Page           int64  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`                                             // 页码
 	PageSize       int64  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`                     // 每页数量
-	StartTime      int64  `protobuf:"varint,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                  // 查询下注开始时间
-	EndTime        int64  `protobuf:"varint,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                        // 查询下注结束时间
+	StartTime      int64  `protobuf:"varint,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                  // 查询下注开始时间(毫秒)
+	EndTime        int64  `protobuf:"varint,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                        // 查询下注结束时间(毫秒)
 	GamePlatformId int64  `protobuf:"varint,6,opt,name=game_platform_id,json=gamePlatformId,proto3" json:"game_platform_id,omitempty"` // 游戏平台ID
 	GameCategoryId int64  `protobuf:"varint,7,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"` // 游戏类别ID
 	GameId         int64  `protobuf:"varint,8,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`                           // 游戏ID
@@ -5816,8 +5816,8 @@ type GetUserBetRecordSummaryReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	UserId         int64  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	StartTime      int64  `protobuf:"varint,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                  // 查询下注开始时间
-	EndTime        int64  `protobuf:"varint,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                        // 查询下注结束时间
+	StartTime      int64  `protobuf:"varint,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                  // 查询下注开始时间(毫秒)
+	EndTime        int64  `protobuf:"varint,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                        // 查询下注结束时间(毫秒)
 	GamePlatformId int64  `protobuf:"varint,6,opt,name=game_platform_id,json=gamePlatformId,proto3" json:"game_platform_id,omitempty"` // 游戏平台ID
 	GameCategoryId int64  `protobuf:"varint,7,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"` // 游戏类别ID
 	SortOrder      int64  `protobuf:"varint,10,opt,name=sort_order,json=sortOrder,proto3" json:"sort_order,omitempty"`                 // 排序方式: 1-正序，2-倒序(投注金额)
