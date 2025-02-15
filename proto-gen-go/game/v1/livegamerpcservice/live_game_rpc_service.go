@@ -23,6 +23,8 @@ type (
 	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
+	BetRecordInfo                            = v1.BetRecordInfo
+	BetSummaryInfo                           = v1.BetSummaryInfo
 	CategoryNameBase                         = v1.CategoryNameBase
 	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
@@ -60,6 +62,10 @@ type (
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
+	GetUserBetRecordListReply                = v1.GetUserBetRecordListReply
+	GetUserBetRecordListReq                  = v1.GetUserBetRecordListReq
+	GetUserBetRecordSummaryReply             = v1.GetUserBetRecordSummaryReply
+	GetUserBetRecordSummaryReq               = v1.GetUserBetRecordSummaryReq
 	GetUserFavoriteIdsReply                  = v1.GetUserFavoriteIdsReply
 	GetUserFavoriteIdsReq                    = v1.GetUserFavoriteIdsReq
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
@@ -110,6 +116,10 @@ type (
 		GetGameDetails(ctx context.Context, in *GameDetailsReq, opts ...grpc.CallOption) (*GameDetails, error)
 		// 获取用户收藏ID
 		GetUserFavoriteIds(ctx context.Context, in *GetUserFavoriteIdsReq, opts ...grpc.CallOption) (*GetUserFavoriteIdsReply, error)
+		// 获取用户投注记录
+		GetUserBetRecordList(ctx context.Context, in *GetUserBetRecordListReq, opts ...grpc.CallOption) (*GetUserBetRecordListReply, error)
+		// 获取用户投注报表
+		GetUserBetRecordSummary(ctx context.Context, in *GetUserBetRecordSummaryReq, opts ...grpc.CallOption) (*GetUserBetRecordSummaryReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -193,4 +203,16 @@ func (m *defaultLiveGameRpcService) GetGameDetails(ctx context.Context, in *Game
 func (m *defaultLiveGameRpcService) GetUserFavoriteIds(ctx context.Context, in *GetUserFavoriteIdsReq, opts ...grpc.CallOption) (*GetUserFavoriteIdsReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetUserFavoriteIds(ctx, in, opts...)
+}
+
+// 获取用户投注记录
+func (m *defaultLiveGameRpcService) GetUserBetRecordList(ctx context.Context, in *GetUserBetRecordListReq, opts ...grpc.CallOption) (*GetUserBetRecordListReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetUserBetRecordList(ctx, in, opts...)
+}
+
+// 获取用户投注报表
+func (m *defaultLiveGameRpcService) GetUserBetRecordSummary(ctx context.Context, in *GetUserBetRecordSummaryReq, opts ...grpc.CallOption) (*GetUserBetRecordSummaryReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetUserBetRecordSummary(ctx, in, opts...)
 }
