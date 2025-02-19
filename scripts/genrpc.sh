@@ -1,6 +1,9 @@
 #!/bin/bash
 # genrpc.sh
 
+# Turn on command echoing
+set -x
+
 # 参数1: 服务名称
 if [ $# -lt 1 ]; then
     echo "Usage: $0 <service-name>"
