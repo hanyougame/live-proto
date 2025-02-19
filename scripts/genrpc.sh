@@ -8,7 +8,7 @@ if [ $# -lt 1 ]; then
 fi
 
 SERVICE=$1
-TARGET_DIR="../live-rpc-server/app"
+TARGET_DIR="../rpc-server/app"
 RPC_CLIENT_DIR="./proto-gen-go/${SERVICE}/v1"
 # 检查目标目录是否存在，不存在则创建
 mkdir -p ${TARGET_DIR}/${SERVICE}
