@@ -120,8 +120,9 @@ message WalletTransferOutGameReply{
 
 message GetWalletTransferBalanceReq{
   int64 platform_key = 1;    //游戏平台key  唯一标识
-  int64 game_key = 2;        //游戏标志
-  int64  user_id = 3;         //用户ID
+  int64 game_key = 2;        //
+  int64 tripartite_platform_id = 3; // 三方平台ID
+  int64  user_id = 4;         //用户ID
   string currency_code = 5;     //货币Code
 }
 
