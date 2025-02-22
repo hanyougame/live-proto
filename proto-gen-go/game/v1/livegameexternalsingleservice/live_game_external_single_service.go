@@ -29,6 +29,7 @@ type (
 	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
 	GameCategoryDetail                       = v1.GameCategoryDetail
+	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
 	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
@@ -36,6 +37,7 @@ type (
 	GamePlatformSimpleDetail                 = v1.GamePlatformSimpleDetail
 	GameReply                                = v1.GameReply
 	GameReq                                  = v1.GameReq
+	GameSimpleDetails                        = v1.GameSimpleDetails
 	GameUserAdjustmentReply                  = v1.GameUserAdjustmentReply
 	GameUserAdjustmentReq                    = v1.GameUserAdjustmentReq
 	GameUserBetCancelReply                   = v1.GameUserBetCancelReply
@@ -46,11 +48,13 @@ type (
 	GameUserRewardReq                        = v1.GameUserRewardReq
 	GetCategoryListByCurrReply               = v1.GetCategoryListByCurrReply
 	GetCategoryListByCurrReq                 = v1.GetCategoryListByCurrReq
+	GetCategorySimpleListByCurrReply         = v1.GetCategorySimpleListByCurrReply
 	GetGameDetailsListReply                  = v1.GetGameDetailsListReply
 	GetGameFavoriteListReq                   = v1.GetGameFavoriteListReq
 	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
 	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
 	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
+	GetGameSimpleListBySearchReply           = v1.GetGameSimpleListBySearchReply
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply

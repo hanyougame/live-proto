@@ -550,6 +550,20 @@ message GameCategoryDetail {
   string remark = 13;
 }
 
+
+message GetCategorySimpleListByCurrReply {
+  repeated GameCategorySimpleDetail rows = 1;
+}
+
+message GameCategorySimpleDetail {
+  int64 game_category_id = 1; // 主键（自增 ID）
+  int64 tripartite_category_id = 2;  // 三方游戏类型 ID
+  int64 rank = 3; // 排名（表示货币在列表中的排序位置）
+  string currency_code = 4; // 货币代码（例如 "INR"）
+  string categoryName = 5; // 类型名称（JSON 格式）
+  string icon_url = 10; // 图标地址
+}
+
 message CategoryNameBase {
   string language_code = 1;
   string name = 2;
@@ -637,6 +651,18 @@ message GameDetails {
   string icon_image_url = 20;
 }
 
+message GameSimpleDetails {
+  int64 game_id = 1;
+  int64 tripartite_game_id = 2;
+  int64 rank = 3;
+  string currency_code = 4;
+  int64 game_platform_id = 5;
+  int64 game_category_id = 6;
+  string game_name = 7;
+  string logo_url = 19;
+  string icon_image_url = 20;
+}
+
 // 通过类型获取游戏列表响应参数
 message GetGameDetailsListReply {
   int64 page = 1;
@@ -644,7 +670,12 @@ message GetGameDetailsListReply {
   int64 total = 3;
   repeated GameDetails rows = 4;
 }
-
+message GetGameSimpleListBySearchReply {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 total = 3;
+  repeated GameSimpleDetails rows = 4;
+}
 
 // 通过平台获取游戏列表请求参数
 message GetGameListByPlatformReq {
@@ -784,6 +815,8 @@ message BetSummaryInfo {
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
   rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
+  // 通过货币获取游戏类型列表(简单信息)
+  rpc GetGameCategorySimpleListByCurr(GetCategoryListByCurrReq) returns (GetCategorySimpleListByCurrReply);
   // 通过游戏类型获取游戏列表
   rpc GetGameListByCategory(GetGameListByCategoryReq) returns (GetGameDetailsListReply);
   // 通过货币获取平台列表
@@ -794,6 +827,8 @@ service LiveGameRpcService{
   rpc GetGameListByPlatform(GetGameListByPlatformReq) returns (GetGameDetailsListReply);
   // 通过搜索获取游戏列表
   rpc GetGameListBySearch(GetGameListBySearchReq) returns (GetGameDetailsListReply);
+  // 通过搜索获取游戏列表 (简单信息)
+  rpc GetGameSimpleListBySearch(GetGameListBySearchReq) returns (GetGameSimpleListBySearchReply);
   // 添加收藏
   rpc GameAddFavorite(GameHandelFavoriteReq) returns (GameReply);
   // 移除收藏

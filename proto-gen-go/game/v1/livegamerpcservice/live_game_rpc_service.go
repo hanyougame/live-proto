@@ -29,6 +29,7 @@ type (
 	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
 	GameCategoryDetail                       = v1.GameCategoryDetail
+	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
 	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
@@ -36,6 +37,7 @@ type (
 	GamePlatformSimpleDetail                 = v1.GamePlatformSimpleDetail
 	GameReply                                = v1.GameReply
 	GameReq                                  = v1.GameReq
+	GameSimpleDetails                        = v1.GameSimpleDetails
 	GameUserAdjustmentReply                  = v1.GameUserAdjustmentReply
 	GameUserAdjustmentReq                    = v1.GameUserAdjustmentReq
 	GameUserBetCancelReply                   = v1.GameUserBetCancelReply
@@ -46,11 +48,13 @@ type (
 	GameUserRewardReq                        = v1.GameUserRewardReq
 	GetCategoryListByCurrReply               = v1.GetCategoryListByCurrReply
 	GetCategoryListByCurrReq                 = v1.GetCategoryListByCurrReq
+	GetCategorySimpleListByCurrReply         = v1.GetCategorySimpleListByCurrReply
 	GetGameDetailsListReply                  = v1.GetGameDetailsListReply
 	GetGameFavoriteListReq                   = v1.GetGameFavoriteListReq
 	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
 	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
 	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
+	GetGameSimpleListBySearchReply           = v1.GetGameSimpleListBySearchReply
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply
@@ -96,6 +100,8 @@ type (
 	LiveGameRpcService interface {
 		// 通过货币获取游戏类型列表
 		GetGameCategoryListByCurr(ctx context.Context, in *GetCategoryListByCurrReq, opts ...grpc.CallOption) (*GetCategoryListByCurrReply, error)
+		// 通过货币获取游戏类型列表(简单信息)
+		GetGameCategorySimpleListByCurr(ctx context.Context, in *GetCategoryListByCurrReq, opts ...grpc.CallOption) (*GetCategorySimpleListByCurrReply, error)
 		// 通过游戏类型获取游戏列表
 		GetGameListByCategory(ctx context.Context, in *GetGameListByCategoryReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 		// 通过货币获取平台列表
@@ -106,6 +112,8 @@ type (
 		GetGameListByPlatform(ctx context.Context, in *GetGameListByPlatformReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 		// 通过搜索获取游戏列表
 		GetGameListBySearch(ctx context.Context, in *GetGameListBySearchReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
+		// 通过搜索获取游戏列表 (简单信息)
+		GetGameSimpleListBySearch(ctx context.Context, in *GetGameListBySearchReq, opts ...grpc.CallOption) (*GetGameSimpleListBySearchReply, error)
 		// 添加收藏
 		GameAddFavorite(ctx context.Context, in *GameHandelFavoriteReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 移除收藏
@@ -143,6 +151,12 @@ func (m *defaultLiveGameRpcService) GetGameCategoryListByCurr(ctx context.Contex
 	return client.GetGameCategoryListByCurr(ctx, in, opts...)
 }
 
+// 通过货币获取游戏类型列表(简单信息)
+func (m *defaultLiveGameRpcService) GetGameCategorySimpleListByCurr(ctx context.Context, in *GetCategoryListByCurrReq, opts ...grpc.CallOption) (*GetCategorySimpleListByCurrReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetGameCategorySimpleListByCurr(ctx, in, opts...)
+}
+
 // 通过游戏类型获取游戏列表
 func (m *defaultLiveGameRpcService) GetGameListByCategory(ctx context.Context, in *GetGameListByCategoryReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
@@ -171,6 +185,12 @@ func (m *defaultLiveGameRpcService) GetGameListByPlatform(ctx context.Context, i
 func (m *defaultLiveGameRpcService) GetGameListBySearch(ctx context.Context, in *GetGameListBySearchReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetGameListBySearch(ctx, in, opts...)
+}
+
+// 通过搜索获取游戏列表 (简单信息)
+func (m *defaultLiveGameRpcService) GetGameSimpleListBySearch(ctx context.Context, in *GetGameListBySearchReq, opts ...grpc.CallOption) (*GetGameSimpleListBySearchReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetGameSimpleListBySearch(ctx, in, opts...)
 }
 
 // 添加收藏
