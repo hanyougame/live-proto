@@ -930,6 +930,8 @@ const (
 	LiveGameRpcInnerService_AddGameCancelRecord_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddGameCancelRecord"
 	LiveGameRpcInnerService_AddGameAdjustmentRecord_FullMethodName           = "/game.v1.LiveGameRpcInnerService/AddGameAdjustmentRecord"
 	LiveGameRpcInnerService_AddTransferGameBetRecord_FullMethodName          = "/game.v1.LiveGameRpcInnerService/AddTransferGameBetRecord"
+	LiveGameRpcInnerService_SendGameBetBetMQ_FullMethodName                  = "/game.v1.LiveGameRpcInnerService/SendGameBetBetMQ"
+	LiveGameRpcInnerService_SendGameBetBetSettlementMQ_FullMethodName        = "/game.v1.LiveGameRpcInnerService/SendGameBetBetSettlementMQ"
 )
 
 // LiveGameRpcInnerServiceClient is the client API for LiveGameRpcInnerService service.
@@ -957,6 +959,10 @@ type LiveGameRpcInnerServiceClient interface {
 	AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 	// 添加游戏下注记录(转账钱包)
 	AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+	// 发送游戏下注MQ
+	SendGameBetBetMQ(ctx context.Context, in *SendGameBetBetMQReq, opts ...grpc.CallOption) (*GameReply, error)
+	// 发送游戏下注结算MQ
+	SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error)
 }
 
 type liveGameRpcInnerServiceClient struct {
@@ -1077,6 +1083,26 @@ func (c *liveGameRpcInnerServiceClient) AddTransferGameBetRecord(ctx context.Con
 	return out, nil
 }
 
+func (c *liveGameRpcInnerServiceClient) SendGameBetBetMQ(ctx context.Context, in *SendGameBetBetMQReq, opts ...grpc.CallOption) (*GameReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GameReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_SendGameBetBetMQ_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcInnerServiceClient) SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GameReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_SendGameBetBetSettlementMQ_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcInnerServiceServer is the server API for LiveGameRpcInnerService service.
 // All implementations must embed UnimplementedLiveGameRpcInnerServiceServer
 // for forward compatibility.
@@ -1102,6 +1128,10 @@ type LiveGameRpcInnerServiceServer interface {
 	AddGameAdjustmentRecord(context.Context, *AddGameAdjustmentRecordReq) (*AddGameBetBaseReply, error)
 	// 添加游戏下注记录(转账钱包)
 	AddTransferGameBetRecord(context.Context, *AddTransferGameBetRecordReq) (*GameReply, error)
+	// 发送游戏下注MQ
+	SendGameBetBetMQ(context.Context, *SendGameBetBetMQReq) (*GameReply, error)
+	// 发送游戏下注结算MQ
+	SendGameBetBetSettlementMQ(context.Context, *SendGameBetBetSettlementMQReq) (*GameReply, error)
 	mustEmbedUnimplementedLiveGameRpcInnerServiceServer()
 }
 
@@ -1144,6 +1174,12 @@ func (UnimplementedLiveGameRpcInnerServiceServer) AddGameAdjustmentRecord(contex
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) AddTransferGameBetRecord(context.Context, *AddTransferGameBetRecordReq) (*GameReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddTransferGameBetRecord not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) SendGameBetBetMQ(context.Context, *SendGameBetBetMQReq) (*GameReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendGameBetBetMQ not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) SendGameBetBetSettlementMQ(context.Context, *SendGameBetBetSettlementMQReq) (*GameReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendGameBetBetSettlementMQ not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) mustEmbedUnimplementedLiveGameRpcInnerServiceServer() {
 }
@@ -1365,6 +1401,42 @@ func _LiveGameRpcInnerService_AddTransferGameBetRecord_Handler(srv interface{}, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcInnerService_SendGameBetBetMQ_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendGameBetBetMQReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).SendGameBetBetMQ(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_SendGameBetBetMQ_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).SendGameBetBetMQ(ctx, req.(*SendGameBetBetMQReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcInnerService_SendGameBetBetSettlementMQ_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendGameBetBetSettlementMQReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).SendGameBetBetSettlementMQ(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_SendGameBetBetSettlementMQ_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).SendGameBetBetSettlementMQ(ctx, req.(*SendGameBetBetSettlementMQReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcInnerService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1415,6 +1487,14 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddTransferGameBetRecord",
 			Handler:    _LiveGameRpcInnerService_AddTransferGameBetRecord_Handler,
+		},
+		{
+			MethodName: "SendGameBetBetMQ",
+			Handler:    _LiveGameRpcInnerService_SendGameBetBetMQ_Handler,
+		},
+		{
+			MethodName: "SendGameBetBetSettlementMQ",
+			Handler:    _LiveGameRpcInnerService_SendGameBetBetSettlementMQ_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

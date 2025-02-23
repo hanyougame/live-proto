@@ -484,6 +484,35 @@ message AddTransferGameBetRecordReq {
   repeated TransferBetRecord record_list = 1; //下注订单列表
 }
 
+
+
+// 定义 SendGameBetBetMQReq 消息
+message SendGameBetBetMQReq {
+  int64 user_id = 1;          // 用户ID
+  string user_account = 2;    // 用户账号
+  string currency_code = 3;   // 货币代码
+  int64 bet_amount = 4;       // 投注金额（不包含撤单金额）
+  int64 win_amount = 5;       // 中奖金额
+  int64 valid_bet_amount = 6; // 有效投注金额
+  int64 game_id = 7;          // 游戏ID
+  int64 game_category = 8;    // 游戏类型
+  int64 platform_id = 9;      // 游戏平台ID
+  int64 settlement_time = 10; // 结算时间
+}
+// 定义 SendGameBetBetSettlementMQReq 消息
+message SendGameBetBetSettlementMQReq {
+  int64 user_id = 1;          // 用户ID
+  string user_account = 2;    // 用户账号
+  string currency_code = 3;   // 货币代码
+  int64 bet_amount = 4;       // 投注金额（不包含撤单金额）
+  int64 win_amount = 5;       // 中奖金额
+  int64 valid_bet_amount = 6; // 有效投注金额
+  int64 game_id = 7;          // 游戏ID
+  int64 game_category = 8;    // 游戏类型
+  int64 platform_id = 9;      // 游戏平台ID
+  int64 settlement_time = 10; // 结算时间
+}
+
 service LiveGameRpcInnerService{
   // 添加三方转账记录
   rpc AddTripartiteTransferRecord(AddTripartiteTransferRecordReq) returns (GameReply);
@@ -506,6 +535,11 @@ service LiveGameRpcInnerService{
   rpc AddGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (AddGameBetBaseReply);
   // 添加游戏下注记录(转账钱包)
   rpc AddTransferGameBetRecord(AddTransferGameBetRecordReq) returns (GameReply);
+  // 发送游戏下注MQ
+  rpc SendGameBetBetMQ(SendGameBetBetMQReq) returns (GameReply);
+  // 发送游戏下注结算MQ
+  rpc SendGameBetBetSettlementMQ(SendGameBetBetSettlementMQReq) returns (GameReply);
+
 }
 
 

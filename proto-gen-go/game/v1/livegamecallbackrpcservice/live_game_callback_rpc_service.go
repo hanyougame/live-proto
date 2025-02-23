@@ -81,6 +81,8 @@ type (
 	ProcessMessageTransferDataReq            = v1.ProcessMessageTransferDataReq
 	ProcessMessageTransferSendReply          = v1.ProcessMessageTransferSendReply
 	ProcessMessageTransferSendReq            = v1.ProcessMessageTransferSendReq
+	SendGameBetBetMQReq                      = v1.SendGameBetBetMQReq
+	SendGameBetBetSettlementMQReq            = v1.SendGameBetBetSettlementMQReq
 	SingleEnterGameReply                     = v1.SingleEnterGameReply
 	SingleEnterGameReq                       = v1.SingleEnterGameReq
 	SingleEnterGameTryReply                  = v1.SingleEnterGameTryReply

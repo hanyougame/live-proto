@@ -81,6 +81,8 @@ type (
 	ProcessMessageTransferDataReq            = v1.ProcessMessageTransferDataReq
 	ProcessMessageTransferSendReply          = v1.ProcessMessageTransferSendReply
 	ProcessMessageTransferSendReq            = v1.ProcessMessageTransferSendReq
+	SendGameBetBetMQReq                      = v1.SendGameBetBetMQReq
+	SendGameBetBetSettlementMQReq            = v1.SendGameBetBetSettlementMQReq
 	SingleEnterGameReply                     = v1.SingleEnterGameReply
 	SingleEnterGameReq                       = v1.SingleEnterGameReq
 	SingleEnterGameTryReply                  = v1.SingleEnterGameTryReply
@@ -119,6 +121,10 @@ type (
 		AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 		// 添加游戏下注记录(转账钱包)
 		AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 发送游戏下注MQ
+		SendGameBetBetMQ(ctx context.Context, in *SendGameBetBetMQReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 发送游戏下注结算MQ
+		SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -195,4 +201,16 @@ func (m *defaultLiveGameRpcInnerService) AddGameAdjustmentRecord(ctx context.Con
 func (m *defaultLiveGameRpcInnerService) AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddTransferGameBetRecord(ctx, in, opts...)
+}
+
+// 发送游戏下注MQ
+func (m *defaultLiveGameRpcInnerService) SendGameBetBetMQ(ctx context.Context, in *SendGameBetBetMQReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.SendGameBetBetMQ(ctx, in, opts...)
+}
+
+// 发送游戏下注结算MQ
+func (m *defaultLiveGameRpcInnerService) SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.SendGameBetBetSettlementMQ(ctx, in, opts...)
 }
