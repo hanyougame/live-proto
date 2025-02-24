@@ -565,7 +565,7 @@ message GameCategoryDetail {
   // 货币代码（例如 "INR"）
   string currency_code = 4;
   // 类型名称（JSON 格式）
-  string categoryName = 5;
+  string category_name = 5;
   // 类型开关（启用/禁用标志）
   int64 category_switch = 6;
   // 链接类型（1: 外部链接，2: 其他）
@@ -594,7 +594,7 @@ message GameCategorySimpleDetail {
   int64 tripartite_category_id = 2;  // 三方游戏类型 ID
   int64 rank = 3; // 排名（表示货币在列表中的排序位置）
   string currency_code = 4; // 货币代码（例如 "INR"）
-  string categoryName = 5; // 类型名称（JSON 格式）
+  string category_name = 5; // 类型名称（JSON 格式）
   string icon_url = 10; // 图标地址
 }
 
