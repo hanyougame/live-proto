@@ -2,7 +2,7 @@
 # genrpc.sh
 
 # Turn on command echoing
-set -x
+#set -x
 
 # 参数1: 服务名称
 if [ $# -lt 1 ]; then
