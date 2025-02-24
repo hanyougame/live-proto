@@ -180,7 +180,7 @@ message TransferBetRecord{
 message GetGameTransferBetOrderListReply{
   int64 total_page = 1;        //总页数
   int64 current_page = 2;        //当前页数
-  string lastUpdate_date = 3;       //本批次数据的最后更新时间
+  int64 last_update_date = 3;       //本批次数据的最后更新时间
   repeated TransferBetRecord bet_list = 4; //订单列表
 }
 
