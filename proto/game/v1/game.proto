@@ -754,6 +754,15 @@ message GetUserFavoriteIdsReply {
   map<int64, bool> favoriteIds = 1;
 }
 
+// 通过搜索获取游戏列表请求参数
+message GetGameRecentlyListReq {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 user_id = 3;
+  int64 game_platform_id = 4;
+}
+
+
 
 // 热门游戏列表
 message GetHotGameListReq {
@@ -872,6 +881,8 @@ service LiveGameRpcService{
   rpc GameFavoriteList(GetGameFavoriteListReq) returns (GetGameDetailsListReply);
   // 热门游戏列表
   rpc GetHotGameList(GetHotGameListReq) returns (GetGameDetailsListReply);
+  // 最近游戏列表
+  rpc GetRecentlyGameList(GetGameRecentlyListReq) returns (GetGameDetailsListReply);
   // 热门平台列表
   rpc GetHotPlatformList(GetHotPlatformListReq) returns (GetHotPlatformListReply);
   // 根据游戏ID获取游戏详情

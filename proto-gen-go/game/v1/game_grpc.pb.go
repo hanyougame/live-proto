@@ -1514,6 +1514,7 @@ const (
 	LiveGameRpcService_GameRemoveFavorite_FullMethodName              = "/game.v1.LiveGameRpcService/GameRemoveFavorite"
 	LiveGameRpcService_GameFavoriteList_FullMethodName                = "/game.v1.LiveGameRpcService/GameFavoriteList"
 	LiveGameRpcService_GetHotGameList_FullMethodName                  = "/game.v1.LiveGameRpcService/GetHotGameList"
+	LiveGameRpcService_GetRecentlyGameList_FullMethodName             = "/game.v1.LiveGameRpcService/GetRecentlyGameList"
 	LiveGameRpcService_GetHotPlatformList_FullMethodName              = "/game.v1.LiveGameRpcService/GetHotPlatformList"
 	LiveGameRpcService_GetGameDetails_FullMethodName                  = "/game.v1.LiveGameRpcService/GetGameDetails"
 	LiveGameRpcService_GetUserFavoriteIds_FullMethodName              = "/game.v1.LiveGameRpcService/GetUserFavoriteIds"
@@ -1549,6 +1550,8 @@ type LiveGameRpcServiceClient interface {
 	GameFavoriteList(ctx context.Context, in *GetGameFavoriteListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 	// 热门游戏列表
 	GetHotGameList(ctx context.Context, in *GetHotGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
+	// 最近游戏列表
+	GetRecentlyGameList(ctx context.Context, in *GetGameRecentlyListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 	// 热门平台列表
 	GetHotPlatformList(ctx context.Context, in *GetHotPlatformListReq, opts ...grpc.CallOption) (*GetHotPlatformListReply, error)
 	// 根据游戏ID获取游戏详情
@@ -1689,6 +1692,16 @@ func (c *liveGameRpcServiceClient) GetHotGameList(ctx context.Context, in *GetHo
 	return out, nil
 }
 
+func (c *liveGameRpcServiceClient) GetRecentlyGameList(ctx context.Context, in *GetGameRecentlyListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGameDetailsListReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_GetRecentlyGameList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *liveGameRpcServiceClient) GetHotPlatformList(ctx context.Context, in *GetHotPlatformListReq, opts ...grpc.CallOption) (*GetHotPlatformListReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetHotPlatformListReply)
@@ -1767,6 +1780,8 @@ type LiveGameRpcServiceServer interface {
 	GameFavoriteList(context.Context, *GetGameFavoriteListReq) (*GetGameDetailsListReply, error)
 	// 热门游戏列表
 	GetHotGameList(context.Context, *GetHotGameListReq) (*GetGameDetailsListReply, error)
+	// 最近游戏列表
+	GetRecentlyGameList(context.Context, *GetGameRecentlyListReq) (*GetGameDetailsListReply, error)
 	// 热门平台列表
 	GetHotPlatformList(context.Context, *GetHotPlatformListReq) (*GetHotPlatformListReply, error)
 	// 根据游戏ID获取游戏详情
@@ -1822,6 +1837,9 @@ func (UnimplementedLiveGameRpcServiceServer) GameFavoriteList(context.Context, *
 }
 func (UnimplementedLiveGameRpcServiceServer) GetHotGameList(context.Context, *GetHotGameListReq) (*GetGameDetailsListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHotGameList not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) GetRecentlyGameList(context.Context, *GetGameRecentlyListReq) (*GetGameDetailsListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRecentlyGameList not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) GetHotPlatformList(context.Context, *GetHotPlatformListReq) (*GetHotPlatformListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHotPlatformList not implemented")
@@ -2075,6 +2093,24 @@ func _LiveGameRpcService_GetHotGameList_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcService_GetRecentlyGameList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGameRecentlyListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).GetRecentlyGameList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_GetRecentlyGameList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).GetRecentlyGameList(ctx, req.(*GetGameRecentlyListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LiveGameRpcService_GetHotPlatformList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetHotPlatformListReq)
 	if err := dec(in); err != nil {
@@ -2219,6 +2255,10 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetHotGameList",
 			Handler:    _LiveGameRpcService_GetHotGameList_Handler,
+		},
+		{
+			MethodName: "GetRecentlyGameList",
+			Handler:    _LiveGameRpcService_GetRecentlyGameList_Handler,
 		},
 		{
 			MethodName: "GetHotPlatformList",

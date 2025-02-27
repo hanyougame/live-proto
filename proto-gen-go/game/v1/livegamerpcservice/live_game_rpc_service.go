@@ -54,6 +54,7 @@ type (
 	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
 	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
 	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
+	GetGameRecentlyListReq                   = v1.GetGameRecentlyListReq
 	GetGameSimpleListBySearchReply           = v1.GetGameSimpleListBySearchReply
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
@@ -124,6 +125,8 @@ type (
 		GameFavoriteList(ctx context.Context, in *GetGameFavoriteListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 		// 热门游戏列表
 		GetHotGameList(ctx context.Context, in *GetHotGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
+		// 最近游戏列表
+		GetRecentlyGameList(ctx context.Context, in *GetGameRecentlyListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 		// 热门平台列表
 		GetHotPlatformList(ctx context.Context, in *GetHotPlatformListReq, opts ...grpc.CallOption) (*GetHotPlatformListReply, error)
 		// 根据游戏ID获取游戏详情
@@ -217,6 +220,12 @@ func (m *defaultLiveGameRpcService) GameFavoriteList(ctx context.Context, in *Ge
 func (m *defaultLiveGameRpcService) GetHotGameList(ctx context.Context, in *GetHotGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetHotGameList(ctx, in, opts...)
+}
+
+// 最近游戏列表
+func (m *defaultLiveGameRpcService) GetRecentlyGameList(ctx context.Context, in *GetGameRecentlyListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetRecentlyGameList(ctx, in, opts...)
 }
 
 // 热门平台列表

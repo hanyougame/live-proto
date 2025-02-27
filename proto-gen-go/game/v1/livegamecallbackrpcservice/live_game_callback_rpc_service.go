@@ -54,6 +54,7 @@ type (
 	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
 	GetGameListByPlatformReq                 = v1.GetGameListByPlatformReq
 	GetGameListBySearchReq                   = v1.GetGameListBySearchReq
+	GetGameRecentlyListReq                   = v1.GetGameRecentlyListReq
 	GetGameSimpleListBySearchReply           = v1.GetGameSimpleListBySearchReply
 	GetGameTransferBetOrderListReply         = v1.GetGameTransferBetOrderListReply
 	GetGameTransferBetOrderListReq           = v1.GetGameTransferBetOrderListReq
