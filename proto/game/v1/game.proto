@@ -512,7 +512,7 @@ message SendGameBetBetSettlementMQReq {
   int64 settlement_time = 10; // 结算时间
 }
 
-message AddRecordGamePlayReq {
+message AddRecentlyGamePlayReq {
   int64 user_id = 1;          // 用户ID
   int64 game_id = 2;          // 游戏ID
 }
@@ -544,7 +544,7 @@ service LiveGameRpcInnerService{
   // 发送游戏下注结算MQ
   rpc SendGameBetBetSettlementMQ(SendGameBetBetSettlementMQReq) returns (GameReply);
   // 添加最近游玩的游戏
-  rpc AddRecordGamePlay(AddRecordGamePlayReq) returns (GameReply);
+  rpc AddRecentlyGamePlay(AddRecentlyGamePlayReq) returns (GameReply);
 
 }
 
