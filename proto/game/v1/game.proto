@@ -505,12 +505,13 @@ message SendGameBetBetSettlementMQReq {
   string user_account = 2;    // 用户账号
   string currency_code = 3;   // 货币代码
   int64 bet_amount = 4;       // 投注金额（不包含撤单金额）
-  int64 win_amount = 5;       // 中奖金额
+  int64 user_win_amount = 5;       // 用户中奖金额
   int64 valid_bet_amount = 6; // 有效投注金额
   int64 game_id = 7;          // 游戏ID
   int64 game_category = 8;    // 游戏类型
   int64 platform_id = 9;      // 游戏平台ID
   int64 settlement_time = 10; // 结算时间
+  int64 bonus_amount = 11; // 派奖金额
 }
 
 message AddRecentlyGamePlayReq {
