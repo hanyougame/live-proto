@@ -353,13 +353,14 @@ message GetAuditInfoReq {
 }
 
 message GetAuditInfoResp {
-  int64  NeedBetAmount = 1; // 需要投注金额
-  int64  NeedBetCount = 2; // 需要投注次数
-  int64  Balance = 3;     // 可用餘額
-  string CurrencyCode = 4;//货币代码
-  string Username = 5;   // 用户名
-  int64  UserId = 6;   // 用户Id
-  bool CanWithdraw = 7; // 是否可提现 true 可以 false 不可以
+  int64  need_bet_amount = 1; // 需要投注金额
+  int64  need_bet_count = 2; // 需要投注次数
+  int64  balance = 3;     // 可用餘額
+  string currency_code = 4;//货币代码
+  string username = 5;   // 用户名
+  int64  userId = 6;   // 用户Id
+  bool can_withdraw = 7; // 是否可提现 true 可以 false 不可以
+  int64 un_finish_num = 8; // 未完成稽核任務數量
 }
 
 message GetAuditListReq {
