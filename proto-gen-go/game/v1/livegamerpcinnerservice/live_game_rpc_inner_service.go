@@ -20,6 +20,7 @@ type (
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
 	AddGameCancelRecordReq                   = v1.AddGameCancelRecordReq
 	AddGameSettledRecordReq                  = v1.AddGameSettledRecordReq
+	AddRecordGamePlayReq                     = v1.AddRecordGamePlayReq
 	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
@@ -126,6 +127,8 @@ type (
 		SendGameBetBetMQ(ctx context.Context, in *SendGameBetBetMQReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 发送游戏下注结算MQ
 		SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 添加最近游玩的游戏
+		AddRecordGamePlay(ctx context.Context, in *AddRecordGamePlayReq, opts ...grpc.CallOption) (*GameReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -214,4 +217,10 @@ func (m *defaultLiveGameRpcInnerService) SendGameBetBetMQ(ctx context.Context, i
 func (m *defaultLiveGameRpcInnerService) SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.SendGameBetBetSettlementMQ(ctx, in, opts...)
+}
+
+// 添加最近游玩的游戏
+func (m *defaultLiveGameRpcInnerService) AddRecordGamePlay(ctx context.Context, in *AddRecordGamePlayReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddRecordGamePlay(ctx, in, opts...)
 }

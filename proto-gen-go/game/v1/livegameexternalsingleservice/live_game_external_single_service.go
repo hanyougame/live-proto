@@ -20,6 +20,7 @@ type (
 	AddGameBetRecordReq                      = v1.AddGameBetRecordReq
 	AddGameCancelRecordReq                   = v1.AddGameCancelRecordReq
 	AddGameSettledRecordReq                  = v1.AddGameSettledRecordReq
+	AddRecordGamePlayReq                     = v1.AddRecordGamePlayReq
 	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
