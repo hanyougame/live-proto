@@ -431,6 +431,7 @@ message AddGameBetRecordReq{
   string round_id = 8; // 下注牌局ID（三方）
   int64 bet_time = 9; // 下注时间毫秒
   string tripartite_original_data = 10; // 三方原始数据
+  int64 post_bet_balance = 11; // 投注后余额
 }
 
 message  AddGameBetRecordReply {
