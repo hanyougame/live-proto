@@ -685,6 +685,7 @@ message GameDetails {
   string game_name = 7;
   int64 is_favorite = 8; //  收藏状态(1:普通，2：收藏)
   int64 is_featured = 9; //  是否推荐(1:开启，2：关闭)
+  int64 is_jump_tab = 10; //  是否开启跳转(1:开启，2：关闭)
   int64 wallet_model = 13;
   int64 horizontal_support = 14;
   int64 vertical_support = 15;
