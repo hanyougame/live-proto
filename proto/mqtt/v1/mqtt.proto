@@ -4,17 +4,20 @@ package mqtt.v1;
 option go_package = "./pb/v1";
 
 message PushRequest {
-  bytes message = 1;
+  int64 code = 1;
+  bytes message = 2;
 }
 
 message PushToUserRequest {
-  string user_id = 1;
-  bytes message = 2;
+  int64 code = 1;
+  string user_id = 2;
+  bytes message = 3;
 }
 
 message PushToUsersRequest {
   repeated string user_ids = 1;
   bytes message = 2;
+  int64 code = 3;
 }
 
 message PushResponse {
