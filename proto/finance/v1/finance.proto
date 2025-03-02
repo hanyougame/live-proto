@@ -55,7 +55,10 @@ message PayInStatusReq {
 
 message PayInStatusResp {
   PayInStatus status = 1; // 状态
-  string msg = 2;   // 消息
+  string order_number = 2; // 订单Id
+  string third_order_number = 3; // 三方订单号
+  int64 amount = 4; // 订单金额
+  string msg = 5;   // 消息
 }
 
 enum PayInStatus {
@@ -79,7 +82,10 @@ message PayOutStatusReq {
 
 message PayOutStatusResp {
   PayOutStatus status = 1; // 状态
-  string msg = 2;   // 消息
+  string order_number = 2; // 订单Id
+  string third_order_number = 3; // 三方订单号
+  int64 amount = 4; // 订单金额
+  string msg = 5;   // 消息
 }
 
 enum PayOutStatus {
