@@ -35,6 +35,7 @@ type (
 	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
 	GamePlatformDetail                       = v1.GamePlatformDetail
+	GamePlatformDetailsReq                   = v1.GamePlatformDetailsReq
 	GamePlatformSimpleDetail                 = v1.GamePlatformSimpleDetail
 	GameReply                                = v1.GameReply
 	GameReq                                  = v1.GameReq
