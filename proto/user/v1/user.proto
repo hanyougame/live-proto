@@ -107,11 +107,11 @@ message BatchGetUserBalanceV2Req{
 }
 
 message BatchGetUserBalanceV2Resp{
-  map<int64, UserWalletList> wallet_info = 1; // 钱包信息
+  map<int64, UserWalletList> user_wallet_info = 1; // 钱包信息
 }
 
 message UserWalletList{
-  repeated UserWalletInfo wallet_info = 1;
+  map<int64, int64> wallet_info = 1;
 }
 
 service LiveUserRpcService {
