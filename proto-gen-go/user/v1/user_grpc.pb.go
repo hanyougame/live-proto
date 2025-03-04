@@ -19,12 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LiveUserRpcService_GetInfoByUserToken_FullMethodName  = "/user.v1.LiveUserRpcService/GetInfoByUserToken"
-	LiveUserRpcService_GetUserBalance_FullMethodName      = "/user.v1.LiveUserRpcService/GetUserBalance"
-	LiveUserRpcService_UpdateUserBalance_FullMethodName   = "/user.v1.LiveUserRpcService/UpdateUserBalance"
-	LiveUserRpcService_GetUserInfoById_FullMethodName     = "/user.v1.LiveUserRpcService/GetUserInfoById"
-	LiveUserRpcService_GetUserFullInfoById_FullMethodName = "/user.v1.LiveUserRpcService/GetUserFullInfoById"
-	LiveUserRpcService_BatchGetUserBalance_FullMethodName = "/user.v1.LiveUserRpcService/BatchGetUserBalance"
+	LiveUserRpcService_GetInfoByUserToken_FullMethodName    = "/user.v1.LiveUserRpcService/GetInfoByUserToken"
+	LiveUserRpcService_GetUserBalance_FullMethodName        = "/user.v1.LiveUserRpcService/GetUserBalance"
+	LiveUserRpcService_UpdateUserBalance_FullMethodName     = "/user.v1.LiveUserRpcService/UpdateUserBalance"
+	LiveUserRpcService_GetUserInfoById_FullMethodName       = "/user.v1.LiveUserRpcService/GetUserInfoById"
+	LiveUserRpcService_GetUserFullInfoById_FullMethodName   = "/user.v1.LiveUserRpcService/GetUserFullInfoById"
+	LiveUserRpcService_BatchGetUserBalance_FullMethodName   = "/user.v1.LiveUserRpcService/BatchGetUserBalance"
+	LiveUserRpcService_BatchGetUserBalanceV2_FullMethodName = "/user.v1.LiveUserRpcService/BatchGetUserBalanceV2"
 )
 
 // LiveUserRpcServiceClient is the client API for LiveUserRpcService service.
@@ -43,6 +44,8 @@ type LiveUserRpcServiceClient interface {
 	GetUserFullInfoById(ctx context.Context, in *GetUserFullInfoByIdReq, opts ...grpc.CallOption) (*GetUserFullInfoByIdReply, error)
 	// 批量查询用户余额
 	BatchGetUserBalance(ctx context.Context, in *BatchGetUserBalanceReq, opts ...grpc.CallOption) (*BatchGetUserBalanceResp, error)
+	// 获取多用户多钱包余额接口
+	BatchGetUserBalanceV2(ctx context.Context, in *BatchGetUserBalanceV2Req, opts ...grpc.CallOption) (*BatchGetUserBalanceV2Resp, error)
 }
 
 type liveUserRpcServiceClient struct {
@@ -113,6 +116,16 @@ func (c *liveUserRpcServiceClient) BatchGetUserBalance(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *liveUserRpcServiceClient) BatchGetUserBalanceV2(ctx context.Context, in *BatchGetUserBalanceV2Req, opts ...grpc.CallOption) (*BatchGetUserBalanceV2Resp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BatchGetUserBalanceV2Resp)
+	err := c.cc.Invoke(ctx, LiveUserRpcService_BatchGetUserBalanceV2_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveUserRpcServiceServer is the server API for LiveUserRpcService service.
 // All implementations must embed UnimplementedLiveUserRpcServiceServer
 // for forward compatibility.
@@ -129,6 +142,8 @@ type LiveUserRpcServiceServer interface {
 	GetUserFullInfoById(context.Context, *GetUserFullInfoByIdReq) (*GetUserFullInfoByIdReply, error)
 	// 批量查询用户余额
 	BatchGetUserBalance(context.Context, *BatchGetUserBalanceReq) (*BatchGetUserBalanceResp, error)
+	// 获取多用户多钱包余额接口
+	BatchGetUserBalanceV2(context.Context, *BatchGetUserBalanceV2Req) (*BatchGetUserBalanceV2Resp, error)
 	mustEmbedUnimplementedLiveUserRpcServiceServer()
 }
 
@@ -156,6 +171,9 @@ func (UnimplementedLiveUserRpcServiceServer) GetUserFullInfoById(context.Context
 }
 func (UnimplementedLiveUserRpcServiceServer) BatchGetUserBalance(context.Context, *BatchGetUserBalanceReq) (*BatchGetUserBalanceResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchGetUserBalance not implemented")
+}
+func (UnimplementedLiveUserRpcServiceServer) BatchGetUserBalanceV2(context.Context, *BatchGetUserBalanceV2Req) (*BatchGetUserBalanceV2Resp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchGetUserBalanceV2 not implemented")
 }
 func (UnimplementedLiveUserRpcServiceServer) mustEmbedUnimplementedLiveUserRpcServiceServer() {}
 func (UnimplementedLiveUserRpcServiceServer) testEmbeddedByValue()                            {}
@@ -286,6 +304,24 @@ func _LiveUserRpcService_BatchGetUserBalance_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveUserRpcService_BatchGetUserBalanceV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchGetUserBalanceV2Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveUserRpcServiceServer).BatchGetUserBalanceV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveUserRpcService_BatchGetUserBalanceV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveUserRpcServiceServer).BatchGetUserBalanceV2(ctx, req.(*BatchGetUserBalanceV2Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveUserRpcService_ServiceDesc is the grpc.ServiceDesc for LiveUserRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -316,6 +352,10 @@ var LiveUserRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchGetUserBalance",
 			Handler:    _LiveUserRpcService_BatchGetUserBalance_Handler,
+		},
+		{
+			MethodName: "BatchGetUserBalanceV2",
+			Handler:    _LiveUserRpcService_BatchGetUserBalanceV2_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
