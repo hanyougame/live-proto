@@ -63,6 +63,9 @@ type (
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply
 	GetGameTransferOrderStatusReplyOrderInfo = v1.GetGameTransferOrderStatusReplyOrderInfo
 	GetGameTransferOrderStatusReq            = v1.GetGameTransferOrderStatusReq
+	GetHomeGameItemReq                       = v1.GetHomeGameItemReq
+	GetHomeGameItemsReply                    = v1.GetHomeGameItemsReply
+	GetHomePlatformItemsReply                = v1.GetHomePlatformItemsReply
 	GetHotGameListReq                        = v1.GetHotGameListReq
 	GetHotPlatformListReply                  = v1.GetHotPlatformListReply
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq

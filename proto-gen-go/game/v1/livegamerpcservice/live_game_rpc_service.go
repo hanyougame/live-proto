@@ -63,6 +63,9 @@ type (
 	GetGameTransferOrderStatusReply          = v1.GetGameTransferOrderStatusReply
 	GetGameTransferOrderStatusReplyOrderInfo = v1.GetGameTransferOrderStatusReplyOrderInfo
 	GetGameTransferOrderStatusReq            = v1.GetGameTransferOrderStatusReq
+	GetHomeGameItemReq                       = v1.GetHomeGameItemReq
+	GetHomeGameItemsReply                    = v1.GetHomeGameItemsReply
+	GetHomePlatformItemsReply                = v1.GetHomePlatformItemsReply
 	GetHotGameListReq                        = v1.GetHotGameListReq
 	GetHotPlatformListReply                  = v1.GetHotPlatformListReply
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
@@ -141,6 +144,10 @@ type (
 		GetUserBetRecordList(ctx context.Context, in *GetUserBetRecordListReq, opts ...grpc.CallOption) (*GetUserBetRecordListReply, error)
 		// 获取用户投注报表
 		GetUserBetRecordSummary(ctx context.Context, in *GetUserBetRecordSummaryReq, opts ...grpc.CallOption) (*GetUserBetRecordSummaryReply, error)
+		// 获取首页平台详情
+		GetHomePlatformItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomePlatformItemsReply, error)
+		// 获取首页游戏详情
+		GetHomeGameItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomeGameItemsReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -266,4 +273,16 @@ func (m *defaultLiveGameRpcService) GetUserBetRecordList(ctx context.Context, in
 func (m *defaultLiveGameRpcService) GetUserBetRecordSummary(ctx context.Context, in *GetUserBetRecordSummaryReq, opts ...grpc.CallOption) (*GetUserBetRecordSummaryReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetUserBetRecordSummary(ctx, in, opts...)
+}
+
+// 获取首页平台详情
+func (m *defaultLiveGameRpcService) GetHomePlatformItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomePlatformItemsReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetHomePlatformItems(ctx, in, opts...)
+}
+
+// 获取首页游戏详情
+func (m *defaultLiveGameRpcService) GetHomeGameItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomeGameItemsReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetHomeGameItems(ctx, in, opts...)
 }
