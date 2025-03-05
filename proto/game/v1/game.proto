@@ -877,7 +877,18 @@ message BetSummaryInfo {
   int64 bet_amount = 9;                             // 投注金额
   int64 user_win_loss = 10;                       // 输赢金额
 }
+message GetHomeGameItemReq {
+  int64 num = 1;
+  string currency_code = 2;
+  repeated int64 game_category_id = 3;
+}
 
+message GetHomePlatformItemsReply {
+  map<int64, GamePlatformDetail> home_item = 1;
+}
+message GetHomeGameItemsReply {
+  map<int64, GameDetails> home_item = 1;
+}
 
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
@@ -918,4 +929,8 @@ service LiveGameRpcService{
   rpc GetUserBetRecordList(GetUserBetRecordListReq) returns (GetUserBetRecordListReply);
   // 获取用户投注报表
   rpc GetUserBetRecordSummary(GetUserBetRecordSummaryReq) returns (GetUserBetRecordSummaryReply);
+  // 获取首页平台详情
+  rpc GetHomePlatformItems(GetHomeGameItemReq) returns (GetHomePlatformItemsReply);
+  // 获取首页游戏详情
+  rpc GetHomeGameItems(GetHomeGameItemReq) returns (GetHomeGameItemsReply);
 }
