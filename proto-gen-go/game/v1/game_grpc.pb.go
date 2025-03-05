@@ -1479,7 +1479,6 @@ const (
 	LiveGameRpcService_GetHomePlatformItems_FullMethodName            = "/game.v1.LiveGameRpcService/GetHomePlatformItems"
 	LiveGameRpcService_GetHomeGameItems_FullMethodName                = "/game.v1.LiveGameRpcService/GetHomeGameItems"
 	LiveGameRpcService_GetHomeGameList_FullMethodName                 = "/game.v1.LiveGameRpcService/GetHomeGameList"
-	LiveGameRpcService_GetHomeGameListTest_FullMethodName             = "/game.v1.LiveGameRpcService/GetHomeGameListTest"
 )
 
 // LiveGameRpcServiceClient is the client API for LiveGameRpcService service.
@@ -1530,8 +1529,6 @@ type LiveGameRpcServiceClient interface {
 	GetHomeGameItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomeGameItemsReply, error)
 	// 获取指定数量的游戏列表 --
 	GetHomeGameList(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error)
-	// asd
-	GetHomeGameListTest(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error)
 }
 
 type liveGameRpcServiceClient struct {
@@ -1740,15 +1737,6 @@ func (c *liveGameRpcServiceClient) GetHomeGameList(ctx context.Context, in *GetH
 	return out, nil
 }
 
-func (c *liveGameRpcServiceClient) GetHomeGameListTest(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error) {
-	out := new(GameDetailsList)
-	err := c.cc.Invoke(ctx, LiveGameRpcService_GetHomeGameListTest_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // LiveGameRpcServiceServer is the server API for LiveGameRpcService service.
 // All implementations must embed UnimplementedLiveGameRpcServiceServer
 // for forward compatibility
@@ -1797,8 +1785,6 @@ type LiveGameRpcServiceServer interface {
 	GetHomeGameItems(context.Context, *GetHomeGameItemReq) (*GetHomeGameItemsReply, error)
 	// 获取指定数量的游戏列表 --
 	GetHomeGameList(context.Context, *GetHomeGameItemReq) (*GameDetailsList, error)
-	// asd
-	GetHomeGameListTest(context.Context, *GetHomeGameItemReq) (*GameDetailsList, error)
 	mustEmbedUnimplementedLiveGameRpcServiceServer()
 }
 
@@ -1871,9 +1857,6 @@ func (UnimplementedLiveGameRpcServiceServer) GetHomeGameItems(context.Context, *
 }
 func (UnimplementedLiveGameRpcServiceServer) GetHomeGameList(context.Context, *GetHomeGameItemReq) (*GameDetailsList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHomeGameList not implemented")
-}
-func (UnimplementedLiveGameRpcServiceServer) GetHomeGameListTest(context.Context, *GetHomeGameItemReq) (*GameDetailsList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetHomeGameListTest not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) mustEmbedUnimplementedLiveGameRpcServiceServer() {}
 
@@ -2284,24 +2267,6 @@ func _LiveGameRpcService_GetHomeGameList_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LiveGameRpcService_GetHomeGameListTest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetHomeGameItemReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveGameRpcServiceServer).GetHomeGameListTest(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveGameRpcService_GetHomeGameListTest_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcServiceServer).GetHomeGameListTest(ctx, req.(*GetHomeGameItemReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // LiveGameRpcService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2396,10 +2361,6 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetHomeGameList",
 			Handler:    _LiveGameRpcService_GetHomeGameList_Handler,
-		},
-		{
-			MethodName: "GetHomeGameListTest",
-			Handler:    _LiveGameRpcService_GetHomeGameListTest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
