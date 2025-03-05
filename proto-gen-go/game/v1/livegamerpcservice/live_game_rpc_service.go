@@ -150,8 +150,10 @@ type (
 		GetHomePlatformItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomePlatformItemsReply, error)
 		// 获取首页游戏详情
 		GetHomeGameItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomeGameItemsReply, error)
-		// 获取指定数量的游戏列表
+		// 获取指定数量的游戏列表 --
 		GetHomeGameList(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error)
+		// asd
+		GetHomeGameListTest(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -291,8 +293,14 @@ func (m *defaultLiveGameRpcService) GetHomeGameItems(ctx context.Context, in *Ge
 	return client.GetHomeGameItems(ctx, in, opts...)
 }
 
-// 获取指定数量的游戏列表
+// 获取指定数量的游戏列表 --
 func (m *defaultLiveGameRpcService) GetHomeGameList(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetHomeGameList(ctx, in, opts...)
+}
+
+// asd
+func (m *defaultLiveGameRpcService) GetHomeGameListTest(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetHomeGameListTest(ctx, in, opts...)
 }

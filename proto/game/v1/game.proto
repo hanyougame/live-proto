@@ -943,4 +943,6 @@ service LiveGameRpcService{
   rpc GetHomeGameItems(GetHomeGameItemReq) returns (GetHomeGameItemsReply);
   // 获取指定数量的游戏列表 --
   rpc GetHomeGameList(GetHomeGameItemReq) returns (GameDetailsList);
+  // asd
+  rpc GetHomeGameListTest(GetHomeGameItemReq) returns (GameDetailsList);
 }
