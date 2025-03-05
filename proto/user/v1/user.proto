@@ -92,9 +92,6 @@ message UserWalletInfo {
   int64 balance = 2;         //用户余额
 }
 
-
-
-
 message BatchGetUserBalanceReq{
   repeated int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
   int64 user_id = 2; // 用户id
@@ -102,6 +99,19 @@ message BatchGetUserBalanceReq{
 
 message BatchGetUserBalanceResp{
   map<int64, int64> wallet_info = 1; // 钱包信息
+}
+
+message BatchGetUserBalanceV2Req{
+  repeated int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
+  repeated int64 user_id = 2; // 用户id 集合
+}
+
+message BatchGetUserBalanceV2Resp{
+  map<int64, UserWalletList> user_wallet_info = 1; // 钱包信息
+}
+
+message UserWalletList{
+  map<int64, int64> wallet_info = 1;
 }
 
 service LiveUserRpcService {
@@ -117,4 +127,6 @@ service LiveUserRpcService {
   rpc GetUserFullInfoById(GetUserFullInfoByIdReq) returns(GetUserFullInfoByIdReply);
   // 批量查询用户余额
   rpc BatchGetUserBalance(BatchGetUserBalanceReq)returns (BatchGetUserBalanceResp);
+  // 获取多用户多钱包余额接口
+  rpc BatchGetUserBalanceV2(BatchGetUserBalanceV2Req)returns (BatchGetUserBalanceV2Resp);
 }
