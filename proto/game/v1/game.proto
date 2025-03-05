@@ -941,4 +941,6 @@ service LiveGameRpcService{
   rpc GetHomePlatformItems(GetHomeGameItemReq) returns (GetHomePlatformItemsReply);
   // 获取首页游戏详情
   rpc GetHomeGameItems(GetHomeGameItemReq) returns (GetHomeGameItemsReply);
+  // 获取指定数量的游戏列表
+  rpc GetHomeGameList(GetHomeGameItemReq) returns (GameDetailsList);
 }
