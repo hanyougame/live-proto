@@ -883,11 +883,18 @@ message GetHomeGameItemReq {
   repeated int64 game_category_ids = 3;
 }
 
+message PlatformDetailsList {
+  repeated GamePlatformDetail items = 1;
+}
+message GameDetailsList {
+  repeated GameDetails items = 1;
+}
+
 message GetHomePlatformItemsReply {
-  map<int64, GamePlatformDetail> home_item = 1;
+  map<int64, PlatformDetailsList> home_item = 1;
 }
 message GetHomeGameItemsReply {
-  map<int64, GameDetails> home_item = 1;
+  map<int64, GameDetailsList> home_item = 1;
 }
 
 service LiveGameRpcService{

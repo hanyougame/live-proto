@@ -32,6 +32,7 @@ type (
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
+	GameDetailsList                          = v1.GameDetailsList
 	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
 	GamePlatformDetail                       = v1.GamePlatformDetail
@@ -82,6 +83,7 @@ type (
 	GetUserFavoriteIdsReq                    = v1.GetUserFavoriteIdsReq
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
+	PlatformDetailsList                      = v1.PlatformDetailsList
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
 	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply
 	ProcessMessageTransferDataReq            = v1.ProcessMessageTransferDataReq
