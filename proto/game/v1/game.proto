@@ -881,6 +881,7 @@ message GetHomeGameItemReq {
   int64 num = 1;
   string currency_code = 2;
   repeated int64 game_category_ids = 3;
+  int64 user_id = 4;
 }
 
 message PlatformDetailsList {
