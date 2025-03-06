@@ -512,6 +512,7 @@ message SendGameBetBetSettlementMQReq {
   int64 platform_id = 9;      // 游戏平台ID
   int64 settlement_time = 10; // 结算时间
   int64 bonus_amount = 11; // 派奖金额
+  int64 bet_time = 12; // 投注时间
 }
 
 message AddRecentlyGamePlayReq {
