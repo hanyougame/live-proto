@@ -899,6 +899,15 @@ message GetHomeGameItemsReply {
   map<int64, GameDetailsList> home_item = 1;
 }
 
+message GetGameConfInfoReq{
+  string config_key = 1;
+}
+
+message GetGameConfInfoReply{
+  string config_value = 1;
+}
+
+
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
   rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
@@ -944,4 +953,6 @@ service LiveGameRpcService{
   rpc GetHomeGameItems(GetHomeGameItemReq) returns (GetHomeGameItemsReply);
   // 获取指定数量的游戏列表 --
   rpc GetHomeGameList(GetHomeGameItemReq) returns (GameDetailsList);
+  // 获取游戏功能配置
+  rpc GetGameConfInfo(GetGameConfInfoReq) returns (GetGameConfInfoReply);
 }
