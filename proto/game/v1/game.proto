@@ -669,6 +669,7 @@ message GamePlatformSimpleDetail{
   string platform_name = 5;                    // 平台名称
   string currency_code = 6;                    // 货币代码，例如“INR”
   string icon = 7;                    // 平台图标
+  string logo_url = 8;                    // 品牌LOGO
 }
 
 // 平台跳转方式的基础类型
