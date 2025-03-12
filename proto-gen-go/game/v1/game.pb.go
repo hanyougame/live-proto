@@ -4020,7 +4020,7 @@ type SendGameBetBetSettlementMQReq struct {
 	GameCategoryName     string                 `protobuf:"bytes,9,opt,name=game_category_name,json=gameCategoryName,proto3" json:"game_category_name,omitempty"`               // 游戏类型名称
 	TripartiteCategoryId int64                  `protobuf:"varint,10,opt,name=tripartite_category_id,json=tripartiteCategoryId,proto3" json:"tripartite_category_id,omitempty"` // 三方游戏类型ID
 	PlatformId           int64                  `protobuf:"varint,11,opt,name=platform_id,json=platformId,proto3" json:"platform_id,omitempty"`                                 // 游戏平台ID
-	PlatformName         int64                  `protobuf:"varint,12,opt,name=platform_name,json=platformName,proto3" json:"platform_name,omitempty"`                           // 游戏平台名称
+	PlatformName         string                 `protobuf:"bytes,12,opt,name=platform_name,json=platformName,proto3" json:"platform_name,omitempty"`                            // 游戏平台名称
 	SettlementTime       int64                  `protobuf:"varint,13,opt,name=settlement_time,json=settlementTime,proto3" json:"settlement_time,omitempty"`                     // 结算时间
 	BonusAmount          int64                  `protobuf:"varint,14,opt,name=bonus_amount,json=bonusAmount,proto3" json:"bonus_amount,omitempty"`                              // 派奖金额
 	BetTime              int64                  `protobuf:"varint,15,opt,name=bet_time,json=betTime,proto3" json:"bet_time,omitempty"`                                          // 投注时间
@@ -4135,11 +4135,11 @@ func (x *SendGameBetBetSettlementMQReq) GetPlatformId() int64 {
 	return 0
 }
 
-func (x *SendGameBetBetSettlementMQReq) GetPlatformName() int64 {
+func (x *SendGameBetBetSettlementMQReq) GetPlatformName() string {
 	if x != nil {
 		return x.PlatformName
 	}
-	return 0
+	return ""
 }
 
 func (x *SendGameBetBetSettlementMQReq) GetSettlementTime() int64 {
@@ -8135,7 +8135,7 @@ var file_game_v1_game_proto_rawDesc = string([]byte{
 	0x1f, 0x0a, 0x0b, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x0b,
 	0x20, 0x01, 0x28, 0x03, 0x52, 0x0a, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x49, 0x64,
 	0x12, 0x23, 0x0a, 0x0d, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x5f, 0x6e, 0x61, 0x6d,
-	0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72,
+	0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72,
 	0x6d, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x27, 0x0a, 0x0f, 0x73, 0x65, 0x74, 0x74, 0x6c, 0x65, 0x6d,
 	0x65, 0x6e, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e,
 	0x73, 0x65, 0x74, 0x74, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x21,
