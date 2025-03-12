@@ -512,7 +512,7 @@ message SendGameBetBetSettlementMQReq {
   string game_category_name = 9;    // 游戏类型名称
   int64 tripartite_category_id = 10; // 三方游戏类型ID
   int64 platform_id = 11;      // 游戏平台ID
-  int64 platform_name = 12;      // 游戏平台名称
+  string platform_name = 12;      // 游戏平台名称
   int64 settlement_time = 13; // 结算时间
   int64 bonus_amount = 14; // 派奖金额
   int64 bet_time = 15; // 投注时间
