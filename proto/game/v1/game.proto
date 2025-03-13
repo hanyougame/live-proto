@@ -508,11 +508,17 @@ message SendGameBetBetSettlementMQReq {
   int64 user_win_amount = 5;       // 用户中奖金额
   int64 valid_bet_amount = 6; // 有效投注金额
   int64 game_id = 7;          // 游戏ID
-  int64 game_category = 8;    // 游戏类型
-  int64 platform_id = 9;      // 游戏平台ID
-  int64 settlement_time = 10; // 结算时间
-  int64 bonus_amount = 11; // 派奖金额
-  int64 bet_time = 12; // 投注时间
+  int64 tripartite_game_id = 18;          // 三方游戏ID
+  int64 game_category_id = 8;    // 游戏类型ID
+  string game_category_name = 9;    // 游戏类型名称
+  int64 tripartite_category_id = 10; // 三方游戏类型ID
+  int64 platform_id = 11;      // 游戏平台ID
+  int64 tripartite_platform_id = 17;      // 三方游戏平台ID
+  string platform_name = 12;      // 游戏平台名称
+  int64 settlement_time = 13; // 结算时间
+  int64 bonus_amount = 14; // 派奖金额
+  int64 bet_time = 15; // 投注时间
+  string bet_order_id = 16; // 投注ID
 }
 
 message AddRecentlyGamePlayReq {
@@ -669,6 +675,7 @@ message GamePlatformSimpleDetail{
   string platform_name = 5;                    // 平台名称
   string currency_code = 6;                    // 货币代码，例如“INR”
   string icon = 7;                    // 平台图标
+  string logo_url = 8;                    // 品牌LOGO
 }
 
 // 平台跳转方式的基础类型
@@ -899,6 +906,15 @@ message GetHomeGameItemsReply {
   map<int64, GameDetailsList> home_item = 1;
 }
 
+message GetGameConfInfoReq{
+  string config_key = 1;
+}
+
+message GetGameConfInfoReply{
+  string config_value = 1;
+}
+
+
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
   rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
@@ -944,4 +960,6 @@ service LiveGameRpcService{
   rpc GetHomeGameItems(GetHomeGameItemReq) returns (GetHomeGameItemsReply);
   // 获取指定数量的游戏列表 --
   rpc GetHomeGameList(GetHomeGameItemReq) returns (GameDetailsList);
+  // 获取游戏功能配置
+  rpc GetGameConfInfo(GetGameConfInfoReq) returns (GetGameConfInfoReply);
 }

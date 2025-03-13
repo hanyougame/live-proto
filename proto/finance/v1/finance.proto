@@ -349,6 +349,7 @@ message UpdateAuditAmountReq {
   int64 audit_amount = 2; // 稽核金额(投注金额)（单位:元）
   string currency_code = 3; // 币种
   int64 game_platform_id = 4; // 游戏平台Id
+  int64 tripartite_platform_id = 10; // 三方游戏平台ID
   int64 game_id = 5; // 游戏Id
 }
 

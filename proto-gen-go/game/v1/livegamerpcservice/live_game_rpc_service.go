@@ -52,6 +52,8 @@ type (
 	GetCategoryListByCurrReply               = v1.GetCategoryListByCurrReply
 	GetCategoryListByCurrReq                 = v1.GetCategoryListByCurrReq
 	GetCategorySimpleListByCurrReply         = v1.GetCategorySimpleListByCurrReply
+	GetGameConfInfoReply                     = v1.GetGameConfInfoReply
+	GetGameConfInfoReq                       = v1.GetGameConfInfoReq
 	GetGameDetailsListReply                  = v1.GetGameDetailsListReply
 	GetGameFavoriteListReq                   = v1.GetGameFavoriteListReq
 	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
@@ -152,6 +154,8 @@ type (
 		GetHomeGameItems(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GetHomeGameItemsReply, error)
 		// 获取指定数量的游戏列表 --
 		GetHomeGameList(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error)
+		// 获取游戏功能配置
+		GetGameConfInfo(ctx context.Context, in *GetGameConfInfoReq, opts ...grpc.CallOption) (*GetGameConfInfoReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -295,4 +299,10 @@ func (m *defaultLiveGameRpcService) GetHomeGameItems(ctx context.Context, in *Ge
 func (m *defaultLiveGameRpcService) GetHomeGameList(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetHomeGameList(ctx, in, opts...)
+}
+
+// 获取游戏功能配置
+func (m *defaultLiveGameRpcService) GetGameConfInfo(ctx context.Context, in *GetGameConfInfoReq, opts ...grpc.CallOption) (*GetGameConfInfoReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetGameConfInfo(ctx, in, opts...)
 }
