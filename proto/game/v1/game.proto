@@ -411,6 +411,36 @@ message CreateCompensationRecordResp {
   int64 id = 1;  // 补偿记录ID
 }
 
+message GetGameDetailsByThirdReq {
+  int64 wallet_model = 1;  // 钱包类型
+  int64 tripartite_game_id = 2;  // 三方游戏ID
+  string currency_code = 3;  //  货币code
+  int64 timestamp = 4;  //  毫秒
+
+}
+
+message GetGameDetailsByThirdReply {
+  int64 game_id = 1;
+  int64 tripartite_game_id = 2;
+  int64 rank = 3;
+  string currency_code = 4;
+  int64 game_platform_id = 5;
+  int64 game_category_id = 6;
+  string game_name = 7;
+  int64 is_featured = 9; //  是否推荐(1:开启，2：关闭)
+  int64 is_jump_tab = 10; //  是否开启跳转(1:开启，2：关闭)
+  int64 wallet_model = 13;
+  int64 horizontal_support = 14;
+  int64 vertical_support = 15;
+  int64 try_game_support = 16;
+  string style = 17;
+  int64 icon_style = 18;
+  string logo_url = 19;
+  string icon_image_url = 20;
+  int64 is_game_active = 21;
+  int64 is_under_maintenance = 22;
+}
+
 
 message AddGameBetBaseReply {
   int64 user_id = 1;
@@ -540,6 +570,8 @@ service LiveGameRpcInnerService{
   rpc TripartiteTransferRecordStatus(TripartiteTransferRecordStatusReq) returns (TripartiteTransferRecord);
   // 创建补偿失败记录
   rpc CreateCompensationFailedRecord(CreateCompensationRecordReq) returns (CreateCompensationRecordResp);
+  // 获取游戏详情通过第三方
+  rpc GetGameDetailsByThird(GetGameDetailsByThirdReq) returns (GetGameDetailsByThirdReply);
   // 添加游戏下注记录(单一钱包)
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
   // 变更游戏下注记录结算状态

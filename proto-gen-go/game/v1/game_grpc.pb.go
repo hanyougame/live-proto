@@ -865,6 +865,7 @@ const (
 	LiveGameRpcInnerService_ProcessMessageTransferSend_FullMethodName        = "/game.v1.LiveGameRpcInnerService/ProcessMessageTransferSend"
 	LiveGameRpcInnerService_TripartiteTransferRecordStatus_FullMethodName    = "/game.v1.LiveGameRpcInnerService/TripartiteTransferRecordStatus"
 	LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName    = "/game.v1.LiveGameRpcInnerService/CreateCompensationFailedRecord"
+	LiveGameRpcInnerService_GetGameDetailsByThird_FullMethodName             = "/game.v1.LiveGameRpcInnerService/GetGameDetailsByThird"
 	LiveGameRpcInnerService_AddGameBetRecord_FullMethodName                  = "/game.v1.LiveGameRpcInnerService/AddGameBetRecord"
 	LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName              = "/game.v1.LiveGameRpcInnerService/AddGameSettledRecord"
 	LiveGameRpcInnerService_AddGameCancelRecord_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddGameCancelRecord"
@@ -894,6 +895,8 @@ type LiveGameRpcInnerServiceClient interface {
 	TripartiteTransferRecordStatus(ctx context.Context, in *TripartiteTransferRecordStatusReq, opts ...grpc.CallOption) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
 	CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error)
+	// 获取游戏详情通过第三方
+	GetGameDetailsByThird(ctx context.Context, in *GetGameDetailsByThirdReq, opts ...grpc.CallOption) (*GetGameDetailsByThirdReply, error)
 	// 添加游戏下注记录(单一钱包)
 	AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
 	// 变更游戏下注记录结算状态
@@ -976,6 +979,15 @@ func (c *liveGameRpcInnerServiceClient) TripartiteTransferRecordStatus(ctx conte
 func (c *liveGameRpcInnerServiceClient) CreateCompensationFailedRecord(ctx context.Context, in *CreateCompensationRecordReq, opts ...grpc.CallOption) (*CreateCompensationRecordResp, error) {
 	out := new(CreateCompensationRecordResp)
 	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcInnerServiceClient) GetGameDetailsByThird(ctx context.Context, in *GetGameDetailsByThirdReq, opts ...grpc.CallOption) (*GetGameDetailsByThirdReply, error) {
+	out := new(GetGameDetailsByThirdReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_GetGameDetailsByThird_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1105,6 +1117,8 @@ type LiveGameRpcInnerServiceServer interface {
 	TripartiteTransferRecordStatus(context.Context, *TripartiteTransferRecordStatusReq) (*TripartiteTransferRecord, error)
 	// 创建补偿失败记录
 	CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error)
+	// 获取游戏详情通过第三方
+	GetGameDetailsByThird(context.Context, *GetGameDetailsByThirdReq) (*GetGameDetailsByThirdReply, error)
 	// 添加游戏下注记录(单一钱包)
 	AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error)
 	// 变更游戏下注记录结算状态
@@ -1153,6 +1167,9 @@ func (UnimplementedLiveGameRpcInnerServiceServer) TripartiteTransferRecordStatus
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) CreateCompensationFailedRecord(context.Context, *CreateCompensationRecordReq) (*CreateCompensationRecordResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCompensationFailedRecord not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) GetGameDetailsByThird(context.Context, *GetGameDetailsByThirdReq) (*GetGameDetailsByThirdReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGameDetailsByThird not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGameBetRecord not implemented")
@@ -1308,6 +1325,24 @@ func _LiveGameRpcInnerService_CreateCompensationFailedRecord_Handler(srv interfa
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LiveGameRpcInnerServiceServer).CreateCompensationFailedRecord(ctx, req.(*CreateCompensationRecordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcInnerService_GetGameDetailsByThird_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGameDetailsByThirdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).GetGameDetailsByThird(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_GetGameDetailsByThird_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).GetGameDetailsByThird(ctx, req.(*GetGameDetailsByThirdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1558,6 +1593,10 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCompensationFailedRecord",
 			Handler:    _LiveGameRpcInnerService_CreateCompensationFailedRecord_Handler,
+		},
+		{
+			MethodName: "GetGameDetailsByThird",
+			Handler:    _LiveGameRpcInnerService_GetGameDetailsByThird_Handler,
 		},
 		{
 			MethodName: "AddGameBetRecord",

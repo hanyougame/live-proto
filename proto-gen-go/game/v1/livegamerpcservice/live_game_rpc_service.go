@@ -54,6 +54,8 @@ type (
 	GetCategorySimpleListByCurrReply         = v1.GetCategorySimpleListByCurrReply
 	GetGameConfInfoReply                     = v1.GetGameConfInfoReply
 	GetGameConfInfoReq                       = v1.GetGameConfInfoReq
+	GetGameDetailsByThirdReply               = v1.GetGameDetailsByThirdReply
+	GetGameDetailsByThirdReq                 = v1.GetGameDetailsByThirdReq
 	GetGameDetailsListReply                  = v1.GetGameDetailsListReply
 	GetGameFavoriteListReq                   = v1.GetGameFavoriteListReq
 	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
