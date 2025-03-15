@@ -129,6 +129,14 @@ type (
 		AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 		// 变更游戏调整记录状态
 		AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
+		// 添加游戏下注记录(单一钱包)
+		AddMqGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 变更游戏下注记录结算状态
+		AddMqGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 变更游戏取消记录状态
+		AddMqGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 变更游戏调整记录状态
+		AddMqGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 添加游戏下注记录(转账钱包)
 		AddTransferGameBetRecord(ctx context.Context, in *AddTransferGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 发送游戏下注MQ
@@ -207,6 +215,30 @@ func (m *defaultLiveGameRpcInnerService) AddGameCancelRecord(ctx context.Context
 func (m *defaultLiveGameRpcInnerService) AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddGameAdjustmentRecord(ctx, in, opts...)
+}
+
+// 添加游戏下注记录(单一钱包)
+func (m *defaultLiveGameRpcInnerService) AddMqGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddMqGameBetRecord(ctx, in, opts...)
+}
+
+// 变更游戏下注记录结算状态
+func (m *defaultLiveGameRpcInnerService) AddMqGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddMqGameSettledRecord(ctx, in, opts...)
+}
+
+// 变更游戏取消记录状态
+func (m *defaultLiveGameRpcInnerService) AddMqGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddMqGameCancelRecord(ctx, in, opts...)
+}
+
+// 变更游戏调整记录状态
+func (m *defaultLiveGameRpcInnerService) AddMqGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.AddMqGameAdjustmentRecord(ctx, in, opts...)
 }
 
 // 添加游戏下注记录(转账钱包)

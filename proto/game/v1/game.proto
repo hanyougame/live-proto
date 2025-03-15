@@ -450,6 +450,7 @@ message AddGameSettledRecordReq{
   int64 settle_time = 4; // 结算时间毫秒
   int64 user_id = 5;                      // 用户ID
   string bet_id = 6;                    // 对应的投注 ID，如果没有就会取牌局 ID（三方)
+  string order_id = 7;                    // 内部订单号(order_id)
 }
 
 message AddGameCancelRecordReq {
@@ -478,6 +479,7 @@ message AddGameAdjustmentRecordReq {
   string currency_code = 7; // 玩家货币code
   int64 timestamp = 8; //时间戳（毫秒）
   string adjust_desc = 9; //调整说明
+  string order_id = 10;                    // 内部订单号(order_id)
 }
 
 message AddTransferGameBetRecordReq {
@@ -546,6 +548,14 @@ service LiveGameRpcInnerService{
   rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏调整记录状态
   rpc AddGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (AddGameBetBaseReply);
+  // 添加游戏下注记录(单一钱包)
+  rpc AddMqGameBetRecord(AddGameBetRecordReq) returns (GameReply);
+  // 变更游戏下注记录结算状态
+  rpc AddMqGameSettledRecord(AddGameSettledRecordReq) returns (GameReply);
+  // 变更游戏取消记录状态
+  rpc AddMqGameCancelRecord(AddGameCancelRecordReq) returns (GameReply);
+  // 变更游戏调整记录状态
+  rpc AddMqGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (GameReply);
   // 添加游戏下注记录(转账钱包)
   rpc AddTransferGameBetRecord(AddTransferGameBetRecordReq) returns (GameReply);
   // 发送游戏下注MQ
