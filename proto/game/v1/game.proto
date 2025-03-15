@@ -217,6 +217,9 @@ message GameUserBetReq{
   string amount = 6;   //投注金额(6 位小数)
   string currency_code = 7; // 玩家货币code
   int64 timestamp = 8; //时间戳（毫秒）
+  int64 post_bet_balance = 9; //投注后余额
+  string order_id = 10;                    // 内部订单号(数据表的order_id)
+  int64 wei_bet_amount = 11;                    // 内部的投注金额
 }
 //游戏投注创建回应
 message GameUserBetReply{
@@ -237,6 +240,7 @@ message GameUserRewardReq{
   string reward_amount = 7;   //交易金额，非负值
   string currency_code = 8; // 玩家货币code
   int64 timestamp = 9; //时间戳（毫秒）
+  int64 wei_bet_amount = 10;                    // 内部的投注金额
 }
 message GameUserRewardReply{
   string balance = 1;         //余额
@@ -277,6 +281,7 @@ message GameUserAdjustmentReq {
   string adjust_desc = 7;       //调整描述
   string currency_code = 8; //货币Code
   int64 timestamp = 10; //时间戳（毫秒）
+  string order_id = 11;         //内部订单ID
 }
 //游戏调整玩家余额(订单、活动等调整) 响应
 message GameUserAdjustmentReply {
@@ -575,19 +580,11 @@ service LiveGameRpcInnerService{
   // 添加游戏下注记录(单一钱包)
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
   // 变更游戏下注记录结算状态
-  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
+//  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏取消记录状态
   rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏调整记录状态
   rpc AddGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (AddGameBetBaseReply);
-  // 添加游戏下注记录(单一钱包)
-  rpc AddMqGameBetRecord(AddGameBetRecordReq) returns (GameReply);
-  // 变更游戏下注记录结算状态
-  rpc AddMqGameSettledRecord(AddGameSettledRecordReq) returns (GameReply);
-  // 变更游戏取消记录状态
-  rpc AddMqGameCancelRecord(AddGameCancelRecordReq) returns (GameReply);
-  // 变更游戏调整记录状态
-  rpc AddMqGameAdjustmentRecord(AddGameAdjustmentRecordReq) returns (GameReply);
   // 添加游戏下注记录(转账钱包)
   rpc AddTransferGameBetRecord(AddTransferGameBetRecordReq) returns (GameReply);
   // 发送游戏下注MQ
