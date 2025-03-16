@@ -556,6 +556,7 @@ message SendGameBetBetSettlementMQReq {
   int64 bonus_amount = 14; // 派奖金额
   int64 bet_time = 15; // 投注时间
   string bet_order_id = 16; // 投注ID
+  string game_name = 19;      // 游戏名称
 }
 
 message AddRecentlyGamePlayReq {
