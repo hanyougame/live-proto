@@ -49,6 +49,7 @@ type (
 	GameUserBetReq                           = v1.GameUserBetReq
 	GameUserRewardReply                      = v1.GameUserRewardReply
 	GameUserRewardReq                        = v1.GameUserRewardReq
+	GameValueItem                            = v1.GameValueItem
 	GetCategoryListByCurrReply               = v1.GetCategoryListByCurrReply
 	GetCategoryListByCurrReq                 = v1.GetCategoryListByCurrReq
 	GetCategorySimpleListByCurrReply         = v1.GetCategorySimpleListByCurrReply
@@ -76,6 +77,7 @@ type (
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
+	GetNewGameListReply                      = v1.GetNewGameListReply
 	GetNewGameListReq                        = v1.GetNewGameListReq
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply

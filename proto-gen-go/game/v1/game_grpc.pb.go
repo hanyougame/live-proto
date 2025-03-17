@@ -1542,7 +1542,7 @@ type LiveGameRpcServiceClient interface {
 	// 获取游戏功能配置
 	GetGameConfInfo(ctx context.Context, in *GetGameConfInfoReq, opts ...grpc.CallOption) (*GetGameConfInfoReply, error)
 	// 通过搜索获取游戏列表
-	GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
+	GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetNewGameListReply, error)
 }
 
 type liveGameRpcServiceClient struct {
@@ -1760,8 +1760,8 @@ func (c *liveGameRpcServiceClient) GetGameConfInfo(ctx context.Context, in *GetG
 	return out, nil
 }
 
-func (c *liveGameRpcServiceClient) GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
-	out := new(GetGameDetailsListReply)
+func (c *liveGameRpcServiceClient) GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetNewGameListReply, error) {
+	out := new(GetNewGameListReply)
 	err := c.cc.Invoke(ctx, LiveGameRpcService_GetNewGameList_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1820,7 +1820,7 @@ type LiveGameRpcServiceServer interface {
 	// 获取游戏功能配置
 	GetGameConfInfo(context.Context, *GetGameConfInfoReq) (*GetGameConfInfoReply, error)
 	// 通过搜索获取游戏列表
-	GetNewGameList(context.Context, *GetNewGameListReq) (*GetGameDetailsListReply, error)
+	GetNewGameList(context.Context, *GetNewGameListReq) (*GetNewGameListReply, error)
 	mustEmbedUnimplementedLiveGameRpcServiceServer()
 }
 
@@ -1897,7 +1897,7 @@ func (UnimplementedLiveGameRpcServiceServer) GetHomeGameList(context.Context, *G
 func (UnimplementedLiveGameRpcServiceServer) GetGameConfInfo(context.Context, *GetGameConfInfoReq) (*GetGameConfInfoReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGameConfInfo not implemented")
 }
-func (UnimplementedLiveGameRpcServiceServer) GetNewGameList(context.Context, *GetNewGameListReq) (*GetGameDetailsListReply, error) {
+func (UnimplementedLiveGameRpcServiceServer) GetNewGameList(context.Context, *GetNewGameListReq) (*GetNewGameListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNewGameList not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) mustEmbedUnimplementedLiveGameRpcServiceServer() {}

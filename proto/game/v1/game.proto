@@ -974,6 +974,43 @@ message GetNewGameListReq {
   int64 typology = 8; //  1 :热门，2：最近，3：收藏 0 全部 筛选的子类型
 }
 
+message GetNewGameListReply {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 total = 3;
+  int64 total_page = 4;
+  repeated GameValueItem rows = 5;
+}
+
+message GameValueItem {
+  int64 category_type = 1;                    // 类别类型
+  int64 rank = 2;                             // 排名
+  string currency_code = 3;                   // 货币代码
+  int64 game_category_id = 4;                 // 游戏类别ID
+  int64 game_id = 5;                          // 游戏ID
+  int64 tripartite_game_id = 6;               // 第三方游戏ID
+  string game_name = 7;                       // 游戏名称
+  int64 game_platform_id = 8;                 // 游戏平台ID
+  int64 tripartite_game_platform_id = 9;      // 第三方游戏平台ID
+  string game_platform_name = 10;             // 游戏平台名称
+  int64 is_favorite = 11;                     // 是否收藏
+  int64 is_featured = 12;                     // 是否为特色游戏
+  int64 is_jump_tab = 13;                     // 是否跳转标签
+  int64 wallet_model = 14;                    // 钱包模式
+  int64 horizontal_support = 15;              // 横屏支持
+  int64 vertical_support = 16;                // 竖屏支持
+  int64 try_game_support = 17;                // 试玩支持
+  double platform_minimum_entry = 18;         // 平台最低准入
+  int64 platform_promotion_style = 19;        // 平台促销风格
+  string platform_icon = 20;                  // 平台图标
+  string platform_background_color = 21;      // 平台背景颜色
+  string platform_logo_url = 22;              // 平台 Logo URL
+  string platform_promotion_image_url = 23;   // 平台促销图片 URL
+  string platform_hot_image_url = 24;         // 平台热门图片 URL
+  int64 game_icon_style = 25;                 // 图标风格
+  string game_logo_url = 26;                  // 游戏 Logo URL
+  string game_icon_image_url = 27;            // 游戏图标图片 URL
+}
 
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
@@ -1023,5 +1060,5 @@ service LiveGameRpcService{
   // 获取游戏功能配置
   rpc GetGameConfInfo(GetGameConfInfoReq) returns (GetGameConfInfoReply);
   // 通过搜索获取游戏列表
-  rpc GetNewGameList(GetNewGameListReq) returns (GetGameDetailsListReply);
+  rpc GetNewGameList(GetNewGameListReq) returns (GetNewGameListReply);
 }
