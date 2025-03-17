@@ -351,6 +351,7 @@ message UpdateAuditAmountReq {
   int64 game_platform_id = 4; // 游戏平台Id
   int64 tripartite_platform_id = 10; // 三方游戏平台ID
   int64 game_id = 5; // 游戏Id
+  int64 tripartite_game_id = 6; // 三方游戏Id
 }
 
 message UpdateAuditAmountResp {
