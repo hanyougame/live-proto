@@ -76,6 +76,7 @@ type (
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
+	GetNewGameListReq                        = v1.GetNewGameListReq
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
@@ -158,6 +159,8 @@ type (
 		GetHomeGameList(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error)
 		// 获取游戏功能配置
 		GetGameConfInfo(ctx context.Context, in *GetGameConfInfoReq, opts ...grpc.CallOption) (*GetGameConfInfoReply, error)
+		// 通过搜索获取游戏列表
+		GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -307,4 +310,10 @@ func (m *defaultLiveGameRpcService) GetHomeGameList(ctx context.Context, in *Get
 func (m *defaultLiveGameRpcService) GetGameConfInfo(ctx context.Context, in *GetGameConfInfoReq, opts ...grpc.CallOption) (*GetGameConfInfoReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetGameConfInfo(ctx, in, opts...)
+}
+
+// 通过搜索获取游戏列表
+func (m *defaultLiveGameRpcService) GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetNewGameList(ctx, in, opts...)
 }

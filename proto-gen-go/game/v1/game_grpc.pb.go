@@ -1488,6 +1488,7 @@ const (
 	LiveGameRpcService_GetHomeGameItems_FullMethodName                = "/game.v1.LiveGameRpcService/GetHomeGameItems"
 	LiveGameRpcService_GetHomeGameList_FullMethodName                 = "/game.v1.LiveGameRpcService/GetHomeGameList"
 	LiveGameRpcService_GetGameConfInfo_FullMethodName                 = "/game.v1.LiveGameRpcService/GetGameConfInfo"
+	LiveGameRpcService_GetNewGameList_FullMethodName                  = "/game.v1.LiveGameRpcService/GetNewGameList"
 )
 
 // LiveGameRpcServiceClient is the client API for LiveGameRpcService service.
@@ -1540,6 +1541,8 @@ type LiveGameRpcServiceClient interface {
 	GetHomeGameList(ctx context.Context, in *GetHomeGameItemReq, opts ...grpc.CallOption) (*GameDetailsList, error)
 	// 获取游戏功能配置
 	GetGameConfInfo(ctx context.Context, in *GetGameConfInfoReq, opts ...grpc.CallOption) (*GetGameConfInfoReply, error)
+	// 通过搜索获取游戏列表
+	GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error)
 }
 
 type liveGameRpcServiceClient struct {
@@ -1757,6 +1760,15 @@ func (c *liveGameRpcServiceClient) GetGameConfInfo(ctx context.Context, in *GetG
 	return out, nil
 }
 
+func (c *liveGameRpcServiceClient) GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetGameDetailsListReply, error) {
+	out := new(GetGameDetailsListReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_GetNewGameList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcServiceServer is the server API for LiveGameRpcService service.
 // All implementations must embed UnimplementedLiveGameRpcServiceServer
 // for forward compatibility
@@ -1807,6 +1819,8 @@ type LiveGameRpcServiceServer interface {
 	GetHomeGameList(context.Context, *GetHomeGameItemReq) (*GameDetailsList, error)
 	// 获取游戏功能配置
 	GetGameConfInfo(context.Context, *GetGameConfInfoReq) (*GetGameConfInfoReply, error)
+	// 通过搜索获取游戏列表
+	GetNewGameList(context.Context, *GetNewGameListReq) (*GetGameDetailsListReply, error)
 	mustEmbedUnimplementedLiveGameRpcServiceServer()
 }
 
@@ -1882,6 +1896,9 @@ func (UnimplementedLiveGameRpcServiceServer) GetHomeGameList(context.Context, *G
 }
 func (UnimplementedLiveGameRpcServiceServer) GetGameConfInfo(context.Context, *GetGameConfInfoReq) (*GetGameConfInfoReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGameConfInfo not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) GetNewGameList(context.Context, *GetNewGameListReq) (*GetGameDetailsListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNewGameList not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) mustEmbedUnimplementedLiveGameRpcServiceServer() {}
 
@@ -2310,6 +2327,24 @@ func _LiveGameRpcService_GetGameConfInfo_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcService_GetNewGameList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNewGameListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).GetNewGameList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_GetNewGameList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).GetNewGameList(ctx, req.(*GetNewGameListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2408,6 +2443,10 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGameConfInfo",
 			Handler:    _LiveGameRpcService_GetGameConfInfo_Handler,
+		},
+		{
+			MethodName: "GetNewGameList",
+			Handler:    _LiveGameRpcService_GetNewGameList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

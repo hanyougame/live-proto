@@ -529,13 +529,21 @@ message SendGameBetBetMQReq {
   string user_account = 2;    // 用户账号
   string currency_code = 3;   // 货币代码
   int64 bet_amount = 4;       // 投注金额（不包含撤单金额）
-  int64 win_amount = 5;       // 中奖金额
-  int64 valid_bet_amount = 6; // 有效投注金额
+  string game_name = 19;      // 游戏名称
   int64 game_id = 7;          // 游戏ID
-  int64 game_category = 8;    // 游戏类型
-  int64 platform_id = 9;      // 游戏平台ID
-  int64 settlement_time = 10; // 结算时间
+  int64 bet_time = 10; // 投注时间
+  string bet_order_id = 16; // 投注ID
+  int64 tripartite_game_id = 18;          // 三方游戏ID
+  int64 game_category_id = 8;    // 游戏类型ID
+  string game_category_name = 9;    // 游戏类型名称
+  int64 tripartite_category_id = 15; // 三方游戏类型ID
+  int64 platform_id = 11;      // 游戏平台ID
+  int64 tripartite_platform_id = 17;      // 三方游戏平台ID
+  string platform_name = 12;      // 游戏平台名称
+
 }
+
+
 // 定义 SendGameBetBetSettlementMQReq 消息
 message SendGameBetBetSettlementMQReq {
   int64 user_id = 1;          // 用户ID
@@ -581,7 +589,7 @@ service LiveGameRpcInnerService{
   // 添加游戏下注记录(单一钱包)
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
   // 变更游戏下注记录结算状态
-//  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
+  //  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏取消记录状态
   rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏调整记录状态
@@ -954,6 +962,18 @@ message GetGameConfInfoReply{
   string config_value = 1;
 }
 
+// 通过搜索获取游戏列表请求参数
+message GetNewGameListReq {
+  int64 page = 1;
+  int64 page_size = 2;
+  string search_value = 3;
+  string currency_code = 4;
+  int64 user_id = 5;
+  int64 game_platform_id = 6;
+  int64 tripartite_category_id = 7;
+  int64 typology = 8; //  1 :热门，2：最近，3：收藏 0 全部 筛选的子类型
+}
+
 
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
@@ -1002,4 +1022,6 @@ service LiveGameRpcService{
   rpc GetHomeGameList(GetHomeGameItemReq) returns (GameDetailsList);
   // 获取游戏功能配置
   rpc GetGameConfInfo(GetGameConfInfoReq) returns (GetGameConfInfoReply);
+  // 通过搜索获取游戏列表
+  rpc GetNewGameList(GetNewGameListReq) returns (GetGameDetailsListReply);
 }

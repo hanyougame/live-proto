@@ -76,6 +76,7 @@ type (
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
+	GetNewGameListReq                        = v1.GetNewGameListReq
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
