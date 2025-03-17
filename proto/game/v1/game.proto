@@ -681,6 +681,7 @@ message GetPlatformListByCurrReq {
   int64 currency_id = 1;
   string currency_code = 2;
   int64 game_category_id = 3;
+  int64 tripartite_category_id = 4;
 }
 // 通过货币获取平台响应参数
 message GetPlatformListByCurrReply {
