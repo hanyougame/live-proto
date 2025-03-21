@@ -25,6 +25,7 @@ type (
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	BatchAddGameBetRecordReq                 = v1.BatchAddGameBetRecordReq
+	BatchAddGameSettledRecordReq             = v1.BatchAddGameSettledRecordReq
 	BetRecordInfo                            = v1.BetRecordInfo
 	BetSummaryInfo                           = v1.BetSummaryInfo
 	CategoryNameBase                         = v1.CategoryNameBase
@@ -134,6 +135,8 @@ type (
 		// 批量添加游戏下注记录(单一钱包)
 		BatchAddGameBetRecord(ctx context.Context, in *BatchAddGameBetRecordReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 变更游戏下注记录结算状态
+		BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 变更游戏取消记录状态
 		AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 		// 变更游戏调整记录状态
 		AddGameAdjustmentRecord(ctx context.Context, in *AddGameAdjustmentRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
@@ -212,6 +215,12 @@ func (m *defaultLiveGameRpcInnerService) BatchAddGameBetRecord(ctx context.Conte
 }
 
 // 变更游戏下注记录结算状态
+func (m *defaultLiveGameRpcInnerService) BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.BatchAddGameSettledRecord(ctx, in, opts...)
+}
+
+// 变更游戏取消记录状态
 func (m *defaultLiveGameRpcInnerService) AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddGameCancelRecord(ctx, in, opts...)

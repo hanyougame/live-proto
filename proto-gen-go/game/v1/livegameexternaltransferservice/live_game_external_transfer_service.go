@@ -25,6 +25,7 @@ type (
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
 	BatchAddGameBetRecordReq                 = v1.BatchAddGameBetRecordReq
+	BatchAddGameSettledRecordReq             = v1.BatchAddGameSettledRecordReq
 	BetRecordInfo                            = v1.BetRecordInfo
 	BetSummaryInfo                           = v1.BetSummaryInfo
 	CategoryNameBase                         = v1.CategoryNameBase

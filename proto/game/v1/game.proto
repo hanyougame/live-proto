@@ -492,6 +492,11 @@ message AddGameSettledRecordReq{
   string order_id = 7;                    // 内部订单号(order_id)
 }
 
+message BatchAddGameSettledRecordReq {
+  repeated AddGameSettledRecordReq add_game_settled_record_req = 1;
+}
+
+
 message AddGameCancelRecordReq {
   int64 user_id = 2;  // 用户ID
   int64 game_id = 3;                      // 游戏ID
@@ -596,6 +601,7 @@ service LiveGameRpcInnerService{
   rpc BatchAddGameBetRecord(BatchAddGameBetRecordReq) returns (GameReply);
   // 变更游戏下注记录结算状态
   //  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
+  rpc BatchAddGameSettledRecord(BatchAddGameSettledRecordReq) returns (GameReply);
   // 变更游戏取消记录状态
   rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏调整记录状态
