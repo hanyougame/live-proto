@@ -209,6 +209,11 @@ message GetK9GameAccessKeyReply{
 }
 //游戏投注创建请求
 message GameUserBetReq{
+  repeated GameUserBetInfo bet_info = 1;
+}
+
+//游戏投注创建请求
+message GameUserBetInfo{
   int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
   int64 user_id = 2;  // 用户ID
   int64 tripartite_game_id = 3;      // 三方游戏id
@@ -221,6 +226,8 @@ message GameUserBetReq{
   string order_id = 10;                    // 内部订单号(数据表的order_id)
   int64 wei_bet_amount = 11;                    // 内部的投注金额
 }
+
+
 //游戏投注创建回应
 message GameUserBetReply{
   string balance = 1;         //用户余额
@@ -231,6 +238,11 @@ message GameUserBetReply{
 
 // 游戏订单派奖创建
 message GameUserRewardReq{
+  repeated GameUserRewardInfo reward_info = 1;
+}
+
+// 游戏订单派奖创建
+message GameUserRewardInfo{
   int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
   int64 user_id = 2;  // 用户ID
   int64 tripartite_game_id = 3;      // 三方游戏id
@@ -242,6 +254,8 @@ message GameUserRewardReq{
   int64 timestamp = 9; //时间戳（毫秒）
   int64 wei_bet_amount = 10;                    // 内部的投注金额
 }
+
+
 message GameUserRewardReply{
   string balance = 1;         //余额
   string currency_code = 2;   //货币代码
