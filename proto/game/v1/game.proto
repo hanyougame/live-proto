@@ -231,10 +231,7 @@ message GameUserBetInfo{
 
 //游戏投注创建回应
 message GameUserBetReply{
-  string balance = 1;         //用户余额
-  string currency_code = 2;   //货币代码
-  string order_id = 3;                    // 投注记录表内部订单号(数据表的order_id)
-  string bet_record_id = 4;                   // 投注记录表ID(数据表的ID)
+  repeated string msg_id = 1;         // 处理成功的mq的消息ID
 }
 
 // 游戏订单派奖创建
@@ -259,9 +256,7 @@ message GameUserRewardInfo{
 
 
 message GameUserRewardReply{
-  string balance = 1;         //余额
-  string currency_code = 2;   //货币代码
-  string order_id = 4;         //订单ID
+  repeated string msg_id = 1;         // 处理成功的mq的消息ID
 }
 
 //游戏投注撤销
@@ -281,9 +276,7 @@ message GameUserBetCancelReq {
 }
 //游戏投注撤销响应
 message GameUserBetCancelReply {
-  string balance = 1;         //余额
-  string currency_code = 2;   //货币代码
-  string order_id = 4;         //订单ID
+  repeated string msg_id = 1;         // 处理成功的mq的消息ID
 }
 
 //游戏调整玩家余额(订单、活动等调整) 请求
@@ -301,9 +294,7 @@ message GameUserAdjustmentReq {
 }
 //游戏调整玩家余额(订单、活动等调整) 响应
 message GameUserAdjustmentReply {
-  string balance = 1;         //余额
-  string currency_code = 2;   //货币代码
-  string order_id = 4;         //订单ID
+  repeated string msg_id = 1;         // 处理成功的mq的消息ID
 }
 
 // 游戏转账订单回调
