@@ -209,6 +209,11 @@ message GetK9GameAccessKeyReply{
 }
 //游戏投注创建请求
 message GameUserBetReq{
+  repeated GameUserBetInfo bet_info = 1;
+}
+
+//游戏投注创建请求
+message GameUserBetInfo{
   int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
   int64 user_id = 2;  // 用户ID
   int64 tripartite_game_id = 3;      // 三方游戏id
@@ -234,6 +239,11 @@ message GameUserBetReply{
 
 // 游戏订单派奖创建
 message GameUserRewardReq{
+  repeated GameUserRewardInfo reward_info = 1;
+}
+
+// 游戏订单派奖创建
+message GameUserRewardInfo{
   int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
   int64 user_id = 2;  // 用户ID
   int64 tripartite_game_id = 3;      // 三方游戏id
@@ -268,7 +278,6 @@ message GameUserBetCancelReq {
   int64 timestamp = 10; //时间戳（毫秒）
   string order_desc = 11; //撤单说明
   int64 cancel_type = 12; //撤单类型：1 投注撤单，2 派奖撤单
-  string msg_id = 13;                    // mq的消息ID
 }
 //游戏投注撤销响应
 message GameUserBetCancelReply {
@@ -289,7 +298,6 @@ message GameUserAdjustmentReq {
   string currency_code = 8; //货币Code
   int64 timestamp = 10; //时间戳（毫秒）
   string order_id = 11;         //内部订单ID
-  string msg_id = 12;                    // mq的消息ID
 }
 //游戏调整玩家余额(订单、活动等调整) 响应
 message GameUserAdjustmentReply {
