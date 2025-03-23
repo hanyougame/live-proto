@@ -901,7 +901,7 @@ type LiveGameRpcInnerServiceClient interface {
 	// 变更游戏下注记录结算状态
 	//
 	//	rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
-	BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*GameReply, error)
+	BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*BatchAddGameSettledRecordReply, error)
 	// 变更游戏取消记录状态
 	AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 	// 变更游戏调整记录状态
@@ -1005,8 +1005,8 @@ func (c *liveGameRpcInnerServiceClient) BatchAddGameBetRecord(ctx context.Contex
 	return out, nil
 }
 
-func (c *liveGameRpcInnerServiceClient) BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*GameReply, error) {
-	out := new(GameReply)
+func (c *liveGameRpcInnerServiceClient) BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*BatchAddGameSettledRecordReply, error) {
+	out := new(BatchAddGameSettledRecordReply)
 	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_BatchAddGameSettledRecord_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1092,7 +1092,7 @@ type LiveGameRpcInnerServiceServer interface {
 	// 变更游戏下注记录结算状态
 	//
 	//	rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
-	BatchAddGameSettledRecord(context.Context, *BatchAddGameSettledRecordReq) (*GameReply, error)
+	BatchAddGameSettledRecord(context.Context, *BatchAddGameSettledRecordReq) (*BatchAddGameSettledRecordReply, error)
 	// 变更游戏取消记录状态
 	AddGameCancelRecord(context.Context, *AddGameCancelRecordReq) (*AddGameBetBaseReply, error)
 	// 变更游戏调整记录状态
@@ -1139,7 +1139,7 @@ func (UnimplementedLiveGameRpcInnerServiceServer) AddGameBetRecord(context.Conte
 func (UnimplementedLiveGameRpcInnerServiceServer) BatchAddGameBetRecord(context.Context, *BatchAddGameBetRecordReq) (*GameReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchAddGameBetRecord not implemented")
 }
-func (UnimplementedLiveGameRpcInnerServiceServer) BatchAddGameSettledRecord(context.Context, *BatchAddGameSettledRecordReq) (*GameReply, error) {
+func (UnimplementedLiveGameRpcInnerServiceServer) BatchAddGameSettledRecord(context.Context, *BatchAddGameSettledRecordReq) (*BatchAddGameSettledRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchAddGameSettledRecord not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) AddGameCancelRecord(context.Context, *AddGameCancelRecordReq) (*AddGameBetBaseReply, error) {

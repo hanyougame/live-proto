@@ -489,6 +489,12 @@ message BatchAddGameBetRecordReq {
   repeated AddGameBetRecordReq add_game_bet_record_req = 1;
 }
 
+message BatchAddGameBetRecordReply {
+  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+}
+
+
+
 message AddGameSettledRecordReq{
   string round_id = 1;                    // 牌局ID（三方)
   int64 reward_amount = 2; // 派奖金额（处理之后的数据）
@@ -502,6 +508,11 @@ message AddGameSettledRecordReq{
 message BatchAddGameSettledRecordReq {
   repeated AddGameSettledRecordReq add_game_settled_record_req = 1;
 }
+
+message BatchAddGameSettledRecordReply {
+  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+}
+
 
 
 message AddGameCancelRecordReq {
@@ -608,7 +619,7 @@ service LiveGameRpcInnerService{
   rpc BatchAddGameBetRecord(BatchAddGameBetRecordReq) returns (GameReply);
   // 变更游戏下注记录结算状态
   //  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
-  rpc BatchAddGameSettledRecord(BatchAddGameSettledRecordReq) returns (GameReply);
+  rpc BatchAddGameSettledRecord(BatchAddGameSettledRecordReq) returns (BatchAddGameSettledRecordReply);
   // 变更游戏取消记录状态
   rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏调整记录状态
