@@ -490,7 +490,7 @@ message BatchAddGameBetRecordReq {
 }
 
 message BatchAddGameBetRecordReply {
-  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+  repeated string order_id = 1;         // 处理成功的mq的消息ID
 }
 
 
@@ -510,7 +510,7 @@ message BatchAddGameSettledRecordReq {
 }
 
 message BatchAddGameSettledRecordReply {
-  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+  repeated string order_id = 1;         // 处理成功的mq的消息ID
 }
 
 
