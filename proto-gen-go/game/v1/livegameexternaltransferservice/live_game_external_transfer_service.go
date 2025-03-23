@@ -47,10 +47,8 @@ type (
 	GameUserAdjustmentReq                    = v1.GameUserAdjustmentReq
 	GameUserBetCancelReply                   = v1.GameUserBetCancelReply
 	GameUserBetCancelReq                     = v1.GameUserBetCancelReq
-	GameUserBetInfo                          = v1.GameUserBetInfo
 	GameUserBetReply                         = v1.GameUserBetReply
 	GameUserBetReq                           = v1.GameUserBetReq
-	GameUserRewardInfo                       = v1.GameUserRewardInfo
 	GameUserRewardReply                      = v1.GameUserRewardReply
 	GameUserRewardReq                        = v1.GameUserRewardReq
 	GameValueItem                            = v1.GameValueItem
