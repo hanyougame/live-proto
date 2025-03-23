@@ -616,7 +616,7 @@ service LiveGameRpcInnerService{
   // 添加游戏下注记录(单一钱包)
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
   // 批量添加游戏下注记录(单一钱包)
-  rpc BatchAddGameBetRecord(BatchAddGameBetRecordReq) returns (GameReply);
+  rpc BatchAddGameBetRecord(BatchAddGameBetRecordReq) returns (BatchAddGameBetRecordReply);
   // 变更游戏下注记录结算状态
   //  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
   rpc BatchAddGameSettledRecord(BatchAddGameSettledRecordReq) returns (BatchAddGameSettledRecordReply);
