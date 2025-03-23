@@ -209,11 +209,6 @@ message GetK9GameAccessKeyReply{
 }
 //游戏投注创建请求
 message GameUserBetReq{
-  repeated GameUserBetInfo bet_info = 1;
-}
-
-//游戏投注创建请求
-message GameUserBetInfo{
   int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
   int64 user_id = 2;  // 用户ID
   int64 tripartite_game_id = 3;      // 三方游戏id
@@ -229,18 +224,17 @@ message GameUserBetInfo{
 }
 
 
+
 //游戏投注创建回应
 message GameUserBetReply{
-  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+  string balance = 1;         //用户余额
+  string currency_code = 2;   //货币代码
+  string order_id = 3;                    // 投注记录表内部订单号(数据表的order_id)
+  string bet_record_id = 4;                   // 投注记录表ID(数据表的ID)
 }
 
 // 游戏订单派奖创建
 message GameUserRewardReq{
-  repeated GameUserRewardInfo reward_info = 1;
-}
-
-// 游戏订单派奖创建
-message GameUserRewardInfo{
   int64 wallet_model = 1; // 钱包模式：1：单一钱包，2：转账钱包
   int64 user_id = 2;  // 用户ID
   int64 tripartite_game_id = 3;      // 三方游戏id
@@ -255,8 +249,11 @@ message GameUserRewardInfo{
 }
 
 
+
 message GameUserRewardReply{
-  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+  string balance = 1;         //余额
+  string currency_code = 2;   //货币代码
+  string order_id = 4;         //订单ID
 }
 
 //游戏投注撤销
@@ -273,10 +270,13 @@ message GameUserBetCancelReq {
   int64 timestamp = 10; //时间戳（毫秒）
   string order_desc = 11; //撤单说明
   int64 cancel_type = 12; //撤单类型：1 投注撤单，2 派奖撤单
+  string msg_id = 13;                    // mq的消息ID
 }
 //游戏投注撤销响应
 message GameUserBetCancelReply {
-  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+  string balance = 1;         //余额
+  string currency_code = 2;   //货币代码
+  string order_id = 4;         //订单ID
 }
 
 //游戏调整玩家余额(订单、活动等调整) 请求
@@ -291,10 +291,13 @@ message GameUserAdjustmentReq {
   string currency_code = 8; //货币Code
   int64 timestamp = 10; //时间戳（毫秒）
   string order_id = 11;         //内部订单ID
+  string msg_id = 12;                    // mq的消息ID
 }
 //游戏调整玩家余额(订单、活动等调整) 响应
 message GameUserAdjustmentReply {
-  repeated string msg_id = 1;         // 处理成功的mq的消息ID
+  string balance = 1;         //余额
+  string currency_code = 2;   //货币代码
+  string order_id = 4;         //订单ID
 }
 
 // 游戏转账订单回调
@@ -489,12 +492,6 @@ message BatchAddGameBetRecordReq {
   repeated AddGameBetRecordReq add_game_bet_record_req = 1;
 }
 
-message BatchAddGameBetRecordReply {
-  repeated string order_id = 1;         // 处理成功的mq的消息ID
-}
-
-
-
 message AddGameSettledRecordReq{
   string round_id = 1;                    // 牌局ID（三方)
   int64 reward_amount = 2; // 派奖金额（处理之后的数据）
@@ -508,11 +505,6 @@ message AddGameSettledRecordReq{
 message BatchAddGameSettledRecordReq {
   repeated AddGameSettledRecordReq add_game_settled_record_req = 1;
 }
-
-message BatchAddGameSettledRecordReply {
-  repeated string order_id = 1;         // 处理成功的mq的消息ID
-}
-
 
 
 message AddGameCancelRecordReq {
@@ -615,11 +607,8 @@ service LiveGameRpcInnerService{
   rpc GetGameDetailsByThird(GetGameDetailsByThirdReq) returns (GetGameDetailsByThirdReply);
   // 添加游戏下注记录(单一钱包)
   rpc AddGameBetRecord(AddGameBetRecordReq) returns (AddGameBetRecordReply);
-  // 批量添加游戏下注记录(单一钱包)
-  rpc BatchAddGameBetRecord(BatchAddGameBetRecordReq) returns (BatchAddGameBetRecordReply);
   // 变更游戏下注记录结算状态
-  //  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
-  rpc BatchAddGameSettledRecord(BatchAddGameSettledRecordReq) returns (BatchAddGameSettledRecordReply);
+  rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏取消记录状态
   rpc AddGameCancelRecord(AddGameCancelRecordReq) returns (AddGameBetBaseReply);
   // 变更游戏调整记录状态

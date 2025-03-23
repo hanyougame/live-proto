@@ -867,8 +867,7 @@ const (
 	LiveGameRpcInnerService_CreateCompensationFailedRecord_FullMethodName    = "/game.v1.LiveGameRpcInnerService/CreateCompensationFailedRecord"
 	LiveGameRpcInnerService_GetGameDetailsByThird_FullMethodName             = "/game.v1.LiveGameRpcInnerService/GetGameDetailsByThird"
 	LiveGameRpcInnerService_AddGameBetRecord_FullMethodName                  = "/game.v1.LiveGameRpcInnerService/AddGameBetRecord"
-	LiveGameRpcInnerService_BatchAddGameBetRecord_FullMethodName             = "/game.v1.LiveGameRpcInnerService/BatchAddGameBetRecord"
-	LiveGameRpcInnerService_BatchAddGameSettledRecord_FullMethodName         = "/game.v1.LiveGameRpcInnerService/BatchAddGameSettledRecord"
+	LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName              = "/game.v1.LiveGameRpcInnerService/AddGameSettledRecord"
 	LiveGameRpcInnerService_AddGameCancelRecord_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddGameCancelRecord"
 	LiveGameRpcInnerService_AddGameAdjustmentRecord_FullMethodName           = "/game.v1.LiveGameRpcInnerService/AddGameAdjustmentRecord"
 	LiveGameRpcInnerService_AddTransferGameBetRecord_FullMethodName          = "/game.v1.LiveGameRpcInnerService/AddTransferGameBetRecord"
@@ -896,12 +895,8 @@ type LiveGameRpcInnerServiceClient interface {
 	GetGameDetailsByThird(ctx context.Context, in *GetGameDetailsByThirdReq, opts ...grpc.CallOption) (*GetGameDetailsByThirdReply, error)
 	// 添加游戏下注记录(单一钱包)
 	AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
-	// 批量添加游戏下注记录(单一钱包)
-	BatchAddGameBetRecord(ctx context.Context, in *BatchAddGameBetRecordReq, opts ...grpc.CallOption) (*BatchAddGameBetRecordReply, error)
 	// 变更游戏下注记录结算状态
-	//
-	//	rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
-	BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*BatchAddGameSettledRecordReply, error)
+	AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 	// 变更游戏取消记录状态
 	AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 	// 变更游戏调整记录状态
@@ -996,18 +991,9 @@ func (c *liveGameRpcInnerServiceClient) AddGameBetRecord(ctx context.Context, in
 	return out, nil
 }
 
-func (c *liveGameRpcInnerServiceClient) BatchAddGameBetRecord(ctx context.Context, in *BatchAddGameBetRecordReq, opts ...grpc.CallOption) (*BatchAddGameBetRecordReply, error) {
-	out := new(BatchAddGameBetRecordReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_BatchAddGameBetRecord_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *liveGameRpcInnerServiceClient) BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*BatchAddGameSettledRecordReply, error) {
-	out := new(BatchAddGameSettledRecordReply)
-	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_BatchAddGameSettledRecord_FullMethodName, in, out, opts...)
+func (c *liveGameRpcInnerServiceClient) AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
+	out := new(AddGameBetBaseReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1087,12 +1073,8 @@ type LiveGameRpcInnerServiceServer interface {
 	GetGameDetailsByThird(context.Context, *GetGameDetailsByThirdReq) (*GetGameDetailsByThirdReply, error)
 	// 添加游戏下注记录(单一钱包)
 	AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error)
-	// 批量添加游戏下注记录(单一钱包)
-	BatchAddGameBetRecord(context.Context, *BatchAddGameBetRecordReq) (*BatchAddGameBetRecordReply, error)
 	// 变更游戏下注记录结算状态
-	//
-	//	rpc AddGameSettledRecord(AddGameSettledRecordReq) returns (AddGameBetBaseReply);
-	BatchAddGameSettledRecord(context.Context, *BatchAddGameSettledRecordReq) (*BatchAddGameSettledRecordReply, error)
+	AddGameSettledRecord(context.Context, *AddGameSettledRecordReq) (*AddGameBetBaseReply, error)
 	// 变更游戏取消记录状态
 	AddGameCancelRecord(context.Context, *AddGameCancelRecordReq) (*AddGameBetBaseReply, error)
 	// 变更游戏调整记录状态
@@ -1136,11 +1118,8 @@ func (UnimplementedLiveGameRpcInnerServiceServer) GetGameDetailsByThird(context.
 func (UnimplementedLiveGameRpcInnerServiceServer) AddGameBetRecord(context.Context, *AddGameBetRecordReq) (*AddGameBetRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGameBetRecord not implemented")
 }
-func (UnimplementedLiveGameRpcInnerServiceServer) BatchAddGameBetRecord(context.Context, *BatchAddGameBetRecordReq) (*BatchAddGameBetRecordReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BatchAddGameBetRecord not implemented")
-}
-func (UnimplementedLiveGameRpcInnerServiceServer) BatchAddGameSettledRecord(context.Context, *BatchAddGameSettledRecordReq) (*BatchAddGameSettledRecordReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BatchAddGameSettledRecord not implemented")
+func (UnimplementedLiveGameRpcInnerServiceServer) AddGameSettledRecord(context.Context, *AddGameSettledRecordReq) (*AddGameBetBaseReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGameSettledRecord not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) AddGameCancelRecord(context.Context, *AddGameCancelRecordReq) (*AddGameBetBaseReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGameCancelRecord not implemented")
@@ -1318,38 +1297,20 @@ func _LiveGameRpcInnerService_AddGameBetRecord_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LiveGameRpcInnerService_BatchAddGameBetRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchAddGameBetRecordReq)
+func _LiveGameRpcInnerService_AddGameSettledRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGameSettledRecordReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LiveGameRpcInnerServiceServer).BatchAddGameBetRecord(ctx, in)
+		return srv.(LiveGameRpcInnerServiceServer).AddGameSettledRecord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LiveGameRpcInnerService_BatchAddGameBetRecord_FullMethodName,
+		FullMethod: LiveGameRpcInnerService_AddGameSettledRecord_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcInnerServiceServer).BatchAddGameBetRecord(ctx, req.(*BatchAddGameBetRecordReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveGameRpcInnerService_BatchAddGameSettledRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchAddGameSettledRecordReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveGameRpcInnerServiceServer).BatchAddGameSettledRecord(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveGameRpcInnerService_BatchAddGameSettledRecord_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveGameRpcInnerServiceServer).BatchAddGameSettledRecord(ctx, req.(*BatchAddGameSettledRecordReq))
+		return srv.(LiveGameRpcInnerServiceServer).AddGameSettledRecord(ctx, req.(*AddGameSettledRecordReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1502,12 +1463,8 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LiveGameRpcInnerService_AddGameBetRecord_Handler,
 		},
 		{
-			MethodName: "BatchAddGameBetRecord",
-			Handler:    _LiveGameRpcInnerService_BatchAddGameBetRecord_Handler,
-		},
-		{
-			MethodName: "BatchAddGameSettledRecord",
-			Handler:    _LiveGameRpcInnerService_BatchAddGameSettledRecord_Handler,
+			MethodName: "AddGameSettledRecord",
+			Handler:    _LiveGameRpcInnerService_AddGameSettledRecord_Handler,
 		},
 		{
 			MethodName: "AddGameCancelRecord",

@@ -24,9 +24,7 @@ type (
 	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
-	BatchAddGameBetRecordReply               = v1.BatchAddGameBetRecordReply
 	BatchAddGameBetRecordReq                 = v1.BatchAddGameBetRecordReq
-	BatchAddGameSettledRecordReply           = v1.BatchAddGameSettledRecordReply
 	BatchAddGameSettledRecordReq             = v1.BatchAddGameSettledRecordReq
 	BetRecordInfo                            = v1.BetRecordInfo
 	BetSummaryInfo                           = v1.BetSummaryInfo
@@ -49,10 +47,8 @@ type (
 	GameUserAdjustmentReq                    = v1.GameUserAdjustmentReq
 	GameUserBetCancelReply                   = v1.GameUserBetCancelReply
 	GameUserBetCancelReq                     = v1.GameUserBetCancelReq
-	GameUserBetInfo                          = v1.GameUserBetInfo
 	GameUserBetReply                         = v1.GameUserBetReply
 	GameUserBetReq                           = v1.GameUserBetReq
-	GameUserRewardInfo                       = v1.GameUserRewardInfo
 	GameUserRewardReply                      = v1.GameUserRewardReply
 	GameUserRewardReq                        = v1.GameUserRewardReq
 	GameValueItem                            = v1.GameValueItem

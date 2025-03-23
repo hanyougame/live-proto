@@ -24,9 +24,7 @@ type (
 	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
-	BatchAddGameBetRecordReply               = v1.BatchAddGameBetRecordReply
 	BatchAddGameBetRecordReq                 = v1.BatchAddGameBetRecordReq
-	BatchAddGameSettledRecordReply           = v1.BatchAddGameSettledRecordReply
 	BatchAddGameSettledRecordReq             = v1.BatchAddGameSettledRecordReq
 	BetRecordInfo                            = v1.BetRecordInfo
 	BetSummaryInfo                           = v1.BetSummaryInfo
@@ -49,10 +47,8 @@ type (
 	GameUserAdjustmentReq                    = v1.GameUserAdjustmentReq
 	GameUserBetCancelReply                   = v1.GameUserBetCancelReply
 	GameUserBetCancelReq                     = v1.GameUserBetCancelReq
-	GameUserBetInfo                          = v1.GameUserBetInfo
 	GameUserBetReply                         = v1.GameUserBetReply
 	GameUserBetReq                           = v1.GameUserBetReq
-	GameUserRewardInfo                       = v1.GameUserRewardInfo
 	GameUserRewardReply                      = v1.GameUserRewardReply
 	GameUserRewardReq                        = v1.GameUserRewardReq
 	GameValueItem                            = v1.GameValueItem
@@ -136,10 +132,8 @@ type (
 		GetGameDetailsByThird(ctx context.Context, in *GetGameDetailsByThirdReq, opts ...grpc.CallOption) (*GetGameDetailsByThirdReply, error)
 		// 添加游戏下注记录(单一钱包)
 		AddGameBetRecord(ctx context.Context, in *AddGameBetRecordReq, opts ...grpc.CallOption) (*AddGameBetRecordReply, error)
-		// 批量添加游戏下注记录(单一钱包)
-		BatchAddGameBetRecord(ctx context.Context, in *BatchAddGameBetRecordReq, opts ...grpc.CallOption) (*BatchAddGameBetRecordReply, error)
 		// 变更游戏下注记录结算状态
-		BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*BatchAddGameSettledRecordReply, error)
+		AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 		// 变更游戏取消记录状态
 		AddGameCancelRecord(ctx context.Context, in *AddGameCancelRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error)
 		// 变更游戏调整记录状态
@@ -212,16 +206,10 @@ func (m *defaultLiveGameRpcInnerService) AddGameBetRecord(ctx context.Context, i
 	return client.AddGameBetRecord(ctx, in, opts...)
 }
 
-// 批量添加游戏下注记录(单一钱包)
-func (m *defaultLiveGameRpcInnerService) BatchAddGameBetRecord(ctx context.Context, in *BatchAddGameBetRecordReq, opts ...grpc.CallOption) (*BatchAddGameBetRecordReply, error) {
-	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
-	return client.BatchAddGameBetRecord(ctx, in, opts...)
-}
-
 // 变更游戏下注记录结算状态
-func (m *defaultLiveGameRpcInnerService) BatchAddGameSettledRecord(ctx context.Context, in *BatchAddGameSettledRecordReq, opts ...grpc.CallOption) (*BatchAddGameSettledRecordReply, error) {
+func (m *defaultLiveGameRpcInnerService) AddGameSettledRecord(ctx context.Context, in *AddGameSettledRecordReq, opts ...grpc.CallOption) (*AddGameBetBaseReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
-	return client.BatchAddGameSettledRecord(ctx, in, opts...)
+	return client.AddGameSettledRecord(ctx, in, opts...)
 }
 
 // 变更游戏取消记录状态
