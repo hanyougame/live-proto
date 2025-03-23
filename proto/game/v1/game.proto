@@ -225,6 +225,7 @@ message GameUserBetInfo{
   int64 post_bet_balance = 9; //投注后余额
   string order_id = 10;                    // 内部订单号(数据表的order_id)
   int64 wei_bet_amount = 11;                    // 内部的投注金额
+  string msg_id = 12;                    // mq的消息ID
 }
 
 
@@ -253,6 +254,7 @@ message GameUserRewardInfo{
   string currency_code = 8; // 玩家货币code
   int64 timestamp = 9; //时间戳（毫秒）
   int64 wei_bet_amount = 10;                    // 内部的投注金额
+  string msg_id = 11;                    // mq的消息ID
 }
 
 
