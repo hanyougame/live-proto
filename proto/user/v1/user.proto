@@ -24,6 +24,8 @@ message UserDetailsInfoReply {
   int64 vip_level = 12;                      //vip等级
   int64 user_level = 13; // 用户等级
   repeated int64 tags = 14; // 用户标签
+  int64 Source = 15; //注册来源
+  string LastLoginIP = 16; // 登录ip
 }
 
 
