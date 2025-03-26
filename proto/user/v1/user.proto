@@ -73,6 +73,14 @@ message GetUserFullInfoByIdReq {
   int64 user_id = 1;         // 用户ID
 }
 
+message GetUserFullMapInfoReq{
+  repeated  int64 user_id = 1;         // 用户ID
+}
+
+message GetUserFullMapInfoReply{
+  map <int64, GetUserFullInfoByIdReply> user_info = 1;         // 用户信息
+}
+
 message GetUserFullInfoByIdReply{
   int64  user_id = 1; // 用户ID
   string username = 2; // 用户账号
@@ -127,6 +135,8 @@ service LiveUserRpcService {
   rpc GetUserInfoById(GetUserInfoByIdReq) returns(UserDetailsInfoReply);
   // 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
   rpc GetUserFullInfoById(GetUserFullInfoByIdReq) returns(GetUserFullInfoByIdReply);
+  // 获取用户信息map
+  rpc GetUserFullMapInfo(GetUserFullMapInfoReq) returns(GetUserFullMapInfoReply);
   // 批量查询用户余额
   rpc BatchGetUserBalance(BatchGetUserBalanceReq)returns (BatchGetUserBalanceResp);
   // 获取多用户多钱包余额接口

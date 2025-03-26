@@ -24,6 +24,8 @@ type (
 	AddTransferGameBetRecordReq              = v1.AddTransferGameBetRecordReq
 	AddTripartiteTransferRecordReq           = v1.AddTripartiteTransferRecordReq
 	AddTripartiteTransferRecordStatusReq     = v1.AddTripartiteTransferRecordStatusReq
+	BatchAddGameBetRecordReq                 = v1.BatchAddGameBetRecordReq
+	BatchAddGameSettledRecordReq             = v1.BatchAddGameSettledRecordReq
 	BetRecordInfo                            = v1.BetRecordInfo
 	BetSummaryInfo                           = v1.BetSummaryInfo
 	CategoryNameBase                         = v1.CategoryNameBase
@@ -49,11 +51,14 @@ type (
 	GameUserBetReq                           = v1.GameUserBetReq
 	GameUserRewardReply                      = v1.GameUserRewardReply
 	GameUserRewardReq                        = v1.GameUserRewardReq
+	GameValueItem                            = v1.GameValueItem
 	GetCategoryListByCurrReply               = v1.GetCategoryListByCurrReply
 	GetCategoryListByCurrReq                 = v1.GetCategoryListByCurrReq
 	GetCategorySimpleListByCurrReply         = v1.GetCategorySimpleListByCurrReply
 	GetGameConfInfoReply                     = v1.GetGameConfInfoReply
 	GetGameConfInfoReq                       = v1.GetGameConfInfoReq
+	GetGameDetailsByThirdReply               = v1.GetGameDetailsByThirdReply
+	GetGameDetailsByThirdReq                 = v1.GetGameDetailsByThirdReq
 	GetGameDetailsListReply                  = v1.GetGameDetailsListReply
 	GetGameFavoriteListReq                   = v1.GetGameFavoriteListReq
 	GetGameListByCategoryReq                 = v1.GetGameListByCategoryReq
@@ -74,6 +79,8 @@ type (
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
+	GetNewGameListReply                      = v1.GetNewGameListReply
+	GetNewGameListReq                        = v1.GetNewGameListReq
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq

@@ -24,6 +24,7 @@ const (
 	LiveUserRpcService_UpdateUserBalance_FullMethodName     = "/user.v1.LiveUserRpcService/UpdateUserBalance"
 	LiveUserRpcService_GetUserInfoById_FullMethodName       = "/user.v1.LiveUserRpcService/GetUserInfoById"
 	LiveUserRpcService_GetUserFullInfoById_FullMethodName   = "/user.v1.LiveUserRpcService/GetUserFullInfoById"
+	LiveUserRpcService_GetUserFullMapInfo_FullMethodName    = "/user.v1.LiveUserRpcService/GetUserFullMapInfo"
 	LiveUserRpcService_BatchGetUserBalance_FullMethodName   = "/user.v1.LiveUserRpcService/BatchGetUserBalance"
 	LiveUserRpcService_BatchGetUserBalanceV2_FullMethodName = "/user.v1.LiveUserRpcService/BatchGetUserBalanceV2"
 )
@@ -42,6 +43,8 @@ type LiveUserRpcServiceClient interface {
 	GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
 	// 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
 	GetUserFullInfoById(ctx context.Context, in *GetUserFullInfoByIdReq, opts ...grpc.CallOption) (*GetUserFullInfoByIdReply, error)
+	// 获取用户信息map
+	GetUserFullMapInfo(ctx context.Context, in *GetUserFullMapInfoReq, opts ...grpc.CallOption) (*GetUserFullMapInfoReply, error)
 	// 批量查询用户余额
 	BatchGetUserBalance(ctx context.Context, in *BatchGetUserBalanceReq, opts ...grpc.CallOption) (*BatchGetUserBalanceResp, error)
 	// 获取多用户多钱包余额接口
@@ -106,6 +109,15 @@ func (c *liveUserRpcServiceClient) GetUserFullInfoById(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *liveUserRpcServiceClient) GetUserFullMapInfo(ctx context.Context, in *GetUserFullMapInfoReq, opts ...grpc.CallOption) (*GetUserFullMapInfoReply, error) {
+	out := new(GetUserFullMapInfoReply)
+	err := c.cc.Invoke(ctx, LiveUserRpcService_GetUserFullMapInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *liveUserRpcServiceClient) BatchGetUserBalance(ctx context.Context, in *BatchGetUserBalanceReq, opts ...grpc.CallOption) (*BatchGetUserBalanceResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(BatchGetUserBalanceResp)
@@ -140,6 +152,8 @@ type LiveUserRpcServiceServer interface {
 	GetUserInfoById(context.Context, *GetUserInfoByIdReq) (*UserDetailsInfoReply, error)
 	// 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
 	GetUserFullInfoById(context.Context, *GetUserFullInfoByIdReq) (*GetUserFullInfoByIdReply, error)
+	// 获取用户信息map
+	GetUserFullMapInfo(context.Context, *GetUserFullMapInfoReq) (*GetUserFullMapInfoReply, error)
 	// 批量查询用户余额
 	BatchGetUserBalance(context.Context, *BatchGetUserBalanceReq) (*BatchGetUserBalanceResp, error)
 	// 获取多用户多钱包余额接口
@@ -168,6 +182,9 @@ func (UnimplementedLiveUserRpcServiceServer) GetUserInfoById(context.Context, *G
 }
 func (UnimplementedLiveUserRpcServiceServer) GetUserFullInfoById(context.Context, *GetUserFullInfoByIdReq) (*GetUserFullInfoByIdReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserFullInfoById not implemented")
+}
+func (UnimplementedLiveUserRpcServiceServer) GetUserFullMapInfo(context.Context, *GetUserFullMapInfoReq) (*GetUserFullMapInfoReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserFullMapInfo not implemented")
 }
 func (UnimplementedLiveUserRpcServiceServer) BatchGetUserBalance(context.Context, *BatchGetUserBalanceReq) (*BatchGetUserBalanceResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchGetUserBalance not implemented")
@@ -286,6 +303,24 @@ func _LiveUserRpcService_GetUserFullInfoById_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveUserRpcService_GetUserFullMapInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserFullMapInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveUserRpcServiceServer).GetUserFullMapInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveUserRpcService_GetUserFullMapInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveUserRpcServiceServer).GetUserFullMapInfo(ctx, req.(*GetUserFullMapInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LiveUserRpcService_BatchGetUserBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BatchGetUserBalanceReq)
 	if err := dec(in); err != nil {
@@ -348,6 +383,10 @@ var LiveUserRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserFullInfoById",
 			Handler:    _LiveUserRpcService_GetUserFullInfoById_Handler,
+		},
+		{
+			MethodName: "GetUserFullMapInfo",
+			Handler:    _LiveUserRpcService_GetUserFullMapInfo_Handler,
 		},
 		{
 			MethodName: "BatchGetUserBalance",

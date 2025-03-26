@@ -23,6 +23,8 @@ type (
 	GetUserBalanceReq         = v1.GetUserBalanceReq
 	GetUserFullInfoByIdReply  = v1.GetUserFullInfoByIdReply
 	GetUserFullInfoByIdReq    = v1.GetUserFullInfoByIdReq
+	GetUserFullMapInfoReply   = v1.GetUserFullMapInfoReply
+	GetUserFullMapInfoReq     = v1.GetUserFullMapInfoReq
 	GetUserInfoByIdReq        = v1.GetUserInfoByIdReq
 	UpdateUserBalanceReq      = v1.UpdateUserBalanceReq
 	UpdateUserBalanceResp     = v1.UpdateUserBalanceResp
@@ -41,6 +43,8 @@ type (
 		GetUserInfoById(ctx context.Context, in *GetUserInfoByIdReq, opts ...grpc.CallOption) (*UserDetailsInfoReply, error)
 		// 获取用户详细信息（全部-需要其他用户字段就在reply里面加）
 		GetUserFullInfoById(ctx context.Context, in *GetUserFullInfoByIdReq, opts ...grpc.CallOption) (*GetUserFullInfoByIdReply, error)
+		// 获取用户信息map
+		GetUserFullMapInfo(ctx context.Context, in *GetUserFullMapInfoReq, opts ...grpc.CallOption) (*GetUserFullMapInfoReply, error)
 		// 批量查询用户余额
 		BatchGetUserBalance(ctx context.Context, in *BatchGetUserBalanceReq, opts ...grpc.CallOption) (*BatchGetUserBalanceResp, error)
 		// 获取多用户多钱包余额接口
@@ -86,6 +90,12 @@ func (m *defaultLiveUserRpcService) GetUserInfoById(ctx context.Context, in *Get
 func (m *defaultLiveUserRpcService) GetUserFullInfoById(ctx context.Context, in *GetUserFullInfoByIdReq, opts ...grpc.CallOption) (*GetUserFullInfoByIdReply, error) {
 	client := v1.NewLiveUserRpcServiceClient(m.cli.Conn())
 	return client.GetUserFullInfoById(ctx, in, opts...)
+}
+
+// 获取用户信息map
+func (m *defaultLiveUserRpcService) GetUserFullMapInfo(ctx context.Context, in *GetUserFullMapInfoReq, opts ...grpc.CallOption) (*GetUserFullMapInfoReply, error) {
+	client := v1.NewLiveUserRpcServiceClient(m.cli.Conn())
+	return client.GetUserFullMapInfo(ctx, in, opts...)
 }
 
 // 批量查询用户余额
