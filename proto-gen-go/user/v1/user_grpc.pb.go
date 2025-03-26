@@ -110,8 +110,9 @@ func (c *liveUserRpcServiceClient) GetUserFullInfoById(ctx context.Context, in *
 }
 
 func (c *liveUserRpcServiceClient) GetUserFullMapInfo(ctx context.Context, in *GetUserFullMapInfoReq, opts ...grpc.CallOption) (*GetUserFullMapInfoReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetUserFullMapInfoReply)
-	err := c.cc.Invoke(ctx, LiveUserRpcService_GetUserFullMapInfo_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, LiveUserRpcService_GetUserFullMapInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
