@@ -621,6 +621,8 @@ service LiveGameRpcInnerService{
   rpc SendGameBetBetSettlementMQ(SendGameBetBetSettlementMQReq) returns (GameReply);
   // 添加最近游玩的游戏
   rpc AddRecentlyGamePlay(AddRecentlyGamePlayReq) returns (GameReply);
+  // 同步下注统计数据到pg
+  rpc SyncGameBetSummaryToPGTask(GameReq) returns (GameReply);
 
 }
 

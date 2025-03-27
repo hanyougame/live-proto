@@ -146,6 +146,8 @@ type (
 		SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 添加最近游玩的游戏
 		AddRecentlyGamePlay(ctx context.Context, in *AddRecentlyGamePlayReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 同步下注统计数据到pg
+		SyncGameBetSummaryToPGTask(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -246,4 +248,10 @@ func (m *defaultLiveGameRpcInnerService) SendGameBetBetSettlementMQ(ctx context.
 func (m *defaultLiveGameRpcInnerService) AddRecentlyGamePlay(ctx context.Context, in *AddRecentlyGamePlayReq, opts ...grpc.CallOption) (*GameReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.AddRecentlyGamePlay(ctx, in, opts...)
+}
+
+// 同步下注统计数据到pg
+func (m *defaultLiveGameRpcInnerService) SyncGameBetSummaryToPGTask(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.SyncGameBetSummaryToPGTask(ctx, in, opts...)
 }

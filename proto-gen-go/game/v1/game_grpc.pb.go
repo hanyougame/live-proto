@@ -874,6 +874,7 @@ const (
 	LiveGameRpcInnerService_SendGameBetBetMQ_FullMethodName                  = "/game.v1.LiveGameRpcInnerService/SendGameBetBetMQ"
 	LiveGameRpcInnerService_SendGameBetBetSettlementMQ_FullMethodName        = "/game.v1.LiveGameRpcInnerService/SendGameBetBetSettlementMQ"
 	LiveGameRpcInnerService_AddRecentlyGamePlay_FullMethodName               = "/game.v1.LiveGameRpcInnerService/AddRecentlyGamePlay"
+	LiveGameRpcInnerService_SyncGameBetSummaryToPGTask_FullMethodName        = "/game.v1.LiveGameRpcInnerService/SyncGameBetSummaryToPGTask"
 )
 
 // LiveGameRpcInnerServiceClient is the client API for LiveGameRpcInnerService service.
@@ -909,6 +910,8 @@ type LiveGameRpcInnerServiceClient interface {
 	SendGameBetBetSettlementMQ(ctx context.Context, in *SendGameBetBetSettlementMQReq, opts ...grpc.CallOption) (*GameReply, error)
 	// 添加最近游玩的游戏
 	AddRecentlyGamePlay(ctx context.Context, in *AddRecentlyGamePlayReq, opts ...grpc.CallOption) (*GameReply, error)
+	// 同步下注统计数据到pg
+	SyncGameBetSummaryToPGTask(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error)
 }
 
 type liveGameRpcInnerServiceClient struct {
@@ -1054,6 +1057,15 @@ func (c *liveGameRpcInnerServiceClient) AddRecentlyGamePlay(ctx context.Context,
 	return out, nil
 }
 
+func (c *liveGameRpcInnerServiceClient) SyncGameBetSummaryToPGTask(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error) {
+	out := new(GameReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcInnerService_SyncGameBetSummaryToPGTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcInnerServiceServer is the server API for LiveGameRpcInnerService service.
 // All implementations must embed UnimplementedLiveGameRpcInnerServiceServer
 // for forward compatibility
@@ -1087,6 +1099,8 @@ type LiveGameRpcInnerServiceServer interface {
 	SendGameBetBetSettlementMQ(context.Context, *SendGameBetBetSettlementMQReq) (*GameReply, error)
 	// 添加最近游玩的游戏
 	AddRecentlyGamePlay(context.Context, *AddRecentlyGamePlayReq) (*GameReply, error)
+	// 同步下注统计数据到pg
+	SyncGameBetSummaryToPGTask(context.Context, *GameReq) (*GameReply, error)
 	mustEmbedUnimplementedLiveGameRpcInnerServiceServer()
 }
 
@@ -1138,6 +1152,9 @@ func (UnimplementedLiveGameRpcInnerServiceServer) SendGameBetBetSettlementMQ(con
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) AddRecentlyGamePlay(context.Context, *AddRecentlyGamePlayReq) (*GameReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddRecentlyGamePlay not implemented")
+}
+func (UnimplementedLiveGameRpcInnerServiceServer) SyncGameBetSummaryToPGTask(context.Context, *GameReq) (*GameReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SyncGameBetSummaryToPGTask not implemented")
 }
 func (UnimplementedLiveGameRpcInnerServiceServer) mustEmbedUnimplementedLiveGameRpcInnerServiceServer() {
 }
@@ -1423,6 +1440,24 @@ func _LiveGameRpcInnerService_AddRecentlyGamePlay_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcInnerService_SyncGameBetSummaryToPGTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcInnerServiceServer).SyncGameBetSummaryToPGTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcInnerService_SyncGameBetSummaryToPGTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcInnerServiceServer).SyncGameBetSummaryToPGTask(ctx, req.(*GameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcInnerService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1489,6 +1524,10 @@ var LiveGameRpcInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddRecentlyGamePlay",
 			Handler:    _LiveGameRpcInnerService_AddRecentlyGamePlay_Handler,
+		},
+		{
+			MethodName: "SyncGameBetSummaryToPGTask",
+			Handler:    _LiveGameRpcInnerService_SyncGameBetSummaryToPGTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
