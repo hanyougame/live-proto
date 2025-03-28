@@ -584,6 +584,7 @@ message SendGameBetBetSettlementMQReq {
   int64 bet_time = 15; // 投注时间
   string bet_order_id = 16; // 投注ID
   string game_name = 19;      // 游戏名称
+  bool is_not_repeat = 20;  // 是否是重复的结算（一笔订单多笔结算的情况，只处理第一笔结算）
 }
 
 message AddRecentlyGamePlayReq {
