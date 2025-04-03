@@ -486,6 +486,7 @@ message WithdrawReq {
   string ip = 9; // IP
   string currency_code = 10; // 币种
   int64 withdraw_category = 11; // 提现大类
+  string phone = 12; // 手机号
 }
 message WithdrawResp {
 
