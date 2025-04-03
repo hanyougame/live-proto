@@ -487,6 +487,7 @@ message WithdrawReq {
   string currency_code = 10; // 币种
   int64 withdraw_category = 11; // 提现大类
   string phone = 12; // 手机号
+  string Identify = 13; // 身份证号
 }
 message WithdrawResp {
 
