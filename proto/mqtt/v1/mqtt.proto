@@ -6,18 +6,21 @@ option go_package = "./pb/v1";
 message PushRequest {
   int64 code = 1;
   bytes message = 2;
+  int64 user_type = 3;
 }
 
 message PushToUserRequest {
   int64 code = 1;
   string user_id = 2;
   bytes message = 3;
+  int64 user_type = 4;
 }
 
 message PushToUsersRequest {
   repeated string user_ids = 1;
   bytes message = 2;
   int64 code = 3;
+  int64 user_type = 4;
 }
 
 message PushResponse {
