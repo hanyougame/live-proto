@@ -38,7 +38,9 @@ message  PayOutReq {
   string currency_code = 9; // 币种
   int64 withdraw_type_id = 10; // 提现方式
   string account = 12; // 提现账号
-  string extra = 13; // 扩展字段
+  string ifsc = 13; // ifsc
+  string bank_name = 14; // 银行名称
+  string extra = 15; // 扩展字段
 }
 
 message PayOutResp {
