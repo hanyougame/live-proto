@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package activity.v1;
+option go_package = "./pb/v1";
+
+
+message ActivityReq{
+
+}
+message ActivityReply{
+
+}
+service LiveActivityInnerService{
+  // 抢红包活动事件
+  rpc RedPacketCampaignEvent(RedPacketCampaignEventReq) returns (ActivityReply);
+}
+
+message RedPacketCampaignEventReq {
+  int64 user_id = 1;   // 用户id
+}
