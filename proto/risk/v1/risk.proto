@@ -10,3 +10,26 @@ message RiskReq{
 message RiskReply{
 
 }
+
+// 任务类型的枚举
+enum TaskType {
+  CREATE_TASK = 0; // 创建任务
+  UPDATE_TASK = 1; // 更新任务
+  CANCEL_TASK = 2; // 取消任务
+}
+
+message ScheduledTaskRequest {
+  string task_id = 1; // 任务唯一标识符
+  int64  delay_seconds = 2; // 延迟执行的秒数
+  bytes data = 3;  // 任务数据，可以序列化任何内容
+  TaskType task_type = 4; // 任务类型，用于区分不同类型的任务
+}
+
+
+
+service LiveRiskInnerService{
+  //
+  rpc RiskTest(RiskReq) returns (RiskReply);
+}
+
+
