@@ -13,11 +13,10 @@ message RiskReply{
 
 // 任务类型的枚举
 enum TaskType {
-  CREATE_TASK = 0; // 创建任务
-  UPDATE_TASK = 1; // 更新任务
-  CANCEL_TASK = 2; // 取消任务
+  UNDEFINED = 0;               // 未定义（默认值）
+  GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
+  WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
 }
-
 message ScheduledTaskRequest {
   string task_id = 1; // 任务唯一标识符
   int64  delay_seconds = 2; // 延迟执行的秒数
