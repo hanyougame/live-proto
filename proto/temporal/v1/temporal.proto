@@ -28,7 +28,53 @@ service TemporalService {
 
   // 创建定时任务
   rpc StartScheduleTask(ScheduleTaskRequest) returns (ScheduleTaskResponse) {}
+
+  // 批量取消工作流
+  rpc BatchCancelWorkflows(BatchCancelWorkflowRequest) returns (BatchCancelWorkflowResponse) {}
+
+  // 批量创建定时任务
+  rpc BatchStartScheduleTasks(BatchScheduleTaskRequest) returns (BatchScheduleTaskResponse) {}
 }
+
+
+// 任务类型的枚举
+enum ScheduleTaskType {
+  UNDEFINED = 0;               // 未定义（默认值）
+  GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
+  WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
+}
+
+// 工作流执行状态
+enum WorkflowExecutionStatus {
+  WORKFLOW_EXECUTION_STATUS_UNSPECIFIED = 0;
+  WORKFLOW_EXECUTION_STATUS_RUNNING = 1;
+  WORKFLOW_EXECUTION_STATUS_COMPLETED = 2;
+  WORKFLOW_EXECUTION_STATUS_FAILED = 3;
+  WORKFLOW_EXECUTION_STATUS_CANCELED = 4;
+  WORKFLOW_EXECUTION_STATUS_TERMINATED = 5;
+  WORKFLOW_EXECUTION_STATUS_CONTINUED_AS_NEW = 6;
+  WORKFLOW_EXECUTION_STATUS_TIMED_OUT = 7;
+}
+
+
+// 工作流 ID 重用策略枚举
+enum WorkflowIdReusePolicy {
+  // 未指定策略（默认）
+  WORKFLOW_ID_REUSE_POLICY_UNSPECIFIED = 0;
+
+  // 允许使用相同的 workflow ID 启动新的 workflow
+  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE = 1;
+
+  // 仅当上一次执行结果为终止、取消、超时或失败时才允许使用相同的 workflow ID 启动新的 workflow
+  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE_FAILED_ONLY = 2;
+
+  // 不允许重复使用 workflow ID
+  WORKFLOW_ID_REUSE_POLICY_REJECT_DUPLICATE = 3;
+
+  // 与 ALLOW_DUPLICATE 类似，但如果有运行中的 workflow，则会终止当前的并启动新的
+  WORKFLOW_ID_REUSE_POLICY_TERMINATE_IF_RUNNING = 4;
+}
+
 
 // 启动工作流请求
 message StartWorkflowRequest {
@@ -93,17 +139,7 @@ message GetWorkflowExecutionRequest {
   string run_id = 2;          // 运行ID(可选)
 }
 
-// 工作流执行状态
-enum WorkflowExecutionStatus {
-  WORKFLOW_EXECUTION_STATUS_UNSPECIFIED = 0;
-  WORKFLOW_EXECUTION_STATUS_RUNNING = 1;
-  WORKFLOW_EXECUTION_STATUS_COMPLETED = 2;
-  WORKFLOW_EXECUTION_STATUS_FAILED = 3;
-  WORKFLOW_EXECUTION_STATUS_CANCELED = 4;
-  WORKFLOW_EXECUTION_STATUS_TERMINATED = 5;
-  WORKFLOW_EXECUTION_STATUS_CONTINUED_AS_NEW = 6;
-  WORKFLOW_EXECUTION_STATUS_TIMED_OUT = 7;
-}
+
 
 // 获取工作流执行响应
 message GetWorkflowExecutionResponse {
@@ -118,30 +154,7 @@ message GetWorkflowExecutionResponse {
 
 
 
-// 任务类型的枚举
-enum ScheduleTaskType {
-  UNDEFINED = 0;               // 未定义（默认值）
-  GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
-  WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
-}
 
-// 工作流 ID 重用策略枚举
-enum WorkflowIdReusePolicy {
-  // 未指定策略（默认）
-  WORKFLOW_ID_REUSE_POLICY_UNSPECIFIED = 0;
-
-  // 允许使用相同的 workflow ID 启动新的 workflow
-  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE = 1;
-
-  // 仅当上一次执行结果为终止、取消、超时或失败时才允许使用相同的 workflow ID 启动新的 workflow
-  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE_FAILED_ONLY = 2;
-
-  // 不允许重复使用 workflow ID
-  WORKFLOW_ID_REUSE_POLICY_REJECT_DUPLICATE = 3;
-
-  // 与 ALLOW_DUPLICATE 类似，但如果有运行中的 workflow，则会终止当前的并启动新的
-  WORKFLOW_ID_REUSE_POLICY_TERMINATE_IF_RUNNING = 4;
-}
 
 // 定时任务请求
 message ScheduleTaskRequest {
@@ -159,3 +172,39 @@ message ScheduleTaskResponse {
   string workflow_id = 1;           // 工作流ID
   string run_id = 2;                // 运行ID
 }
+
+// 批量取消工作流请求
+message BatchCancelWorkflowRequest {
+  repeated CancelWorkflowRequest workflows = 1; // 需要取消的工作流列表
+}
+
+// 批量取消工作流响应
+message BatchCancelWorkflowResponse {
+  message Result {
+    string workflow_id = 1;     // 工作流ID
+    bool success = 2;           // 是否成功
+    string error_message = 3;   // 错误信息(如果失败)
+  }
+  repeated Result results = 1;  // 每个工作流的取消结果
+}
+
+// 批量创建定时任务请求
+message BatchScheduleTaskRequest {
+  repeated ScheduleTaskRequest tasks = 1; // 需要创建的定时任务列表
+}
+
+// 批量创建定时任务响应
+message BatchScheduleTaskResponse {
+  message Result {
+    string task_id = 1;        // 任务ID
+    string workflow_id = 2;    // 工作流ID
+    string run_id = 3;         // 运行ID
+    bool success = 4;          // 是否成功
+    string error_message = 5;  // 错误信息(如果失败)
+  }
+  repeated Result results = 1; // 每个任务的创建结果
+}
+
+
+
+

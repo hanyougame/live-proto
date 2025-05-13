@@ -19,11 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	TemporalService_StartWorkflow_FullMethodName        = "/temporal.v1.TemporalService/StartWorkflow"
-	TemporalService_CancelWorkflow_FullMethodName       = "/temporal.v1.TemporalService/CancelWorkflow"
-	TemporalService_SignalWorkflow_FullMethodName       = "/temporal.v1.TemporalService/SignalWorkflow"
-	TemporalService_GetWorkflowExecution_FullMethodName = "/temporal.v1.TemporalService/GetWorkflowExecution"
-	TemporalService_StartScheduleTask_FullMethodName    = "/temporal.v1.TemporalService/StartScheduleTask"
+	TemporalService_StartWorkflow_FullMethodName           = "/temporal.v1.TemporalService/StartWorkflow"
+	TemporalService_CancelWorkflow_FullMethodName          = "/temporal.v1.TemporalService/CancelWorkflow"
+	TemporalService_SignalWorkflow_FullMethodName          = "/temporal.v1.TemporalService/SignalWorkflow"
+	TemporalService_GetWorkflowExecution_FullMethodName    = "/temporal.v1.TemporalService/GetWorkflowExecution"
+	TemporalService_StartScheduleTask_FullMethodName       = "/temporal.v1.TemporalService/StartScheduleTask"
+	TemporalService_BatchCancelWorkflows_FullMethodName    = "/temporal.v1.TemporalService/BatchCancelWorkflows"
+	TemporalService_BatchStartScheduleTasks_FullMethodName = "/temporal.v1.TemporalService/BatchStartScheduleTasks"
 )
 
 // TemporalServiceClient is the client API for TemporalService service.
@@ -40,6 +42,10 @@ type TemporalServiceClient interface {
 	GetWorkflowExecution(ctx context.Context, in *GetWorkflowExecutionRequest, opts ...grpc.CallOption) (*GetWorkflowExecutionResponse, error)
 	// 创建定时任务
 	StartScheduleTask(ctx context.Context, in *ScheduleTaskRequest, opts ...grpc.CallOption) (*ScheduleTaskResponse, error)
+	// 批量取消工作流
+	BatchCancelWorkflows(ctx context.Context, in *BatchCancelWorkflowRequest, opts ...grpc.CallOption) (*BatchCancelWorkflowResponse, error)
+	// 批量创建定时任务
+	BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error)
 }
 
 type temporalServiceClient struct {
@@ -95,6 +101,24 @@ func (c *temporalServiceClient) StartScheduleTask(ctx context.Context, in *Sched
 	return out, nil
 }
 
+func (c *temporalServiceClient) BatchCancelWorkflows(ctx context.Context, in *BatchCancelWorkflowRequest, opts ...grpc.CallOption) (*BatchCancelWorkflowResponse, error) {
+	out := new(BatchCancelWorkflowResponse)
+	err := c.cc.Invoke(ctx, TemporalService_BatchCancelWorkflows_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *temporalServiceClient) BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error) {
+	out := new(BatchScheduleTaskResponse)
+	err := c.cc.Invoke(ctx, TemporalService_BatchStartScheduleTasks_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TemporalServiceServer is the server API for TemporalService service.
 // All implementations must embed UnimplementedTemporalServiceServer
 // for forward compatibility
@@ -109,6 +133,10 @@ type TemporalServiceServer interface {
 	GetWorkflowExecution(context.Context, *GetWorkflowExecutionRequest) (*GetWorkflowExecutionResponse, error)
 	// 创建定时任务
 	StartScheduleTask(context.Context, *ScheduleTaskRequest) (*ScheduleTaskResponse, error)
+	// 批量取消工作流
+	BatchCancelWorkflows(context.Context, *BatchCancelWorkflowRequest) (*BatchCancelWorkflowResponse, error)
+	// 批量创建定时任务
+	BatchStartScheduleTasks(context.Context, *BatchScheduleTaskRequest) (*BatchScheduleTaskResponse, error)
 	mustEmbedUnimplementedTemporalServiceServer()
 }
 
@@ -130,6 +158,12 @@ func (UnimplementedTemporalServiceServer) GetWorkflowExecution(context.Context, 
 }
 func (UnimplementedTemporalServiceServer) StartScheduleTask(context.Context, *ScheduleTaskRequest) (*ScheduleTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartScheduleTask not implemented")
+}
+func (UnimplementedTemporalServiceServer) BatchCancelWorkflows(context.Context, *BatchCancelWorkflowRequest) (*BatchCancelWorkflowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchCancelWorkflows not implemented")
+}
+func (UnimplementedTemporalServiceServer) BatchStartScheduleTasks(context.Context, *BatchScheduleTaskRequest) (*BatchScheduleTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchStartScheduleTasks not implemented")
 }
 func (UnimplementedTemporalServiceServer) mustEmbedUnimplementedTemporalServiceServer() {}
 
@@ -234,6 +268,42 @@ func _TemporalService_StartScheduleTask_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TemporalService_BatchCancelWorkflows_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchCancelWorkflowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TemporalServiceServer).BatchCancelWorkflows(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TemporalService_BatchCancelWorkflows_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TemporalServiceServer).BatchCancelWorkflows(ctx, req.(*BatchCancelWorkflowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TemporalService_BatchStartScheduleTasks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchScheduleTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TemporalServiceServer).BatchStartScheduleTasks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TemporalService_BatchStartScheduleTasks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TemporalServiceServer).BatchStartScheduleTasks(ctx, req.(*BatchScheduleTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TemporalService_ServiceDesc is the grpc.ServiceDesc for TemporalService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -260,6 +330,14 @@ var TemporalService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StartScheduleTask",
 			Handler:    _TemporalService_StartScheduleTask_Handler,
+		},
+		{
+			MethodName: "BatchCancelWorkflows",
+			Handler:    _TemporalService_BatchCancelWorkflows_Handler,
+		},
+		{
+			MethodName: "BatchStartScheduleTasks",
+			Handler:    _TemporalService_BatchStartScheduleTasks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

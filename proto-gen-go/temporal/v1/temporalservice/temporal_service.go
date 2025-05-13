@@ -14,20 +14,26 @@ import (
 )
 
 type (
-	CancelWorkflowRequest        = v1.CancelWorkflowRequest
-	CancelWorkflowResponse       = v1.CancelWorkflowResponse
-	GetWorkflowExecutionRequest  = v1.GetWorkflowExecutionRequest
-	GetWorkflowExecutionResponse = v1.GetWorkflowExecutionResponse
-	RetryPolicy                  = v1.RetryPolicy
-	ScheduleTaskRequest          = v1.ScheduleTaskRequest
-	ScheduleTaskResponse         = v1.ScheduleTaskResponse
-	SignalWorkflowRequest        = v1.SignalWorkflowRequest
-	SignalWorkflowResponse       = v1.SignalWorkflowResponse
-	StartWorkflowRequest         = v1.StartWorkflowRequest
-	StartWorkflowResponse        = v1.StartWorkflowResponse
-	TemporalReply                = v1.TemporalReply
-	TemporalReq                  = v1.TemporalReq
-	WorkflowOptions              = v1.WorkflowOptions
+	BatchCancelWorkflowRequest         = v1.BatchCancelWorkflowRequest
+	BatchCancelWorkflowResponse        = v1.BatchCancelWorkflowResponse
+	BatchCancelWorkflowResponse_Result = v1.BatchCancelWorkflowResponse_Result
+	BatchScheduleTaskRequest           = v1.BatchScheduleTaskRequest
+	BatchScheduleTaskResponse          = v1.BatchScheduleTaskResponse
+	BatchScheduleTaskResponse_Result   = v1.BatchScheduleTaskResponse_Result
+	CancelWorkflowRequest              = v1.CancelWorkflowRequest
+	CancelWorkflowResponse             = v1.CancelWorkflowResponse
+	GetWorkflowExecutionRequest        = v1.GetWorkflowExecutionRequest
+	GetWorkflowExecutionResponse       = v1.GetWorkflowExecutionResponse
+	RetryPolicy                        = v1.RetryPolicy
+	ScheduleTaskRequest                = v1.ScheduleTaskRequest
+	ScheduleTaskResponse               = v1.ScheduleTaskResponse
+	SignalWorkflowRequest              = v1.SignalWorkflowRequest
+	SignalWorkflowResponse             = v1.SignalWorkflowResponse
+	StartWorkflowRequest               = v1.StartWorkflowRequest
+	StartWorkflowResponse              = v1.StartWorkflowResponse
+	TemporalReply                      = v1.TemporalReply
+	TemporalReq                        = v1.TemporalReq
+	WorkflowOptions                    = v1.WorkflowOptions
 
 	TemporalService interface {
 		// 启动工作流
@@ -40,6 +46,10 @@ type (
 		GetWorkflowExecution(ctx context.Context, in *GetWorkflowExecutionRequest, opts ...grpc.CallOption) (*GetWorkflowExecutionResponse, error)
 		// 创建定时任务
 		StartScheduleTask(ctx context.Context, in *ScheduleTaskRequest, opts ...grpc.CallOption) (*ScheduleTaskResponse, error)
+		// 批量取消工作流
+		BatchCancelWorkflows(ctx context.Context, in *BatchCancelWorkflowRequest, opts ...grpc.CallOption) (*BatchCancelWorkflowResponse, error)
+		// 批量创建定时任务
+		BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error)
 	}
 
 	defaultTemporalService struct {
@@ -81,4 +91,16 @@ func (m *defaultTemporalService) GetWorkflowExecution(ctx context.Context, in *G
 func (m *defaultTemporalService) StartScheduleTask(ctx context.Context, in *ScheduleTaskRequest, opts ...grpc.CallOption) (*ScheduleTaskResponse, error) {
 	client := v1.NewTemporalServiceClient(m.cli.Conn())
 	return client.StartScheduleTask(ctx, in, opts...)
+}
+
+// 批量取消工作流
+func (m *defaultTemporalService) BatchCancelWorkflows(ctx context.Context, in *BatchCancelWorkflowRequest, opts ...grpc.CallOption) (*BatchCancelWorkflowResponse, error) {
+	client := v1.NewTemporalServiceClient(m.cli.Conn())
+	return client.BatchCancelWorkflows(ctx, in, opts...)
+}
+
+// 批量创建定时任务
+func (m *defaultTemporalService) BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error) {
+	client := v1.NewTemporalServiceClient(m.cli.Conn())
+	return client.BatchStartScheduleTasks(ctx, in, opts...)
 }
