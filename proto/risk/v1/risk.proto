@@ -11,24 +11,16 @@ message RiskReply{
 
 }
 
-// 任务类型的枚举
-enum TaskType {
-  UNDEFINED = 0;               // 未定义（默认值）
-  GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
-  WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
-}
-message ScheduledTaskRequest {
-  string task_id = 1; // 任务唯一标识符
-  int64  delay_seconds = 2; // 延迟执行的秒数
-  bytes data = 3;  // 任务数据，可以序列化任何内容
-  TaskType task_type = 4; // 任务类型，用于区分不同类型的任务
-}
-
-
 
 service LiveRiskInnerService{
-  //
-  rpc RiskTest(RiskReq) returns (RiskReply);
+  // / NotifyRiskRuleTrigger 处理通知风控触发规则
+  rpc NotifyRiskRuleTrigger(NotifyRiskRuleTriggerReq) returns (RiskReply);
 }
 
 
+message NotifyRiskRuleTriggerReq{
+  int64 user_id = 1; // 用户ID
+  int64 target_type = 2;  // 触发类型
+  repeated string target_value = 3;  // 触发值（参数）
+  string currency_code = 4;   //货币Code
+}

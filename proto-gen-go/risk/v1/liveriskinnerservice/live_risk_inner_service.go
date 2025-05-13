@@ -14,13 +14,13 @@ import (
 )
 
 type (
-	RiskReply            = v1.RiskReply
-	RiskReq              = v1.RiskReq
-	ScheduledTaskRequest = v1.ScheduledTaskRequest
+	NotifyRiskRuleTriggerReq = v1.NotifyRiskRuleTriggerReq
+	RiskReply                = v1.RiskReply
+	RiskReq                  = v1.RiskReq
 
 	LiveRiskInnerService interface {
-		//
-		RiskTest(ctx context.Context, in *RiskReq, opts ...grpc.CallOption) (*RiskReply, error)
+		// / NotifyRiskRuleTrigger 处理通知风控触发规则
+		NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
 	}
 
 	defaultLiveRiskInnerService struct {
@@ -34,7 +34,8 @@ func NewLiveRiskInnerService(cli zrpc.Client) LiveRiskInnerService {
 	}
 }
 
-func (m *defaultLiveRiskInnerService) RiskTest(ctx context.Context, in *RiskReq, opts ...grpc.CallOption) (*RiskReply, error) {
+// / NotifyRiskRuleTrigger 处理通知风控触发规则
+func (m *defaultLiveRiskInnerService) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error) {
 	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
-	return client.RiskTest(ctx, in, opts...)
+	return client.NotifyRiskRuleTrigger(ctx, in, opts...)
 }

@@ -19,14 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	LiveRiskInnerService_RiskTest_FullMethodName = "/risk.v1.LiveRiskInnerService/RiskTest"
+	LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName = "/risk.v1.LiveRiskInnerService/NotifyRiskRuleTrigger"
 )
 
 // LiveRiskInnerServiceClient is the client API for LiveRiskInnerService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LiveRiskInnerServiceClient interface {
-	RiskTest(ctx context.Context, in *RiskReq, opts ...grpc.CallOption) (*RiskReply, error)
+	// / NotifyRiskRuleTrigger 处理通知风控触发规则
+	NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
 }
 
 type liveRiskInnerServiceClient struct {
@@ -37,9 +38,9 @@ func NewLiveRiskInnerServiceClient(cc grpc.ClientConnInterface) LiveRiskInnerSer
 	return &liveRiskInnerServiceClient{cc}
 }
 
-func (c *liveRiskInnerServiceClient) RiskTest(ctx context.Context, in *RiskReq, opts ...grpc.CallOption) (*RiskReply, error) {
+func (c *liveRiskInnerServiceClient) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error) {
 	out := new(RiskReply)
-	err := c.cc.Invoke(ctx, LiveRiskInnerService_RiskTest_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +51,8 @@ func (c *liveRiskInnerServiceClient) RiskTest(ctx context.Context, in *RiskReq, 
 // All implementations must embed UnimplementedLiveRiskInnerServiceServer
 // for forward compatibility
 type LiveRiskInnerServiceServer interface {
-	RiskTest(context.Context, *RiskReq) (*RiskReply, error)
+	// / NotifyRiskRuleTrigger 处理通知风控触发规则
+	NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error)
 	mustEmbedUnimplementedLiveRiskInnerServiceServer()
 }
 
@@ -58,8 +60,8 @@ type LiveRiskInnerServiceServer interface {
 type UnimplementedLiveRiskInnerServiceServer struct {
 }
 
-func (UnimplementedLiveRiskInnerServiceServer) RiskTest(context.Context, *RiskReq) (*RiskReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RiskTest not implemented")
+func (UnimplementedLiveRiskInnerServiceServer) NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NotifyRiskRuleTrigger not implemented")
 }
 func (UnimplementedLiveRiskInnerServiceServer) mustEmbedUnimplementedLiveRiskInnerServiceServer() {}
 
@@ -74,20 +76,20 @@ func RegisterLiveRiskInnerServiceServer(s grpc.ServiceRegistrar, srv LiveRiskInn
 	s.RegisterService(&LiveRiskInnerService_ServiceDesc, srv)
 }
 
-func _LiveRiskInnerService_RiskTest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RiskReq)
+func _LiveRiskInnerService_NotifyRiskRuleTrigger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NotifyRiskRuleTriggerReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LiveRiskInnerServiceServer).RiskTest(ctx, in)
+		return srv.(LiveRiskInnerServiceServer).NotifyRiskRuleTrigger(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LiveRiskInnerService_RiskTest_FullMethodName,
+		FullMethod: LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveRiskInnerServiceServer).RiskTest(ctx, req.(*RiskReq))
+		return srv.(LiveRiskInnerServiceServer).NotifyRiskRuleTrigger(ctx, req.(*NotifyRiskRuleTriggerReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -100,8 +102,8 @@ var LiveRiskInnerService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LiveRiskInnerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RiskTest",
-			Handler:    _LiveRiskInnerService_RiskTest_Handler,
+			MethodName: "NotifyRiskRuleTrigger",
+			Handler:    _LiveRiskInnerService_NotifyRiskRuleTrigger_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
