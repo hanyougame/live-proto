@@ -13,7 +13,7 @@ message RiskReply{
 
 
 service LiveRiskInnerService{
-  // / NotifyRiskRuleTrigger 处理通知风控触发规则
+  // NotifyRiskRuleTrigger 处理通知风控触发规则
   rpc NotifyRiskRuleTrigger(NotifyRiskRuleTriggerReq) returns (RiskReply);
 }
 

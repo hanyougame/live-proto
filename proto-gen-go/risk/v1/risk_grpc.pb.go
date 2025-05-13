@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LiveRiskInnerServiceClient interface {
-	// / NotifyRiskRuleTrigger 处理通知风控触发规则
+	// NotifyRiskRuleTrigger 处理通知风控触发规则
 	NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
 }
 
@@ -51,7 +51,7 @@ func (c *liveRiskInnerServiceClient) NotifyRiskRuleTrigger(ctx context.Context, 
 // All implementations must embed UnimplementedLiveRiskInnerServiceServer
 // for forward compatibility
 type LiveRiskInnerServiceServer interface {
-	// / NotifyRiskRuleTrigger 处理通知风控触发规则
+	// NotifyRiskRuleTrigger 处理通知风控触发规则
 	NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error)
 	mustEmbedUnimplementedLiveRiskInnerServiceServer()
 }

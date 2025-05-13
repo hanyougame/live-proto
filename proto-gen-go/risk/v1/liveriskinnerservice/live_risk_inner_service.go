@@ -19,7 +19,7 @@ type (
 	RiskReq                  = v1.RiskReq
 
 	LiveRiskInnerService interface {
-		// / NotifyRiskRuleTrigger 处理通知风控触发规则
+		// NotifyRiskRuleTrigger 处理通知风控触发规则
 		NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
 	}
 
@@ -34,7 +34,7 @@ func NewLiveRiskInnerService(cli zrpc.Client) LiveRiskInnerService {
 	}
 }
 
-// / NotifyRiskRuleTrigger 处理通知风控触发规则
+// NotifyRiskRuleTrigger 处理通知风控触发规则
 func (m *defaultLiveRiskInnerService) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error) {
 	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
 	return client.NotifyRiskRuleTrigger(ctx, in, opts...)
