@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package temporal.v1;
+option go_package = "./pb/v1";
+
+
+message TemporalReq{
+
+}
+message TemporalReply{
+
+}
+
+
+// Temporal服务定义
+service TemporalService {
+  // 启动工作流
+  rpc StartWorkflow(StartWorkflowRequest) returns (StartWorkflowResponse) {}
+
+  // 取消工作流
+  rpc CancelWorkflow(CancelWorkflowRequest) returns (CancelWorkflowResponse) {}
+
+  // 发送信号到工作流
+  rpc SignalWorkflow(SignalWorkflowRequest) returns (SignalWorkflowResponse) {}
+
+  // 获取工作流执行状态
+  rpc GetWorkflowExecution(GetWorkflowExecutionRequest) returns (GetWorkflowExecutionResponse) {}
+
+  // 创建定时任务
+  rpc StartScheduleTask(ScheduleTaskRequest) returns (ScheduleTaskResponse) {}
+}
+
+// 启动工作流请求
+message StartWorkflowRequest {
+  string workflow_type = 1;       // 工作流类型
+  string task_queue = 2;          // 任务队列
+  string workflow_id = 3;         // 工作流ID(可选)
+  bytes input = 4;                // 工作流输入参数(JSON编码)
+  int64 timeout_seconds = 5;      // 超时时间(秒)
+  WorkflowOptions options = 6;    // 工作流选项
+}
+
+// 工作流选项
+message WorkflowOptions {
+  int64 execution_timeout_seconds = 1;   // 执行超时(秒)
+  int64 run_timeout_seconds = 2;         // 运行超时(秒)
+  int64 task_timeout_seconds = 3;        // 任务超时(秒)
+  repeated RetryPolicy retry_policy = 4;  // 重试策略
+}
+
+// 重试策略
+message RetryPolicy {
+  int64 initial_interval_seconds = 1;    // 初始重试间隔(秒)
+  double backoff_coefficient = 2;        // 退避系数
+  int64 maximum_interval_seconds = 3;    // 最大重试间隔(秒)
+  int32 maximum_attempts = 4;            // 最大重试次数
+}
+
+// 启动工作流响应
+message StartWorkflowResponse {
+  string workflow_id = 1;    // 工作流ID
+  string run_id = 2;         // 运行ID
+}
+
+// 取消工作流请求
+message CancelWorkflowRequest {
+  string workflow_id = 1;   // 工作流ID
+  string run_id = 2;        // 运行ID(可选)
+  string reason = 3;        // 取消原因
+}
+
+// 取消工作流响应
+message CancelWorkflowResponse {
+  bool success = 1;         // 是否成功
+}
+
+// 发送信号请求
+message SignalWorkflowRequest {
+  string workflow_id = 1;     // 工作流ID
+  string run_id = 2;          // 运行ID(可选)
+  string signal_name = 3;     // 信号名称
+  bytes signal_input = 4;     // 信号数据(JSON编码)
+}
+
+// 发送信号响应
+message SignalWorkflowResponse {
+  bool success = 1;           // 是否成功
+}
+
+// 获取工作流执行请求
+message GetWorkflowExecutionRequest {
+  string workflow_id = 1;     // 工作流ID
+  string run_id = 2;          // 运行ID(可选)
+}
+
+// 工作流执行状态
+enum WorkflowExecutionStatus {
+  WORKFLOW_EXECUTION_STATUS_UNSPECIFIED = 0;
+  WORKFLOW_EXECUTION_STATUS_RUNNING = 1;
+  WORKFLOW_EXECUTION_STATUS_COMPLETED = 2;
+  WORKFLOW_EXECUTION_STATUS_FAILED = 3;
+  WORKFLOW_EXECUTION_STATUS_CANCELED = 4;
+  WORKFLOW_EXECUTION_STATUS_TERMINATED = 5;
+  WORKFLOW_EXECUTION_STATUS_CONTINUED_AS_NEW = 6;
+  WORKFLOW_EXECUTION_STATUS_TIMED_OUT = 7;
+}
+
+// 获取工作流执行响应
+message GetWorkflowExecutionResponse {
+  string workflow_id = 1;                           // 工作流ID
+  string run_id = 2;                                // 运行ID
+  WorkflowExecutionStatus status = 3;               // 状态
+  bytes result = 4;                                 // 结果(JSON编码，如果已完成)
+  string error_message = 5;                         // 错误信息(如果失败)
+  int64 start_time_unix = 6;                        // 开始时间(Unix时间戳)
+  int64 close_time_unix = 7;                        // 结束时间(Unix时间戳，如果已结束)
+}
+
+
+
+// 任务类型的枚举
+enum ScheduleTaskType {
+  UNDEFINED = 0;               // 未定义（默认值）
+  GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
+  WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
+}
+
+// 工作流 ID 重用策略枚举
+enum WorkflowIdReusePolicy {
+  // 未指定策略（默认）
+  WORKFLOW_ID_REUSE_POLICY_UNSPECIFIED = 0;
+
+  // 允许使用相同的 workflow ID 启动新的 workflow
+  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE = 1;
+
+  // 仅当上一次执行结果为终止、取消、超时或失败时才允许使用相同的 workflow ID 启动新的 workflow
+  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE_FAILED_ONLY = 2;
+
+  // 不允许重复使用 workflow ID
+  WORKFLOW_ID_REUSE_POLICY_REJECT_DUPLICATE = 3;
+
+  // 与 ALLOW_DUPLICATE 类似，但如果有运行中的 workflow，则会终止当前的并启动新的
+  WORKFLOW_ID_REUSE_POLICY_TERMINATE_IF_RUNNING = 4;
+}
+
+// 定时任务请求
+message ScheduleTaskRequest {
+  string task_id = 1;               // 任务ID
+  ScheduleTaskType task_type = 2;              // 任务类型
+  int64 delay_seconds = 3;          // 延迟时间(秒)
+  bytes data = 4;                   // 任务数据(JSON编码)
+  WorkflowIdReusePolicy workflow_id_policy = 5;            // 工作流 ID 重用策略枚举
+}
+
+
+
+// 定时任务响应
+message ScheduleTaskResponse {
+  string workflow_id = 1;           // 工作流ID
+  string run_id = 2;                // 运行ID
+}
