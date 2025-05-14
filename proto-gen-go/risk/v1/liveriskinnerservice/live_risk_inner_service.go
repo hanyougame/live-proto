@@ -14,6 +14,7 @@ import (
 )
 
 type (
+	NotifyRiskRuleTrigger    = v1.NotifyRiskRuleTrigger
 	NotifyRiskRuleTriggerReq = v1.NotifyRiskRuleTriggerReq
 	RiskReply                = v1.RiskReply
 	RiskReq                  = v1.RiskReq

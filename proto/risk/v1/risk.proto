@@ -19,6 +19,10 @@ service LiveRiskInnerService{
 
 
 message NotifyRiskRuleTriggerReq{
+  repeated NotifyRiskRuleTrigger risk_rule_info = 1;
+}
+
+message NotifyRiskRuleTrigger{
   int64 user_id = 1; // 用户ID
   int64 target_type = 2;  // 触发类型
   repeated string target_value = 3;  // 触发值（参数）
