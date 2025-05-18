@@ -1037,18 +1037,11 @@ message GameValueItem {
 }
 
 message BigWinGameListReq{
-  int64 page = 1;
-  int64 page_size = 2;
-  string search_value = 3;
-  string currency_code = 4;
+  string currency_code = 1;
 }
 
 message BigWinGameListReply{
-  int64 page = 1;
-  int64 page_size = 2;
-  int64 total = 3;
-  int64 total_page = 4;
-  repeated WinGameValueItem rows = 5;
+  repeated WinGameValueItem rows = 1;
 }
 
 message WinGameValueItem {
@@ -1066,7 +1059,7 @@ message WinGameValueItem {
   int64 game_icon_style = 25;                 // 图标风格
   string game_logo_url = 26;                  // 游戏 Logo URL
   string game_icon_image_url = 27;            // 游戏图标图片 URL
-  int64  game_win_amount = 28; // 赢取金额
+  string game_win_amount = 28; // 赢取金额
 }
 
 service LiveGameRpcService{
