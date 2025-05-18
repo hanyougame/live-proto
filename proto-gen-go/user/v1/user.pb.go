@@ -69,23 +69,24 @@ func (x *GetInfoByUserTokenReq) GetToken() string {
 // 用户基础信息
 type UserDetailsInfoReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                  // 用户ID
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`                             // 用户账号
-	RealName      string                 `protobuf:"bytes,3,opt,name=real_name,json=realName,proto3" json:"real_name,omitempty"`             // 真实姓名
-	Nickname      string                 `protobuf:"bytes,4,opt,name=nickname,proto3" json:"nickname,omitempty"`                             // 昵称
-	Gender        int64                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender,omitempty"`                                //性别：1-男；2-女；3-未知
-	Avatar        string                 `protobuf:"bytes,6,opt,name=avatar,proto3" json:"avatar,omitempty"`                                 // 头像
-	CountryCode   string                 `protobuf:"bytes,7,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`    // 国家code
-	CurrencyCode  string                 `protobuf:"bytes,8,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"` // 货币code
-	Phone         string                 `protobuf:"bytes,9,opt,name=phone,proto3" json:"phone,omitempty"`                                   //手机号码
-	Email         string                 `protobuf:"bytes,10,opt,name=email,proto3" json:"email,omitempty"`                                  //邮箱
-	Birthday      string                 `protobuf:"bytes,11,opt,name=birthday,proto3" json:"birthday,omitempty"`                            //生日
-	VipLevel      int64                  `protobuf:"varint,12,opt,name=vip_level,json=vipLevel,proto3" json:"vip_level,omitempty"`           //vip等级
-	UserLevel     int64                  `protobuf:"varint,13,opt,name=user_level,json=userLevel,proto3" json:"user_level,omitempty"`        // 用户等级
-	Tags          []int64                `protobuf:"varint,14,rep,packed,name=tags,proto3" json:"tags,omitempty"`                            // 用户标签
-	Source        int64                  `protobuf:"varint,15,opt,name=Source,proto3" json:"Source,omitempty"`                               //注册来源
-	LastLoginIP   string                 `protobuf:"bytes,16,opt,name=LastLoginIP,proto3" json:"LastLoginIP,omitempty"`                      // 登录ip
-	ChannelId     int64                  `protobuf:"varint,17,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`        // 用户渠道ID
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                    // 用户ID
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`                               // 用户账号
+	RealName      string                 `protobuf:"bytes,3,opt,name=real_name,json=realName,proto3" json:"real_name,omitempty"`               // 真实姓名
+	Nickname      string                 `protobuf:"bytes,4,opt,name=nickname,proto3" json:"nickname,omitempty"`                               // 昵称
+	Gender        int64                  `protobuf:"varint,5,opt,name=gender,proto3" json:"gender,omitempty"`                                  //性别：1-男；2-女；3-未知
+	Avatar        string                 `protobuf:"bytes,6,opt,name=avatar,proto3" json:"avatar,omitempty"`                                   // 头像
+	CountryCode   string                 `protobuf:"bytes,7,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`      // 国家code
+	CurrencyCode  string                 `protobuf:"bytes,8,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`   // 货币code
+	Phone         string                 `protobuf:"bytes,9,opt,name=phone,proto3" json:"phone,omitempty"`                                     //手机号码
+	Email         string                 `protobuf:"bytes,10,opt,name=email,proto3" json:"email,omitempty"`                                    //邮箱
+	Birthday      string                 `protobuf:"bytes,11,opt,name=birthday,proto3" json:"birthday,omitempty"`                              //生日
+	VipLevel      int64                  `protobuf:"varint,12,opt,name=vip_level,json=vipLevel,proto3" json:"vip_level,omitempty"`             //vip等级
+	UserLevel     int64                  `protobuf:"varint,13,opt,name=user_level,json=userLevel,proto3" json:"user_level,omitempty"`          // 用户等级
+	Tags          []int64                `protobuf:"varint,14,rep,packed,name=tags,proto3" json:"tags,omitempty"`                              // 用户标签
+	Source        int64                  `protobuf:"varint,15,opt,name=Source,proto3" json:"Source,omitempty"`                                 //注册来源
+	LastLoginIP   string                 `protobuf:"bytes,16,opt,name=LastLoginIP,proto3" json:"LastLoginIP,omitempty"`                        // 登录ip
+	ChannelId     int64                  `protobuf:"varint,17,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`          // 用户渠道ID
+	RegisterTime  int64                  `protobuf:"varint,18,opt,name=register_time,json=registerTime,proto3" json:"register_time,omitempty"` // 注册时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -235,6 +236,13 @@ func (x *UserDetailsInfoReply) GetLastLoginIP() string {
 func (x *UserDetailsInfoReply) GetChannelId() int64 {
 	if x != nil {
 		return x.ChannelId
+	}
+	return 0
+}
+
+func (x *UserDetailsInfoReply) GetRegisterTime() int64 {
+	if x != nil {
+		return x.RegisterTime
 	}
 	return 0
 }
@@ -1179,7 +1187,7 @@ const file_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"\x12user/v1/user.proto\x12\auser.v1\"-\n" +
 	"\x15GetInfoByUserTokenReq\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"\xed\x03\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\x92\x04\n" +
 	"\x14UserDetailsInfoReply\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1b\n" +
@@ -1200,7 +1208,8 @@ const file_user_v1_user_proto_rawDesc = "" +
 	"\x06Source\x18\x0f \x01(\x03R\x06Source\x12 \n" +
 	"\vLastLoginIP\x18\x10 \x01(\tR\vLastLoginIP\x12\x1d\n" +
 	"\n" +
-	"channel_id\x18\x11 \x01(\x03R\tchannelId\"M\n" +
+	"channel_id\x18\x11 \x01(\x03R\tchannelId\x12#\n" +
+	"\rregister_time\x18\x12 \x01(\x03R\fregisterTime\"M\n" +
 	"\x11GetUserBalanceReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1f\n" +
 	"\vwallet_type\x18\x02 \x01(\x03R\n" +
