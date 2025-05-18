@@ -26,6 +26,7 @@ message UserDetailsInfoReply {
   repeated int64 tags = 14; // 用户标签
   int64 Source = 15; //注册来源
   string LastLoginIP = 16; // 登录ip
+  int64 channel_id = 17;  // 用户渠道ID
 }
 
 
