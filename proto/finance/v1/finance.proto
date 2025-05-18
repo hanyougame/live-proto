@@ -145,6 +145,25 @@ message RechargeResp {
   string payUrl = 6; // 支付链接
 }
 
+message AutoWithdrawJudgeReq {
+  int64 order_id = 1; // 订单ID
+}
+
+message AutoWithdrawJudgeResp {
+  bool auto_withdraw = 1; // 自动提现通过
+  int64 withdraw_merchant_id = 2; // 提现商户ID
+  int64 auto_withdraw_merchant_all = 3; // 是否所有自动提现商户 1-所有 2-指定
+}
+
+message AutoWithdrawReq {
+  int64 order_id = 1;
+  int64 withdraw_merchant_id = 2;
+}
+
+message AutoWithdrawResp {
+  int64 status = 1; // 出款状态 1-success 2-fail
+}
+
 service LivePaymentRpcService {
   rpc PayIn(PayInReq) returns (PayInResp);
   rpc PayOut(PayOutReq) returns (PayOutResp);
@@ -153,6 +172,8 @@ service LivePaymentRpcService {
   rpc Balance(BalanceReq) returns (BalanceResp);
   rpc Recharge(RechargeReq) returns (RechargeResp); // 充值
   rpc Withdraw(WithdrawReq) returns (WithdrawResp); // 提现
+  rpc AutoWithdrawJudge(AutoWithdrawJudgeReq) returns (AutoWithdrawJudgeResp); // 自动出款检查
+  rpc AutoWithdraw(AutoWithdrawReq) returns (AutoWithdrawResp);
 }
 
 
