@@ -862,6 +862,7 @@ message GetGameRecentlyListReq {
   int64 user_id = 3;
   int64 game_platform_id = 4;
   int64 game_category_id = 7;  // 游戏类别ID
+  string currency_code = 5;
 }
 
 
@@ -1036,6 +1037,32 @@ message GameValueItem {
   string game_icon_image_url = 27;            // 游戏图标图片 URL
 }
 
+message BigWinGameListReq{
+  string currency_code = 1;
+}
+
+message BigWinGameListReply{
+  repeated WinGameValueItem rows = 1;
+}
+
+message WinGameValueItem {
+  string currency_code = 3;                   // 货币代码
+  int64 game_category_id = 4;                 // 游戏类别ID
+  int64 game_id = 5;                          // 游戏ID
+  int64 tripartite_game_id = 6;               // 第三方游戏ID
+  string game_name = 7;                       // 游戏名称
+  int64 game_platform_id = 8;                 // 游戏平台ID
+  int64 is_jump_tab = 13;                     // 是否跳转标签
+  int64 wallet_model = 14;                    // 钱包模式
+  int64 horizontal_support = 15;              // 横屏支持
+  int64 vertical_support = 16;                // 竖屏支持
+  int64 try_game_support = 17;                // 试玩支持
+  int64 game_icon_style = 25;                 // 图标风格
+  string game_logo_url = 26;                  // 游戏 Logo URL
+  string game_icon_image_url = 27;            // 游戏图标图片 URL
+  string game_win_amount = 28; // 赢取金额
+}
+
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
   rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
@@ -1085,4 +1112,6 @@ service LiveGameRpcService{
   rpc GetGameConfInfo(GetGameConfInfoReq) returns (GetGameConfInfoReply);
   // 通过搜索获取游戏列表
   rpc GetNewGameList(GetNewGameListReq) returns (GetNewGameListReply);
+  // 获取大胜游戏列表
+  rpc GetBigWinGameList(BigWinGameListReq) returns (BigWinGameListReply);
 }
