@@ -164,6 +164,15 @@ message AutoWithdrawResp {
   int64 status = 1; // 出款状态 1-success 2-fail
 }
 
+message CalcWithdrawFeeReq {
+  int64 user_id = 1; // 用户Id （必填）
+  int64 amount = 2;                   // 提现金额 （必填）
+}
+
+message CalcWithdrawFeeResp {
+  int64 fee_amount = 1; // 手续费
+}
+
 service LivePaymentRpcService {
   rpc PayIn(PayInReq) returns (PayInResp);
   rpc PayOut(PayOutReq) returns (PayOutResp);
@@ -174,6 +183,7 @@ service LivePaymentRpcService {
   rpc Withdraw(WithdrawReq) returns (WithdrawResp); // 提现
   rpc AutoWithdrawJudge(AutoWithdrawJudgeReq) returns (AutoWithdrawJudgeResp); // 自动出款检查
   rpc AutoWithdraw(AutoWithdrawReq) returns (AutoWithdrawResp);
+  rpc CalcWithdrawFee(CalcWithdrawFeeReq) returns (CalcWithdrawFeeResp); //计算提现手续费
 }
 
 
