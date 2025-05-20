@@ -160,6 +160,7 @@ message AutoWithdrawReq {
   int64 withdraw_merchant_id = 2;
   bool auto_match = 3; // 是否自动匹配 true 是 false 否
   string operator = 4; // 操作人
+  int64 auto_withdraw_merchant_all = 5; // 是否所有自动提现商户 1-所有 2-指定
 }
 
 message AutoWithdrawResp {
@@ -169,6 +170,7 @@ message AutoWithdrawResp {
 message CalcWithdrawFeeReq {
   int64 user_id = 1; // 用户Id （必填）
   int64 amount = 2;                   // 提现金额 （必填）
+  int64 withdraw_type = 3; // 提现方式
 }
 
 message CalcWithdrawFeeResp {
@@ -177,7 +179,12 @@ message CalcWithdrawFeeResp {
 
 message AutoWithdrawMatchReq {
   int64 order_id = 1; // 订单ID
-  repeated int64 merchant_ids = 2; // 三方商户ID
+  string order_number = 2;   // 订单号
+  string currency_code = 3; // 币种
+  int64 actual_received_amount = 4; // 实际到账金额
+  int64 withdraw_type_id = 5; // 提现方式ID
+  repeated int64 limit_merchant_ids = 6; // 三方商户ID
+  bool auto_match  = 7; // 自动匹配
 }
 
 message AutoWithdrawMatchResp {

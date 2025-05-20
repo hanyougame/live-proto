@@ -2001,13 +2001,14 @@ func (x *AutoWithdrawJudgeResp) GetAutoWithdrawMerchantAll() int64 {
 }
 
 type AutoWithdrawReq struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	OrderId            int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	WithdrawMerchantId int64                  `protobuf:"varint,2,opt,name=withdraw_merchant_id,json=withdrawMerchantId,proto3" json:"withdraw_merchant_id,omitempty"`
-	AutoMatch          bool                   `protobuf:"varint,3,opt,name=auto_match,json=autoMatch,proto3" json:"auto_match,omitempty"` // 是否自动匹配 true 是 false 否
-	Operator           string                 `protobuf:"bytes,4,opt,name=operator,proto3" json:"operator,omitempty"`                     // 操作人
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	OrderId                 int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	WithdrawMerchantId      int64                  `protobuf:"varint,2,opt,name=withdraw_merchant_id,json=withdrawMerchantId,proto3" json:"withdraw_merchant_id,omitempty"`
+	AutoMatch               bool                   `protobuf:"varint,3,opt,name=auto_match,json=autoMatch,proto3" json:"auto_match,omitempty"`                                               // 是否自动匹配 true 是 false 否
+	Operator                string                 `protobuf:"bytes,4,opt,name=operator,proto3" json:"operator,omitempty"`                                                                   // 操作人
+	AutoWithdrawMerchantAll int64                  `protobuf:"varint,5,opt,name=auto_withdraw_merchant_all,json=autoWithdrawMerchantAll,proto3" json:"auto_withdraw_merchant_all,omitempty"` // 是否所有自动提现商户 1-所有 2-指定
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *AutoWithdrawReq) Reset() {
@@ -2068,6 +2069,13 @@ func (x *AutoWithdrawReq) GetOperator() string {
 	return ""
 }
 
+func (x *AutoWithdrawReq) GetAutoWithdrawMerchantAll() int64 {
+	if x != nil {
+		return x.AutoWithdrawMerchantAll
+	}
+	return 0
+}
+
 type AutoWithdrawResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Status        int64                  `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"` // 出款状态 1-success 2-fail
@@ -2114,8 +2122,9 @@ func (x *AutoWithdrawResp) GetStatus() int64 {
 
 type CalcWithdrawFeeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"` // 用户Id （必填）
-	Amount        int64                  `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`               // 提现金额 （必填）
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                   // 用户Id （必填）
+	Amount        int64                  `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`                                 // 提现金额 （必填）
+	WithdrawType  int64                  `protobuf:"varint,3,opt,name=withdraw_type,json=withdrawType,proto3" json:"withdraw_type,omitempty"` // 提现方式
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2160,6 +2169,13 @@ func (x *CalcWithdrawFeeReq) GetUserId() int64 {
 func (x *CalcWithdrawFeeReq) GetAmount() int64 {
 	if x != nil {
 		return x.Amount
+	}
+	return 0
+}
+
+func (x *CalcWithdrawFeeReq) GetWithdrawType() int64 {
+	if x != nil {
+		return x.WithdrawType
 	}
 	return 0
 }
@@ -2209,11 +2225,16 @@ func (x *CalcWithdrawFeeResp) GetFeeAmount() int64 {
 }
 
 type AutoWithdrawMatchReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderId       int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`                    // 订单ID
-	MerchantIds   []int64                `protobuf:"varint,2,rep,packed,name=merchant_ids,json=merchantIds,proto3" json:"merchant_ids,omitempty"` // 三方商户ID
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	OrderId              int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`                                          // 订单ID
+	OrderNumber          string                 `protobuf:"bytes,2,opt,name=order_number,json=orderNumber,proto3" json:"order_number,omitempty"`                               // 订单号
+	CurrencyCode         string                 `protobuf:"bytes,3,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`                            // 币种
+	ActualReceivedAmount int64                  `protobuf:"varint,4,opt,name=actual_received_amount,json=actualReceivedAmount,proto3" json:"actual_received_amount,omitempty"` // 实际到账金额
+	WithdrawTypeId       int64                  `protobuf:"varint,5,opt,name=withdraw_type_id,json=withdrawTypeId,proto3" json:"withdraw_type_id,omitempty"`                   // 提现方式ID
+	LimitMerchantIds     []int64                `protobuf:"varint,6,rep,packed,name=limit_merchant_ids,json=limitMerchantIds,proto3" json:"limit_merchant_ids,omitempty"`      // 三方商户ID
+	AutoMatch            bool                   `protobuf:"varint,7,opt,name=auto_match,json=autoMatch,proto3" json:"auto_match,omitempty"`                                    // 自动匹配
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *AutoWithdrawMatchReq) Reset() {
@@ -2253,11 +2274,46 @@ func (x *AutoWithdrawMatchReq) GetOrderId() int64 {
 	return 0
 }
 
-func (x *AutoWithdrawMatchReq) GetMerchantIds() []int64 {
+func (x *AutoWithdrawMatchReq) GetOrderNumber() string {
 	if x != nil {
-		return x.MerchantIds
+		return x.OrderNumber
+	}
+	return ""
+}
+
+func (x *AutoWithdrawMatchReq) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
+}
+
+func (x *AutoWithdrawMatchReq) GetActualReceivedAmount() int64 {
+	if x != nil {
+		return x.ActualReceivedAmount
+	}
+	return 0
+}
+
+func (x *AutoWithdrawMatchReq) GetWithdrawTypeId() int64 {
+	if x != nil {
+		return x.WithdrawTypeId
+	}
+	return 0
+}
+
+func (x *AutoWithdrawMatchReq) GetLimitMerchantIds() []int64 {
+	if x != nil {
+		return x.LimitMerchantIds
 	}
 	return nil
+}
+
+func (x *AutoWithdrawMatchReq) GetAutoMatch() bool {
+	if x != nil {
+		return x.AutoMatch
+	}
+	return false
 }
 
 type AutoWithdrawMatchResp struct {
@@ -3940,24 +3996,32 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"\x15AutoWithdrawJudgeResp\x12#\n" +
 	"\rauto_withdraw\x18\x01 \x01(\bR\fautoWithdraw\x120\n" +
 	"\x14withdraw_merchant_id\x18\x02 \x01(\x03R\x12withdrawMerchantId\x12;\n" +
-	"\x1aauto_withdraw_merchant_all\x18\x03 \x01(\x03R\x17autoWithdrawMerchantAll\"\x99\x01\n" +
+	"\x1aauto_withdraw_merchant_all\x18\x03 \x01(\x03R\x17autoWithdrawMerchantAll\"\xd6\x01\n" +
 	"\x0fAutoWithdrawReq\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\x120\n" +
 	"\x14withdraw_merchant_id\x18\x02 \x01(\x03R\x12withdrawMerchantId\x12\x1d\n" +
 	"\n" +
 	"auto_match\x18\x03 \x01(\bR\tautoMatch\x12\x1a\n" +
-	"\boperator\x18\x04 \x01(\tR\boperator\"*\n" +
+	"\boperator\x18\x04 \x01(\tR\boperator\x12;\n" +
+	"\x1aauto_withdraw_merchant_all\x18\x05 \x01(\x03R\x17autoWithdrawMerchantAll\"*\n" +
 	"\x10AutoWithdrawResp\x12\x16\n" +
-	"\x06status\x18\x01 \x01(\x03R\x06status\"E\n" +
+	"\x06status\x18\x01 \x01(\x03R\x06status\"j\n" +
 	"\x12CalcWithdrawFeeReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x16\n" +
-	"\x06amount\x18\x02 \x01(\x03R\x06amount\"4\n" +
+	"\x06amount\x18\x02 \x01(\x03R\x06amount\x12#\n" +
+	"\rwithdraw_type\x18\x03 \x01(\x03R\fwithdrawType\"4\n" +
 	"\x13CalcWithdrawFeeResp\x12\x1d\n" +
 	"\n" +
-	"fee_amount\x18\x01 \x01(\x03R\tfeeAmount\"T\n" +
+	"fee_amount\x18\x01 \x01(\x03R\tfeeAmount\"\xa6\x02\n" +
 	"\x14AutoWithdrawMatchReq\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\x12!\n" +
-	"\fmerchant_ids\x18\x02 \x03(\x03R\vmerchantIds\"8\n" +
+	"\forder_number\x18\x02 \x01(\tR\vorderNumber\x12#\n" +
+	"\rcurrency_code\x18\x03 \x01(\tR\fcurrencyCode\x124\n" +
+	"\x16actual_received_amount\x18\x04 \x01(\x03R\x14actualReceivedAmount\x12(\n" +
+	"\x10withdraw_type_id\x18\x05 \x01(\x03R\x0ewithdrawTypeId\x12,\n" +
+	"\x12limit_merchant_ids\x18\x06 \x03(\x03R\x10limitMerchantIds\x12\x1d\n" +
+	"\n" +
+	"auto_match\x18\a \x01(\bR\tautoMatch\"8\n" +
 	"\x15AutoWithdrawMatchResp\x12\x1f\n" +
 	"\vmerchant_id\x18\x01 \x01(\x03R\n" +
 	"merchantId\"\xf0\x04\n" +
