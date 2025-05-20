@@ -229,6 +229,50 @@ func (x *DelReq) GetCrontabId() int64 {
 	return 0
 }
 
+type DelBatchReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Labels        []string               `protobuf:"bytes,1,rep,name=labels,proto3" json:"labels,omitempty"` // 定时任务唯一标识ID数组
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DelBatchReq) Reset() {
+	*x = DelBatchReq{}
+	mi := &file_crontab_v1_crontab_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DelBatchReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DelBatchReq) ProtoMessage() {}
+
+func (x *DelBatchReq) ProtoReflect() protoreflect.Message {
+	mi := &file_crontab_v1_crontab_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DelBatchReq.ProtoReflect.Descriptor instead.
+func (*DelBatchReq) Descriptor() ([]byte, []int) {
+	return file_crontab_v1_crontab_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *DelBatchReq) GetLabels() []string {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
 var File_crontab_v1_crontab_proto protoreflect.FileDescriptor
 
 const file_crontab_v1_crontab_proto_rawDesc = "" +
@@ -248,10 +292,13 @@ const file_crontab_v1_crontab_proto_rawDesc = "" +
 	"\x06DelReq\x12\x14\n" +
 	"\x05label\x18\x01 \x01(\tR\x05label\x12\x1d\n" +
 	"\n" +
-	"crontab_id\x18\x02 \x01(\x03R\tcrontabId2k\n" +
+	"crontab_id\x18\x02 \x01(\x03R\tcrontabId\"%\n" +
+	"\vDelBatchReq\x12\x16\n" +
+	"\x06labels\x18\x01 \x03(\tR\x06labels2\xa0\x01\n" +
 	"\x15LiveCrontabRpcService\x12'\n" +
 	"\x03Add\x12\x0f.user.v1.AddReq\x1a\x0f.user.v1.AddRes\x12)\n" +
-	"\x03Del\x12\x0f.user.v1.DelReq\x1a\x11.user.v1.EmptyResB\tZ\a./pb/v1b\x06proto3"
+	"\x03Del\x12\x0f.user.v1.DelReq\x1a\x11.user.v1.EmptyRes\x123\n" +
+	"\bDelBatch\x12\x14.user.v1.DelBatchReq\x1a\x11.user.v1.EmptyResB\tZ\a./pb/v1b\x06proto3"
 
 var (
 	file_crontab_v1_crontab_proto_rawDescOnce sync.Once
@@ -265,20 +312,23 @@ func file_crontab_v1_crontab_proto_rawDescGZIP() []byte {
 	return file_crontab_v1_crontab_proto_rawDescData
 }
 
-var file_crontab_v1_crontab_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_crontab_v1_crontab_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_crontab_v1_crontab_proto_goTypes = []any{
-	(*EmptyRes)(nil), // 0: user.v1.EmptyRes
-	(*AddReq)(nil),   // 1: user.v1.AddReq
-	(*AddRes)(nil),   // 2: user.v1.AddRes
-	(*DelReq)(nil),   // 3: user.v1.DelReq
+	(*EmptyRes)(nil),    // 0: user.v1.EmptyRes
+	(*AddReq)(nil),      // 1: user.v1.AddReq
+	(*AddRes)(nil),      // 2: user.v1.AddRes
+	(*DelReq)(nil),      // 3: user.v1.DelReq
+	(*DelBatchReq)(nil), // 4: user.v1.DelBatchReq
 }
 var file_crontab_v1_crontab_proto_depIdxs = []int32{
 	1, // 0: user.v1.LiveCrontabRpcService.Add:input_type -> user.v1.AddReq
 	3, // 1: user.v1.LiveCrontabRpcService.Del:input_type -> user.v1.DelReq
-	2, // 2: user.v1.LiveCrontabRpcService.Add:output_type -> user.v1.AddRes
-	0, // 3: user.v1.LiveCrontabRpcService.Del:output_type -> user.v1.EmptyRes
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	4, // 2: user.v1.LiveCrontabRpcService.DelBatch:input_type -> user.v1.DelBatchReq
+	2, // 3: user.v1.LiveCrontabRpcService.Add:output_type -> user.v1.AddRes
+	0, // 4: user.v1.LiveCrontabRpcService.Del:output_type -> user.v1.EmptyRes
+	0, // 5: user.v1.LiveCrontabRpcService.DelBatch:output_type -> user.v1.EmptyRes
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -295,7 +345,7 @@ func file_crontab_v1_crontab_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_crontab_v1_crontab_proto_rawDesc), len(file_crontab_v1_crontab_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

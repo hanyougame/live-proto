@@ -22,9 +22,15 @@ message DelReq {
   int64 crontab_id = 2; // 定时任务id
 }
 
+message DelBatchReq {
+  repeated string labels = 1; // 定时任务唯一标识ID数组
+}
+
 service LiveCrontabRpcService {
   // 添加定时任务
   rpc Add(AddReq) returns(AddRes);
   // 删除定时任务
   rpc Del(DelReq) returns(EmptyRes);
+  // 批量删除定时任务
+  rpc DelBatch(DelBatchReq) returns(EmptyRes);
 }

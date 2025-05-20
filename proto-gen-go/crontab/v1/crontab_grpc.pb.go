@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LiveCrontabRpcService_Add_FullMethodName = "/user.v1.LiveCrontabRpcService/Add"
-	LiveCrontabRpcService_Del_FullMethodName = "/user.v1.LiveCrontabRpcService/Del"
+	LiveCrontabRpcService_Add_FullMethodName      = "/user.v1.LiveCrontabRpcService/Add"
+	LiveCrontabRpcService_Del_FullMethodName      = "/user.v1.LiveCrontabRpcService/Del"
+	LiveCrontabRpcService_DelBatch_FullMethodName = "/user.v1.LiveCrontabRpcService/DelBatch"
 )
 
 // LiveCrontabRpcServiceClient is the client API for LiveCrontabRpcService service.
@@ -31,6 +32,8 @@ type LiveCrontabRpcServiceClient interface {
 	Add(ctx context.Context, in *AddReq, opts ...grpc.CallOption) (*AddRes, error)
 	// 删除定时任务
 	Del(ctx context.Context, in *DelReq, opts ...grpc.CallOption) (*EmptyRes, error)
+	// 批量删除定时任务
+	DelBatch(ctx context.Context, in *DelBatchReq, opts ...grpc.CallOption) (*EmptyRes, error)
 }
 
 type liveCrontabRpcServiceClient struct {
@@ -61,6 +64,16 @@ func (c *liveCrontabRpcServiceClient) Del(ctx context.Context, in *DelReq, opts 
 	return out, nil
 }
 
+func (c *liveCrontabRpcServiceClient) DelBatch(ctx context.Context, in *DelBatchReq, opts ...grpc.CallOption) (*EmptyRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EmptyRes)
+	err := c.cc.Invoke(ctx, LiveCrontabRpcService_DelBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveCrontabRpcServiceServer is the server API for LiveCrontabRpcService service.
 // All implementations must embed UnimplementedLiveCrontabRpcServiceServer
 // for forward compatibility.
@@ -69,6 +82,8 @@ type LiveCrontabRpcServiceServer interface {
 	Add(context.Context, *AddReq) (*AddRes, error)
 	// 删除定时任务
 	Del(context.Context, *DelReq) (*EmptyRes, error)
+	// 批量删除定时任务
+	DelBatch(context.Context, *DelBatchReq) (*EmptyRes, error)
 	mustEmbedUnimplementedLiveCrontabRpcServiceServer()
 }
 
@@ -84,6 +99,9 @@ func (UnimplementedLiveCrontabRpcServiceServer) Add(context.Context, *AddReq) (*
 }
 func (UnimplementedLiveCrontabRpcServiceServer) Del(context.Context, *DelReq) (*EmptyRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Del not implemented")
+}
+func (UnimplementedLiveCrontabRpcServiceServer) DelBatch(context.Context, *DelBatchReq) (*EmptyRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelBatch not implemented")
 }
 func (UnimplementedLiveCrontabRpcServiceServer) mustEmbedUnimplementedLiveCrontabRpcServiceServer() {}
 func (UnimplementedLiveCrontabRpcServiceServer) testEmbeddedByValue()                               {}
@@ -142,6 +160,24 @@ func _LiveCrontabRpcService_Del_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveCrontabRpcService_DelBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelBatchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveCrontabRpcServiceServer).DelBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveCrontabRpcService_DelBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveCrontabRpcServiceServer).DelBatch(ctx, req.(*DelBatchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveCrontabRpcService_ServiceDesc is the grpc.ServiceDesc for LiveCrontabRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -156,6 +192,10 @@ var LiveCrontabRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Del",
 			Handler:    _LiveCrontabRpcService_Del_Handler,
+		},
+		{
+			MethodName: "DelBatch",
+			Handler:    _LiveCrontabRpcService_DelBatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
