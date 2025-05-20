@@ -22,6 +22,8 @@ type (
 	AuditInfo                     = v1.AuditInfo
 	AutoWithdrawJudgeReq          = v1.AutoWithdrawJudgeReq
 	AutoWithdrawJudgeResp         = v1.AutoWithdrawJudgeResp
+	AutoWithdrawMatchReq          = v1.AutoWithdrawMatchReq
+	AutoWithdrawMatchResp         = v1.AutoWithdrawMatchResp
 	AutoWithdrawReq               = v1.AutoWithdrawReq
 	AutoWithdrawResp              = v1.AutoWithdrawResp
 	BalanceReq                    = v1.BalanceReq
