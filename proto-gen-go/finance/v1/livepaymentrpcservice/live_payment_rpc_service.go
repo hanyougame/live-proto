@@ -46,6 +46,8 @@ type (
 	PayOutResp                    = v1.PayOutResp
 	PayOutStatusReq               = v1.PayOutStatusReq
 	PayOutStatusResp              = v1.PayOutStatusResp
+	ReWithdrawReq                 = v1.ReWithdrawReq
+	ReWithdrawResp                = v1.ReWithdrawResp
 	RechargeReq                   = v1.RechargeReq
 	RechargeResp                  = v1.RechargeResp
 	UpdateAuditAmountReq          = v1.UpdateAuditAmountReq
@@ -67,6 +69,7 @@ type (
 		AutoWithdraw(ctx context.Context, in *AutoWithdrawReq, opts ...grpc.CallOption) (*AutoWithdrawResp, error)
 		CalcWithdrawFee(ctx context.Context, in *CalcWithdrawFeeReq, opts ...grpc.CallOption) (*CalcWithdrawFeeResp, error)
 		AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error)
+		ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error)
 	}
 
 	defaultLivePaymentRpcService struct {
@@ -133,4 +136,9 @@ func (m *defaultLivePaymentRpcService) CalcWithdrawFee(ctx context.Context, in *
 func (m *defaultLivePaymentRpcService) AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error) {
 	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
 	return client.AutoWithdrawMatch(ctx, in, opts...)
+}
+
+func (m *defaultLivePaymentRpcService) ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error) {
+	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
+	return client.ReWithdraw(ctx, in, opts...)
 }

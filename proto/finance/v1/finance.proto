@@ -147,6 +147,7 @@ message RechargeResp {
 
 message AutoWithdrawJudgeReq {
   int64 order_id = 1; // 订单ID
+  int64 created_at = 2; // 订单创建时间 优化查询
 }
 
 message AutoWithdrawJudgeResp {
@@ -161,6 +162,7 @@ message AutoWithdrawReq {
   bool auto_match = 3; // 是否自动匹配 true 是 false 否
   string operator = 4; // 操作人
   int64 auto_withdraw_merchant_all = 5; // 是否所有自动提现商户 1-所有 2-指定
+  int64 created_at = 6; // 订单创建时间 优化查询
 }
 
 message AutoWithdrawResp {
@@ -191,6 +193,14 @@ message AutoWithdrawMatchResp {
   int64 merchant_id = 1; // 三方商户ID
 }
 
+message ReWithdrawReq {
+  int64 order_id = 1; // 订单ID
+  int64 created_at = 2; // 订单创建时间 优化查询
+}
+
+message ReWithdrawResp {
+}
+
 service LivePaymentRpcService {
   rpc PayIn(PayInReq) returns (PayInResp);
   rpc PayOut(PayOutReq) returns (PayOutResp);
@@ -203,6 +213,7 @@ service LivePaymentRpcService {
   rpc AutoWithdraw(AutoWithdrawReq) returns (AutoWithdrawResp);
   rpc CalcWithdrawFee(CalcWithdrawFeeReq) returns (CalcWithdrawFeeResp); //计算提现手续费
   rpc AutoWithdrawMatch(AutoWithdrawMatchReq) returns (AutoWithdrawMatchResp); // 自动出款匹配
+  rpc ReWithdraw(ReWithdrawReq) returns (ReWithdrawResp); // 重新出款
 }
 
 

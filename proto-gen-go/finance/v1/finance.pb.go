@@ -1898,7 +1898,8 @@ func (x *RechargeResp) GetPayUrl() string {
 
 type AutoWithdrawJudgeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderId       int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"` // 订单ID
+	OrderId       int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`       // 订单ID
+	CreatedAt     int64                  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // 订单创建时间 优化查询
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1936,6 +1937,13 @@ func (*AutoWithdrawJudgeReq) Descriptor() ([]byte, []int) {
 func (x *AutoWithdrawJudgeReq) GetOrderId() int64 {
 	if x != nil {
 		return x.OrderId
+	}
+	return 0
+}
+
+func (x *AutoWithdrawJudgeReq) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
 	}
 	return 0
 }
@@ -2007,6 +2015,7 @@ type AutoWithdrawReq struct {
 	AutoMatch               bool                   `protobuf:"varint,3,opt,name=auto_match,json=autoMatch,proto3" json:"auto_match,omitempty"`                                               // 是否自动匹配 true 是 false 否
 	Operator                string                 `protobuf:"bytes,4,opt,name=operator,proto3" json:"operator,omitempty"`                                                                   // 操作人
 	AutoWithdrawMerchantAll int64                  `protobuf:"varint,5,opt,name=auto_withdraw_merchant_all,json=autoWithdrawMerchantAll,proto3" json:"auto_withdraw_merchant_all,omitempty"` // 是否所有自动提现商户 1-所有 2-指定
+	CreatedAt               int64                  `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`                                               // 订单创建时间 优化查询
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -2072,6 +2081,13 @@ func (x *AutoWithdrawReq) GetOperator() string {
 func (x *AutoWithdrawReq) GetAutoWithdrawMerchantAll() int64 {
 	if x != nil {
 		return x.AutoWithdrawMerchantAll
+	}
+	return 0
+}
+
+func (x *AutoWithdrawReq) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
 	}
 	return 0
 }
@@ -2360,6 +2376,94 @@ func (x *AutoWithdrawMatchResp) GetMerchantId() int64 {
 	return 0
 }
 
+type ReWithdrawReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderId       int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`       // 订单ID
+	CreatedAt     int64                  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // 订单创建时间 优化查询
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReWithdrawReq) Reset() {
+	*x = ReWithdrawReq{}
+	mi := &file_finance_v1_finance_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReWithdrawReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReWithdrawReq) ProtoMessage() {}
+
+func (x *ReWithdrawReq) ProtoReflect() protoreflect.Message {
+	mi := &file_finance_v1_finance_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReWithdrawReq.ProtoReflect.Descriptor instead.
+func (*ReWithdrawReq) Descriptor() ([]byte, []int) {
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ReWithdrawReq) GetOrderId() int64 {
+	if x != nil {
+		return x.OrderId
+	}
+	return 0
+}
+
+func (x *ReWithdrawReq) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+type ReWithdrawResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReWithdrawResp) Reset() {
+	*x = ReWithdrawResp{}
+	mi := &file_finance_v1_finance_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReWithdrawResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReWithdrawResp) ProtoMessage() {}
+
+func (x *ReWithdrawResp) ProtoReflect() protoreflect.Message {
+	mi := &file_finance_v1_finance_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReWithdrawResp.ProtoReflect.Descriptor instead.
+func (*ReWithdrawResp) Descriptor() ([]byte, []int) {
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{21}
+}
+
 // 添加用户稽核
 type AddAuditReq struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
@@ -2384,7 +2488,7 @@ type AddAuditReq struct {
 
 func (x *AddAuditReq) Reset() {
 	*x = AddAuditReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[20]
+	mi := &file_finance_v1_finance_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2396,7 +2500,7 @@ func (x *AddAuditReq) String() string {
 func (*AddAuditReq) ProtoMessage() {}
 
 func (x *AddAuditReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[20]
+	mi := &file_finance_v1_finance_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2409,7 +2513,7 @@ func (x *AddAuditReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAuditReq.ProtoReflect.Descriptor instead.
 func (*AddAuditReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{20}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *AddAuditReq) GetUserId() int64 {
@@ -2526,7 +2630,7 @@ type AddAuditResp struct {
 
 func (x *AddAuditResp) Reset() {
 	*x = AddAuditResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[21]
+	mi := &file_finance_v1_finance_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2538,7 +2642,7 @@ func (x *AddAuditResp) String() string {
 func (*AddAuditResp) ProtoMessage() {}
 
 func (x *AddAuditResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[21]
+	mi := &file_finance_v1_finance_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2551,7 +2655,7 @@ func (x *AddAuditResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAuditResp.ProtoReflect.Descriptor instead.
 func (*AddAuditResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{21}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *AddAuditResp) GetAuditId() int64 {
@@ -2577,7 +2681,7 @@ type UpdateAuditAmountReq struct {
 
 func (x *UpdateAuditAmountReq) Reset() {
 	*x = UpdateAuditAmountReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[22]
+	mi := &file_finance_v1_finance_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2589,7 +2693,7 @@ func (x *UpdateAuditAmountReq) String() string {
 func (*UpdateAuditAmountReq) ProtoMessage() {}
 
 func (x *UpdateAuditAmountReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[22]
+	mi := &file_finance_v1_finance_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2602,7 +2706,7 @@ func (x *UpdateAuditAmountReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAuditAmountReq.ProtoReflect.Descriptor instead.
 func (*UpdateAuditAmountReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{22}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *UpdateAuditAmountReq) GetUserId() int64 {
@@ -2662,7 +2766,7 @@ type UpdateAuditAmountResp struct {
 
 func (x *UpdateAuditAmountResp) Reset() {
 	*x = UpdateAuditAmountResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[23]
+	mi := &file_finance_v1_finance_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2674,7 +2778,7 @@ func (x *UpdateAuditAmountResp) String() string {
 func (*UpdateAuditAmountResp) ProtoMessage() {}
 
 func (x *UpdateAuditAmountResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[23]
+	mi := &file_finance_v1_finance_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2687,7 +2791,7 @@ func (x *UpdateAuditAmountResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAuditAmountResp.ProtoReflect.Descriptor instead.
 func (*UpdateAuditAmountResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{23}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{25}
 }
 
 type GetAuditInfoReq struct {
@@ -2700,7 +2804,7 @@ type GetAuditInfoReq struct {
 
 func (x *GetAuditInfoReq) Reset() {
 	*x = GetAuditInfoReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[24]
+	mi := &file_finance_v1_finance_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2712,7 +2816,7 @@ func (x *GetAuditInfoReq) String() string {
 func (*GetAuditInfoReq) ProtoMessage() {}
 
 func (x *GetAuditInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[24]
+	mi := &file_finance_v1_finance_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2725,7 +2829,7 @@ func (x *GetAuditInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAuditInfoReq.ProtoReflect.Descriptor instead.
 func (*GetAuditInfoReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{24}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *GetAuditInfoReq) GetUserId() int64 {
@@ -2758,7 +2862,7 @@ type GetAuditInfoResp struct {
 
 func (x *GetAuditInfoResp) Reset() {
 	*x = GetAuditInfoResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[25]
+	mi := &file_finance_v1_finance_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2770,7 +2874,7 @@ func (x *GetAuditInfoResp) String() string {
 func (*GetAuditInfoResp) ProtoMessage() {}
 
 func (x *GetAuditInfoResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[25]
+	mi := &file_finance_v1_finance_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2783,7 +2887,7 @@ func (x *GetAuditInfoResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAuditInfoResp.ProtoReflect.Descriptor instead.
 func (*GetAuditInfoResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{25}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *GetAuditInfoResp) GetNeedBetAmount() int64 {
@@ -2854,7 +2958,7 @@ type GetAuditListReq struct {
 
 func (x *GetAuditListReq) Reset() {
 	*x = GetAuditListReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[26]
+	mi := &file_finance_v1_finance_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2866,7 +2970,7 @@ func (x *GetAuditListReq) String() string {
 func (*GetAuditListReq) ProtoMessage() {}
 
 func (x *GetAuditListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[26]
+	mi := &file_finance_v1_finance_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2879,7 +2983,7 @@ func (x *GetAuditListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAuditListReq.ProtoReflect.Descriptor instead.
 func (*GetAuditListReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{26}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GetAuditListReq) GetUserId() int64 {
@@ -2931,7 +3035,7 @@ type AuditInfo struct {
 
 func (x *AuditInfo) Reset() {
 	*x = AuditInfo{}
-	mi := &file_finance_v1_finance_proto_msgTypes[27]
+	mi := &file_finance_v1_finance_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2943,7 +3047,7 @@ func (x *AuditInfo) String() string {
 func (*AuditInfo) ProtoMessage() {}
 
 func (x *AuditInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[27]
+	mi := &file_finance_v1_finance_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2956,7 +3060,7 @@ func (x *AuditInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuditInfo.ProtoReflect.Descriptor instead.
 func (*AuditInfo) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{27}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *AuditInfo) GetId() int64 {
@@ -3060,7 +3164,7 @@ type GetAuditListResp struct {
 
 func (x *GetAuditListResp) Reset() {
 	*x = GetAuditListResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[28]
+	mi := &file_finance_v1_finance_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3072,7 +3176,7 @@ func (x *GetAuditListResp) String() string {
 func (*GetAuditListResp) ProtoMessage() {}
 
 func (x *GetAuditListResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[28]
+	mi := &file_finance_v1_finance_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3085,7 +3189,7 @@ func (x *GetAuditListResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAuditListResp.ProtoReflect.Descriptor instead.
 func (*GetAuditListResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{28}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *GetAuditListResp) GetTotal() int64 {
@@ -3122,7 +3226,7 @@ type AddAudit struct {
 
 func (x *AddAudit) Reset() {
 	*x = AddAudit{}
-	mi := &file_finance_v1_finance_proto_msgTypes[29]
+	mi := &file_finance_v1_finance_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3134,7 +3238,7 @@ func (x *AddAudit) String() string {
 func (*AddAudit) ProtoMessage() {}
 
 func (x *AddAudit) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[29]
+	mi := &file_finance_v1_finance_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3147,7 +3251,7 @@ func (x *AddAudit) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAudit.ProtoReflect.Descriptor instead.
 func (*AddAudit) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{29}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *AddAudit) GetAutoReleaseType() AutoReleaseType {
@@ -3246,7 +3350,7 @@ type BatchAddAuditReq struct {
 
 func (x *BatchAddAuditReq) Reset() {
 	*x = BatchAddAuditReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[30]
+	mi := &file_finance_v1_finance_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3258,7 +3362,7 @@ func (x *BatchAddAuditReq) String() string {
 func (*BatchAddAuditReq) ProtoMessage() {}
 
 func (x *BatchAddAuditReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[30]
+	mi := &file_finance_v1_finance_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3271,7 +3375,7 @@ func (x *BatchAddAuditReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchAddAuditReq.ProtoReflect.Descriptor instead.
 func (*BatchAddAuditReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{30}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *BatchAddAuditReq) GetUserId() int64 {
@@ -3310,7 +3414,7 @@ type BatchAddAuditResp struct {
 
 func (x *BatchAddAuditResp) Reset() {
 	*x = BatchAddAuditResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[31]
+	mi := &file_finance_v1_finance_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3322,7 +3426,7 @@ func (x *BatchAddAuditResp) String() string {
 func (*BatchAddAuditResp) ProtoMessage() {}
 
 func (x *BatchAddAuditResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[31]
+	mi := &file_finance_v1_finance_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3335,7 +3439,7 @@ func (x *BatchAddAuditResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchAddAuditResp.ProtoReflect.Descriptor instead.
 func (*BatchAddAuditResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{31}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{33}
 }
 
 type AddWithdrawLimitReq struct {
@@ -3353,7 +3457,7 @@ type AddWithdrawLimitReq struct {
 
 func (x *AddWithdrawLimitReq) Reset() {
 	*x = AddWithdrawLimitReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[32]
+	mi := &file_finance_v1_finance_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3365,7 +3469,7 @@ func (x *AddWithdrawLimitReq) String() string {
 func (*AddWithdrawLimitReq) ProtoMessage() {}
 
 func (x *AddWithdrawLimitReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[32]
+	mi := &file_finance_v1_finance_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3378,7 +3482,7 @@ func (x *AddWithdrawLimitReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddWithdrawLimitReq.ProtoReflect.Descriptor instead.
 func (*AddWithdrawLimitReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{32}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *AddWithdrawLimitReq) GetUserId() int64 {
@@ -3439,7 +3543,7 @@ type AddWithdrawLimitResp struct {
 
 func (x *AddWithdrawLimitResp) Reset() {
 	*x = AddWithdrawLimitResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[33]
+	mi := &file_finance_v1_finance_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3451,7 +3555,7 @@ func (x *AddWithdrawLimitResp) String() string {
 func (*AddWithdrawLimitResp) ProtoMessage() {}
 
 func (x *AddWithdrawLimitResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[33]
+	mi := &file_finance_v1_finance_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3464,7 +3568,7 @@ func (x *AddWithdrawLimitResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddWithdrawLimitResp.ProtoReflect.Descriptor instead.
 func (*AddWithdrawLimitResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{33}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *AddWithdrawLimitResp) GetWithdrawLimitId() int64 {
@@ -3485,7 +3589,7 @@ type UpdateWithdrawLimitAmountReq struct {
 
 func (x *UpdateWithdrawLimitAmountReq) Reset() {
 	*x = UpdateWithdrawLimitAmountReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[34]
+	mi := &file_finance_v1_finance_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3497,7 +3601,7 @@ func (x *UpdateWithdrawLimitAmountReq) String() string {
 func (*UpdateWithdrawLimitAmountReq) ProtoMessage() {}
 
 func (x *UpdateWithdrawLimitAmountReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[34]
+	mi := &file_finance_v1_finance_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3510,7 +3614,7 @@ func (x *UpdateWithdrawLimitAmountReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateWithdrawLimitAmountReq.ProtoReflect.Descriptor instead.
 func (*UpdateWithdrawLimitAmountReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{34}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *UpdateWithdrawLimitAmountReq) GetUserId() int64 {
@@ -3542,7 +3646,7 @@ type UpdateWithdrawLimitAmountResp struct {
 
 func (x *UpdateWithdrawLimitAmountResp) Reset() {
 	*x = UpdateWithdrawLimitAmountResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[35]
+	mi := &file_finance_v1_finance_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3554,7 +3658,7 @@ func (x *UpdateWithdrawLimitAmountResp) String() string {
 func (*UpdateWithdrawLimitAmountResp) ProtoMessage() {}
 
 func (x *UpdateWithdrawLimitAmountResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[35]
+	mi := &file_finance_v1_finance_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3567,7 +3671,7 @@ func (x *UpdateWithdrawLimitAmountResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateWithdrawLimitAmountResp.ProtoReflect.Descriptor instead.
 func (*UpdateWithdrawLimitAmountResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{35}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{37}
 }
 
 type WithdrawReq struct {
@@ -3591,7 +3695,7 @@ type WithdrawReq struct {
 
 func (x *WithdrawReq) Reset() {
 	*x = WithdrawReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[36]
+	mi := &file_finance_v1_finance_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3603,7 +3707,7 @@ func (x *WithdrawReq) String() string {
 func (*WithdrawReq) ProtoMessage() {}
 
 func (x *WithdrawReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[36]
+	mi := &file_finance_v1_finance_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3616,7 +3720,7 @@ func (x *WithdrawReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawReq.ProtoReflect.Descriptor instead.
 func (*WithdrawReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{36}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *WithdrawReq) GetUserId() int64 {
@@ -3718,7 +3822,7 @@ type WithdrawResp struct {
 
 func (x *WithdrawResp) Reset() {
 	*x = WithdrawResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[37]
+	mi := &file_finance_v1_finance_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3730,7 +3834,7 @@ func (x *WithdrawResp) String() string {
 func (*WithdrawResp) ProtoMessage() {}
 
 func (x *WithdrawResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[37]
+	mi := &file_finance_v1_finance_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3743,7 +3847,7 @@ func (x *WithdrawResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawResp.ProtoReflect.Descriptor instead.
 func (*WithdrawResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{37}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{39}
 }
 
 type ExchangeRateReq struct {
@@ -3757,7 +3861,7 @@ type ExchangeRateReq struct {
 
 func (x *ExchangeRateReq) Reset() {
 	*x = ExchangeRateReq{}
-	mi := &file_finance_v1_finance_proto_msgTypes[38]
+	mi := &file_finance_v1_finance_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3769,7 +3873,7 @@ func (x *ExchangeRateReq) String() string {
 func (*ExchangeRateReq) ProtoMessage() {}
 
 func (x *ExchangeRateReq) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[38]
+	mi := &file_finance_v1_finance_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3782,7 +3886,7 @@ func (x *ExchangeRateReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExchangeRateReq.ProtoReflect.Descriptor instead.
 func (*ExchangeRateReq) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{38}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ExchangeRateReq) GetSourceCurrencyCode() string {
@@ -3819,7 +3923,7 @@ type ExchangeRateResp struct {
 
 func (x *ExchangeRateResp) Reset() {
 	*x = ExchangeRateResp{}
-	mi := &file_finance_v1_finance_proto_msgTypes[39]
+	mi := &file_finance_v1_finance_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3831,7 +3935,7 @@ func (x *ExchangeRateResp) String() string {
 func (*ExchangeRateResp) ProtoMessage() {}
 
 func (x *ExchangeRateResp) ProtoReflect() protoreflect.Message {
-	mi := &file_finance_v1_finance_proto_msgTypes[39]
+	mi := &file_finance_v1_finance_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3844,7 +3948,7 @@ func (x *ExchangeRateResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExchangeRateResp.ProtoReflect.Descriptor instead.
 func (*ExchangeRateResp) Descriptor() ([]byte, []int) {
-	return file_finance_v1_finance_proto_rawDescGZIP(), []int{39}
+	return file_finance_v1_finance_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *ExchangeRateResp) GetSourceCurrencyCode() string {
@@ -3990,20 +4094,24 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"\forder_number\x18\x03 \x01(\tR\vorderNumber\x12,\n" +
 	"\x12third_order_number\x18\x04 \x01(\tR\x10thirdOrderNumber\x12\x16\n" +
 	"\x06amount\x18\x05 \x01(\x03R\x06amount\x12\x16\n" +
-	"\x06payUrl\x18\x06 \x01(\tR\x06payUrl\"1\n" +
+	"\x06payUrl\x18\x06 \x01(\tR\x06payUrl\"P\n" +
 	"\x14AutoWithdrawJudgeReq\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\x03R\aorderId\"\xab\x01\n" +
+	"\border_id\x18\x01 \x01(\x03R\aorderId\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x02 \x01(\x03R\tcreatedAt\"\xab\x01\n" +
 	"\x15AutoWithdrawJudgeResp\x12#\n" +
 	"\rauto_withdraw\x18\x01 \x01(\bR\fautoWithdraw\x120\n" +
 	"\x14withdraw_merchant_id\x18\x02 \x01(\x03R\x12withdrawMerchantId\x12;\n" +
-	"\x1aauto_withdraw_merchant_all\x18\x03 \x01(\x03R\x17autoWithdrawMerchantAll\"\xd6\x01\n" +
+	"\x1aauto_withdraw_merchant_all\x18\x03 \x01(\x03R\x17autoWithdrawMerchantAll\"\xf5\x01\n" +
 	"\x0fAutoWithdrawReq\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\x120\n" +
 	"\x14withdraw_merchant_id\x18\x02 \x01(\x03R\x12withdrawMerchantId\x12\x1d\n" +
 	"\n" +
 	"auto_match\x18\x03 \x01(\bR\tautoMatch\x12\x1a\n" +
 	"\boperator\x18\x04 \x01(\tR\boperator\x12;\n" +
-	"\x1aauto_withdraw_merchant_all\x18\x05 \x01(\x03R\x17autoWithdrawMerchantAll\"*\n" +
+	"\x1aauto_withdraw_merchant_all\x18\x05 \x01(\x03R\x17autoWithdrawMerchantAll\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\x03R\tcreatedAt\"*\n" +
 	"\x10AutoWithdrawResp\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\x03R\x06status\"j\n" +
 	"\x12CalcWithdrawFeeReq\x12\x17\n" +
@@ -4024,7 +4132,12 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"auto_match\x18\a \x01(\bR\tautoMatch\"8\n" +
 	"\x15AutoWithdrawMatchResp\x12\x1f\n" +
 	"\vmerchant_id\x18\x01 \x01(\x03R\n" +
-	"merchantId\"\xf0\x04\n" +
+	"merchantId\"I\n" +
+	"\rReWithdrawReq\x12\x19\n" +
+	"\border_id\x18\x01 \x01(\x03R\aorderId\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x02 \x01(\x03R\tcreatedAt\"\x10\n" +
+	"\x0eReWithdrawResp\"\xf0\x04\n" +
 	"\vAddAuditReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12#\n" +
@@ -4338,7 +4451,7 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"\x11WithdrawLimitType\x12\x19\n" +
 	"\x15WithdrawLimitTypeNone\x10\x00\x12\x1d\n" +
 	"\x19WithdrawLimitTypeActivity\x10\x01\x12\x19\n" +
-	"\x15WithdrawLimitTypeTask\x10\x022\xa6\x06\n" +
+	"\x15WithdrawLimitTypeTask\x10\x022\xeb\x06\n" +
 	"\x15LivePaymentRpcService\x124\n" +
 	"\x05PayIn\x12\x14.finance.v1.PayInReq\x1a\x15.finance.v1.PayInResp\x127\n" +
 	"\x06PayOut\x12\x15.finance.v1.PayOutReq\x1a\x16.finance.v1.PayOutResp\x12F\n" +
@@ -4350,7 +4463,9 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"\x11AutoWithdrawJudge\x12 .finance.v1.AutoWithdrawJudgeReq\x1a!.finance.v1.AutoWithdrawJudgeResp\x12I\n" +
 	"\fAutoWithdraw\x12\x1b.finance.v1.AutoWithdrawReq\x1a\x1c.finance.v1.AutoWithdrawResp\x12R\n" +
 	"\x0fCalcWithdrawFee\x12\x1e.finance.v1.CalcWithdrawFeeReq\x1a\x1f.finance.v1.CalcWithdrawFeeResp\x12X\n" +
-	"\x11AutoWithdrawMatch\x12 .finance.v1.AutoWithdrawMatchReq\x1a!.finance.v1.AutoWithdrawMatchResp2\x92\x03\n" +
+	"\x11AutoWithdrawMatch\x12 .finance.v1.AutoWithdrawMatchReq\x1a!.finance.v1.AutoWithdrawMatchResp\x12C\n" +
+	"\n" +
+	"ReWithdraw\x12\x19.finance.v1.ReWithdrawReq\x1a\x1a.finance.v1.ReWithdrawResp2\x92\x03\n" +
 	"\x13LiveAuditRpcService\x12=\n" +
 	"\bAddAudit\x12\x17.finance.v1.AddAuditReq\x1a\x18.finance.v1.AddAuditResp\x12X\n" +
 	"\x11UpdateAuditAmount\x12 .finance.v1.UpdateAuditAmountReq\x1a!.finance.v1.UpdateAuditAmountResp\x12I\n" +
@@ -4376,7 +4491,7 @@ func file_finance_v1_finance_proto_rawDescGZIP() []byte {
 }
 
 var file_finance_v1_finance_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
-var file_finance_v1_finance_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
+var file_finance_v1_finance_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
 var file_finance_v1_finance_proto_goTypes = []any{
 	(PayInStatus)(0),                      // 0: finance.v1.PayInStatus
 	(PayOutStatus)(0),                     // 1: finance.v1.PayOutStatus
@@ -4405,26 +4520,28 @@ var file_finance_v1_finance_proto_goTypes = []any{
 	(*CalcWithdrawFeeResp)(nil),           // 24: finance.v1.CalcWithdrawFeeResp
 	(*AutoWithdrawMatchReq)(nil),          // 25: finance.v1.AutoWithdrawMatchReq
 	(*AutoWithdrawMatchResp)(nil),         // 26: finance.v1.AutoWithdrawMatchResp
-	(*AddAuditReq)(nil),                   // 27: finance.v1.AddAuditReq
-	(*AddAuditResp)(nil),                  // 28: finance.v1.AddAuditResp
-	(*UpdateAuditAmountReq)(nil),          // 29: finance.v1.UpdateAuditAmountReq
-	(*UpdateAuditAmountResp)(nil),         // 30: finance.v1.UpdateAuditAmountResp
-	(*GetAuditInfoReq)(nil),               // 31: finance.v1.GetAuditInfoReq
-	(*GetAuditInfoResp)(nil),              // 32: finance.v1.GetAuditInfoResp
-	(*GetAuditListReq)(nil),               // 33: finance.v1.GetAuditListReq
-	(*AuditInfo)(nil),                     // 34: finance.v1.AuditInfo
-	(*GetAuditListResp)(nil),              // 35: finance.v1.GetAuditListResp
-	(*AddAudit)(nil),                      // 36: finance.v1.AddAudit
-	(*BatchAddAuditReq)(nil),              // 37: finance.v1.BatchAddAuditReq
-	(*BatchAddAuditResp)(nil),             // 38: finance.v1.BatchAddAuditResp
-	(*AddWithdrawLimitReq)(nil),           // 39: finance.v1.AddWithdrawLimitReq
-	(*AddWithdrawLimitResp)(nil),          // 40: finance.v1.AddWithdrawLimitResp
-	(*UpdateWithdrawLimitAmountReq)(nil),  // 41: finance.v1.UpdateWithdrawLimitAmountReq
-	(*UpdateWithdrawLimitAmountResp)(nil), // 42: finance.v1.UpdateWithdrawLimitAmountResp
-	(*WithdrawReq)(nil),                   // 43: finance.v1.WithdrawReq
-	(*WithdrawResp)(nil),                  // 44: finance.v1.WithdrawResp
-	(*ExchangeRateReq)(nil),               // 45: finance.v1.ExchangeRateReq
-	(*ExchangeRateResp)(nil),              // 46: finance.v1.ExchangeRateResp
+	(*ReWithdrawReq)(nil),                 // 27: finance.v1.ReWithdrawReq
+	(*ReWithdrawResp)(nil),                // 28: finance.v1.ReWithdrawResp
+	(*AddAuditReq)(nil),                   // 29: finance.v1.AddAuditReq
+	(*AddAuditResp)(nil),                  // 30: finance.v1.AddAuditResp
+	(*UpdateAuditAmountReq)(nil),          // 31: finance.v1.UpdateAuditAmountReq
+	(*UpdateAuditAmountResp)(nil),         // 32: finance.v1.UpdateAuditAmountResp
+	(*GetAuditInfoReq)(nil),               // 33: finance.v1.GetAuditInfoReq
+	(*GetAuditInfoResp)(nil),              // 34: finance.v1.GetAuditInfoResp
+	(*GetAuditListReq)(nil),               // 35: finance.v1.GetAuditListReq
+	(*AuditInfo)(nil),                     // 36: finance.v1.AuditInfo
+	(*GetAuditListResp)(nil),              // 37: finance.v1.GetAuditListResp
+	(*AddAudit)(nil),                      // 38: finance.v1.AddAudit
+	(*BatchAddAuditReq)(nil),              // 39: finance.v1.BatchAddAuditReq
+	(*BatchAddAuditResp)(nil),             // 40: finance.v1.BatchAddAuditResp
+	(*AddWithdrawLimitReq)(nil),           // 41: finance.v1.AddWithdrawLimitReq
+	(*AddWithdrawLimitResp)(nil),          // 42: finance.v1.AddWithdrawLimitResp
+	(*UpdateWithdrawLimitAmountReq)(nil),  // 43: finance.v1.UpdateWithdrawLimitAmountReq
+	(*UpdateWithdrawLimitAmountResp)(nil), // 44: finance.v1.UpdateWithdrawLimitAmountResp
+	(*WithdrawReq)(nil),                   // 45: finance.v1.WithdrawReq
+	(*WithdrawResp)(nil),                  // 46: finance.v1.WithdrawResp
+	(*ExchangeRateReq)(nil),               // 47: finance.v1.ExchangeRateReq
+	(*ExchangeRateResp)(nil),              // 48: finance.v1.ExchangeRateResp
 }
 var file_finance_v1_finance_proto_depIdxs = []int32{
 	0,  // 0: finance.v1.PayInStatusResp.status:type_name -> finance.v1.PayInStatus
@@ -4433,12 +4550,12 @@ var file_finance_v1_finance_proto_depIdxs = []int32{
 	2,  // 3: finance.v1.AddAuditReq.audit_type:type_name -> finance.v1.AuditType
 	3,  // 4: finance.v1.AddAuditReq.audit_sub_type:type_name -> finance.v1.AuditSubType
 	5,  // 5: finance.v1.AddAuditReq.audit_withdraw_type:type_name -> finance.v1.AuditWithdrawType
-	34, // 6: finance.v1.GetAuditListResp.audit_list:type_name -> finance.v1.AuditInfo
+	36, // 6: finance.v1.GetAuditListResp.audit_list:type_name -> finance.v1.AuditInfo
 	4,  // 7: finance.v1.AddAudit.auto_release_type:type_name -> finance.v1.AutoReleaseType
 	2,  // 8: finance.v1.AddAudit.audit_type:type_name -> finance.v1.AuditType
 	3,  // 9: finance.v1.AddAudit.audit_sub_type:type_name -> finance.v1.AuditSubType
 	5,  // 10: finance.v1.AddAudit.audit_withdraw_type:type_name -> finance.v1.AuditWithdrawType
-	36, // 11: finance.v1.BatchAddAuditReq.audit_list:type_name -> finance.v1.AddAudit
+	38, // 11: finance.v1.BatchAddAuditReq.audit_list:type_name -> finance.v1.AddAudit
 	6,  // 12: finance.v1.AddWithdrawLimitReq.withdraw_limit_type:type_name -> finance.v1.WithdrawLimitType
 	7,  // 13: finance.v1.LivePaymentRpcService.PayIn:input_type -> finance.v1.PayInReq
 	9,  // 14: finance.v1.LivePaymentRpcService.PayOut:input_type -> finance.v1.PayOutReq
@@ -4446,40 +4563,42 @@ var file_finance_v1_finance_proto_depIdxs = []int32{
 	13, // 16: finance.v1.LivePaymentRpcService.PayOutStatus:input_type -> finance.v1.PayOutStatusReq
 	15, // 17: finance.v1.LivePaymentRpcService.Balance:input_type -> finance.v1.BalanceReq
 	17, // 18: finance.v1.LivePaymentRpcService.Recharge:input_type -> finance.v1.RechargeReq
-	43, // 19: finance.v1.LivePaymentRpcService.Withdraw:input_type -> finance.v1.WithdrawReq
+	45, // 19: finance.v1.LivePaymentRpcService.Withdraw:input_type -> finance.v1.WithdrawReq
 	19, // 20: finance.v1.LivePaymentRpcService.AutoWithdrawJudge:input_type -> finance.v1.AutoWithdrawJudgeReq
 	21, // 21: finance.v1.LivePaymentRpcService.AutoWithdraw:input_type -> finance.v1.AutoWithdrawReq
 	23, // 22: finance.v1.LivePaymentRpcService.CalcWithdrawFee:input_type -> finance.v1.CalcWithdrawFeeReq
 	25, // 23: finance.v1.LivePaymentRpcService.AutoWithdrawMatch:input_type -> finance.v1.AutoWithdrawMatchReq
-	27, // 24: finance.v1.LiveAuditRpcService.AddAudit:input_type -> finance.v1.AddAuditReq
-	29, // 25: finance.v1.LiveAuditRpcService.UpdateAuditAmount:input_type -> finance.v1.UpdateAuditAmountReq
-	31, // 26: finance.v1.LiveAuditRpcService.GetAuditInfo:input_type -> finance.v1.GetAuditInfoReq
-	33, // 27: finance.v1.LiveAuditRpcService.GetAuditList:input_type -> finance.v1.GetAuditListReq
-	37, // 28: finance.v1.LiveAuditRpcService.BatchAddAudit:input_type -> finance.v1.BatchAddAuditReq
-	39, // 29: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:input_type -> finance.v1.AddWithdrawLimitReq
-	41, // 30: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:input_type -> finance.v1.UpdateWithdrawLimitAmountReq
-	45, // 31: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:input_type -> finance.v1.ExchangeRateReq
-	8,  // 32: finance.v1.LivePaymentRpcService.PayIn:output_type -> finance.v1.PayInResp
-	10, // 33: finance.v1.LivePaymentRpcService.PayOut:output_type -> finance.v1.PayOutResp
-	12, // 34: finance.v1.LivePaymentRpcService.PayInStatus:output_type -> finance.v1.PayInStatusResp
-	14, // 35: finance.v1.LivePaymentRpcService.PayOutStatus:output_type -> finance.v1.PayOutStatusResp
-	16, // 36: finance.v1.LivePaymentRpcService.Balance:output_type -> finance.v1.BalanceResp
-	18, // 37: finance.v1.LivePaymentRpcService.Recharge:output_type -> finance.v1.RechargeResp
-	44, // 38: finance.v1.LivePaymentRpcService.Withdraw:output_type -> finance.v1.WithdrawResp
-	20, // 39: finance.v1.LivePaymentRpcService.AutoWithdrawJudge:output_type -> finance.v1.AutoWithdrawJudgeResp
-	22, // 40: finance.v1.LivePaymentRpcService.AutoWithdraw:output_type -> finance.v1.AutoWithdrawResp
-	24, // 41: finance.v1.LivePaymentRpcService.CalcWithdrawFee:output_type -> finance.v1.CalcWithdrawFeeResp
-	26, // 42: finance.v1.LivePaymentRpcService.AutoWithdrawMatch:output_type -> finance.v1.AutoWithdrawMatchResp
-	28, // 43: finance.v1.LiveAuditRpcService.AddAudit:output_type -> finance.v1.AddAuditResp
-	30, // 44: finance.v1.LiveAuditRpcService.UpdateAuditAmount:output_type -> finance.v1.UpdateAuditAmountResp
-	32, // 45: finance.v1.LiveAuditRpcService.GetAuditInfo:output_type -> finance.v1.GetAuditInfoResp
-	35, // 46: finance.v1.LiveAuditRpcService.GetAuditList:output_type -> finance.v1.GetAuditListResp
-	38, // 47: finance.v1.LiveAuditRpcService.BatchAddAudit:output_type -> finance.v1.BatchAddAuditResp
-	40, // 48: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:output_type -> finance.v1.AddWithdrawLimitResp
-	42, // 49: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:output_type -> finance.v1.UpdateWithdrawLimitAmountResp
-	46, // 50: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:output_type -> finance.v1.ExchangeRateResp
-	32, // [32:51] is the sub-list for method output_type
-	13, // [13:32] is the sub-list for method input_type
+	27, // 24: finance.v1.LivePaymentRpcService.ReWithdraw:input_type -> finance.v1.ReWithdrawReq
+	29, // 25: finance.v1.LiveAuditRpcService.AddAudit:input_type -> finance.v1.AddAuditReq
+	31, // 26: finance.v1.LiveAuditRpcService.UpdateAuditAmount:input_type -> finance.v1.UpdateAuditAmountReq
+	33, // 27: finance.v1.LiveAuditRpcService.GetAuditInfo:input_type -> finance.v1.GetAuditInfoReq
+	35, // 28: finance.v1.LiveAuditRpcService.GetAuditList:input_type -> finance.v1.GetAuditListReq
+	39, // 29: finance.v1.LiveAuditRpcService.BatchAddAudit:input_type -> finance.v1.BatchAddAuditReq
+	41, // 30: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:input_type -> finance.v1.AddWithdrawLimitReq
+	43, // 31: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:input_type -> finance.v1.UpdateWithdrawLimitAmountReq
+	47, // 32: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:input_type -> finance.v1.ExchangeRateReq
+	8,  // 33: finance.v1.LivePaymentRpcService.PayIn:output_type -> finance.v1.PayInResp
+	10, // 34: finance.v1.LivePaymentRpcService.PayOut:output_type -> finance.v1.PayOutResp
+	12, // 35: finance.v1.LivePaymentRpcService.PayInStatus:output_type -> finance.v1.PayInStatusResp
+	14, // 36: finance.v1.LivePaymentRpcService.PayOutStatus:output_type -> finance.v1.PayOutStatusResp
+	16, // 37: finance.v1.LivePaymentRpcService.Balance:output_type -> finance.v1.BalanceResp
+	18, // 38: finance.v1.LivePaymentRpcService.Recharge:output_type -> finance.v1.RechargeResp
+	46, // 39: finance.v1.LivePaymentRpcService.Withdraw:output_type -> finance.v1.WithdrawResp
+	20, // 40: finance.v1.LivePaymentRpcService.AutoWithdrawJudge:output_type -> finance.v1.AutoWithdrawJudgeResp
+	22, // 41: finance.v1.LivePaymentRpcService.AutoWithdraw:output_type -> finance.v1.AutoWithdrawResp
+	24, // 42: finance.v1.LivePaymentRpcService.CalcWithdrawFee:output_type -> finance.v1.CalcWithdrawFeeResp
+	26, // 43: finance.v1.LivePaymentRpcService.AutoWithdrawMatch:output_type -> finance.v1.AutoWithdrawMatchResp
+	28, // 44: finance.v1.LivePaymentRpcService.ReWithdraw:output_type -> finance.v1.ReWithdrawResp
+	30, // 45: finance.v1.LiveAuditRpcService.AddAudit:output_type -> finance.v1.AddAuditResp
+	32, // 46: finance.v1.LiveAuditRpcService.UpdateAuditAmount:output_type -> finance.v1.UpdateAuditAmountResp
+	34, // 47: finance.v1.LiveAuditRpcService.GetAuditInfo:output_type -> finance.v1.GetAuditInfoResp
+	37, // 48: finance.v1.LiveAuditRpcService.GetAuditList:output_type -> finance.v1.GetAuditListResp
+	40, // 49: finance.v1.LiveAuditRpcService.BatchAddAudit:output_type -> finance.v1.BatchAddAuditResp
+	42, // 50: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:output_type -> finance.v1.AddWithdrawLimitResp
+	44, // 51: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:output_type -> finance.v1.UpdateWithdrawLimitAmountResp
+	48, // 52: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:output_type -> finance.v1.ExchangeRateResp
+	33, // [33:53] is the sub-list for method output_type
+	13, // [13:33] is the sub-list for method input_type
 	13, // [13:13] is the sub-list for extension type_name
 	13, // [13:13] is the sub-list for extension extendee
 	0,  // [0:13] is the sub-list for field type_name
@@ -4496,7 +4615,7 @@ func file_finance_v1_finance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_finance_v1_finance_proto_rawDesc), len(file_finance_v1_finance_proto_rawDesc)),
 			NumEnums:      7,
-			NumMessages:   40,
+			NumMessages:   42,
 			NumExtensions: 0,
 			NumServices:   4,
 		},

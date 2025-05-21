@@ -46,6 +46,8 @@ type (
 	PayOutResp                    = v1.PayOutResp
 	PayOutStatusReq               = v1.PayOutStatusReq
 	PayOutStatusResp              = v1.PayOutStatusResp
+	ReWithdrawReq                 = v1.ReWithdrawReq
+	ReWithdrawResp                = v1.ReWithdrawResp
 	RechargeReq                   = v1.RechargeReq
 	RechargeResp                  = v1.RechargeResp
 	UpdateAuditAmountReq          = v1.UpdateAuditAmountReq
