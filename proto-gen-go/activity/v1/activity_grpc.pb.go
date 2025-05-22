@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	LiveActivityInnerService_RedPacketCampaignEvent_FullMethodName = "/activity.v1.LiveActivityInnerService/RedPacketCampaignEvent"
+	LiveActivityInnerService_LuckySpinEvent_FullMethodName         = "/activity.v1.LiveActivityInnerService/LuckySpinEvent"
 )
 
 // LiveActivityInnerServiceClient is the client API for LiveActivityInnerService service.
@@ -28,6 +29,8 @@ const (
 type LiveActivityInnerServiceClient interface {
 	// 抢红包活动事件
 	RedPacketCampaignEvent(ctx context.Context, in *RedPacketCampaignEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
+	// 幸运转盘活动事件
+	LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
 }
 
 type liveActivityInnerServiceClient struct {
@@ -48,12 +51,23 @@ func (c *liveActivityInnerServiceClient) RedPacketCampaignEvent(ctx context.Cont
 	return out, nil
 }
 
+func (c *liveActivityInnerServiceClient) LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error) {
+	out := new(ActivityReply)
+	err := c.cc.Invoke(ctx, LiveActivityInnerService_LuckySpinEvent_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveActivityInnerServiceServer is the server API for LiveActivityInnerService service.
 // All implementations must embed UnimplementedLiveActivityInnerServiceServer
 // for forward compatibility.
 type LiveActivityInnerServiceServer interface {
 	// 抢红包活动事件
 	RedPacketCampaignEvent(context.Context, *RedPacketCampaignEventReq) (*ActivityReply, error)
+	// 幸运转盘活动事件
+	LuckySpinEvent(context.Context, *LuckySpinEventReq) (*ActivityReply, error)
 	mustEmbedUnimplementedLiveActivityInnerServiceServer()
 }
 
@@ -66,6 +80,9 @@ type UnimplementedLiveActivityInnerServiceServer struct{}
 
 func (UnimplementedLiveActivityInnerServiceServer) RedPacketCampaignEvent(context.Context, *RedPacketCampaignEventReq) (*ActivityReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RedPacketCampaignEvent not implemented")
+}
+func (UnimplementedLiveActivityInnerServiceServer) LuckySpinEvent(context.Context, *LuckySpinEventReq) (*ActivityReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LuckySpinEvent not implemented")
 }
 func (UnimplementedLiveActivityInnerServiceServer) mustEmbedUnimplementedLiveActivityInnerServiceServer() {
 }
@@ -107,6 +124,24 @@ func _LiveActivityInnerService_RedPacketCampaignEvent_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveActivityInnerService_LuckySpinEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LuckySpinEventReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveActivityInnerServiceServer).LuckySpinEvent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveActivityInnerService_LuckySpinEvent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveActivityInnerServiceServer).LuckySpinEvent(ctx, req.(*LuckySpinEventReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveActivityInnerService_ServiceDesc is the grpc.ServiceDesc for LiveActivityInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -117,6 +152,10 @@ var LiveActivityInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RedPacketCampaignEvent",
 			Handler:    _LiveActivityInnerService_RedPacketCampaignEvent_Handler,
+		},
+		{
+			MethodName: "LuckySpinEvent",
+			Handler:    _LiveActivityInnerService_LuckySpinEvent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
