@@ -6,23 +6,27 @@ package livecrontabrpcservice
 
 import (
 	"context"
-	v1 "github.com/hanyougame/live-proto/proto-gen-go/crontab/v1"
+
+	"github.com/hanyougame/live-proto/proto-gen-go/crontab/v1"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	AddReq   = v1.AddReq
-	AddRes   = v1.AddRes
-	DelReq   = v1.DelReq
-	EmptyRes = v1.EmptyRes
+	AddReq      = v1.AddReq
+	AddRes      = v1.AddRes
+	DelBatchReq = v1.DelBatchReq
+	DelReq      = v1.DelReq
+	EmptyRes    = v1.EmptyRes
 
 	LiveCrontabRpcService interface {
 		// 添加定时任务
 		Add(ctx context.Context, in *AddReq, opts ...grpc.CallOption) (*AddRes, error)
 		// 删除定时任务
 		Del(ctx context.Context, in *DelReq, opts ...grpc.CallOption) (*EmptyRes, error)
+		// 批量删除定时任务
+		DelBatch(ctx context.Context, in *DelBatchReq, opts ...grpc.CallOption) (*EmptyRes, error)
 	}
 
 	defaultLiveCrontabRpcService struct {
@@ -46,4 +50,10 @@ func (m *defaultLiveCrontabRpcService) Add(ctx context.Context, in *AddReq, opts
 func (m *defaultLiveCrontabRpcService) Del(ctx context.Context, in *DelReq, opts ...grpc.CallOption) (*EmptyRes, error) {
 	client := v1.NewLiveCrontabRpcServiceClient(m.cli.Conn())
 	return client.Del(ctx, in, opts...)
+}
+
+// 批量删除定时任务
+func (m *defaultLiveCrontabRpcService) DelBatch(ctx context.Context, in *DelBatchReq, opts ...grpc.CallOption) (*EmptyRes, error) {
+	client := v1.NewLiveCrontabRpcServiceClient(m.cli.Conn())
+	return client.DelBatch(ctx, in, opts...)
 }

@@ -27,6 +27,7 @@ message UserDetailsInfoReply {
   int64 Source = 15; //注册来源
   string LastLoginIP = 16; // 登录ip
   int64 channel_id = 17;  // 用户渠道ID
+  int64 register_time = 18; // 注册时间
 }
 
 

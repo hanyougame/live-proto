@@ -22,12 +22,16 @@ type (
 	AuditInfo                     = v1.AuditInfo
 	AutoWithdrawJudgeReq          = v1.AutoWithdrawJudgeReq
 	AutoWithdrawJudgeResp         = v1.AutoWithdrawJudgeResp
+	AutoWithdrawMatchReq          = v1.AutoWithdrawMatchReq
+	AutoWithdrawMatchResp         = v1.AutoWithdrawMatchResp
 	AutoWithdrawReq               = v1.AutoWithdrawReq
 	AutoWithdrawResp              = v1.AutoWithdrawResp
 	BalanceReq                    = v1.BalanceReq
 	BalanceResp                   = v1.BalanceResp
 	BatchAddAuditReq              = v1.BatchAddAuditReq
 	BatchAddAuditResp             = v1.BatchAddAuditResp
+	CalcWithdrawFeeReq            = v1.CalcWithdrawFeeReq
+	CalcWithdrawFeeResp           = v1.CalcWithdrawFeeResp
 	ExchangeRateReq               = v1.ExchangeRateReq
 	ExchangeRateResp              = v1.ExchangeRateResp
 	GetAuditInfoReq               = v1.GetAuditInfoReq
@@ -42,6 +46,8 @@ type (
 	PayOutResp                    = v1.PayOutResp
 	PayOutStatusReq               = v1.PayOutStatusReq
 	PayOutStatusResp              = v1.PayOutStatusResp
+	ReWithdrawReq                 = v1.ReWithdrawReq
+	ReWithdrawResp                = v1.ReWithdrawResp
 	RechargeReq                   = v1.RechargeReq
 	RechargeResp                  = v1.RechargeResp
 	UpdateAuditAmountReq          = v1.UpdateAuditAmountReq

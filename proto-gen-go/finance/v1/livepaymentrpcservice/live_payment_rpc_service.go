@@ -22,12 +22,16 @@ type (
 	AuditInfo                     = v1.AuditInfo
 	AutoWithdrawJudgeReq          = v1.AutoWithdrawJudgeReq
 	AutoWithdrawJudgeResp         = v1.AutoWithdrawJudgeResp
+	AutoWithdrawMatchReq          = v1.AutoWithdrawMatchReq
+	AutoWithdrawMatchResp         = v1.AutoWithdrawMatchResp
 	AutoWithdrawReq               = v1.AutoWithdrawReq
 	AutoWithdrawResp              = v1.AutoWithdrawResp
 	BalanceReq                    = v1.BalanceReq
 	BalanceResp                   = v1.BalanceResp
 	BatchAddAuditReq              = v1.BatchAddAuditReq
 	BatchAddAuditResp             = v1.BatchAddAuditResp
+	CalcWithdrawFeeReq            = v1.CalcWithdrawFeeReq
+	CalcWithdrawFeeResp           = v1.CalcWithdrawFeeResp
 	ExchangeRateReq               = v1.ExchangeRateReq
 	ExchangeRateResp              = v1.ExchangeRateResp
 	GetAuditInfoReq               = v1.GetAuditInfoReq
@@ -42,6 +46,8 @@ type (
 	PayOutResp                    = v1.PayOutResp
 	PayOutStatusReq               = v1.PayOutStatusReq
 	PayOutStatusResp              = v1.PayOutStatusResp
+	ReWithdrawReq                 = v1.ReWithdrawReq
+	ReWithdrawResp                = v1.ReWithdrawResp
 	RechargeReq                   = v1.RechargeReq
 	RechargeResp                  = v1.RechargeResp
 	UpdateAuditAmountReq          = v1.UpdateAuditAmountReq
@@ -61,6 +67,9 @@ type (
 		Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error)
 		AutoWithdrawJudge(ctx context.Context, in *AutoWithdrawJudgeReq, opts ...grpc.CallOption) (*AutoWithdrawJudgeResp, error)
 		AutoWithdraw(ctx context.Context, in *AutoWithdrawReq, opts ...grpc.CallOption) (*AutoWithdrawResp, error)
+		CalcWithdrawFee(ctx context.Context, in *CalcWithdrawFeeReq, opts ...grpc.CallOption) (*CalcWithdrawFeeResp, error)
+		AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error)
+		ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error)
 	}
 
 	defaultLivePaymentRpcService struct {
@@ -117,4 +126,19 @@ func (m *defaultLivePaymentRpcService) AutoWithdrawJudge(ctx context.Context, in
 func (m *defaultLivePaymentRpcService) AutoWithdraw(ctx context.Context, in *AutoWithdrawReq, opts ...grpc.CallOption) (*AutoWithdrawResp, error) {
 	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
 	return client.AutoWithdraw(ctx, in, opts...)
+}
+
+func (m *defaultLivePaymentRpcService) CalcWithdrawFee(ctx context.Context, in *CalcWithdrawFeeReq, opts ...grpc.CallOption) (*CalcWithdrawFeeResp, error) {
+	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
+	return client.CalcWithdrawFee(ctx, in, opts...)
+}
+
+func (m *defaultLivePaymentRpcService) AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error) {
+	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
+	return client.AutoWithdrawMatch(ctx, in, opts...)
+}
+
+func (m *defaultLivePaymentRpcService) ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error) {
+	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
+	return client.ReWithdraw(ctx, in, opts...)
 }

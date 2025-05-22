@@ -28,6 +28,9 @@ const (
 	LivePaymentRpcService_Withdraw_FullMethodName          = "/finance.v1.LivePaymentRpcService/Withdraw"
 	LivePaymentRpcService_AutoWithdrawJudge_FullMethodName = "/finance.v1.LivePaymentRpcService/AutoWithdrawJudge"
 	LivePaymentRpcService_AutoWithdraw_FullMethodName      = "/finance.v1.LivePaymentRpcService/AutoWithdraw"
+	LivePaymentRpcService_CalcWithdrawFee_FullMethodName   = "/finance.v1.LivePaymentRpcService/CalcWithdrawFee"
+	LivePaymentRpcService_AutoWithdrawMatch_FullMethodName = "/finance.v1.LivePaymentRpcService/AutoWithdrawMatch"
+	LivePaymentRpcService_ReWithdraw_FullMethodName        = "/finance.v1.LivePaymentRpcService/ReWithdraw"
 )
 
 // LivePaymentRpcServiceClient is the client API for LivePaymentRpcService service.
@@ -43,6 +46,9 @@ type LivePaymentRpcServiceClient interface {
 	Withdraw(ctx context.Context, in *WithdrawReq, opts ...grpc.CallOption) (*WithdrawResp, error)
 	AutoWithdrawJudge(ctx context.Context, in *AutoWithdrawJudgeReq, opts ...grpc.CallOption) (*AutoWithdrawJudgeResp, error)
 	AutoWithdraw(ctx context.Context, in *AutoWithdrawReq, opts ...grpc.CallOption) (*AutoWithdrawResp, error)
+	CalcWithdrawFee(ctx context.Context, in *CalcWithdrawFeeReq, opts ...grpc.CallOption) (*CalcWithdrawFeeResp, error)
+	AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error)
+	ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error)
 }
 
 type livePaymentRpcServiceClient struct {
@@ -134,6 +140,33 @@ func (c *livePaymentRpcServiceClient) AutoWithdraw(ctx context.Context, in *Auto
 	return out, nil
 }
 
+func (c *livePaymentRpcServiceClient) CalcWithdrawFee(ctx context.Context, in *CalcWithdrawFeeReq, opts ...grpc.CallOption) (*CalcWithdrawFeeResp, error) {
+	out := new(CalcWithdrawFeeResp)
+	err := c.cc.Invoke(ctx, LivePaymentRpcService_CalcWithdrawFee_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *livePaymentRpcServiceClient) AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error) {
+	out := new(AutoWithdrawMatchResp)
+	err := c.cc.Invoke(ctx, LivePaymentRpcService_AutoWithdrawMatch_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *livePaymentRpcServiceClient) ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error) {
+	out := new(ReWithdrawResp)
+	err := c.cc.Invoke(ctx, LivePaymentRpcService_ReWithdraw_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LivePaymentRpcServiceServer is the server API for LivePaymentRpcService service.
 // All implementations must embed UnimplementedLivePaymentRpcServiceServer
 // for forward compatibility
@@ -147,6 +180,9 @@ type LivePaymentRpcServiceServer interface {
 	Withdraw(context.Context, *WithdrawReq) (*WithdrawResp, error)
 	AutoWithdrawJudge(context.Context, *AutoWithdrawJudgeReq) (*AutoWithdrawJudgeResp, error)
 	AutoWithdraw(context.Context, *AutoWithdrawReq) (*AutoWithdrawResp, error)
+	CalcWithdrawFee(context.Context, *CalcWithdrawFeeReq) (*CalcWithdrawFeeResp, error)
+	AutoWithdrawMatch(context.Context, *AutoWithdrawMatchReq) (*AutoWithdrawMatchResp, error)
+	ReWithdraw(context.Context, *ReWithdrawReq) (*ReWithdrawResp, error)
 	mustEmbedUnimplementedLivePaymentRpcServiceServer()
 }
 
@@ -180,6 +216,15 @@ func (UnimplementedLivePaymentRpcServiceServer) AutoWithdrawJudge(context.Contex
 }
 func (UnimplementedLivePaymentRpcServiceServer) AutoWithdraw(context.Context, *AutoWithdrawReq) (*AutoWithdrawResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AutoWithdraw not implemented")
+}
+func (UnimplementedLivePaymentRpcServiceServer) CalcWithdrawFee(context.Context, *CalcWithdrawFeeReq) (*CalcWithdrawFeeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CalcWithdrawFee not implemented")
+}
+func (UnimplementedLivePaymentRpcServiceServer) AutoWithdrawMatch(context.Context, *AutoWithdrawMatchReq) (*AutoWithdrawMatchResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AutoWithdrawMatch not implemented")
+}
+func (UnimplementedLivePaymentRpcServiceServer) ReWithdraw(context.Context, *ReWithdrawReq) (*ReWithdrawResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReWithdraw not implemented")
 }
 func (UnimplementedLivePaymentRpcServiceServer) mustEmbedUnimplementedLivePaymentRpcServiceServer() {}
 
@@ -356,6 +401,60 @@ func _LivePaymentRpcService_AutoWithdraw_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LivePaymentRpcService_CalcWithdrawFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CalcWithdrawFeeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LivePaymentRpcServiceServer).CalcWithdrawFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LivePaymentRpcService_CalcWithdrawFee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LivePaymentRpcServiceServer).CalcWithdrawFee(ctx, req.(*CalcWithdrawFeeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LivePaymentRpcService_AutoWithdrawMatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AutoWithdrawMatchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LivePaymentRpcServiceServer).AutoWithdrawMatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LivePaymentRpcService_AutoWithdrawMatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LivePaymentRpcServiceServer).AutoWithdrawMatch(ctx, req.(*AutoWithdrawMatchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LivePaymentRpcService_ReWithdraw_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReWithdrawReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LivePaymentRpcServiceServer).ReWithdraw(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LivePaymentRpcService_ReWithdraw_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LivePaymentRpcServiceServer).ReWithdraw(ctx, req.(*ReWithdrawReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LivePaymentRpcService_ServiceDesc is the grpc.ServiceDesc for LivePaymentRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -398,6 +497,18 @@ var LivePaymentRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AutoWithdraw",
 			Handler:    _LivePaymentRpcService_AutoWithdraw_Handler,
+		},
+		{
+			MethodName: "CalcWithdrawFee",
+			Handler:    _LivePaymentRpcService_CalcWithdrawFee_Handler,
+		},
+		{
+			MethodName: "AutoWithdrawMatch",
+			Handler:    _LivePaymentRpcService_AutoWithdrawMatch_Handler,
+		},
+		{
+			MethodName: "ReWithdraw",
+			Handler:    _LivePaymentRpcService_ReWithdraw_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
