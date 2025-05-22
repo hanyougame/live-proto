@@ -26,7 +26,7 @@ type (
 		// NotifyRiskRuleTrigger 处理通知风控触发规则
 		NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
 		// 获取用户风控名单标识
-		GetUserRiskList(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
+		GetUserRiskList(ctx context.Context, in *GetUserRiskListReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
 		// 批量获取用户风控名单
 		BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error)
 	}
@@ -49,7 +49,7 @@ func (m *defaultLiveRiskInnerService) NotifyRiskRuleTrigger(ctx context.Context,
 }
 
 // 获取用户风控名单标识
-func (m *defaultLiveRiskInnerService) GetUserRiskList(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error) {
+func (m *defaultLiveRiskInnerService) GetUserRiskList(ctx context.Context, in *GetUserRiskListReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error) {
 	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
 	return client.GetUserRiskList(ctx, in, opts...)
 }

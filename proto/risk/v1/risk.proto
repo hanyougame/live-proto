@@ -16,7 +16,7 @@ service LiveRiskInnerService{
   // NotifyRiskRuleTrigger 处理通知风控触发规则
   rpc NotifyRiskRuleTrigger(NotifyRiskRuleTriggerReq) returns (RiskReply);
   // 获取用户风控名单标识
-  rpc GetUserRiskList(NotifyRiskRuleTriggerReq) returns (GetUserRiskListReply);
+  rpc GetUserRiskList(GetUserRiskListReq) returns (GetUserRiskListReply);
   // 批量获取用户风控名单
   rpc BatchGetUserRiskList(BatchGetUserRiskListReq) returns (BatchGetUserRiskListReply);
 }
