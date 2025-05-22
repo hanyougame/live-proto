@@ -15,16 +15,40 @@ message RiskReply{
 service LiveRiskInnerService{
   // NotifyRiskRuleTrigger 处理通知风控触发规则
   rpc NotifyRiskRuleTrigger(NotifyRiskRuleTriggerReq) returns (RiskReply);
+  // 获取用户风控名单标识
+  rpc GetUserRiskList(NotifyRiskRuleTriggerReq) returns (GetUserRiskListReply);
+  // 批量获取用户风控名单
+  rpc BatchGetUserRiskList(BatchGetUserRiskListReq) returns (BatchGetUserRiskListReply);
 }
 
 
 message NotifyRiskRuleTriggerReq{
   int64 user_id = 1; // 用户ID
-  string currency_code = 2;   //货币Code
-  repeated NotifyRiskRuleTrigger risk_rule_info = 3;
 }
 
-message NotifyRiskRuleTrigger{
-  int64 target_type = 2;  // 触发类型
-  repeated string target_value = 3;  // 触发值（参数）
+message GetUserRiskListReq{
+  int64 user_id = 1;  // 用户ID
+}
+
+// 风控名单类型枚举
+enum RiskListType {
+  RISK_LIST_TYPE_UNSPECIFIED = 0;  // 未指定
+  RISK_LIST_TYPE_NORMAL = 1;       // 普通用户
+  RISK_LIST_TYPE_WHITE = 2;        // 白名单
+  RISK_LIST_TYPE_GRAY = 3;         // 灰名单
+  RISK_LIST_TYPE_BLACK = 4;        // 黑名单
+}
+message GetUserRiskListReply{
+  RiskListType user_risk_list = 1;  // 用户名单类型
+}
+
+
+// 批量获取用户风控名单请求
+message BatchGetUserRiskListReq {
+  repeated int64 user_ids = 1;                     // 用户ID列表
+}
+
+// 批量获取用户风控名单响应
+message BatchGetUserRiskListReply {
+  map<int64, RiskListType> user_risk_lists = 1;  // 用户ID -> 风控名单信息
 }

@@ -14,14 +14,21 @@ import (
 )
 
 type (
-	NotifyRiskRuleTrigger    = v1.NotifyRiskRuleTrigger
-	NotifyRiskRuleTriggerReq = v1.NotifyRiskRuleTriggerReq
-	RiskReply                = v1.RiskReply
-	RiskReq                  = v1.RiskReq
+	BatchGetUserRiskListReply = v1.BatchGetUserRiskListReply
+	BatchGetUserRiskListReq   = v1.BatchGetUserRiskListReq
+	GetUserRiskListReply      = v1.GetUserRiskListReply
+	GetUserRiskListReq        = v1.GetUserRiskListReq
+	NotifyRiskRuleTriggerReq  = v1.NotifyRiskRuleTriggerReq
+	RiskReply                 = v1.RiskReply
+	RiskReq                   = v1.RiskReq
 
 	LiveRiskInnerService interface {
 		// NotifyRiskRuleTrigger 处理通知风控触发规则
 		NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
+		// 获取用户风控名单标识
+		GetUserRiskList(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
+		// 批量获取用户风控名单
+		BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error)
 	}
 
 	defaultLiveRiskInnerService struct {
@@ -39,4 +46,16 @@ func NewLiveRiskInnerService(cli zrpc.Client) LiveRiskInnerService {
 func (m *defaultLiveRiskInnerService) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error) {
 	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
 	return client.NotifyRiskRuleTrigger(ctx, in, opts...)
+}
+
+// 获取用户风控名单标识
+func (m *defaultLiveRiskInnerService) GetUserRiskList(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error) {
+	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
+	return client.GetUserRiskList(ctx, in, opts...)
+}
+
+// 批量获取用户风控名单
+func (m *defaultLiveRiskInnerService) BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error) {
+	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
+	return client.BatchGetUserRiskList(ctx, in, opts...)
 }

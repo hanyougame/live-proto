@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName = "/risk.v1.LiveRiskInnerService/NotifyRiskRuleTrigger"
+	LiveRiskInnerService_GetUserRiskList_FullMethodName       = "/risk.v1.LiveRiskInnerService/GetUserRiskList"
+	LiveRiskInnerService_BatchGetUserRiskList_FullMethodName  = "/risk.v1.LiveRiskInnerService/BatchGetUserRiskList"
 )
 
 // LiveRiskInnerServiceClient is the client API for LiveRiskInnerService service.
@@ -28,6 +30,10 @@ const (
 type LiveRiskInnerServiceClient interface {
 	// NotifyRiskRuleTrigger 处理通知风控触发规则
 	NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
+	// 获取用户风控名单标识
+	GetUserRiskList(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
+	// 批量获取用户风控名单
+	BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error)
 }
 
 type liveRiskInnerServiceClient struct {
@@ -47,12 +53,34 @@ func (c *liveRiskInnerServiceClient) NotifyRiskRuleTrigger(ctx context.Context, 
 	return out, nil
 }
 
+func (c *liveRiskInnerServiceClient) GetUserRiskList(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error) {
+	out := new(GetUserRiskListReply)
+	err := c.cc.Invoke(ctx, LiveRiskInnerService_GetUserRiskList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveRiskInnerServiceClient) BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error) {
+	out := new(BatchGetUserRiskListReply)
+	err := c.cc.Invoke(ctx, LiveRiskInnerService_BatchGetUserRiskList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveRiskInnerServiceServer is the server API for LiveRiskInnerService service.
 // All implementations must embed UnimplementedLiveRiskInnerServiceServer
 // for forward compatibility
 type LiveRiskInnerServiceServer interface {
 	// NotifyRiskRuleTrigger 处理通知风控触发规则
 	NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error)
+	// 获取用户风控名单标识
+	GetUserRiskList(context.Context, *NotifyRiskRuleTriggerReq) (*GetUserRiskListReply, error)
+	// 批量获取用户风控名单
+	BatchGetUserRiskList(context.Context, *BatchGetUserRiskListReq) (*BatchGetUserRiskListReply, error)
 	mustEmbedUnimplementedLiveRiskInnerServiceServer()
 }
 
@@ -62,6 +90,12 @@ type UnimplementedLiveRiskInnerServiceServer struct {
 
 func (UnimplementedLiveRiskInnerServiceServer) NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NotifyRiskRuleTrigger not implemented")
+}
+func (UnimplementedLiveRiskInnerServiceServer) GetUserRiskList(context.Context, *NotifyRiskRuleTriggerReq) (*GetUserRiskListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserRiskList not implemented")
+}
+func (UnimplementedLiveRiskInnerServiceServer) BatchGetUserRiskList(context.Context, *BatchGetUserRiskListReq) (*BatchGetUserRiskListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchGetUserRiskList not implemented")
 }
 func (UnimplementedLiveRiskInnerServiceServer) mustEmbedUnimplementedLiveRiskInnerServiceServer() {}
 
@@ -94,6 +128,42 @@ func _LiveRiskInnerService_NotifyRiskRuleTrigger_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveRiskInnerService_GetUserRiskList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NotifyRiskRuleTriggerReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveRiskInnerServiceServer).GetUserRiskList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveRiskInnerService_GetUserRiskList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveRiskInnerServiceServer).GetUserRiskList(ctx, req.(*NotifyRiskRuleTriggerReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveRiskInnerService_BatchGetUserRiskList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchGetUserRiskListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveRiskInnerServiceServer).BatchGetUserRiskList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveRiskInnerService_BatchGetUserRiskList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveRiskInnerServiceServer).BatchGetUserRiskList(ctx, req.(*BatchGetUserRiskListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveRiskInnerService_ServiceDesc is the grpc.ServiceDesc for LiveRiskInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -104,6 +174,14 @@ var LiveRiskInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "NotifyRiskRuleTrigger",
 			Handler:    _LiveRiskInnerService_NotifyRiskRuleTrigger_Handler,
+		},
+		{
+			MethodName: "GetUserRiskList",
+			Handler:    _LiveRiskInnerService_GetUserRiskList_Handler,
+		},
+		{
+			MethodName: "BatchGetUserRiskList",
+			Handler:    _LiveRiskInnerService_BatchGetUserRiskList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
