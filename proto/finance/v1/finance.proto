@@ -168,6 +168,7 @@ message AutoWithdrawReq {
 
 message AutoWithdrawResp {
   int64 status = 1; // 出款状态 1-success 2-fail
+  string msg = 2; // 错误消息
 }
 
 message CalcWithdrawFeeReq {
