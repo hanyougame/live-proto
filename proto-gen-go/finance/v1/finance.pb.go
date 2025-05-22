@@ -1953,6 +1953,7 @@ type AutoWithdrawJudgeResp struct {
 	AutoWithdraw            bool                   `protobuf:"varint,1,opt,name=auto_withdraw,json=autoWithdraw,proto3" json:"auto_withdraw,omitempty"`                                      // 自动提现通过
 	WithdrawMerchantId      int64                  `protobuf:"varint,2,opt,name=withdraw_merchant_id,json=withdrawMerchantId,proto3" json:"withdraw_merchant_id,omitempty"`                  // 提现商户ID
 	AutoWithdrawMerchantAll int64                  `protobuf:"varint,3,opt,name=auto_withdraw_merchant_all,json=autoWithdrawMerchantAll,proto3" json:"auto_withdraw_merchant_all,omitempty"` // 是否所有自动提现商户 1-所有 2-指定
+	Msg                     string                 `protobuf:"bytes,4,opt,name=msg,proto3" json:"msg,omitempty"`                                                                             // 提示信息
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -2006,6 +2007,13 @@ func (x *AutoWithdrawJudgeResp) GetAutoWithdrawMerchantAll() int64 {
 		return x.AutoWithdrawMerchantAll
 	}
 	return 0
+}
+
+func (x *AutoWithdrawJudgeResp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
 }
 
 type AutoWithdrawReq struct {
@@ -4098,11 +4106,12 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"\x14AutoWithdrawJudgeReq\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\x03R\tcreatedAt\"\xab\x01\n" +
+	"created_at\x18\x02 \x01(\x03R\tcreatedAt\"\xbd\x01\n" +
 	"\x15AutoWithdrawJudgeResp\x12#\n" +
 	"\rauto_withdraw\x18\x01 \x01(\bR\fautoWithdraw\x120\n" +
 	"\x14withdraw_merchant_id\x18\x02 \x01(\x03R\x12withdrawMerchantId\x12;\n" +
-	"\x1aauto_withdraw_merchant_all\x18\x03 \x01(\x03R\x17autoWithdrawMerchantAll\"\xf5\x01\n" +
+	"\x1aauto_withdraw_merchant_all\x18\x03 \x01(\x03R\x17autoWithdrawMerchantAll\x12\x10\n" +
+	"\x03msg\x18\x04 \x01(\tR\x03msg\"\xf5\x01\n" +
 	"\x0fAutoWithdrawReq\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\x03R\aorderId\x120\n" +
 	"\x14withdraw_merchant_id\x18\x02 \x01(\x03R\x12withdrawMerchantId\x12\x1d\n" +

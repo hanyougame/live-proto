@@ -154,6 +154,7 @@ message AutoWithdrawJudgeResp {
   bool auto_withdraw = 1; // 自动提现通过
   int64 withdraw_merchant_id = 2; // 提现商户ID
   int64 auto_withdraw_merchant_all = 3; // 是否所有自动提现商户 1-所有 2-指定
+  string msg = 4; // 提示信息
 }
 
 message AutoWithdrawReq {
