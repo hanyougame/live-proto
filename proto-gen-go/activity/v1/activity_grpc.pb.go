@@ -19,8 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	LiveActivityInnerService_RedPacketCampaignEvent_FullMethodName = "/activity.v1.LiveActivityInnerService/RedPacketCampaignEvent"
-	LiveActivityInnerService_LuckySpinEvent_FullMethodName         = "/activity.v1.LiveActivityInnerService/LuckySpinEvent"
+	LiveActivityInnerService_RedPacketCampaignEvent_FullMethodName      = "/activity.v1.LiveActivityInnerService/RedPacketCampaignEvent"
+	LiveActivityInnerService_CheckUserRedPacketCondition_FullMethodName = "/activity.v1.LiveActivityInnerService/CheckUserRedPacketCondition"
+	LiveActivityInnerService_IncreaseUserRedPacketCount_FullMethodName  = "/activity.v1.LiveActivityInnerService/IncreaseUserRedPacketCount"
+	LiveActivityInnerService_LuckySpinEvent_FullMethodName              = "/activity.v1.LiveActivityInnerService/LuckySpinEvent"
 )
 
 // LiveActivityInnerServiceClient is the client API for LiveActivityInnerService service.
@@ -29,6 +31,10 @@ const (
 type LiveActivityInnerServiceClient interface {
 	// 抢红包活动事件
 	RedPacketCampaignEvent(ctx context.Context, in *RedPacketCampaignEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
+	// 判断用户抢红包条件
+	CheckUserRedPacketCondition(ctx context.Context, in *CheckUserRedPacketConditionReq, opts ...grpc.CallOption) (*CheckUserRedPacketConditionReply, error)
+	// 增加用户领取红包次数缓存
+	IncreaseUserRedPacketCount(ctx context.Context, in *IncreaseUserRedPacketCountReq, opts ...grpc.CallOption) (*ActivityReply, error)
 	// 幸运转盘活动事件
 	LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
 }
@@ -50,6 +56,24 @@ func (c *liveActivityInnerServiceClient) RedPacketCampaignEvent(ctx context.Cont
 	return out, nil
 }
 
+func (c *liveActivityInnerServiceClient) CheckUserRedPacketCondition(ctx context.Context, in *CheckUserRedPacketConditionReq, opts ...grpc.CallOption) (*CheckUserRedPacketConditionReply, error) {
+	out := new(CheckUserRedPacketConditionReply)
+	err := c.cc.Invoke(ctx, LiveActivityInnerService_CheckUserRedPacketCondition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveActivityInnerServiceClient) IncreaseUserRedPacketCount(ctx context.Context, in *IncreaseUserRedPacketCountReq, opts ...grpc.CallOption) (*ActivityReply, error) {
+	out := new(ActivityReply)
+	err := c.cc.Invoke(ctx, LiveActivityInnerService_IncreaseUserRedPacketCount_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *liveActivityInnerServiceClient) LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error) {
 	out := new(ActivityReply)
 	err := c.cc.Invoke(ctx, LiveActivityInnerService_LuckySpinEvent_FullMethodName, in, out, opts...)
@@ -65,6 +89,10 @@ func (c *liveActivityInnerServiceClient) LuckySpinEvent(ctx context.Context, in 
 type LiveActivityInnerServiceServer interface {
 	// 抢红包活动事件
 	RedPacketCampaignEvent(context.Context, *RedPacketCampaignEventReq) (*ActivityReply, error)
+	// 判断用户抢红包条件
+	CheckUserRedPacketCondition(context.Context, *CheckUserRedPacketConditionReq) (*CheckUserRedPacketConditionReply, error)
+	// 增加用户领取红包次数缓存
+	IncreaseUserRedPacketCount(context.Context, *IncreaseUserRedPacketCountReq) (*ActivityReply, error)
 	// 幸运转盘活动事件
 	LuckySpinEvent(context.Context, *LuckySpinEventReq) (*ActivityReply, error)
 	mustEmbedUnimplementedLiveActivityInnerServiceServer()
@@ -76,6 +104,12 @@ type UnimplementedLiveActivityInnerServiceServer struct {
 
 func (UnimplementedLiveActivityInnerServiceServer) RedPacketCampaignEvent(context.Context, *RedPacketCampaignEventReq) (*ActivityReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RedPacketCampaignEvent not implemented")
+}
+func (UnimplementedLiveActivityInnerServiceServer) CheckUserRedPacketCondition(context.Context, *CheckUserRedPacketConditionReq) (*CheckUserRedPacketConditionReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckUserRedPacketCondition not implemented")
+}
+func (UnimplementedLiveActivityInnerServiceServer) IncreaseUserRedPacketCount(context.Context, *IncreaseUserRedPacketCountReq) (*ActivityReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IncreaseUserRedPacketCount not implemented")
 }
 func (UnimplementedLiveActivityInnerServiceServer) LuckySpinEvent(context.Context, *LuckySpinEventReq) (*ActivityReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LuckySpinEvent not implemented")
@@ -112,6 +146,42 @@ func _LiveActivityInnerService_RedPacketCampaignEvent_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveActivityInnerService_CheckUserRedPacketCondition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckUserRedPacketConditionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveActivityInnerServiceServer).CheckUserRedPacketCondition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveActivityInnerService_CheckUserRedPacketCondition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveActivityInnerServiceServer).CheckUserRedPacketCondition(ctx, req.(*CheckUserRedPacketConditionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveActivityInnerService_IncreaseUserRedPacketCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IncreaseUserRedPacketCountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveActivityInnerServiceServer).IncreaseUserRedPacketCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveActivityInnerService_IncreaseUserRedPacketCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveActivityInnerServiceServer).IncreaseUserRedPacketCount(ctx, req.(*IncreaseUserRedPacketCountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LiveActivityInnerService_LuckySpinEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LuckySpinEventReq)
 	if err := dec(in); err != nil {
@@ -140,6 +210,14 @@ var LiveActivityInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RedPacketCampaignEvent",
 			Handler:    _LiveActivityInnerService_RedPacketCampaignEvent_Handler,
+		},
+		{
+			MethodName: "CheckUserRedPacketCondition",
+			Handler:    _LiveActivityInnerService_CheckUserRedPacketCondition_Handler,
+		},
+		{
+			MethodName: "IncreaseUserRedPacketCount",
+			Handler:    _LiveActivityInnerService_IncreaseUserRedPacketCount_Handler,
 		},
 		{
 			MethodName: "LuckySpinEvent",
