@@ -5,7 +5,7 @@ option go_package = "./pb/v1";
 
 enum EventType {
   UNKNOWN = 0;
-  PAYMENT = 1;  // 打码
+  BET = 1;  // 打码
   RECHARGE = 2; // 充值
 }
 
