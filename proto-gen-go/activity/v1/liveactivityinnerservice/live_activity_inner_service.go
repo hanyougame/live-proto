@@ -14,14 +14,21 @@ import (
 )
 
 type (
-	ActivityReply             = v1.ActivityReply
-	ActivityReq               = v1.ActivityReq
-	LuckySpinEventReq         = v1.LuckySpinEventReq
-	RedPacketCampaignEventReq = v1.RedPacketCampaignEventReq
+	ActivityReply                    = v1.ActivityReply
+	ActivityReq                      = v1.ActivityReq
+	CheckUserRedPacketConditionReply = v1.CheckUserRedPacketConditionReply
+	CheckUserRedPacketConditionReq   = v1.CheckUserRedPacketConditionReq
+	IncreaseUserRedPacketCountReq    = v1.IncreaseUserRedPacketCountReq
+	LuckySpinEventReq                = v1.LuckySpinEventReq
+	RedPacketCampaignEventReq        = v1.RedPacketCampaignEventReq
 
 	LiveActivityInnerService interface {
 		// 抢红包活动事件
 		RedPacketCampaignEvent(ctx context.Context, in *RedPacketCampaignEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
+		// 判断用户抢红包条件
+		CheckUserRedPacketCondition(ctx context.Context, in *CheckUserRedPacketConditionReq, opts ...grpc.CallOption) (*CheckUserRedPacketConditionReply, error)
+		// 增加用户领取红包次数缓存
+		IncreaseUserRedPacketCount(ctx context.Context, in *IncreaseUserRedPacketCountReq, opts ...grpc.CallOption) (*ActivityReply, error)
 		// 幸运转盘活动事件
 		LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
 	}
@@ -41,6 +48,18 @@ func NewLiveActivityInnerService(cli zrpc.Client) LiveActivityInnerService {
 func (m *defaultLiveActivityInnerService) RedPacketCampaignEvent(ctx context.Context, in *RedPacketCampaignEventReq, opts ...grpc.CallOption) (*ActivityReply, error) {
 	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
 	return client.RedPacketCampaignEvent(ctx, in, opts...)
+}
+
+// 判断用户抢红包条件
+func (m *defaultLiveActivityInnerService) CheckUserRedPacketCondition(ctx context.Context, in *CheckUserRedPacketConditionReq, opts ...grpc.CallOption) (*CheckUserRedPacketConditionReply, error) {
+	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
+	return client.CheckUserRedPacketCondition(ctx, in, opts...)
+}
+
+// 增加用户领取红包次数缓存
+func (m *defaultLiveActivityInnerService) IncreaseUserRedPacketCount(ctx context.Context, in *IncreaseUserRedPacketCountReq, opts ...grpc.CallOption) (*ActivityReply, error) {
+	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
+	return client.IncreaseUserRedPacketCount(ctx, in, opts...)
 }
 
 // 幸运转盘活动事件
