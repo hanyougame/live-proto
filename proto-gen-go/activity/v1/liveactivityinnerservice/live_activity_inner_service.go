@@ -16,6 +16,7 @@ import (
 type (
 	ActivityReply                    = v1.ActivityReply
 	ActivityReq                      = v1.ActivityReq
+	AddLuckyValReq                   = v1.AddLuckyValReq
 	CheckUserRedPacketConditionReply = v1.CheckUserRedPacketConditionReply
 	CheckUserRedPacketConditionReq   = v1.CheckUserRedPacketConditionReq
 	IncreaseUserRedPacketCountReq    = v1.IncreaseUserRedPacketCountReq
@@ -31,6 +32,8 @@ type (
 		IncreaseUserRedPacketCount(ctx context.Context, in *IncreaseUserRedPacketCountReq, opts ...grpc.CallOption) (*ActivityReply, error)
 		// 幸运转盘活动事件
 		LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
+		// 增加幸运值
+		AddLuckyPoint(ctx context.Context, in *AddLuckyValReq, opts ...grpc.CallOption) (*ActivityReply, error)
 	}
 
 	defaultLiveActivityInnerService struct {
@@ -66,4 +69,10 @@ func (m *defaultLiveActivityInnerService) IncreaseUserRedPacketCount(ctx context
 func (m *defaultLiveActivityInnerService) LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error) {
 	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
 	return client.LuckySpinEvent(ctx, in, opts...)
+}
+
+// 增加幸运值
+func (m *defaultLiveActivityInnerService) AddLuckyPoint(ctx context.Context, in *AddLuckyValReq, opts ...grpc.CallOption) (*ActivityReply, error) {
+	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
+	return client.AddLuckyPoint(ctx, in, opts...)
 }

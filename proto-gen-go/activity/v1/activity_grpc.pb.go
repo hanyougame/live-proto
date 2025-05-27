@@ -23,6 +23,7 @@ const (
 	LiveActivityInnerService_CheckUserRedPacketCondition_FullMethodName = "/activity.v1.LiveActivityInnerService/CheckUserRedPacketCondition"
 	LiveActivityInnerService_IncreaseUserRedPacketCount_FullMethodName  = "/activity.v1.LiveActivityInnerService/IncreaseUserRedPacketCount"
 	LiveActivityInnerService_LuckySpinEvent_FullMethodName              = "/activity.v1.LiveActivityInnerService/LuckySpinEvent"
+	LiveActivityInnerService_AddLuckyPoint_FullMethodName               = "/activity.v1.LiveActivityInnerService/AddLuckyPoint"
 )
 
 // LiveActivityInnerServiceClient is the client API for LiveActivityInnerService service.
@@ -37,6 +38,8 @@ type LiveActivityInnerServiceClient interface {
 	IncreaseUserRedPacketCount(ctx context.Context, in *IncreaseUserRedPacketCountReq, opts ...grpc.CallOption) (*ActivityReply, error)
 	// 幸运转盘活动事件
 	LuckySpinEvent(ctx context.Context, in *LuckySpinEventReq, opts ...grpc.CallOption) (*ActivityReply, error)
+	// 增加幸运值
+	AddLuckyPoint(ctx context.Context, in *AddLuckyValReq, opts ...grpc.CallOption) (*ActivityReply, error)
 }
 
 type liveActivityInnerServiceClient struct {
@@ -83,6 +86,15 @@ func (c *liveActivityInnerServiceClient) LuckySpinEvent(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *liveActivityInnerServiceClient) AddLuckyPoint(ctx context.Context, in *AddLuckyValReq, opts ...grpc.CallOption) (*ActivityReply, error) {
+	out := new(ActivityReply)
+	err := c.cc.Invoke(ctx, LiveActivityInnerService_AddLuckyPoint_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveActivityInnerServiceServer is the server API for LiveActivityInnerService service.
 // All implementations must embed UnimplementedLiveActivityInnerServiceServer
 // for forward compatibility
@@ -95,6 +107,8 @@ type LiveActivityInnerServiceServer interface {
 	IncreaseUserRedPacketCount(context.Context, *IncreaseUserRedPacketCountReq) (*ActivityReply, error)
 	// 幸运转盘活动事件
 	LuckySpinEvent(context.Context, *LuckySpinEventReq) (*ActivityReply, error)
+	// 增加幸运值
+	AddLuckyPoint(context.Context, *AddLuckyValReq) (*ActivityReply, error)
 	mustEmbedUnimplementedLiveActivityInnerServiceServer()
 }
 
@@ -113,6 +127,9 @@ func (UnimplementedLiveActivityInnerServiceServer) IncreaseUserRedPacketCount(co
 }
 func (UnimplementedLiveActivityInnerServiceServer) LuckySpinEvent(context.Context, *LuckySpinEventReq) (*ActivityReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LuckySpinEvent not implemented")
+}
+func (UnimplementedLiveActivityInnerServiceServer) AddLuckyPoint(context.Context, *AddLuckyValReq) (*ActivityReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddLuckyPoint not implemented")
 }
 func (UnimplementedLiveActivityInnerServiceServer) mustEmbedUnimplementedLiveActivityInnerServiceServer() {
 }
@@ -200,6 +217,24 @@ func _LiveActivityInnerService_LuckySpinEvent_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveActivityInnerService_AddLuckyPoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddLuckyValReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveActivityInnerServiceServer).AddLuckyPoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveActivityInnerService_AddLuckyPoint_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveActivityInnerServiceServer).AddLuckyPoint(ctx, req.(*AddLuckyValReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveActivityInnerService_ServiceDesc is the grpc.ServiceDesc for LiveActivityInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -222,6 +257,10 @@ var LiveActivityInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LuckySpinEvent",
 			Handler:    _LiveActivityInnerService_LuckySpinEvent_Handler,
+		},
+		{
+			MethodName: "AddLuckyPoint",
+			Handler:    _LiveActivityInnerService_AddLuckyPoint_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
