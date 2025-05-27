@@ -66,7 +66,7 @@ message UseLuckyPointReq {
   int64 activity_id = 2; // 活动id
   int32 reward = 3; // // 奖励金额
   repeated UseLuckyPoint UsedList = 4; // 使用的幸运值列表
-  string spin_type = 5; // 转盘类型 1:白银转盘 2:黄金转盘 3:钻石转盘
+  int32 spin_type = 5; // 转盘类型 1:白银转盘 2:黄金转盘 3:钻石转盘
   map<string, string> detail = 6; // 额外信息
 }
 

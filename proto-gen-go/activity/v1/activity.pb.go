@@ -416,7 +416,7 @@ type UseLuckyPointReq struct {
 	ActivityId    int64                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`                                                // 活动id
 	Reward        int32                  `protobuf:"varint,3,opt,name=reward,proto3" json:"reward,omitempty"`                                                                          // // 奖励金额
 	UsedList      []*UseLuckyPoint       `protobuf:"bytes,4,rep,name=UsedList,proto3" json:"UsedList,omitempty"`                                                                       // 使用的幸运值列表
-	SpinType      string                 `protobuf:"bytes,5,opt,name=spin_type,json=spinType,proto3" json:"spin_type,omitempty"`                                                       // 转盘类型 1:白银转盘 2:黄金转盘 3:钻石转盘
+	SpinType      int32                  `protobuf:"varint,5,opt,name=spin_type,json=spinType,proto3" json:"spin_type,omitempty"`                                                      // 转盘类型 1:白银转盘 2:黄金转盘 3:钻石转盘
 	Detail        map[string]string      `protobuf:"bytes,6,rep,name=detail,proto3" json:"detail,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 额外信息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -480,11 +480,11 @@ func (x *UseLuckyPointReq) GetUsedList() []*UseLuckyPoint {
 	return nil
 }
 
-func (x *UseLuckyPointReq) GetSpinType() string {
+func (x *UseLuckyPointReq) GetSpinType() int32 {
 	if x != nil {
 		return x.SpinType
 	}
-	return ""
+	return 0
 }
 
 func (x *UseLuckyPointReq) GetDetail() map[string]string {
@@ -996,7 +996,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"activityId\x12\x16\n" +
 	"\x06reward\x18\x03 \x01(\x05R\x06reward\x126\n" +
 	"\bUsedList\x18\x04 \x03(\v2\x1a.activity.v1.UseLuckyPointR\bUsedList\x12\x1b\n" +
-	"\tspin_type\x18\x05 \x01(\tR\bspinType\x12A\n" +
+	"\tspin_type\x18\x05 \x01(\x05R\bspinType\x12A\n" +
 	"\x06detail\x18\x06 \x03(\v2).activity.v1.UseLuckyPointReq.DetailEntryR\x06detail\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
