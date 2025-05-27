@@ -47,7 +47,7 @@ type LiveActivityInnerServiceClient interface {
 	AddLuckyPoint(ctx context.Context, in *AddLuckyValReq, opts ...grpc.CallOption) (*ActivityReply, error)
 	// 使用幸运值
 	UseLuckyPoint(ctx context.Context, in *UseLuckyPointReq, opts ...grpc.CallOption) (*ActivityReply, error)
-	// 获取幸运值
+	// 我的幸运值
 	GetUserLuckyPoint(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*GetLuckyPointReply, error)
 	// 幸运值获取记录
 	LuckyPointsAddList(ctx context.Context, in *LuckyPointsAddListReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error)
@@ -181,7 +181,7 @@ type LiveActivityInnerServiceServer interface {
 	AddLuckyPoint(context.Context, *AddLuckyValReq) (*ActivityReply, error)
 	// 使用幸运值
 	UseLuckyPoint(context.Context, *UseLuckyPointReq) (*ActivityReply, error)
-	// 获取幸运值
+	// 我的幸运值
 	GetUserLuckyPoint(context.Context, *GetLuckyPointReq) (*GetLuckyPointReply, error)
 	// 幸运值获取记录
 	LuckyPointsAddList(context.Context, *LuckyPointsAddListReq) (*LuckyPointsAddListReply, error)

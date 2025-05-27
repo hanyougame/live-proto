@@ -29,7 +29,7 @@ service LiveActivityInnerService{
   rpc AddLuckyPoint(AddLuckyValReq) returns (ActivityReply);
   // 使用幸运值
   rpc UseLuckyPoint(UseLuckyPointReq) returns (ActivityReply);
-  // 获取幸运值
+  // 我的幸运值
   rpc GetUserLuckyPoint(GetLuckyPointReq) returns (GetLuckyPointReply);
   // 幸运值获取记录
   rpc LuckyPointsAddList(LuckyPointsAddListReq) returns (LuckyPointsAddListReply);
