@@ -32,29 +32,31 @@ service LiveActivityInnerService{
   // 我的幸运值
   rpc GetUserLuckyPoint(GetLuckyPointReq) returns (GetLuckyPointReply);
   // 幸运值获取记录
-  rpc LuckyPointsAddList(LuckyPointsAddListReq) returns (LuckyPointsAddListReply);
+  rpc LuckyPointsAddList(GetLuckyPointReq) returns (LuckyPointsAddListReply);
   // 幸运值消费记录
-  rpc LuckyPointsUsedList(LuckyPointsUsedReq) returns (LuckyPointsUsedReply);
+  rpc LuckyPointsUsedList(GetLuckyPointReq) returns (LuckyPointsUsedReply);
   // 获奖记录 公告展示
   rpc RewardList(RewardListReq) returns (RewardListReply);
 }
 
 message RewardListReply {
+  int64 user_id = 1; // 用户id
+  int32 reward = 2; // // 奖励金额
+  int32 reward_time = 3; // 奖励时间
 }
-message LuckyPointsUsedReply {
-}
+
 message RewardListReq {
+  int64 activity_id = 1; // 活动id
 }
+
+message LuckyPointsUsedReply {
+
+}
+
 
 message LuckyPointsAddListReply {
 }
 
-message LuckyPointsUsedReq {
-}
-
-message LuckyPointsAddListReq {
-
-}
 
 message UseLuckyPoint {
   int32 claim_id = 1; // 领取id

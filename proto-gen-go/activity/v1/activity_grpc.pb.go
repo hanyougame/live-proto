@@ -50,9 +50,9 @@ type LiveActivityInnerServiceClient interface {
 	// 我的幸运值
 	GetUserLuckyPoint(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*GetLuckyPointReply, error)
 	// 幸运值获取记录
-	LuckyPointsAddList(ctx context.Context, in *LuckyPointsAddListReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error)
+	LuckyPointsAddList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error)
 	// 幸运值消费记录
-	LuckyPointsUsedList(ctx context.Context, in *LuckyPointsUsedReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error)
+	LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error)
 	// 获奖记录 公告展示
 	RewardList(ctx context.Context, in *RewardListReq, opts ...grpc.CallOption) (*RewardListReply, error)
 }
@@ -135,7 +135,7 @@ func (c *liveActivityInnerServiceClient) GetUserLuckyPoint(ctx context.Context, 
 	return out, nil
 }
 
-func (c *liveActivityInnerServiceClient) LuckyPointsAddList(ctx context.Context, in *LuckyPointsAddListReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error) {
+func (c *liveActivityInnerServiceClient) LuckyPointsAddList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LuckyPointsAddListReply)
 	err := c.cc.Invoke(ctx, LiveActivityInnerService_LuckyPointsAddList_FullMethodName, in, out, cOpts...)
@@ -145,7 +145,7 @@ func (c *liveActivityInnerServiceClient) LuckyPointsAddList(ctx context.Context,
 	return out, nil
 }
 
-func (c *liveActivityInnerServiceClient) LuckyPointsUsedList(ctx context.Context, in *LuckyPointsUsedReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error) {
+func (c *liveActivityInnerServiceClient) LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LuckyPointsUsedReply)
 	err := c.cc.Invoke(ctx, LiveActivityInnerService_LuckyPointsUsedList_FullMethodName, in, out, cOpts...)
@@ -184,9 +184,9 @@ type LiveActivityInnerServiceServer interface {
 	// 我的幸运值
 	GetUserLuckyPoint(context.Context, *GetLuckyPointReq) (*GetLuckyPointReply, error)
 	// 幸运值获取记录
-	LuckyPointsAddList(context.Context, *LuckyPointsAddListReq) (*LuckyPointsAddListReply, error)
+	LuckyPointsAddList(context.Context, *GetLuckyPointReq) (*LuckyPointsAddListReply, error)
 	// 幸运值消费记录
-	LuckyPointsUsedList(context.Context, *LuckyPointsUsedReq) (*LuckyPointsUsedReply, error)
+	LuckyPointsUsedList(context.Context, *GetLuckyPointReq) (*LuckyPointsUsedReply, error)
 	// 获奖记录 公告展示
 	RewardList(context.Context, *RewardListReq) (*RewardListReply, error)
 	mustEmbedUnimplementedLiveActivityInnerServiceServer()
@@ -220,10 +220,10 @@ func (UnimplementedLiveActivityInnerServiceServer) UseLuckyPoint(context.Context
 func (UnimplementedLiveActivityInnerServiceServer) GetUserLuckyPoint(context.Context, *GetLuckyPointReq) (*GetLuckyPointReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserLuckyPoint not implemented")
 }
-func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsAddList(context.Context, *LuckyPointsAddListReq) (*LuckyPointsAddListReply, error) {
+func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsAddList(context.Context, *GetLuckyPointReq) (*LuckyPointsAddListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LuckyPointsAddList not implemented")
 }
-func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsUsedList(context.Context, *LuckyPointsUsedReq) (*LuckyPointsUsedReply, error) {
+func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsUsedList(context.Context, *GetLuckyPointReq) (*LuckyPointsUsedReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LuckyPointsUsedList not implemented")
 }
 func (UnimplementedLiveActivityInnerServiceServer) RewardList(context.Context, *RewardListReq) (*RewardListReply, error) {
@@ -378,7 +378,7 @@ func _LiveActivityInnerService_GetUserLuckyPoint_Handler(srv interface{}, ctx co
 }
 
 func _LiveActivityInnerService_LuckyPointsAddList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LuckyPointsAddListReq)
+	in := new(GetLuckyPointReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -390,13 +390,13 @@ func _LiveActivityInnerService_LuckyPointsAddList_Handler(srv interface{}, ctx c
 		FullMethod: LiveActivityInnerService_LuckyPointsAddList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveActivityInnerServiceServer).LuckyPointsAddList(ctx, req.(*LuckyPointsAddListReq))
+		return srv.(LiveActivityInnerServiceServer).LuckyPointsAddList(ctx, req.(*GetLuckyPointReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LiveActivityInnerService_LuckyPointsUsedList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LuckyPointsUsedReq)
+	in := new(GetLuckyPointReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -408,7 +408,7 @@ func _LiveActivityInnerService_LuckyPointsUsedList_Handler(srv interface{}, ctx 
 		FullMethod: LiveActivityInnerService_LuckyPointsUsedList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveActivityInnerServiceServer).LuckyPointsUsedList(ctx, req.(*LuckyPointsUsedReq))
+		return srv.(LiveActivityInnerServiceServer).LuckyPointsUsedList(ctx, req.(*GetLuckyPointReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
