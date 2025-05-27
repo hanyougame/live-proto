@@ -23,13 +23,63 @@ service LiveActivityInnerService{
   // 增加用户领取红包次数缓存
   rpc IncreaseUserRedPacketCount(IncreaseUserRedPacketCountReq) returns (ActivityReply);
 
-
   // 幸运转盘活动事件
   rpc LuckySpinEvent(LuckySpinEventReq) returns (ActivityReply);
-
   // 增加幸运值
   rpc AddLuckyPoint(AddLuckyValReq) returns (ActivityReply);
+  // 使用幸运值
+  rpc UseLuckyPoint(UseLuckyPointReq) returns (ActivityReply);
+  // 获取幸运值
+  rpc GetUserLuckyPoint(GetLuckyPointReq) returns (GetLuckyPointReply);
+  // 幸运值获取记录
+  rpc LuckyPointsAddList(LuckyPointsAddListReq) returns (LuckyPointsAddListReply);
+  // 幸运值消费记录
+  rpc LuckyPointsUsedList(LuckyPointsUsedReq) returns (LuckyPointsUsedReply);
+  // 获奖记录 公告展示
+  rpc RewardList(RewardListReq) returns (RewardListReply);
+}
 
+message RewardListReply {
+}
+message LuckyPointsUsedReply {
+}
+message RewardListReq {
+}
+
+message LuckyPointsAddListReply {
+}
+
+message LuckyPointsUsedReq {
+}
+
+message LuckyPointsAddListReq {
+
+}
+
+message UseLuckyPoint {
+  int32 claim_id = 1; // 领取id
+  int32 point = 2; // 幸运值
+}
+
+message UseLuckyPointReq {
+  int64 user_id = 1; // 用户id
+  int64 activity_id = 2; // 活动id
+  int32 reward = 3; // // 奖励金额
+  repeated UseLuckyPoint UsedList = 4; // 使用的幸运值列表
+  string spin_type = 5; // 转盘类型 1:白银转盘 2:黄金转盘 3:钻石转盘
+  map<string, string> detail = 6; // 额外信息
+}
+
+message GetLuckyPointReq {
+  int64 user_id = 1; // 用户id
+  int64 activity_id = 2; // 活动id
+}
+
+message GetLuckyPointReply {
+  int64 total_count = 1; // 总幸运值
+  int64 expired_count = 2; // 过期幸运值
+  int64 available_count = 3; // 可用幸运值
+  int64 used_count = 4; // 已使用幸运值
 }
 
 message AddLuckyValReq {
