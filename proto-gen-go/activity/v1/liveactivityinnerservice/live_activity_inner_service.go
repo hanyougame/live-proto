@@ -26,6 +26,7 @@ type (
 	LuckyPointsUsedReply             = v1.LuckyPointsUsedReply
 	LuckySpinEventReq                = v1.LuckySpinEventReq
 	RedPacketCampaignEventReq        = v1.RedPacketCampaignEventReq
+	RewardData                       = v1.RewardData
 	RewardListReply                  = v1.RewardListReply
 	RewardListReq                    = v1.RewardListReq
 	UseLuckyPoint                    = v1.UseLuckyPoint

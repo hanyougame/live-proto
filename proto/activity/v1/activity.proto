@@ -40,6 +40,10 @@ service LiveActivityInnerService{
 }
 
 message RewardListReply {
+  repeated RewardData data = 1; // 奖励数据列表
+}
+
+message RewardData {
   int64 user_id = 1; // 用户id
   int32 reward = 2; // 奖励金额
   int32 reward_time = 3; // 奖励时间
