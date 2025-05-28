@@ -22,8 +22,10 @@ type (
 	GetLuckyPointReply               = v1.GetLuckyPointReply
 	GetLuckyPointReq                 = v1.GetLuckyPointReq
 	IncreaseUserRedPacketCountReq    = v1.IncreaseUserRedPacketCountReq
+	LuckyPointsAddItem               = v1.LuckyPointsAddItem
 	LuckyPointsAddListReply          = v1.LuckyPointsAddListReply
-	LuckyPointsUsedReply             = v1.LuckyPointsUsedReply
+	LuckyPointsUsedItem              = v1.LuckyPointsUsedItem
+	LuckyPointsUsedListReply         = v1.LuckyPointsUsedListReply
 	LuckySpinEventReq                = v1.LuckySpinEventReq
 	RedPacketCampaignEventReq        = v1.RedPacketCampaignEventReq
 	RewardData                       = v1.RewardData
@@ -50,7 +52,7 @@ type (
 		// 幸运值获取记录
 		LuckyPointsAddList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error)
 		// 幸运值消费记录
-		LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error)
+		LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error)
 		// 获奖记录 公告展示
 		RewardList(ctx context.Context, in *RewardListReq, opts ...grpc.CallOption) (*RewardListReply, error)
 	}
@@ -115,7 +117,7 @@ func (m *defaultLiveActivityInnerService) LuckyPointsAddList(ctx context.Context
 }
 
 // 幸运值消费记录
-func (m *defaultLiveActivityInnerService) LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error) {
+func (m *defaultLiveActivityInnerService) LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error) {
 	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
 	return client.LuckyPointsUsedList(ctx, in, opts...)
 }

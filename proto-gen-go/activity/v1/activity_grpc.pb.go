@@ -52,7 +52,7 @@ type LiveActivityInnerServiceClient interface {
 	// 幸运值获取记录
 	LuckyPointsAddList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error)
 	// 幸运值消费记录
-	LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error)
+	LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error)
 	// 获奖记录 公告展示
 	RewardList(ctx context.Context, in *RewardListReq, opts ...grpc.CallOption) (*RewardListReply, error)
 }
@@ -145,9 +145,9 @@ func (c *liveActivityInnerServiceClient) LuckyPointsAddList(ctx context.Context,
 	return out, nil
 }
 
-func (c *liveActivityInnerServiceClient) LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedReply, error) {
+func (c *liveActivityInnerServiceClient) LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LuckyPointsUsedReply)
+	out := new(LuckyPointsUsedListReply)
 	err := c.cc.Invoke(ctx, LiveActivityInnerService_LuckyPointsUsedList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -186,7 +186,7 @@ type LiveActivityInnerServiceServer interface {
 	// 幸运值获取记录
 	LuckyPointsAddList(context.Context, *GetLuckyPointReq) (*LuckyPointsAddListReply, error)
 	// 幸运值消费记录
-	LuckyPointsUsedList(context.Context, *GetLuckyPointReq) (*LuckyPointsUsedReply, error)
+	LuckyPointsUsedList(context.Context, *GetLuckyPointReq) (*LuckyPointsUsedListReply, error)
 	// 获奖记录 公告展示
 	RewardList(context.Context, *RewardListReq) (*RewardListReply, error)
 	mustEmbedUnimplementedLiveActivityInnerServiceServer()
@@ -223,7 +223,7 @@ func (UnimplementedLiveActivityInnerServiceServer) GetUserLuckyPoint(context.Con
 func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsAddList(context.Context, *GetLuckyPointReq) (*LuckyPointsAddListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LuckyPointsAddList not implemented")
 }
-func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsUsedList(context.Context, *GetLuckyPointReq) (*LuckyPointsUsedReply, error) {
+func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsUsedList(context.Context, *GetLuckyPointReq) (*LuckyPointsUsedListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LuckyPointsUsedList not implemented")
 }
 func (UnimplementedLiveActivityInnerServiceServer) RewardList(context.Context, *RewardListReq) (*RewardListReply, error) {

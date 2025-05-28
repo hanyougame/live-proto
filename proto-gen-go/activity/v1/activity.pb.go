@@ -343,7 +343,7 @@ func (x *RewardListReq) GetActivityId() int64 {
 	return 0
 }
 
-type LuckyPointsUsedReply struct {
+type LuckyPointsUsedItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpinType      SpinType               `protobuf:"varint,1,opt,name=spin_type,json=spinType,proto3,enum=activity.v1.SpinType" json:"spin_type,omitempty"`                            // 转盘类型
 	UsedList      []*UseLuckyPoint       `protobuf:"bytes,2,rep,name=UsedList,proto3" json:"UsedList,omitempty"`                                                                       // 使用的幸运值列表
@@ -358,20 +358,20 @@ type LuckyPointsUsedReply struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *LuckyPointsUsedReply) Reset() {
-	*x = LuckyPointsUsedReply{}
+func (x *LuckyPointsUsedItem) Reset() {
+	*x = LuckyPointsUsedItem{}
 	mi := &file_proto_activity_v1_activity_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *LuckyPointsUsedReply) String() string {
+func (x *LuckyPointsUsedItem) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*LuckyPointsUsedReply) ProtoMessage() {}
+func (*LuckyPointsUsedItem) ProtoMessage() {}
 
-func (x *LuckyPointsUsedReply) ProtoReflect() protoreflect.Message {
+func (x *LuckyPointsUsedItem) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_activity_v1_activity_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -383,75 +383,119 @@ func (x *LuckyPointsUsedReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use LuckyPointsUsedReply.ProtoReflect.Descriptor instead.
-func (*LuckyPointsUsedReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use LuckyPointsUsedItem.ProtoReflect.Descriptor instead.
+func (*LuckyPointsUsedItem) Descriptor() ([]byte, []int) {
 	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *LuckyPointsUsedReply) GetSpinType() SpinType {
+func (x *LuckyPointsUsedItem) GetSpinType() SpinType {
 	if x != nil {
 		return x.SpinType
 	}
 	return SpinType_SPIN_TYPE_UNKNOWN
 }
 
-func (x *LuckyPointsUsedReply) GetUsedList() []*UseLuckyPoint {
+func (x *LuckyPointsUsedItem) GetUsedList() []*UseLuckyPoint {
 	if x != nil {
 		return x.UsedList
 	}
 	return nil
 }
 
-func (x *LuckyPointsUsedReply) GetUserId() int64 {
+func (x *LuckyPointsUsedItem) GetUserId() int64 {
 	if x != nil {
 		return x.UserId
 	}
 	return 0
 }
 
-func (x *LuckyPointsUsedReply) GetCreateAt() int32 {
+func (x *LuckyPointsUsedItem) GetCreateAt() int32 {
 	if x != nil {
 		return x.CreateAt
 	}
 	return 0
 }
 
-func (x *LuckyPointsUsedReply) GetDetail() map[string]string {
+func (x *LuckyPointsUsedItem) GetDetail() map[string]string {
 	if x != nil {
 		return x.Detail
 	}
 	return nil
 }
 
-func (x *LuckyPointsUsedReply) GetUserName() string {
+func (x *LuckyPointsUsedItem) GetUserName() string {
 	if x != nil {
 		return x.UserName
 	}
 	return ""
 }
 
-func (x *LuckyPointsUsedReply) GetPointBefore() int64 {
+func (x *LuckyPointsUsedItem) GetPointBefore() int64 {
 	if x != nil {
 		return x.PointBefore
 	}
 	return 0
 }
 
-func (x *LuckyPointsUsedReply) GetPointAfter() int64 {
+func (x *LuckyPointsUsedItem) GetPointAfter() int64 {
 	if x != nil {
 		return x.PointAfter
 	}
 	return 0
 }
 
-func (x *LuckyPointsUsedReply) GetPoint() int32 {
+func (x *LuckyPointsUsedItem) GetPoint() int32 {
 	if x != nil {
 		return x.Point
 	}
 	return 0
 }
 
-type LuckyPointsAddListReply struct {
+type LuckyPointsUsedListReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          []*LuckyPointsUsedItem `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LuckyPointsUsedListReply) Reset() {
+	*x = LuckyPointsUsedListReply{}
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckyPointsUsedListReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckyPointsUsedListReply) ProtoMessage() {}
+
+func (x *LuckyPointsUsedListReply) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckyPointsUsedListReply.ProtoReflect.Descriptor instead.
+func (*LuckyPointsUsedListReply) Descriptor() ([]byte, []int) {
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *LuckyPointsUsedListReply) GetData() []*LuckyPointsUsedItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type LuckyPointsAddItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                                            // 用户id
 	Point         int32                  `protobuf:"varint,2,opt,name=point,proto3" json:"point,omitempty"`                                                                            // 幸运值
@@ -465,9 +509,102 @@ type LuckyPointsAddListReply struct {
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *LuckyPointsAddItem) Reset() {
+	*x = LuckyPointsAddItem{}
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckyPointsAddItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckyPointsAddItem) ProtoMessage() {}
+
+func (x *LuckyPointsAddItem) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckyPointsAddItem.ProtoReflect.Descriptor instead.
+func (*LuckyPointsAddItem) Descriptor() ([]byte, []int) {
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *LuckyPointsAddItem) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *LuckyPointsAddItem) GetPoint() int32 {
+	if x != nil {
+		return x.Point
+	}
+	return 0
+}
+
+func (x *LuckyPointsAddItem) GetCreateAt() int32 {
+	if x != nil {
+		return x.CreateAt
+	}
+	return 0
+}
+
+func (x *LuckyPointsAddItem) GetClaimId() int32 {
+	if x != nil {
+		return x.ClaimId
+	}
+	return 0
+}
+
+func (x *LuckyPointsAddItem) GetDetail() map[string]string {
+	if x != nil {
+		return x.Detail
+	}
+	return nil
+}
+
+func (x *LuckyPointsAddItem) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+func (x *LuckyPointsAddItem) GetPointBefore() int64 {
+	if x != nil {
+		return x.PointBefore
+	}
+	return 0
+}
+
+func (x *LuckyPointsAddItem) GetPointAfter() int64 {
+	if x != nil {
+		return x.PointAfter
+	}
+	return 0
+}
+
+type LuckyPointsAddListReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          []*LuckyPointsAddItem  `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
 func (x *LuckyPointsAddListReply) Reset() {
 	*x = LuckyPointsAddListReply{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[6]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -479,7 +616,7 @@ func (x *LuckyPointsAddListReply) String() string {
 func (*LuckyPointsAddListReply) ProtoMessage() {}
 
 func (x *LuckyPointsAddListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[6]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -492,63 +629,14 @@ func (x *LuckyPointsAddListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LuckyPointsAddListReply.ProtoReflect.Descriptor instead.
 func (*LuckyPointsAddListReply) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{6}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *LuckyPointsAddListReply) GetUserId() int64 {
+func (x *LuckyPointsAddListReply) GetData() []*LuckyPointsAddItem {
 	if x != nil {
-		return x.UserId
-	}
-	return 0
-}
-
-func (x *LuckyPointsAddListReply) GetPoint() int32 {
-	if x != nil {
-		return x.Point
-	}
-	return 0
-}
-
-func (x *LuckyPointsAddListReply) GetCreateAt() int32 {
-	if x != nil {
-		return x.CreateAt
-	}
-	return 0
-}
-
-func (x *LuckyPointsAddListReply) GetClaimId() int32 {
-	if x != nil {
-		return x.ClaimId
-	}
-	return 0
-}
-
-func (x *LuckyPointsAddListReply) GetDetail() map[string]string {
-	if x != nil {
-		return x.Detail
+		return x.Data
 	}
 	return nil
-}
-
-func (x *LuckyPointsAddListReply) GetUserName() string {
-	if x != nil {
-		return x.UserName
-	}
-	return ""
-}
-
-func (x *LuckyPointsAddListReply) GetPointBefore() int64 {
-	if x != nil {
-		return x.PointBefore
-	}
-	return 0
-}
-
-func (x *LuckyPointsAddListReply) GetPointAfter() int64 {
-	if x != nil {
-		return x.PointAfter
-	}
-	return 0
 }
 
 type UseLuckyPoint struct {
@@ -561,7 +649,7 @@ type UseLuckyPoint struct {
 
 func (x *UseLuckyPoint) Reset() {
 	*x = UseLuckyPoint{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[7]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -573,7 +661,7 @@ func (x *UseLuckyPoint) String() string {
 func (*UseLuckyPoint) ProtoMessage() {}
 
 func (x *UseLuckyPoint) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[7]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -586,7 +674,7 @@ func (x *UseLuckyPoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UseLuckyPoint.ProtoReflect.Descriptor instead.
 func (*UseLuckyPoint) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{7}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *UseLuckyPoint) GetClaimId() int32 {
@@ -617,7 +705,7 @@ type UseLuckyPointReq struct {
 
 func (x *UseLuckyPointReq) Reset() {
 	*x = UseLuckyPointReq{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[8]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -629,7 +717,7 @@ func (x *UseLuckyPointReq) String() string {
 func (*UseLuckyPointReq) ProtoMessage() {}
 
 func (x *UseLuckyPointReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[8]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -642,7 +730,7 @@ func (x *UseLuckyPointReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UseLuckyPointReq.ProtoReflect.Descriptor instead.
 func (*UseLuckyPointReq) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{8}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UseLuckyPointReq) GetUserId() int64 {
@@ -697,7 +785,7 @@ type GetLuckyPointReq struct {
 
 func (x *GetLuckyPointReq) Reset() {
 	*x = GetLuckyPointReq{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[9]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -709,7 +797,7 @@ func (x *GetLuckyPointReq) String() string {
 func (*GetLuckyPointReq) ProtoMessage() {}
 
 func (x *GetLuckyPointReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[9]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -722,7 +810,7 @@ func (x *GetLuckyPointReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLuckyPointReq.ProtoReflect.Descriptor instead.
 func (*GetLuckyPointReq) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{9}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetLuckyPointReq) GetUserId() int64 {
@@ -751,7 +839,7 @@ type GetLuckyPointReply struct {
 
 func (x *GetLuckyPointReply) Reset() {
 	*x = GetLuckyPointReply{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[10]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -763,7 +851,7 @@ func (x *GetLuckyPointReply) String() string {
 func (*GetLuckyPointReply) ProtoMessage() {}
 
 func (x *GetLuckyPointReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[10]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -776,7 +864,7 @@ func (x *GetLuckyPointReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLuckyPointReply.ProtoReflect.Descriptor instead.
 func (*GetLuckyPointReply) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{10}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetLuckyPointReply) GetTotalCount() int64 {
@@ -822,7 +910,7 @@ type AddLuckyValReq struct {
 
 func (x *AddLuckyValReq) Reset() {
 	*x = AddLuckyValReq{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[11]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -834,7 +922,7 @@ func (x *AddLuckyValReq) String() string {
 func (*AddLuckyValReq) ProtoMessage() {}
 
 func (x *AddLuckyValReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[11]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -847,7 +935,7 @@ func (x *AddLuckyValReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddLuckyValReq.ProtoReflect.Descriptor instead.
 func (*AddLuckyValReq) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{11}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *AddLuckyValReq) GetUserId() int64 {
@@ -908,7 +996,7 @@ type RedPacketCampaignEventReq struct {
 
 func (x *RedPacketCampaignEventReq) Reset() {
 	*x = RedPacketCampaignEventReq{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[12]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -920,7 +1008,7 @@ func (x *RedPacketCampaignEventReq) String() string {
 func (*RedPacketCampaignEventReq) ProtoMessage() {}
 
 func (x *RedPacketCampaignEventReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[12]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -933,7 +1021,7 @@ func (x *RedPacketCampaignEventReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RedPacketCampaignEventReq.ProtoReflect.Descriptor instead.
 func (*RedPacketCampaignEventReq) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{12}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *RedPacketCampaignEventReq) GetUserId() int64 {
@@ -953,7 +1041,7 @@ type LuckySpinEventReq struct {
 
 func (x *LuckySpinEventReq) Reset() {
 	*x = LuckySpinEventReq{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[13]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -965,7 +1053,7 @@ func (x *LuckySpinEventReq) String() string {
 func (*LuckySpinEventReq) ProtoMessage() {}
 
 func (x *LuckySpinEventReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[13]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -978,7 +1066,7 @@ func (x *LuckySpinEventReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LuckySpinEventReq.ProtoReflect.Descriptor instead.
 func (*LuckySpinEventReq) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{13}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *LuckySpinEventReq) GetType() EventType {
@@ -1006,7 +1094,7 @@ type CheckUserRedPacketConditionReq struct {
 
 func (x *CheckUserRedPacketConditionReq) Reset() {
 	*x = CheckUserRedPacketConditionReq{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[14]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1018,7 +1106,7 @@ func (x *CheckUserRedPacketConditionReq) String() string {
 func (*CheckUserRedPacketConditionReq) ProtoMessage() {}
 
 func (x *CheckUserRedPacketConditionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[14]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1031,7 +1119,7 @@ func (x *CheckUserRedPacketConditionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckUserRedPacketConditionReq.ProtoReflect.Descriptor instead.
 func (*CheckUserRedPacketConditionReq) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{14}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *CheckUserRedPacketConditionReq) GetUserIds() []int64 {
@@ -1064,7 +1152,7 @@ type CheckUserRedPacketConditionReply struct {
 
 func (x *CheckUserRedPacketConditionReply) Reset() {
 	*x = CheckUserRedPacketConditionReply{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[15]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1076,7 +1164,7 @@ func (x *CheckUserRedPacketConditionReply) String() string {
 func (*CheckUserRedPacketConditionReply) ProtoMessage() {}
 
 func (x *CheckUserRedPacketConditionReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[15]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1089,7 +1177,7 @@ func (x *CheckUserRedPacketConditionReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckUserRedPacketConditionReply.ProtoReflect.Descriptor instead.
 func (*CheckUserRedPacketConditionReply) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{15}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *CheckUserRedPacketConditionReply) GetUserPacketConditions() map[int64]bool {
@@ -1111,7 +1199,7 @@ type IncreaseUserRedPacketCountReq struct {
 
 func (x *IncreaseUserRedPacketCountReq) Reset() {
 	*x = IncreaseUserRedPacketCountReq{}
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[16]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1123,7 +1211,7 @@ func (x *IncreaseUserRedPacketCountReq) String() string {
 func (*IncreaseUserRedPacketCountReq) ProtoMessage() {}
 
 func (x *IncreaseUserRedPacketCountReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_activity_v1_activity_proto_msgTypes[16]
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1136,7 +1224,7 @@ func (x *IncreaseUserRedPacketCountReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IncreaseUserRedPacketCountReq.ProtoReflect.Descriptor instead.
 func (*IncreaseUserRedPacketCountReq) Descriptor() ([]byte, []int) {
-	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{16}
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *IncreaseUserRedPacketCountReq) GetUserId() int64 {
@@ -1184,13 +1272,13 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"rewardTime\"0\n" +
 	"\rRewardListReq\x12\x1f\n" +
 	"\vactivity_id\x18\x01 \x01(\x03R\n" +
-	"activityId\"\xb1\x03\n" +
-	"\x14LuckyPointsUsedReply\x122\n" +
+	"activityId\"\xaf\x03\n" +
+	"\x13LuckyPointsUsedItem\x122\n" +
 	"\tspin_type\x18\x01 \x01(\x0e2\x15.activity.v1.SpinTypeR\bspinType\x126\n" +
 	"\bUsedList\x18\x02 \x03(\v2\x1a.activity.v1.UseLuckyPointR\bUsedList\x12\x17\n" +
 	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12\x1b\n" +
-	"\tcreate_at\x18\x04 \x01(\x05R\bcreateAt\x12E\n" +
-	"\x06detail\x18\x05 \x03(\v2-.activity.v1.LuckyPointsUsedReply.DetailEntryR\x06detail\x12\x1b\n" +
+	"\tcreate_at\x18\x04 \x01(\x05R\bcreateAt\x12D\n" +
+	"\x06detail\x18\x05 \x03(\v2,.activity.v1.LuckyPointsUsedItem.DetailEntryR\x06detail\x12\x1b\n" +
 	"\tuser_name\x18\x06 \x01(\tR\buserName\x12!\n" +
 	"\fpoint_before\x18\a \x01(\x03R\vpointBefore\x12\x1f\n" +
 	"\vpoint_after\x18\b \x01(\x03R\n" +
@@ -1198,20 +1286,24 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x05point\x18\t \x01(\x05R\x05point\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe6\x02\n" +
-	"\x17LuckyPointsAddListReply\x12\x17\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"P\n" +
+	"\x18LuckyPointsUsedListReply\x124\n" +
+	"\x04data\x18\x01 \x03(\v2 .activity.v1.LuckyPointsUsedItemR\x04data\"\xdc\x02\n" +
+	"\x12LuckyPointsAddItem\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x14\n" +
 	"\x05point\x18\x02 \x01(\x05R\x05point\x12\x1b\n" +
 	"\tcreate_at\x18\x03 \x01(\x05R\bcreateAt\x12\x19\n" +
-	"\bclaim_id\x18\x04 \x01(\x05R\aclaimId\x12H\n" +
-	"\x06detail\x18\x05 \x03(\v20.activity.v1.LuckyPointsAddListReply.DetailEntryR\x06detail\x12\x1b\n" +
+	"\bclaim_id\x18\x04 \x01(\x05R\aclaimId\x12C\n" +
+	"\x06detail\x18\x05 \x03(\v2+.activity.v1.LuckyPointsAddItem.DetailEntryR\x06detail\x12\x1b\n" +
 	"\tuser_name\x18\x06 \x01(\tR\buserName\x12!\n" +
 	"\fpoint_before\x18\a \x01(\x03R\vpointBefore\x12\x1f\n" +
 	"\vpoint_after\x18\b \x01(\x03R\n" +
 	"pointAfter\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"@\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"N\n" +
+	"\x17LuckyPointsAddListReply\x123\n" +
+	"\x04data\x18\x01 \x03(\v2\x1f.activity.v1.LuckyPointsAddItemR\x04data\"@\n" +
 	"\rUseLuckyPoint\x12\x19\n" +
 	"\bclaim_id\x18\x01 \x01(\x05R\aclaimId\x12\x14\n" +
 	"\x05point\x18\x02 \x01(\x05R\x05point\"\xce\x02\n" +
@@ -1278,7 +1370,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x11SPIN_TYPE_UNKNOWN\x10\x00\x12\x14\n" +
 	"\x10SPIN_TYPE_SILVER\x10\x01\x12\x12\n" +
 	"\x0eSPIN_TYPE_GOLD\x10\x02\x12\x15\n" +
-	"\x11SPIN_TYPE_DIAMOND\x10\x032\x8e\a\n" +
+	"\x11SPIN_TYPE_DIAMOND\x10\x032\x92\a\n" +
 	"\x18LiveActivityInnerService\x12\\\n" +
 	"\x16RedPacketCampaignEvent\x12&.activity.v1.RedPacketCampaignEventReq\x1a\x1a.activity.v1.ActivityReply\x12y\n" +
 	"\x1bCheckUserRedPacketCondition\x12+.activity.v1.CheckUserRedPacketConditionReq\x1a-.activity.v1.CheckUserRedPacketConditionReply\x12d\n" +
@@ -1287,8 +1379,8 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\rAddLuckyPoint\x12\x1b.activity.v1.AddLuckyValReq\x1a\x1a.activity.v1.ActivityReply\x12J\n" +
 	"\rUseLuckyPoint\x12\x1d.activity.v1.UseLuckyPointReq\x1a\x1a.activity.v1.ActivityReply\x12S\n" +
 	"\x11GetUserLuckyPoint\x12\x1d.activity.v1.GetLuckyPointReq\x1a\x1f.activity.v1.GetLuckyPointReply\x12Y\n" +
-	"\x12LuckyPointsAddList\x12\x1d.activity.v1.GetLuckyPointReq\x1a$.activity.v1.LuckyPointsAddListReply\x12W\n" +
-	"\x13LuckyPointsUsedList\x12\x1d.activity.v1.GetLuckyPointReq\x1a!.activity.v1.LuckyPointsUsedReply\x12F\n" +
+	"\x12LuckyPointsAddList\x12\x1d.activity.v1.GetLuckyPointReq\x1a$.activity.v1.LuckyPointsAddListReply\x12[\n" +
+	"\x13LuckyPointsUsedList\x12\x1d.activity.v1.GetLuckyPointReq\x1a%.activity.v1.LuckyPointsUsedListReply\x12F\n" +
 	"\n" +
 	"RewardList\x12\x1a.activity.v1.RewardListReq\x1a\x1c.activity.v1.RewardListReplyB\tZ\a./pb/v1b\x06proto3"
 
@@ -1305,7 +1397,7 @@ func file_proto_activity_v1_activity_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_activity_v1_activity_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_activity_v1_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_proto_activity_v1_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_proto_activity_v1_activity_proto_goTypes = []any{
 	(EventType)(0),                           // 0: activity.v1.EventType
 	(SpinType)(0),                            // 1: activity.v1.SpinType
@@ -1314,59 +1406,63 @@ var file_proto_activity_v1_activity_proto_goTypes = []any{
 	(*RewardListReply)(nil),                  // 4: activity.v1.RewardListReply
 	(*RewardData)(nil),                       // 5: activity.v1.RewardData
 	(*RewardListReq)(nil),                    // 6: activity.v1.RewardListReq
-	(*LuckyPointsUsedReply)(nil),             // 7: activity.v1.LuckyPointsUsedReply
-	(*LuckyPointsAddListReply)(nil),          // 8: activity.v1.LuckyPointsAddListReply
-	(*UseLuckyPoint)(nil),                    // 9: activity.v1.UseLuckyPoint
-	(*UseLuckyPointReq)(nil),                 // 10: activity.v1.UseLuckyPointReq
-	(*GetLuckyPointReq)(nil),                 // 11: activity.v1.GetLuckyPointReq
-	(*GetLuckyPointReply)(nil),               // 12: activity.v1.GetLuckyPointReply
-	(*AddLuckyValReq)(nil),                   // 13: activity.v1.AddLuckyValReq
-	(*RedPacketCampaignEventReq)(nil),        // 14: activity.v1.RedPacketCampaignEventReq
-	(*LuckySpinEventReq)(nil),                // 15: activity.v1.LuckySpinEventReq
-	(*CheckUserRedPacketConditionReq)(nil),   // 16: activity.v1.CheckUserRedPacketConditionReq
-	(*CheckUserRedPacketConditionReply)(nil), // 17: activity.v1.CheckUserRedPacketConditionReply
-	(*IncreaseUserRedPacketCountReq)(nil),    // 18: activity.v1.IncreaseUserRedPacketCountReq
-	nil,                                      // 19: activity.v1.LuckyPointsUsedReply.DetailEntry
-	nil,                                      // 20: activity.v1.LuckyPointsAddListReply.DetailEntry
-	nil,                                      // 21: activity.v1.UseLuckyPointReq.DetailEntry
-	nil,                                      // 22: activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
+	(*LuckyPointsUsedItem)(nil),              // 7: activity.v1.LuckyPointsUsedItem
+	(*LuckyPointsUsedListReply)(nil),         // 8: activity.v1.LuckyPointsUsedListReply
+	(*LuckyPointsAddItem)(nil),               // 9: activity.v1.LuckyPointsAddItem
+	(*LuckyPointsAddListReply)(nil),          // 10: activity.v1.LuckyPointsAddListReply
+	(*UseLuckyPoint)(nil),                    // 11: activity.v1.UseLuckyPoint
+	(*UseLuckyPointReq)(nil),                 // 12: activity.v1.UseLuckyPointReq
+	(*GetLuckyPointReq)(nil),                 // 13: activity.v1.GetLuckyPointReq
+	(*GetLuckyPointReply)(nil),               // 14: activity.v1.GetLuckyPointReply
+	(*AddLuckyValReq)(nil),                   // 15: activity.v1.AddLuckyValReq
+	(*RedPacketCampaignEventReq)(nil),        // 16: activity.v1.RedPacketCampaignEventReq
+	(*LuckySpinEventReq)(nil),                // 17: activity.v1.LuckySpinEventReq
+	(*CheckUserRedPacketConditionReq)(nil),   // 18: activity.v1.CheckUserRedPacketConditionReq
+	(*CheckUserRedPacketConditionReply)(nil), // 19: activity.v1.CheckUserRedPacketConditionReply
+	(*IncreaseUserRedPacketCountReq)(nil),    // 20: activity.v1.IncreaseUserRedPacketCountReq
+	nil,                                      // 21: activity.v1.LuckyPointsUsedItem.DetailEntry
+	nil,                                      // 22: activity.v1.LuckyPointsAddItem.DetailEntry
+	nil,                                      // 23: activity.v1.UseLuckyPointReq.DetailEntry
+	nil,                                      // 24: activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
 }
 var file_proto_activity_v1_activity_proto_depIdxs = []int32{
 	5,  // 0: activity.v1.RewardListReply.data:type_name -> activity.v1.RewardData
-	1,  // 1: activity.v1.LuckyPointsUsedReply.spin_type:type_name -> activity.v1.SpinType
-	9,  // 2: activity.v1.LuckyPointsUsedReply.UsedList:type_name -> activity.v1.UseLuckyPoint
-	19, // 3: activity.v1.LuckyPointsUsedReply.detail:type_name -> activity.v1.LuckyPointsUsedReply.DetailEntry
-	20, // 4: activity.v1.LuckyPointsAddListReply.detail:type_name -> activity.v1.LuckyPointsAddListReply.DetailEntry
-	9,  // 5: activity.v1.UseLuckyPointReq.UsedList:type_name -> activity.v1.UseLuckyPoint
-	1,  // 6: activity.v1.UseLuckyPointReq.spin_type:type_name -> activity.v1.SpinType
-	21, // 7: activity.v1.UseLuckyPointReq.detail:type_name -> activity.v1.UseLuckyPointReq.DetailEntry
-	0,  // 8: activity.v1.LuckySpinEventReq.type:type_name -> activity.v1.EventType
-	22, // 9: activity.v1.CheckUserRedPacketConditionReply.user_packet_conditions:type_name -> activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
-	14, // 10: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:input_type -> activity.v1.RedPacketCampaignEventReq
-	16, // 11: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:input_type -> activity.v1.CheckUserRedPacketConditionReq
-	18, // 12: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:input_type -> activity.v1.IncreaseUserRedPacketCountReq
-	15, // 13: activity.v1.LiveActivityInnerService.LuckySpinEvent:input_type -> activity.v1.LuckySpinEventReq
-	13, // 14: activity.v1.LiveActivityInnerService.AddLuckyPoint:input_type -> activity.v1.AddLuckyValReq
-	10, // 15: activity.v1.LiveActivityInnerService.UseLuckyPoint:input_type -> activity.v1.UseLuckyPointReq
-	11, // 16: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:input_type -> activity.v1.GetLuckyPointReq
-	11, // 17: activity.v1.LiveActivityInnerService.LuckyPointsAddList:input_type -> activity.v1.GetLuckyPointReq
-	11, // 18: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:input_type -> activity.v1.GetLuckyPointReq
-	6,  // 19: activity.v1.LiveActivityInnerService.RewardList:input_type -> activity.v1.RewardListReq
-	3,  // 20: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:output_type -> activity.v1.ActivityReply
-	17, // 21: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:output_type -> activity.v1.CheckUserRedPacketConditionReply
-	3,  // 22: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:output_type -> activity.v1.ActivityReply
-	3,  // 23: activity.v1.LiveActivityInnerService.LuckySpinEvent:output_type -> activity.v1.ActivityReply
-	3,  // 24: activity.v1.LiveActivityInnerService.AddLuckyPoint:output_type -> activity.v1.ActivityReply
-	3,  // 25: activity.v1.LiveActivityInnerService.UseLuckyPoint:output_type -> activity.v1.ActivityReply
-	12, // 26: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:output_type -> activity.v1.GetLuckyPointReply
-	8,  // 27: activity.v1.LiveActivityInnerService.LuckyPointsAddList:output_type -> activity.v1.LuckyPointsAddListReply
-	7,  // 28: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:output_type -> activity.v1.LuckyPointsUsedReply
-	4,  // 29: activity.v1.LiveActivityInnerService.RewardList:output_type -> activity.v1.RewardListReply
-	20, // [20:30] is the sub-list for method output_type
-	10, // [10:20] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	1,  // 1: activity.v1.LuckyPointsUsedItem.spin_type:type_name -> activity.v1.SpinType
+	11, // 2: activity.v1.LuckyPointsUsedItem.UsedList:type_name -> activity.v1.UseLuckyPoint
+	21, // 3: activity.v1.LuckyPointsUsedItem.detail:type_name -> activity.v1.LuckyPointsUsedItem.DetailEntry
+	7,  // 4: activity.v1.LuckyPointsUsedListReply.data:type_name -> activity.v1.LuckyPointsUsedItem
+	22, // 5: activity.v1.LuckyPointsAddItem.detail:type_name -> activity.v1.LuckyPointsAddItem.DetailEntry
+	9,  // 6: activity.v1.LuckyPointsAddListReply.data:type_name -> activity.v1.LuckyPointsAddItem
+	11, // 7: activity.v1.UseLuckyPointReq.UsedList:type_name -> activity.v1.UseLuckyPoint
+	1,  // 8: activity.v1.UseLuckyPointReq.spin_type:type_name -> activity.v1.SpinType
+	23, // 9: activity.v1.UseLuckyPointReq.detail:type_name -> activity.v1.UseLuckyPointReq.DetailEntry
+	0,  // 10: activity.v1.LuckySpinEventReq.type:type_name -> activity.v1.EventType
+	24, // 11: activity.v1.CheckUserRedPacketConditionReply.user_packet_conditions:type_name -> activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
+	16, // 12: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:input_type -> activity.v1.RedPacketCampaignEventReq
+	18, // 13: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:input_type -> activity.v1.CheckUserRedPacketConditionReq
+	20, // 14: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:input_type -> activity.v1.IncreaseUserRedPacketCountReq
+	17, // 15: activity.v1.LiveActivityInnerService.LuckySpinEvent:input_type -> activity.v1.LuckySpinEventReq
+	15, // 16: activity.v1.LiveActivityInnerService.AddLuckyPoint:input_type -> activity.v1.AddLuckyValReq
+	12, // 17: activity.v1.LiveActivityInnerService.UseLuckyPoint:input_type -> activity.v1.UseLuckyPointReq
+	13, // 18: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:input_type -> activity.v1.GetLuckyPointReq
+	13, // 19: activity.v1.LiveActivityInnerService.LuckyPointsAddList:input_type -> activity.v1.GetLuckyPointReq
+	13, // 20: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:input_type -> activity.v1.GetLuckyPointReq
+	6,  // 21: activity.v1.LiveActivityInnerService.RewardList:input_type -> activity.v1.RewardListReq
+	3,  // 22: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:output_type -> activity.v1.ActivityReply
+	19, // 23: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:output_type -> activity.v1.CheckUserRedPacketConditionReply
+	3,  // 24: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:output_type -> activity.v1.ActivityReply
+	3,  // 25: activity.v1.LiveActivityInnerService.LuckySpinEvent:output_type -> activity.v1.ActivityReply
+	3,  // 26: activity.v1.LiveActivityInnerService.AddLuckyPoint:output_type -> activity.v1.ActivityReply
+	3,  // 27: activity.v1.LiveActivityInnerService.UseLuckyPoint:output_type -> activity.v1.ActivityReply
+	14, // 28: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:output_type -> activity.v1.GetLuckyPointReply
+	10, // 29: activity.v1.LiveActivityInnerService.LuckyPointsAddList:output_type -> activity.v1.LuckyPointsAddListReply
+	8,  // 30: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:output_type -> activity.v1.LuckyPointsUsedListReply
+	4,  // 31: activity.v1.LiveActivityInnerService.RewardList:output_type -> activity.v1.RewardListReply
+	22, // [22:32] is the sub-list for method output_type
+	12, // [12:22] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_proto_activity_v1_activity_proto_init() }
@@ -1380,7 +1476,7 @@ func file_proto_activity_v1_activity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_activity_v1_activity_proto_rawDesc), len(file_proto_activity_v1_activity_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   21,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

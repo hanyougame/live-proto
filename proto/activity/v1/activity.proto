@@ -42,7 +42,7 @@ service LiveActivityInnerService{
   // 幸运值获取记录
   rpc LuckyPointsAddList(GetLuckyPointReq) returns (LuckyPointsAddListReply);
   // 幸运值消费记录
-  rpc LuckyPointsUsedList(GetLuckyPointReq) returns (LuckyPointsUsedReply);
+  rpc LuckyPointsUsedList(GetLuckyPointReq) returns (LuckyPointsUsedListReply);
   // 获奖记录 公告展示
   rpc RewardList(RewardListReq) returns (RewardListReply);
 }
@@ -61,7 +61,7 @@ message RewardListReq {
   int64 activity_id = 1; // 活动id
 }
 
-message LuckyPointsUsedReply {
+message LuckyPointsUsedItem {
   SpinType spin_type = 1; // 转盘类型
   repeated UseLuckyPoint UsedList = 2; // 使用的幸运值列表
   int64 user_id = 3; // 用户id
@@ -73,8 +73,12 @@ message LuckyPointsUsedReply {
   int32 point = 9; // 幸运值
 }
 
+message LuckyPointsUsedListReply {
+  repeated LuckyPointsUsedItem data = 1 ;
+}
 
-message LuckyPointsAddListReply {
+
+message LuckyPointsAddItem {
   int64 user_id = 1; // 用户id
   int32 point = 2; // 幸运值
   int32 create_at = 3; // 创建时间
@@ -83,6 +87,10 @@ message LuckyPointsAddListReply {
   string user_name = 6; // 用户名
   int64  point_before = 7; // 领取前的幸运值
   int64 point_after = 8; // 领取后的幸运值
+}
+
+message LuckyPointsAddListReply {
+  repeated LuckyPointsAddItem data = 1 ;
 }
 
 
