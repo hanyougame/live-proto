@@ -109,15 +109,20 @@ message UseLuckyPointReq {
 }
 
 message GetLuckyPointReq {
-  int64 user_id = 1; // 用户id
+  repeated int64 user_id = 1; // 用户id
   int64 activity_id = 2; // 活动id
 }
 
-message GetLuckyPointReply {
+message GetLuckyPointItem {
   int64 total_count = 1; // 总幸运值
   int64 expired_count = 2; // 过期幸运值
   int64 available_count = 3; // 可用幸运值
   int64 used_count = 4; // 已使用幸运值
+  int64 user_id = 5; // 用户id
+}
+
+message GetLuckyPointReply {
+  repeated  GetLuckyPointItem data = 1; // 用户幸运值列表
 }
 
 message AddLuckyValReq {

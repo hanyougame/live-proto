@@ -19,6 +19,7 @@ type (
 	AddLuckyValReq                   = v1.AddLuckyValReq
 	CheckUserRedPacketConditionReply = v1.CheckUserRedPacketConditionReply
 	CheckUserRedPacketConditionReq   = v1.CheckUserRedPacketConditionReq
+	GetLuckyPointItem                = v1.GetLuckyPointItem
 	GetLuckyPointReply               = v1.GetLuckyPointReply
 	GetLuckyPointReq                 = v1.GetLuckyPointReq
 	IncreaseUserRedPacketCountReq    = v1.IncreaseUserRedPacketCountReq
