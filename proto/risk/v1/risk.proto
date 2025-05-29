@@ -18,6 +18,8 @@ service LiveRiskInnerService{
   rpc GetUserRiskList(GetUserRiskListReq) returns (GetUserRiskListReply);
   // 批量获取用户风控名单
   rpc BatchGetUserRiskList(BatchGetUserRiskListReq) returns (BatchGetUserRiskListReply);
+  // 删除批量用户风控名单
+  rpc BatchDelUserRiskList(BatchDelUserRiskListReq) returns (RiskReply);
   // 获取用户绑定上级风控
   rpc GetUserBindParentRisk(GetUserBindParentRiskReq) returns(GetUserBindParentRiskReply);
 }
@@ -66,4 +68,11 @@ message BatchGetUserRiskListReq {
 // 批量获取用户风控名单响应
 message BatchGetUserRiskListReply {
   map<int64, RiskListType> user_risk_lists = 1;  // 用户ID -> 风控名单信息
+}
+
+message BatchDelUserRiskListReq {
+  repeated int64 ids = 1;
+  repeated int64 user_ids = 2;
+  string reason = 3;
+  RiskListType risk_type = 4;  // 0 删除全部
 }
