@@ -179,6 +179,8 @@ message CalcWithdrawFeeReq {
 
 message CalcWithdrawFeeResp {
   int64 fee_amount = 1; // 手续费
+  int64 amount_calc_type = 2; // 计算类型 1:固定金额 2:比例
+  string rate = 3; //计算比例
 }
 
 message AutoWithdrawMatchReq {
