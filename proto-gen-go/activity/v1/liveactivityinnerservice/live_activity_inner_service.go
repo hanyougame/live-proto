@@ -20,6 +20,7 @@ type (
 	CheckUserRedPacketConditionReply = v1.CheckUserRedPacketConditionReply
 	CheckUserRedPacketConditionReq   = v1.CheckUserRedPacketConditionReq
 	GetLuckyPointItem                = v1.GetLuckyPointItem
+	GetLuckyPointListReq             = v1.GetLuckyPointListReq
 	GetLuckyPointReply               = v1.GetLuckyPointReply
 	GetLuckyPointReq                 = v1.GetLuckyPointReq
 	IncreaseUserRedPacketCountReq    = v1.IncreaseUserRedPacketCountReq
@@ -51,9 +52,9 @@ type (
 		// 我的幸运值
 		GetUserLuckyPoint(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*GetLuckyPointReply, error)
 		// 幸运值获取记录
-		LuckyPointsAddList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error)
+		LuckyPointsAddList(ctx context.Context, in *GetLuckyPointListReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error)
 		// 幸运值消费记录
-		LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error)
+		LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointListReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error)
 		// 获奖记录 公告展示
 		RewardList(ctx context.Context, in *RewardListReq, opts ...grpc.CallOption) (*RewardListReply, error)
 	}
@@ -112,13 +113,13 @@ func (m *defaultLiveActivityInnerService) GetUserLuckyPoint(ctx context.Context,
 }
 
 // 幸运值获取记录
-func (m *defaultLiveActivityInnerService) LuckyPointsAddList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error) {
+func (m *defaultLiveActivityInnerService) LuckyPointsAddList(ctx context.Context, in *GetLuckyPointListReq, opts ...grpc.CallOption) (*LuckyPointsAddListReply, error) {
 	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
 	return client.LuckyPointsAddList(ctx, in, opts...)
 }
 
 // 幸运值消费记录
-func (m *defaultLiveActivityInnerService) LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error) {
+func (m *defaultLiveActivityInnerService) LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointListReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error) {
 	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
 	return client.LuckyPointsUsedList(ctx, in, opts...)
 }

@@ -40,9 +40,9 @@ service LiveActivityInnerService{
   // 我的幸运值
   rpc GetUserLuckyPoint(GetLuckyPointReq) returns (GetLuckyPointReply);
   // 幸运值获取记录
-  rpc LuckyPointsAddList(GetLuckyPointReq) returns (LuckyPointsAddListReply);
+  rpc LuckyPointsAddList(GetLuckyPointListReq) returns (LuckyPointsAddListReply);
   // 幸运值消费记录
-  rpc LuckyPointsUsedList(GetLuckyPointReq) returns (LuckyPointsUsedListReply);
+  rpc LuckyPointsUsedList(GetLuckyPointListReq) returns (LuckyPointsUsedListReply);
   // 获奖记录 公告展示
   rpc RewardList(RewardListReq) returns (RewardListReply);
 }
@@ -55,6 +55,11 @@ message RewardData {
   int64 user_id = 1; // 用户id
   int32 reward = 2; // 奖励金额
   int32 reward_time = 3; // 奖励时间
+}
+
+message GetLuckyPointListReq{
+  int64 user_id = 1; // 用户id
+  int64 activity_id = 2; // 活动id
 }
 
 message RewardListReq {
