@@ -92,6 +92,7 @@ message LuckyPointsAddItem {
   string user_name = 6; // 用户名
   int64  point_before = 7; // 领取前的幸运值
   int64 point_after = 8; // 领取后的幸运值
+  string condition = 9; // 条件
 }
 
 message LuckyPointsAddListReply {

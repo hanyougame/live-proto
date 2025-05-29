@@ -557,6 +557,7 @@ type LuckyPointsAddItem struct {
 	UserName      string                 `protobuf:"bytes,6,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`                                                       // 用户名
 	PointBefore   int64                  `protobuf:"varint,7,opt,name=point_before,json=pointBefore,proto3" json:"point_before,omitempty"`                                             // 领取前的幸运值
 	PointAfter    int64                  `protobuf:"varint,8,opt,name=point_after,json=pointAfter,proto3" json:"point_after,omitempty"`                                                // 领取后的幸运值
+	Condition     string                 `protobuf:"bytes,9,opt,name=condition,proto3" json:"condition,omitempty"`                                                                     // 条件
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -645,6 +646,13 @@ func (x *LuckyPointsAddItem) GetPointAfter() int64 {
 		return x.PointAfter
 	}
 	return 0
+}
+
+func (x *LuckyPointsAddItem) GetCondition() string {
+	if x != nil {
+		return x.Condition
+	}
+	return ""
 }
 
 type LuckyPointsAddListReply struct {
@@ -1396,7 +1404,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"P\n" +
 	"\x18LuckyPointsUsedListReply\x124\n" +
-	"\x04data\x18\x01 \x03(\v2 .activity.v1.LuckyPointsUsedItemR\x04data\"\xdc\x02\n" +
+	"\x04data\x18\x01 \x03(\v2 .activity.v1.LuckyPointsUsedItemR\x04data\"\xfa\x02\n" +
 	"\x12LuckyPointsAddItem\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x14\n" +
 	"\x05point\x18\x02 \x01(\x05R\x05point\x12\x1b\n" +
@@ -1406,7 +1414,8 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\tuser_name\x18\x06 \x01(\tR\buserName\x12!\n" +
 	"\fpoint_before\x18\a \x01(\x03R\vpointBefore\x12\x1f\n" +
 	"\vpoint_after\x18\b \x01(\x03R\n" +
-	"pointAfter\x1a9\n" +
+	"pointAfter\x12\x1c\n" +
+	"\tcondition\x18\t \x01(\tR\tcondition\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"N\n" +
