@@ -23,6 +23,7 @@ const (
 	LiveRiskInnerService_GetUserRiskList_FullMethodName       = "/risk.v1.LiveRiskInnerService/GetUserRiskList"
 	LiveRiskInnerService_BatchGetUserRiskList_FullMethodName  = "/risk.v1.LiveRiskInnerService/BatchGetUserRiskList"
 	LiveRiskInnerService_BatchDelUserRiskList_FullMethodName  = "/risk.v1.LiveRiskInnerService/BatchDelUserRiskList"
+	LiveRiskInnerService_GetUserBindParentRisk_FullMethodName = "/risk.v1.LiveRiskInnerService/GetUserBindParentRisk"
 )
 
 // LiveRiskInnerServiceClient is the client API for LiveRiskInnerService service.
@@ -37,6 +38,8 @@ type LiveRiskInnerServiceClient interface {
 	BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error)
 	// 删除批量用户风控名单
 	BatchDelUserRiskList(ctx context.Context, in *BatchDelUserRiskListReq, opts ...grpc.CallOption) (*RiskReply, error)
+	// 获取用户绑定上级风控
+	GetUserBindParentRisk(ctx context.Context, in *GetUserBindParentRiskReq, opts ...grpc.CallOption) (*GetUserBindParentRiskReply, error)
 }
 
 type liveRiskInnerServiceClient struct {
@@ -83,6 +86,15 @@ func (c *liveRiskInnerServiceClient) BatchDelUserRiskList(ctx context.Context, i
 	return out, nil
 }
 
+func (c *liveRiskInnerServiceClient) GetUserBindParentRisk(ctx context.Context, in *GetUserBindParentRiskReq, opts ...grpc.CallOption) (*GetUserBindParentRiskReply, error) {
+	out := new(GetUserBindParentRiskReply)
+	err := c.cc.Invoke(ctx, LiveRiskInnerService_GetUserBindParentRisk_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveRiskInnerServiceServer is the server API for LiveRiskInnerService service.
 // All implementations must embed UnimplementedLiveRiskInnerServiceServer
 // for forward compatibility
@@ -95,6 +107,8 @@ type LiveRiskInnerServiceServer interface {
 	BatchGetUserRiskList(context.Context, *BatchGetUserRiskListReq) (*BatchGetUserRiskListReply, error)
 	// 删除批量用户风控名单
 	BatchDelUserRiskList(context.Context, *BatchDelUserRiskListReq) (*RiskReply, error)
+	// 获取用户绑定上级风控
+	GetUserBindParentRisk(context.Context, *GetUserBindParentRiskReq) (*GetUserBindParentRiskReply, error)
 	mustEmbedUnimplementedLiveRiskInnerServiceServer()
 }
 
@@ -113,6 +127,9 @@ func (UnimplementedLiveRiskInnerServiceServer) BatchGetUserRiskList(context.Cont
 }
 func (UnimplementedLiveRiskInnerServiceServer) BatchDelUserRiskList(context.Context, *BatchDelUserRiskListReq) (*RiskReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchDelUserRiskList not implemented")
+}
+func (UnimplementedLiveRiskInnerServiceServer) GetUserBindParentRisk(context.Context, *GetUserBindParentRiskReq) (*GetUserBindParentRiskReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserBindParentRisk not implemented")
 }
 func (UnimplementedLiveRiskInnerServiceServer) mustEmbedUnimplementedLiveRiskInnerServiceServer() {}
 
@@ -199,6 +216,24 @@ func _LiveRiskInnerService_BatchDelUserRiskList_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveRiskInnerService_GetUserBindParentRisk_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserBindParentRiskReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveRiskInnerServiceServer).GetUserBindParentRisk(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveRiskInnerService_GetUserBindParentRisk_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveRiskInnerServiceServer).GetUserBindParentRisk(ctx, req.(*GetUserBindParentRiskReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveRiskInnerService_ServiceDesc is the grpc.ServiceDesc for LiveRiskInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -221,6 +256,10 @@ var LiveRiskInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchDelUserRiskList",
 			Handler:    _LiveRiskInnerService_BatchDelUserRiskList_Handler,
+		},
+		{
+			MethodName: "GetUserBindParentRisk",
+			Handler:    _LiveRiskInnerService_GetUserBindParentRisk_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
