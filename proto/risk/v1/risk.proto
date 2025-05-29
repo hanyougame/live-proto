@@ -11,7 +11,6 @@ message RiskReply{
 
 }
 
-
 service LiveRiskInnerService{
   // NotifyRiskRuleTrigger 处理通知风控触发规则
   rpc NotifyRiskRuleTrigger(NotifyRiskRuleTriggerReq) returns (RiskReply);
@@ -21,6 +20,22 @@ service LiveRiskInnerService{
   rpc BatchGetUserRiskList(BatchGetUserRiskListReq) returns (BatchGetUserRiskListReply);
   // 删除批量用户风控名单
   rpc BatchDelUserRiskList(BatchDelUserRiskListReq) returns (RiskReply);
+  // 获取用户绑定上级风控
+  rpc GetUserBindParentRisk(GetUserBindParentRiskReq) returns(GetUserBindParentRiskReply);
+}
+
+message GetUserBindParentRiskReq{
+  int64 user_id = 1; // 用户ID
+  string ip = 2; // IP地址
+  string device_id = 3; // 设备号
+  int64 limit_same_ip = 4; // 同IP数量上限（同IP登录的用户数量如果超过这个数量则不能绑定上级，0表示不限制）
+  int64 limit_same_device = 5; // 同设备号数量上限（同设备号登录的用户数量如果超过这个数量则不能绑定上级，0表示不限制）
+}
+
+message GetUserBindParentRiskReply{
+  bool result = 1; // 风控结果：true-风控，false-不风控
+  int64 ip_login_user_total = 2; // ip登录的用户数量
+  int64 device_id_login_user_total = 3; // 设备号登录的用户数量
 }
 
 
