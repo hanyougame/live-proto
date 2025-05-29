@@ -52,9 +52,10 @@ message RewardListReply {
 }
 
 message RewardData {
-  int64 user_id = 1; // 用户id
+  string user_id = 1; // 用户id
   int32 reward = 2; // 奖励金额
   int32 reward_time = 3; // 奖励时间
+  SpinType spin_type = 4; // 转盘类型
 }
 
 message GetLuckyPointListReq{
