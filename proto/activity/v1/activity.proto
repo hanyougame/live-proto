@@ -9,6 +9,14 @@ enum EventType {
   RECHARGE = 2; // 充值
 }
 
+// 新增 SpinType 枚举
+enum SpinType {
+  SPIN_TYPE_UNKNOWN = 0;
+  SPIN_TYPE_SILVER = 1;   // 白银转盘
+  SPIN_TYPE_GOLD = 2;     // 黄金转盘
+  SPIN_TYPE_DIAMOND = 3;  // 钻石转盘
+}
+
 message ActivityReq{
 
 }
@@ -23,13 +31,105 @@ service LiveActivityInnerService{
   // 增加用户领取红包次数缓存
   rpc IncreaseUserRedPacketCount(IncreaseUserRedPacketCountReq) returns (ActivityReply);
 
-
   // 幸运转盘活动事件
   rpc LuckySpinEvent(LuckySpinEventReq) returns (ActivityReply);
-
   // 增加幸运值
   rpc AddLuckyPoint(AddLuckyValReq) returns (ActivityReply);
+  // 使用幸运值
+  rpc UseLuckyPoint(UseLuckyPointReq) returns (ActivityReply);
+  // 我的幸运值
+  rpc GetUserLuckyPoint(GetLuckyPointReq) returns (GetLuckyPointReply);
+  // 幸运值获取记录
+  rpc LuckyPointsAddList(GetLuckyPointListReq) returns (LuckyPointsAddListReply);
+  // 幸运值消费记录
+  rpc LuckyPointsUsedList(GetLuckyPointListReq) returns (LuckyPointsUsedListReply);
+  // 获奖记录 公告展示
+  rpc RewardList(RewardListReq) returns (RewardListReply);
+}
 
+message RewardListReply {
+  repeated RewardData data = 1; // 奖励数据列表
+}
+
+message RewardData {
+  string user_id = 1; // 用户id
+  int32 reward = 2; // 奖励金额
+  int32 reward_time = 3; // 奖励时间
+  SpinType spin_type = 4; // 转盘类型
+}
+
+message GetLuckyPointListReq{
+  int64 user_id = 1; // 用户id
+  int64 activity_id = 2; // 活动id
+}
+
+message RewardListReq {
+  int64 activity_id = 1; // 活动id
+}
+
+message LuckyPointsUsedItem {
+  SpinType spin_type = 1; // 转盘类型
+  repeated UseLuckyPoint UsedList = 2; // 使用的幸运值列表
+  int64 user_id = 3; // 用户id
+  int32 create_at = 4; // 创建时间
+  map<string, string> detail = 5; // 额外信息
+  string user_name = 6; // 用户名
+  int64  point_before = 7; // 领取前的幸运值
+  int64 point_after = 8; // 领取后的幸运值
+  int32 point = 9; // 幸运值
+}
+
+message LuckyPointsUsedListReply {
+  repeated LuckyPointsUsedItem data = 1 ;
+}
+
+
+message LuckyPointsAddItem {
+  int64 user_id = 1; // 用户id
+  int32 point = 2; // 幸运值
+  int32 create_at = 3; // 创建时间
+  int32 claim_id = 4; // 领取id
+  map<string, string> detail = 5; // 额外信息
+  string user_name = 6; // 用户名
+  int64  point_before = 7; // 领取前的幸运值
+  int64 point_after = 8; // 领取后的幸运值
+  string condition = 9; // 条件
+}
+
+message LuckyPointsAddListReply {
+  repeated LuckyPointsAddItem data = 1 ;
+}
+
+
+message UseLuckyPoint {
+  int32 claim_id = 1; // 领取id
+  int32 point = 2; // 幸运值
+}
+
+message UseLuckyPointReq {
+  int64 user_id = 1; // 用户id
+  int64 activity_id = 2; // 活动id
+  int32 reward = 3; // 奖励金额
+  int32 point = 4; // 消耗的总幸运值
+  SpinType spin_type = 5; // 转盘类型
+  map<string, string> detail = 6; // 额外信息
+}
+
+message GetLuckyPointReq {
+  repeated int64 user_id = 1; // 用户id
+  int64 activity_id = 2; // 活动id
+}
+
+message GetLuckyPointItem {
+  int64 total_count = 1; // 总幸运值
+  int64 expired_count = 2; // 过期幸运值
+  int64 available_count = 3; // 可用幸运值
+  int64 used_count = 4; // 已使用幸运值
+  int64 user_id = 5; // 用户id
+}
+
+message GetLuckyPointReply {
+  repeated  GetLuckyPointItem data = 1; // 用户幸运值列表
 }
 
 message AddLuckyValReq {
