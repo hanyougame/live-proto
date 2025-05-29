@@ -14,6 +14,7 @@ import (
 )
 
 type (
+	BatchDelUserRiskListReq   = v1.BatchDelUserRiskListReq
 	BatchGetUserRiskListReply = v1.BatchGetUserRiskListReply
 	BatchGetUserRiskListReq   = v1.BatchGetUserRiskListReq
 	GetUserRiskListReply      = v1.GetUserRiskListReply
@@ -29,6 +30,8 @@ type (
 		GetUserRiskList(ctx context.Context, in *GetUserRiskListReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
 		// 批量获取用户风控名单
 		BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error)
+		// 删除批量用户风控名单
+		BatchDelUserRiskList(ctx context.Context, in *BatchDelUserRiskListReq, opts ...grpc.CallOption) (*RiskReply, error)
 	}
 
 	defaultLiveRiskInnerService struct {
@@ -58,4 +61,10 @@ func (m *defaultLiveRiskInnerService) GetUserRiskList(ctx context.Context, in *G
 func (m *defaultLiveRiskInnerService) BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error) {
 	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
 	return client.BatchGetUserRiskList(ctx, in, opts...)
+}
+
+// 删除批量用户风控名单
+func (m *defaultLiveRiskInnerService) BatchDelUserRiskList(ctx context.Context, in *BatchDelUserRiskListReq, opts ...grpc.CallOption) (*RiskReply, error) {
+	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
+	return client.BatchDelUserRiskList(ctx, in, opts...)
 }
