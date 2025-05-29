@@ -414,6 +414,7 @@ type LuckyPointsUsedItem struct {
 	PointBefore   int64                  `protobuf:"varint,7,opt,name=point_before,json=pointBefore,proto3" json:"point_before,omitempty"`                                             // 领取前的幸运值
 	PointAfter    int64                  `protobuf:"varint,8,opt,name=point_after,json=pointAfter,proto3" json:"point_after,omitempty"`                                                // 领取后的幸运值
 	Point         int32                  `protobuf:"varint,9,opt,name=point,proto3" json:"point,omitempty"`                                                                            // 幸运值
+	Reward        int32                  `protobuf:"varint,10,opt,name=reward,proto3" json:"reward,omitempty"`                                                                         // 奖励金额
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -507,6 +508,13 @@ func (x *LuckyPointsUsedItem) GetPointAfter() int64 {
 func (x *LuckyPointsUsedItem) GetPoint() int32 {
 	if x != nil {
 		return x.Point
+	}
+	return 0
+}
+
+func (x *LuckyPointsUsedItem) GetReward() int32 {
+	if x != nil {
+		return x.Reward
 	}
 	return 0
 }
@@ -1397,7 +1405,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"activityId\"0\n" +
 	"\rRewardListReq\x12\x1f\n" +
 	"\vactivity_id\x18\x01 \x01(\x03R\n" +
-	"activityId\"\xaf\x03\n" +
+	"activityId\"\xc7\x03\n" +
 	"\x13LuckyPointsUsedItem\x122\n" +
 	"\tspin_type\x18\x01 \x01(\x0e2\x15.activity.v1.SpinTypeR\bspinType\x126\n" +
 	"\bUsedList\x18\x02 \x03(\v2\x1a.activity.v1.UseLuckyPointR\bUsedList\x12\x17\n" +
@@ -1408,7 +1416,9 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\fpoint_before\x18\a \x01(\x03R\vpointBefore\x12\x1f\n" +
 	"\vpoint_after\x18\b \x01(\x03R\n" +
 	"pointAfter\x12\x14\n" +
-	"\x05point\x18\t \x01(\x05R\x05point\x1a9\n" +
+	"\x05point\x18\t \x01(\x05R\x05point\x12\x16\n" +
+	"\x06reward\x18\n" +
+	" \x01(\x05R\x06reward\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"P\n" +
