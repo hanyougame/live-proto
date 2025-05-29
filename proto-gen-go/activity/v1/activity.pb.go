@@ -747,8 +747,8 @@ type UseLuckyPointReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                                            // 用户id
 	ActivityId    int64                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`                                                // 活动id
-	Reward        int32                  `protobuf:"varint,3,opt,name=reward,proto3" json:"reward,omitempty"`                                                                          // // 奖励金额
-	UsedList      []*UseLuckyPoint       `protobuf:"bytes,4,rep,name=UsedList,proto3" json:"UsedList,omitempty"`                                                                       // 使用的幸运值列表
+	Reward        int32                  `protobuf:"varint,3,opt,name=reward,proto3" json:"reward,omitempty"`                                                                          // 奖励金额
+	Point         int32                  `protobuf:"varint,4,opt,name=point,proto3" json:"point,omitempty"`                                                                            // 消耗的总幸运值
 	SpinType      SpinType               `protobuf:"varint,5,opt,name=spin_type,json=spinType,proto3,enum=activity.v1.SpinType" json:"spin_type,omitempty"`                            // 转盘类型
 	Detail        map[string]string      `protobuf:"bytes,6,rep,name=detail,proto3" json:"detail,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 额外信息
 	unknownFields protoimpl.UnknownFields
@@ -806,11 +806,11 @@ func (x *UseLuckyPointReq) GetReward() int32 {
 	return 0
 }
 
-func (x *UseLuckyPointReq) GetUsedList() []*UseLuckyPoint {
+func (x *UseLuckyPointReq) GetPoint() int32 {
 	if x != nil {
-		return x.UsedList
+		return x.Point
 	}
-	return nil
+	return 0
 }
 
 func (x *UseLuckyPointReq) GetSpinType() SpinType {
@@ -1414,13 +1414,13 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x04data\x18\x01 \x03(\v2\x1f.activity.v1.LuckyPointsAddItemR\x04data\"@\n" +
 	"\rUseLuckyPoint\x12\x19\n" +
 	"\bclaim_id\x18\x01 \x01(\x05R\aclaimId\x12\x14\n" +
-	"\x05point\x18\x02 \x01(\x05R\x05point\"\xce\x02\n" +
+	"\x05point\x18\x02 \x01(\x05R\x05point\"\xac\x02\n" +
 	"\x10UseLuckyPointReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1f\n" +
 	"\vactivity_id\x18\x02 \x01(\x03R\n" +
 	"activityId\x12\x16\n" +
-	"\x06reward\x18\x03 \x01(\x05R\x06reward\x126\n" +
-	"\bUsedList\x18\x04 \x03(\v2\x1a.activity.v1.UseLuckyPointR\bUsedList\x122\n" +
+	"\x06reward\x18\x03 \x01(\x05R\x06reward\x12\x14\n" +
+	"\x05point\x18\x04 \x01(\x05R\x05point\x122\n" +
 	"\tspin_type\x18\x05 \x01(\x0e2\x15.activity.v1.SpinTypeR\bspinType\x12A\n" +
 	"\x06detail\x18\x06 \x03(\v2).activity.v1.UseLuckyPointReq.DetailEntryR\x06detail\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
@@ -1546,37 +1546,36 @@ var file_proto_activity_v1_activity_proto_depIdxs = []int32{
 	8,  // 4: activity.v1.LuckyPointsUsedListReply.data:type_name -> activity.v1.LuckyPointsUsedItem
 	24, // 5: activity.v1.LuckyPointsAddItem.detail:type_name -> activity.v1.LuckyPointsAddItem.DetailEntry
 	10, // 6: activity.v1.LuckyPointsAddListReply.data:type_name -> activity.v1.LuckyPointsAddItem
-	12, // 7: activity.v1.UseLuckyPointReq.UsedList:type_name -> activity.v1.UseLuckyPoint
-	1,  // 8: activity.v1.UseLuckyPointReq.spin_type:type_name -> activity.v1.SpinType
-	25, // 9: activity.v1.UseLuckyPointReq.detail:type_name -> activity.v1.UseLuckyPointReq.DetailEntry
-	15, // 10: activity.v1.GetLuckyPointReply.data:type_name -> activity.v1.GetLuckyPointItem
-	0,  // 11: activity.v1.LuckySpinEventReq.type:type_name -> activity.v1.EventType
-	26, // 12: activity.v1.CheckUserRedPacketConditionReply.user_packet_conditions:type_name -> activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
-	18, // 13: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:input_type -> activity.v1.RedPacketCampaignEventReq
-	20, // 14: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:input_type -> activity.v1.CheckUserRedPacketConditionReq
-	22, // 15: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:input_type -> activity.v1.IncreaseUserRedPacketCountReq
-	19, // 16: activity.v1.LiveActivityInnerService.LuckySpinEvent:input_type -> activity.v1.LuckySpinEventReq
-	17, // 17: activity.v1.LiveActivityInnerService.AddLuckyPoint:input_type -> activity.v1.AddLuckyValReq
-	13, // 18: activity.v1.LiveActivityInnerService.UseLuckyPoint:input_type -> activity.v1.UseLuckyPointReq
-	14, // 19: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:input_type -> activity.v1.GetLuckyPointReq
-	6,  // 20: activity.v1.LiveActivityInnerService.LuckyPointsAddList:input_type -> activity.v1.GetLuckyPointListReq
-	6,  // 21: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:input_type -> activity.v1.GetLuckyPointListReq
-	7,  // 22: activity.v1.LiveActivityInnerService.RewardList:input_type -> activity.v1.RewardListReq
-	3,  // 23: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:output_type -> activity.v1.ActivityReply
-	21, // 24: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:output_type -> activity.v1.CheckUserRedPacketConditionReply
-	3,  // 25: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:output_type -> activity.v1.ActivityReply
-	3,  // 26: activity.v1.LiveActivityInnerService.LuckySpinEvent:output_type -> activity.v1.ActivityReply
-	3,  // 27: activity.v1.LiveActivityInnerService.AddLuckyPoint:output_type -> activity.v1.ActivityReply
-	3,  // 28: activity.v1.LiveActivityInnerService.UseLuckyPoint:output_type -> activity.v1.ActivityReply
-	16, // 29: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:output_type -> activity.v1.GetLuckyPointReply
-	11, // 30: activity.v1.LiveActivityInnerService.LuckyPointsAddList:output_type -> activity.v1.LuckyPointsAddListReply
-	9,  // 31: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:output_type -> activity.v1.LuckyPointsUsedListReply
-	4,  // 32: activity.v1.LiveActivityInnerService.RewardList:output_type -> activity.v1.RewardListReply
-	23, // [23:33] is the sub-list for method output_type
-	13, // [13:23] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	1,  // 7: activity.v1.UseLuckyPointReq.spin_type:type_name -> activity.v1.SpinType
+	25, // 8: activity.v1.UseLuckyPointReq.detail:type_name -> activity.v1.UseLuckyPointReq.DetailEntry
+	15, // 9: activity.v1.GetLuckyPointReply.data:type_name -> activity.v1.GetLuckyPointItem
+	0,  // 10: activity.v1.LuckySpinEventReq.type:type_name -> activity.v1.EventType
+	26, // 11: activity.v1.CheckUserRedPacketConditionReply.user_packet_conditions:type_name -> activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
+	18, // 12: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:input_type -> activity.v1.RedPacketCampaignEventReq
+	20, // 13: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:input_type -> activity.v1.CheckUserRedPacketConditionReq
+	22, // 14: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:input_type -> activity.v1.IncreaseUserRedPacketCountReq
+	19, // 15: activity.v1.LiveActivityInnerService.LuckySpinEvent:input_type -> activity.v1.LuckySpinEventReq
+	17, // 16: activity.v1.LiveActivityInnerService.AddLuckyPoint:input_type -> activity.v1.AddLuckyValReq
+	13, // 17: activity.v1.LiveActivityInnerService.UseLuckyPoint:input_type -> activity.v1.UseLuckyPointReq
+	14, // 18: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:input_type -> activity.v1.GetLuckyPointReq
+	6,  // 19: activity.v1.LiveActivityInnerService.LuckyPointsAddList:input_type -> activity.v1.GetLuckyPointListReq
+	6,  // 20: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:input_type -> activity.v1.GetLuckyPointListReq
+	7,  // 21: activity.v1.LiveActivityInnerService.RewardList:input_type -> activity.v1.RewardListReq
+	3,  // 22: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:output_type -> activity.v1.ActivityReply
+	21, // 23: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:output_type -> activity.v1.CheckUserRedPacketConditionReply
+	3,  // 24: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:output_type -> activity.v1.ActivityReply
+	3,  // 25: activity.v1.LiveActivityInnerService.LuckySpinEvent:output_type -> activity.v1.ActivityReply
+	3,  // 26: activity.v1.LiveActivityInnerService.AddLuckyPoint:output_type -> activity.v1.ActivityReply
+	3,  // 27: activity.v1.LiveActivityInnerService.UseLuckyPoint:output_type -> activity.v1.ActivityReply
+	16, // 28: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:output_type -> activity.v1.GetLuckyPointReply
+	11, // 29: activity.v1.LiveActivityInnerService.LuckyPointsAddList:output_type -> activity.v1.LuckyPointsAddListReply
+	9,  // 30: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:output_type -> activity.v1.LuckyPointsUsedListReply
+	4,  // 31: activity.v1.LiveActivityInnerService.RewardList:output_type -> activity.v1.RewardListReply
+	22, // [22:32] is the sub-list for method output_type
+	12, // [12:22] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_proto_activity_v1_activity_proto_init() }

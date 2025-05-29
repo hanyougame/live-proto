@@ -107,8 +107,8 @@ message UseLuckyPoint {
 message UseLuckyPointReq {
   int64 user_id = 1; // 用户id
   int64 activity_id = 2; // 活动id
-  int32 reward = 3; // // 奖励金额
-  repeated UseLuckyPoint UsedList = 4; // 使用的幸运值列表
+  int32 reward = 3; // 奖励金额
+  int32 point = 4; // 消耗的总幸运值
   SpinType spin_type = 5; // 转盘类型
   map<string, string> detail = 6; // 额外信息
 }
