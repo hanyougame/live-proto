@@ -20,21 +20,18 @@ service LiveRiskInnerService{
   rpc BatchGetUserRiskList(BatchGetUserRiskListReq) returns (BatchGetUserRiskListReply);
   // 删除批量用户风控名单
   rpc BatchDelUserRiskList(BatchDelUserRiskListReq) returns (RiskReply);
-  // 获取用户绑定上级风控
-  rpc GetUserBindParentRisk(GetUserBindParentRiskReq) returns(GetUserBindParentRiskReply);
+  // 获取指定IP地址和设备号的用户使用数量
+  rpc GetIpOrDeviceUserCount(IpOrDeviceUserCountReq) returns (IpOrDeviceUserCountReply);
 }
 
-message GetUserBindParentRiskReq{
-  string ip = 1; // IP地址
-  string device_id = 2; // 设备号
-  int64 limit_same_ip = 3; // 同IP数量上限（同IP登录的用户数量如果超过这个数量则不能绑定上级，0表示不限制）
-  int64 limit_same_device = 4; // 同设备号数量上限（同设备号登录的用户数量如果超过这个数量则不能绑定上级，0表示不限制）
+message IpOrDeviceUserCountReq{
+  repeated string ip_addresses = 1; // IP地址
+  repeated string device_ids = 2; // 设备号
 }
 
-message GetUserBindParentRiskReply{
-  bool result = 1; // 风控结果：true-风控，false-不风控
-  int64 ip_login_user_total = 2; // ip登录的用户数量
-  int64 device_id_login_user_total = 3; // 设备号登录的用户数量
+message IpOrDeviceUserCountReply{
+  map <string, int64> ip_user_num = 2; // ip登录的用户数量
+  map <string, int64> device_user_num = 3; // 设备号登录的用户数量
 }
 
 

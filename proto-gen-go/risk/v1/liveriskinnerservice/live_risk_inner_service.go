@@ -14,16 +14,16 @@ import (
 )
 
 type (
-	BatchDelUserRiskListReq    = v1.BatchDelUserRiskListReq
-	BatchGetUserRiskListReply  = v1.BatchGetUserRiskListReply
-	BatchGetUserRiskListReq    = v1.BatchGetUserRiskListReq
-	GetUserBindParentRiskReply = v1.GetUserBindParentRiskReply
-	GetUserBindParentRiskReq   = v1.GetUserBindParentRiskReq
-	GetUserRiskListReply       = v1.GetUserRiskListReply
-	GetUserRiskListReq         = v1.GetUserRiskListReq
-	NotifyRiskRuleTriggerReq   = v1.NotifyRiskRuleTriggerReq
-	RiskReply                  = v1.RiskReply
-	RiskReq                    = v1.RiskReq
+	BatchDelUserRiskListReq   = v1.BatchDelUserRiskListReq
+	BatchGetUserRiskListReply = v1.BatchGetUserRiskListReply
+	BatchGetUserRiskListReq   = v1.BatchGetUserRiskListReq
+	GetUserRiskListReply      = v1.GetUserRiskListReply
+	GetUserRiskListReq        = v1.GetUserRiskListReq
+	IpOrDeviceUserCountReply  = v1.IpOrDeviceUserCountReply
+	IpOrDeviceUserCountReq    = v1.IpOrDeviceUserCountReq
+	NotifyRiskRuleTriggerReq  = v1.NotifyRiskRuleTriggerReq
+	RiskReply                 = v1.RiskReply
+	RiskReq                   = v1.RiskReq
 
 	LiveRiskInnerService interface {
 		// NotifyRiskRuleTrigger 处理通知风控触发规则
@@ -34,8 +34,8 @@ type (
 		BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error)
 		// 删除批量用户风控名单
 		BatchDelUserRiskList(ctx context.Context, in *BatchDelUserRiskListReq, opts ...grpc.CallOption) (*RiskReply, error)
-		// 获取用户绑定上级风控
-		GetUserBindParentRisk(ctx context.Context, in *GetUserBindParentRiskReq, opts ...grpc.CallOption) (*GetUserBindParentRiskReply, error)
+		// 获取指定IP地址和设备号的用户使用数量
+		GetIpOrDeviceUserCount(ctx context.Context, in *IpOrDeviceUserCountReq, opts ...grpc.CallOption) (*IpOrDeviceUserCountReply, error)
 	}
 
 	defaultLiveRiskInnerService struct {
@@ -73,8 +73,8 @@ func (m *defaultLiveRiskInnerService) BatchDelUserRiskList(ctx context.Context, 
 	return client.BatchDelUserRiskList(ctx, in, opts...)
 }
 
-// 获取用户绑定上级风控
-func (m *defaultLiveRiskInnerService) GetUserBindParentRisk(ctx context.Context, in *GetUserBindParentRiskReq, opts ...grpc.CallOption) (*GetUserBindParentRiskReply, error) {
+// 获取指定IP地址和设备号的用户使用数量
+func (m *defaultLiveRiskInnerService) GetIpOrDeviceUserCount(ctx context.Context, in *IpOrDeviceUserCountReq, opts ...grpc.CallOption) (*IpOrDeviceUserCountReply, error) {
 	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
-	return client.GetUserBindParentRisk(ctx, in, opts...)
+	return client.GetIpOrDeviceUserCount(ctx, in, opts...)
 }
