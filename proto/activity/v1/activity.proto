@@ -141,6 +141,7 @@ message AddLuckyValReq {
   string condition = 5; // 条件
   string event_type = 6; // 事件类型
   string event_data = 7; // 事件数据
+  map<string, string> detail = 8; // 额外信息
 }
 
 message RedPacketCampaignEventReq {
