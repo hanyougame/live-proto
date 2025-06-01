@@ -45,6 +45,17 @@ service LiveActivityInnerService{
   rpc LuckyPointsUsedList(GetLuckyPointListReq) returns (LuckyPointsUsedListReply);
   // 获奖记录 公告展示
   rpc RewardList(RewardListReq) returns (RewardListReply);
+  // 获取用户当前周期内有效邀请人数
+  rpc GetUserInviteCount(GetUserInviteCountReq) returns (GetUserInviteCountReply);
+}
+
+message GetUserInviteCountReq {
+  int64 user_id = 1;      // 用户id
+  int64 activity_id = 2;  // 活动id
+}
+
+message GetUserInviteCountReply {
+  int32 invite_count = 1; // 有效邀请人数
 }
 
 message RewardListReply {
@@ -141,6 +152,7 @@ message AddLuckyValReq {
   string condition = 5; // 条件
   string event_type = 6; // 事件类型
   string event_data = 7; // 事件数据
+  map<string, string> detail = 8; // 额外信息
 }
 
 message RedPacketCampaignEventReq {
@@ -168,3 +180,5 @@ message IncreaseUserRedPacketCountReq{
   int64 period_index = 3;
   string current_date = 4;
 }
+
+

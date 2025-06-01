@@ -23,6 +23,8 @@ type (
 	GetLuckyPointListReq             = v1.GetLuckyPointListReq
 	GetLuckyPointReply               = v1.GetLuckyPointReply
 	GetLuckyPointReq                 = v1.GetLuckyPointReq
+	GetUserInviteCountReply          = v1.GetUserInviteCountReply
+	GetUserInviteCountReq            = v1.GetUserInviteCountReq
 	IncreaseUserRedPacketCountReq    = v1.IncreaseUserRedPacketCountReq
 	LuckyPointsAddItem               = v1.LuckyPointsAddItem
 	LuckyPointsAddListReply          = v1.LuckyPointsAddListReply
@@ -57,6 +59,8 @@ type (
 		LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointListReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error)
 		// 获奖记录 公告展示
 		RewardList(ctx context.Context, in *RewardListReq, opts ...grpc.CallOption) (*RewardListReply, error)
+		// 获取用户当前周期内有效邀请人数
+		GetUserInviteCount(ctx context.Context, in *GetUserInviteCountReq, opts ...grpc.CallOption) (*GetUserInviteCountReply, error)
 	}
 
 	defaultLiveActivityInnerService struct {
@@ -128,4 +132,10 @@ func (m *defaultLiveActivityInnerService) LuckyPointsUsedList(ctx context.Contex
 func (m *defaultLiveActivityInnerService) RewardList(ctx context.Context, in *RewardListReq, opts ...grpc.CallOption) (*RewardListReply, error) {
 	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
 	return client.RewardList(ctx, in, opts...)
+}
+
+// 获取用户当前周期内有效邀请人数
+func (m *defaultLiveActivityInnerService) GetUserInviteCount(ctx context.Context, in *GetUserInviteCountReq, opts ...grpc.CallOption) (*GetUserInviteCountReply, error) {
+	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
+	return client.GetUserInviteCount(ctx, in, opts...)
 }
