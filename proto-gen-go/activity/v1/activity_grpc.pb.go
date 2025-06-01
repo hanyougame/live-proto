@@ -29,6 +29,7 @@ const (
 	LiveActivityInnerService_LuckyPointsAddList_FullMethodName          = "/activity.v1.LiveActivityInnerService/LuckyPointsAddList"
 	LiveActivityInnerService_LuckyPointsUsedList_FullMethodName         = "/activity.v1.LiveActivityInnerService/LuckyPointsUsedList"
 	LiveActivityInnerService_RewardList_FullMethodName                  = "/activity.v1.LiveActivityInnerService/RewardList"
+	LiveActivityInnerService_GetUserInviteCount_FullMethodName          = "/activity.v1.LiveActivityInnerService/GetUserInviteCount"
 )
 
 // LiveActivityInnerServiceClient is the client API for LiveActivityInnerService service.
@@ -55,6 +56,8 @@ type LiveActivityInnerServiceClient interface {
 	LuckyPointsUsedList(ctx context.Context, in *GetLuckyPointListReq, opts ...grpc.CallOption) (*LuckyPointsUsedListReply, error)
 	// 获奖记录 公告展示
 	RewardList(ctx context.Context, in *RewardListReq, opts ...grpc.CallOption) (*RewardListReply, error)
+	// 获取用户当前周期内有效邀请人数
+	GetUserInviteCount(ctx context.Context, in *GetUserInviteCountReq, opts ...grpc.CallOption) (*GetUserInviteCountReply, error)
 }
 
 type liveActivityInnerServiceClient struct {
@@ -165,6 +168,16 @@ func (c *liveActivityInnerServiceClient) RewardList(ctx context.Context, in *Rew
 	return out, nil
 }
 
+func (c *liveActivityInnerServiceClient) GetUserInviteCount(ctx context.Context, in *GetUserInviteCountReq, opts ...grpc.CallOption) (*GetUserInviteCountReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserInviteCountReply)
+	err := c.cc.Invoke(ctx, LiveActivityInnerService_GetUserInviteCount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveActivityInnerServiceServer is the server API for LiveActivityInnerService service.
 // All implementations must embed UnimplementedLiveActivityInnerServiceServer
 // for forward compatibility.
@@ -189,6 +202,8 @@ type LiveActivityInnerServiceServer interface {
 	LuckyPointsUsedList(context.Context, *GetLuckyPointListReq) (*LuckyPointsUsedListReply, error)
 	// 获奖记录 公告展示
 	RewardList(context.Context, *RewardListReq) (*RewardListReply, error)
+	// 获取用户当前周期内有效邀请人数
+	GetUserInviteCount(context.Context, *GetUserInviteCountReq) (*GetUserInviteCountReply, error)
 	mustEmbedUnimplementedLiveActivityInnerServiceServer()
 }
 
@@ -228,6 +243,9 @@ func (UnimplementedLiveActivityInnerServiceServer) LuckyPointsUsedList(context.C
 }
 func (UnimplementedLiveActivityInnerServiceServer) RewardList(context.Context, *RewardListReq) (*RewardListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RewardList not implemented")
+}
+func (UnimplementedLiveActivityInnerServiceServer) GetUserInviteCount(context.Context, *GetUserInviteCountReq) (*GetUserInviteCountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInviteCount not implemented")
 }
 func (UnimplementedLiveActivityInnerServiceServer) mustEmbedUnimplementedLiveActivityInnerServiceServer() {
 }
@@ -431,6 +449,24 @@ func _LiveActivityInnerService_RewardList_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveActivityInnerService_GetUserInviteCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInviteCountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveActivityInnerServiceServer).GetUserInviteCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveActivityInnerService_GetUserInviteCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveActivityInnerServiceServer).GetUserInviteCount(ctx, req.(*GetUserInviteCountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveActivityInnerService_ServiceDesc is the grpc.ServiceDesc for LiveActivityInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -477,6 +513,10 @@ var LiveActivityInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RewardList",
 			Handler:    _LiveActivityInnerService_RewardList_Handler,
+		},
+		{
+			MethodName: "GetUserInviteCount",
+			Handler:    _LiveActivityInnerService_GetUserInviteCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
