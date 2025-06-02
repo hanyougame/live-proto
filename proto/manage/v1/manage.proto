@@ -76,56 +76,6 @@ message BatchGetIPGeolocationReply {
   map<string, IPGeolocationInfo> geolocations = 1;  // IP -> 地理位置信息映射
 }
 
-// IP风险检查请求
-message CheckIPRiskReq {
-  string ip = 1;                         // IP地址
-}
-
-// IP风险检查响应
-message CheckIPRiskReply {
-  string ip = 1;                         // IP地址
-  string risk_level = 2;                 // 风险等级: low/medium/high
-  bool is_proxy = 3;                     // 是否代理
-  bool is_vpn = 4;                       // 是否VPN
-  bool is_malicious = 5;                 // 是否恶意IP
-  int64 threat_level = 6;                // 威胁等级
-  string country_name = 7;               // 国家名称
-  string city_name = 8;                  // 城市名称
-  string reason = 9;                     // 风险原因描述
-}
-
-// 批量IP风险检查请求
-message BatchCheckIPRiskReq {
-  repeated string ips = 1;               // IP地址列表
-}
-
-// 批量IP风险检查响应
-message BatchCheckIPRiskReply {
-  map<string, CheckIPRiskReply> risks = 1;  // IP -> 风险信息映射
-}
-
-// 根据国家获取IP统计请求
-message GetIPStatsByCountryReq {
-  string country_code = 1;               // 国家代码，为空则获取所有国家
-  int64 limit = 2;                       // 限制返回数量，默认20
-}
-
-// 国家IP统计信息
-message CountryIPStats {
-  string country_code = 1;               // 国家代码
-  string country_name = 2;               // 国家名称
-  int64 ip_ranges_count = 3;             // IP段数量
-  int64 total_ip_count = 4;              // IP总数
-  double avg_confidence_score = 5;       // 平均置信度
-  int64 proxy_count = 6;                 // 代理IP数量
-  int64 vpn_count = 7;                   // VPN IP数量
-  int64 malicious_count = 8;             // 恶意IP数量
-}
-
-// 根据国家获取IP统计响应
-message GetIPStatsByCountryReply {
-  repeated CountryIPStats stats = 1;     // 国家IP统计列表
-}
 
 
 service LiveManageRpcService{
@@ -139,14 +89,5 @@ service LiveManageRpcService{
 
   // 批量获取IP地理位置信息
   rpc BatchGetIPGeolocation (BatchGetIPGeolocationReq) returns (BatchGetIPGeolocationReply);
-
-  // 检查单个IP风险
-  rpc CheckIPRisk (CheckIPRiskReq) returns (CheckIPRiskReply);
-
-  // 批量检查IP风险
-  rpc BatchCheckIPRisk (BatchCheckIPRiskReq) returns (BatchCheckIPRiskReply);
-
-  // 根据国家获取IP统计信息
-  rpc GetIPStatsByCountry (GetIPStatsByCountryReq) returns (GetIPStatsByCountryReply);
 
 }
