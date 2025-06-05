@@ -31,7 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LiveRiskInnerServiceClient interface {
 	// NotifyRiskRuleTrigger 处理通知风控触发规则
-	NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
+	NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*NotifyRiskRuleTriggerReply, error)
 	// 获取用户风控名单标识
 	GetUserRiskList(ctx context.Context, in *GetUserRiskListReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
 	// 批量获取用户风控名单
@@ -50,8 +50,8 @@ func NewLiveRiskInnerServiceClient(cc grpc.ClientConnInterface) LiveRiskInnerSer
 	return &liveRiskInnerServiceClient{cc}
 }
 
-func (c *liveRiskInnerServiceClient) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error) {
-	out := new(RiskReply)
+func (c *liveRiskInnerServiceClient) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*NotifyRiskRuleTriggerReply, error) {
+	out := new(NotifyRiskRuleTriggerReply)
 	err := c.cc.Invoke(ctx, LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (c *liveRiskInnerServiceClient) GetIpOrDeviceUserCount(ctx context.Context,
 // for forward compatibility
 type LiveRiskInnerServiceServer interface {
 	// NotifyRiskRuleTrigger 处理通知风控触发规则
-	NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error)
+	NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*NotifyRiskRuleTriggerReply, error)
 	// 获取用户风控名单标识
 	GetUserRiskList(context.Context, *GetUserRiskListReq) (*GetUserRiskListReply, error)
 	// 批量获取用户风控名单
@@ -116,7 +116,7 @@ type LiveRiskInnerServiceServer interface {
 type UnimplementedLiveRiskInnerServiceServer struct {
 }
 
-func (UnimplementedLiveRiskInnerServiceServer) NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error) {
+func (UnimplementedLiveRiskInnerServiceServer) NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*NotifyRiskRuleTriggerReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NotifyRiskRuleTrigger not implemented")
 }
 func (UnimplementedLiveRiskInnerServiceServer) GetUserRiskList(context.Context, *GetUserRiskListReq) (*GetUserRiskListReply, error) {
