@@ -77,4 +77,6 @@ message BatchDelUserRiskListReq {
   repeated int64 user_ids = 2;
   string reason = 3;
   RiskListType risk_type = 4;  // 0 删除全部
+  int64 operator_id = 5; // 操作人ID
+  string operator = 6; // 操作人
 }
