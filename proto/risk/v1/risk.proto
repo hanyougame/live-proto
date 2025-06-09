@@ -38,6 +38,7 @@ message IpOrDeviceUserCountReply{
 message NotifyRiskRuleTriggerReq{
   int64 user_id = 1; // 用户ID
   bool  is_need = 2; // 是够需要用户风控标识 false 不需要 true 需要
+  string Extend = 3; // 扩展信息
 }
 
 message NotifyRiskRuleTriggerReply{
