@@ -7,6 +7,7 @@ enum EventType {
   UNKNOWN = 0;
   BET = 1;  // 打码
   RECHARGE = 2; // 充值
+  REGISTER = 3; // 注册
 }
 
 // 新增 SpinType 枚举
