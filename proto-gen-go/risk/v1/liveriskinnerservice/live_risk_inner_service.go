@@ -14,20 +14,21 @@ import (
 )
 
 type (
-	BatchDelUserRiskListReq   = v1.BatchDelUserRiskListReq
-	BatchGetUserRiskListReply = v1.BatchGetUserRiskListReply
-	BatchGetUserRiskListReq   = v1.BatchGetUserRiskListReq
-	GetUserRiskListReply      = v1.GetUserRiskListReply
-	GetUserRiskListReq        = v1.GetUserRiskListReq
-	IpOrDeviceUserCountReply  = v1.IpOrDeviceUserCountReply
-	IpOrDeviceUserCountReq    = v1.IpOrDeviceUserCountReq
-	NotifyRiskRuleTriggerReq  = v1.NotifyRiskRuleTriggerReq
-	RiskReply                 = v1.RiskReply
-	RiskReq                   = v1.RiskReq
+	BatchDelUserRiskListReq    = v1.BatchDelUserRiskListReq
+	BatchGetUserRiskListReply  = v1.BatchGetUserRiskListReply
+	BatchGetUserRiskListReq    = v1.BatchGetUserRiskListReq
+	GetUserRiskListReply       = v1.GetUserRiskListReply
+	GetUserRiskListReq         = v1.GetUserRiskListReq
+	IpOrDeviceUserCountReply   = v1.IpOrDeviceUserCountReply
+	IpOrDeviceUserCountReq     = v1.IpOrDeviceUserCountReq
+	NotifyRiskRuleTriggerReply = v1.NotifyRiskRuleTriggerReply
+	NotifyRiskRuleTriggerReq   = v1.NotifyRiskRuleTriggerReq
+	RiskReply                  = v1.RiskReply
+	RiskReq                    = v1.RiskReq
 
 	LiveRiskInnerService interface {
 		// NotifyRiskRuleTrigger 处理通知风控触发规则
-		NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
+		NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*NotifyRiskRuleTriggerReply, error)
 		// 获取用户风控名单标识
 		GetUserRiskList(ctx context.Context, in *GetUserRiskListReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
 		// 批量获取用户风控名单
@@ -50,7 +51,7 @@ func NewLiveRiskInnerService(cli zrpc.Client) LiveRiskInnerService {
 }
 
 // NotifyRiskRuleTrigger 处理通知风控触发规则
-func (m *defaultLiveRiskInnerService) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error) {
+func (m *defaultLiveRiskInnerService) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*NotifyRiskRuleTriggerReply, error) {
 	client := v1.NewLiveRiskInnerServiceClient(m.cli.Conn())
 	return client.NotifyRiskRuleTrigger(ctx, in, opts...)
 }

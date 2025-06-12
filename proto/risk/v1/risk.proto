@@ -13,7 +13,7 @@ message RiskReply{
 
 service LiveRiskInnerService{
   // NotifyRiskRuleTrigger 处理通知风控触发规则
-  rpc NotifyRiskRuleTrigger(NotifyRiskRuleTriggerReq) returns (RiskReply);
+  rpc NotifyRiskRuleTrigger(NotifyRiskRuleTriggerReq) returns (NotifyRiskRuleTriggerReply);
   // 获取用户风控名单标识
   rpc GetUserRiskList(GetUserRiskListReq) returns (GetUserRiskListReply);
   // 批量获取用户风控名单
@@ -37,7 +37,14 @@ message IpOrDeviceUserCountReply{
 
 message NotifyRiskRuleTriggerReq{
   int64 user_id = 1; // 用户ID
+  bool  is_need = 2; // 是够需要用户风控标识 false 不需要 true 需要
+  string Extend = 3; // 扩展信息
 }
+
+message NotifyRiskRuleTriggerReply{
+  RiskListType user_risk_list = 1;  // 用户名单类型
+}
+
 
 message GetUserRiskListReq{
   int64 user_id = 1;  // 用户ID
@@ -71,4 +78,6 @@ message BatchDelUserRiskListReq {
   repeated int64 user_ids = 2;
   string reason = 3;
   RiskListType risk_type = 4;  // 0 删除全部
+  int64 operator_id = 5; // 操作人ID
+  string operator = 6; // 操作人
 }

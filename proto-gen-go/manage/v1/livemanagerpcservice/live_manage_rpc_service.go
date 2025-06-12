@@ -14,20 +14,13 @@ import (
 )
 
 type (
-	BatchCheckIPRiskReply      = v1.BatchCheckIPRiskReply
-	BatchCheckIPRiskReq        = v1.BatchCheckIPRiskReq
 	BatchGetIPGeolocationReply = v1.BatchGetIPGeolocationReply
 	BatchGetIPGeolocationReq   = v1.BatchGetIPGeolocationReq
-	CheckIPRiskReply           = v1.CheckIPRiskReply
-	CheckIPRiskReq             = v1.CheckIPRiskReq
-	CountryIPStats             = v1.CountryIPStats
 	CurrencyDetailReply        = v1.CurrencyDetailReply
 	CurrencyDetailReplyList    = v1.CurrencyDetailReplyList
 	GetCurrInfoByIDReq         = v1.GetCurrInfoByIDReq
 	GetIPGeolocationReply      = v1.GetIPGeolocationReply
 	GetIPGeolocationReq        = v1.GetIPGeolocationReq
-	GetIPStatsByCountryReply   = v1.GetIPStatsByCountryReply
-	GetIPStatsByCountryReq     = v1.GetIPStatsByCountryReq
 	IPGeolocationInfo          = v1.IPGeolocationInfo
 	ManageReply                = v1.ManageReply
 	ManageReq                  = v1.ManageReq
@@ -41,12 +34,6 @@ type (
 		GetIPGeolocation(ctx context.Context, in *GetIPGeolocationReq, opts ...grpc.CallOption) (*GetIPGeolocationReply, error)
 		// 批量获取IP地理位置信息
 		BatchGetIPGeolocation(ctx context.Context, in *BatchGetIPGeolocationReq, opts ...grpc.CallOption) (*BatchGetIPGeolocationReply, error)
-		// 检查单个IP风险
-		CheckIPRisk(ctx context.Context, in *CheckIPRiskReq, opts ...grpc.CallOption) (*CheckIPRiskReply, error)
-		// 批量检查IP风险
-		BatchCheckIPRisk(ctx context.Context, in *BatchCheckIPRiskReq, opts ...grpc.CallOption) (*BatchCheckIPRiskReply, error)
-		// 根据国家获取IP统计信息
-		GetIPStatsByCountry(ctx context.Context, in *GetIPStatsByCountryReq, opts ...grpc.CallOption) (*GetIPStatsByCountryReply, error)
 	}
 
 	defaultLiveManageRpcService struct {
@@ -82,22 +69,4 @@ func (m *defaultLiveManageRpcService) GetIPGeolocation(ctx context.Context, in *
 func (m *defaultLiveManageRpcService) BatchGetIPGeolocation(ctx context.Context, in *BatchGetIPGeolocationReq, opts ...grpc.CallOption) (*BatchGetIPGeolocationReply, error) {
 	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
 	return client.BatchGetIPGeolocation(ctx, in, opts...)
-}
-
-// 检查单个IP风险
-func (m *defaultLiveManageRpcService) CheckIPRisk(ctx context.Context, in *CheckIPRiskReq, opts ...grpc.CallOption) (*CheckIPRiskReply, error) {
-	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
-	return client.CheckIPRisk(ctx, in, opts...)
-}
-
-// 批量检查IP风险
-func (m *defaultLiveManageRpcService) BatchCheckIPRisk(ctx context.Context, in *BatchCheckIPRiskReq, opts ...grpc.CallOption) (*BatchCheckIPRiskReply, error) {
-	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
-	return client.BatchCheckIPRisk(ctx, in, opts...)
-}
-
-// 根据国家获取IP统计信息
-func (m *defaultLiveManageRpcService) GetIPStatsByCountry(ctx context.Context, in *GetIPStatsByCountryReq, opts ...grpc.CallOption) (*GetIPStatsByCountryReply, error) {
-	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
-	return client.GetIPStatsByCountry(ctx, in, opts...)
 }

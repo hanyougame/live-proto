@@ -23,9 +23,6 @@ const (
 	LiveManageRpcService_GetCurrInfoById_FullMethodName       = "/manage.v1.LiveManageRpcService/GetCurrInfoById"
 	LiveManageRpcService_GetIPGeolocation_FullMethodName      = "/manage.v1.LiveManageRpcService/GetIPGeolocation"
 	LiveManageRpcService_BatchGetIPGeolocation_FullMethodName = "/manage.v1.LiveManageRpcService/BatchGetIPGeolocation"
-	LiveManageRpcService_CheckIPRisk_FullMethodName           = "/manage.v1.LiveManageRpcService/CheckIPRisk"
-	LiveManageRpcService_BatchCheckIPRisk_FullMethodName      = "/manage.v1.LiveManageRpcService/BatchCheckIPRisk"
-	LiveManageRpcService_GetIPStatsByCountry_FullMethodName   = "/manage.v1.LiveManageRpcService/GetIPStatsByCountry"
 )
 
 // LiveManageRpcServiceClient is the client API for LiveManageRpcService service.
@@ -41,12 +38,6 @@ type LiveManageRpcServiceClient interface {
 	GetIPGeolocation(ctx context.Context, in *GetIPGeolocationReq, opts ...grpc.CallOption) (*GetIPGeolocationReply, error)
 	// 批量获取IP地理位置信息
 	BatchGetIPGeolocation(ctx context.Context, in *BatchGetIPGeolocationReq, opts ...grpc.CallOption) (*BatchGetIPGeolocationReply, error)
-	// 检查单个IP风险
-	CheckIPRisk(ctx context.Context, in *CheckIPRiskReq, opts ...grpc.CallOption) (*CheckIPRiskReply, error)
-	// 批量检查IP风险
-	BatchCheckIPRisk(ctx context.Context, in *BatchCheckIPRiskReq, opts ...grpc.CallOption) (*BatchCheckIPRiskReply, error)
-	// 根据国家获取IP统计信息
-	GetIPStatsByCountry(ctx context.Context, in *GetIPStatsByCountryReq, opts ...grpc.CallOption) (*GetIPStatsByCountryReply, error)
 }
 
 type liveManageRpcServiceClient struct {
@@ -93,33 +84,6 @@ func (c *liveManageRpcServiceClient) BatchGetIPGeolocation(ctx context.Context, 
 	return out, nil
 }
 
-func (c *liveManageRpcServiceClient) CheckIPRisk(ctx context.Context, in *CheckIPRiskReq, opts ...grpc.CallOption) (*CheckIPRiskReply, error) {
-	out := new(CheckIPRiskReply)
-	err := c.cc.Invoke(ctx, LiveManageRpcService_CheckIPRisk_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *liveManageRpcServiceClient) BatchCheckIPRisk(ctx context.Context, in *BatchCheckIPRiskReq, opts ...grpc.CallOption) (*BatchCheckIPRiskReply, error) {
-	out := new(BatchCheckIPRiskReply)
-	err := c.cc.Invoke(ctx, LiveManageRpcService_BatchCheckIPRisk_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *liveManageRpcServiceClient) GetIPStatsByCountry(ctx context.Context, in *GetIPStatsByCountryReq, opts ...grpc.CallOption) (*GetIPStatsByCountryReply, error) {
-	out := new(GetIPStatsByCountryReply)
-	err := c.cc.Invoke(ctx, LiveManageRpcService_GetIPStatsByCountry_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // LiveManageRpcServiceServer is the server API for LiveManageRpcService service.
 // All implementations must embed UnimplementedLiveManageRpcServiceServer
 // for forward compatibility
@@ -133,12 +97,6 @@ type LiveManageRpcServiceServer interface {
 	GetIPGeolocation(context.Context, *GetIPGeolocationReq) (*GetIPGeolocationReply, error)
 	// 批量获取IP地理位置信息
 	BatchGetIPGeolocation(context.Context, *BatchGetIPGeolocationReq) (*BatchGetIPGeolocationReply, error)
-	// 检查单个IP风险
-	CheckIPRisk(context.Context, *CheckIPRiskReq) (*CheckIPRiskReply, error)
-	// 批量检查IP风险
-	BatchCheckIPRisk(context.Context, *BatchCheckIPRiskReq) (*BatchCheckIPRiskReply, error)
-	// 根据国家获取IP统计信息
-	GetIPStatsByCountry(context.Context, *GetIPStatsByCountryReq) (*GetIPStatsByCountryReply, error)
 	mustEmbedUnimplementedLiveManageRpcServiceServer()
 }
 
@@ -157,15 +115,6 @@ func (UnimplementedLiveManageRpcServiceServer) GetIPGeolocation(context.Context,
 }
 func (UnimplementedLiveManageRpcServiceServer) BatchGetIPGeolocation(context.Context, *BatchGetIPGeolocationReq) (*BatchGetIPGeolocationReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchGetIPGeolocation not implemented")
-}
-func (UnimplementedLiveManageRpcServiceServer) CheckIPRisk(context.Context, *CheckIPRiskReq) (*CheckIPRiskReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckIPRisk not implemented")
-}
-func (UnimplementedLiveManageRpcServiceServer) BatchCheckIPRisk(context.Context, *BatchCheckIPRiskReq) (*BatchCheckIPRiskReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BatchCheckIPRisk not implemented")
-}
-func (UnimplementedLiveManageRpcServiceServer) GetIPStatsByCountry(context.Context, *GetIPStatsByCountryReq) (*GetIPStatsByCountryReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetIPStatsByCountry not implemented")
 }
 func (UnimplementedLiveManageRpcServiceServer) mustEmbedUnimplementedLiveManageRpcServiceServer() {}
 
@@ -252,60 +201,6 @@ func _LiveManageRpcService_BatchGetIPGeolocation_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LiveManageRpcService_CheckIPRisk_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckIPRiskReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveManageRpcServiceServer).CheckIPRisk(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveManageRpcService_CheckIPRisk_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveManageRpcServiceServer).CheckIPRisk(ctx, req.(*CheckIPRiskReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveManageRpcService_BatchCheckIPRisk_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchCheckIPRiskReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveManageRpcServiceServer).BatchCheckIPRisk(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveManageRpcService_BatchCheckIPRisk_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveManageRpcServiceServer).BatchCheckIPRisk(ctx, req.(*BatchCheckIPRiskReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LiveManageRpcService_GetIPStatsByCountry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetIPStatsByCountryReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LiveManageRpcServiceServer).GetIPStatsByCountry(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LiveManageRpcService_GetIPStatsByCountry_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LiveManageRpcServiceServer).GetIPStatsByCountry(ctx, req.(*GetIPStatsByCountryReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // LiveManageRpcService_ServiceDesc is the grpc.ServiceDesc for LiveManageRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -328,18 +223,6 @@ var LiveManageRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchGetIPGeolocation",
 			Handler:    _LiveManageRpcService_BatchGetIPGeolocation_Handler,
-		},
-		{
-			MethodName: "CheckIPRisk",
-			Handler:    _LiveManageRpcService_CheckIPRisk_Handler,
-		},
-		{
-			MethodName: "BatchCheckIPRisk",
-			Handler:    _LiveManageRpcService_BatchCheckIPRisk_Handler,
-		},
-		{
-			MethodName: "GetIPStatsByCountry",
-			Handler:    _LiveManageRpcService_GetIPStatsByCountry_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
