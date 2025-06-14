@@ -874,6 +874,7 @@ type UseLuckyPointReq struct {
 	Point         int32                  `protobuf:"varint,4,opt,name=point,proto3" json:"point,omitempty"`                                                                            // 消耗的总幸运值
 	SpinType      SpinType               `protobuf:"varint,5,opt,name=spin_type,json=spinType,proto3,enum=activity.v1.SpinType" json:"spin_type,omitempty"`                            // 转盘类型
 	Detail        map[string]string      `protobuf:"bytes,6,rep,name=detail,proto3" json:"detail,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 额外信息
+	CycleId       int32                  `protobuf:"varint,7,opt,name=cycle_id,json=cycleId,proto3" json:"cycle_id,omitempty"`                                                         // 周期id
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -948,6 +949,13 @@ func (x *UseLuckyPointReq) GetDetail() map[string]string {
 		return x.Detail
 	}
 	return nil
+}
+
+func (x *UseLuckyPointReq) GetCycleId() int32 {
+	if x != nil {
+		return x.CycleId
+	}
+	return 0
 }
 
 type GetLuckyPointReq struct {
@@ -1555,7 +1563,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x04data\x18\x01 \x03(\v2\x1f.activity.v1.LuckyPointsAddItemR\x04data\"@\n" +
 	"\rUseLuckyPoint\x12\x19\n" +
 	"\bclaim_id\x18\x01 \x01(\x05R\aclaimId\x12\x14\n" +
-	"\x05point\x18\x02 \x01(\x05R\x05point\"\xac\x02\n" +
+	"\x05point\x18\x02 \x01(\x05R\x05point\"\xc7\x02\n" +
 	"\x10UseLuckyPointReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1f\n" +
 	"\vactivity_id\x18\x02 \x01(\x03R\n" +
@@ -1563,7 +1571,8 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x06reward\x18\x03 \x01(\x05R\x06reward\x12\x14\n" +
 	"\x05point\x18\x04 \x01(\x05R\x05point\x122\n" +
 	"\tspin_type\x18\x05 \x01(\x0e2\x15.activity.v1.SpinTypeR\bspinType\x12A\n" +
-	"\x06detail\x18\x06 \x03(\v2).activity.v1.UseLuckyPointReq.DetailEntryR\x06detail\x1a9\n" +
+	"\x06detail\x18\x06 \x03(\v2).activity.v1.UseLuckyPointReq.DetailEntryR\x06detail\x12\x19\n" +
+	"\bcycle_id\x18\a \x01(\x05R\acycleId\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"L\n" +

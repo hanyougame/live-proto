@@ -126,6 +126,7 @@ message UseLuckyPointReq {
   int32 point = 4; // 消耗的总幸运值
   SpinType spin_type = 5; // 转盘类型
   map<string, string> detail = 6; // 额外信息
+  int32 cycle_id = 7; // 周期id
 }
 
 message GetLuckyPointReq {
