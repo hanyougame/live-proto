@@ -667,6 +667,9 @@ message GameCategoryDetail {
   int64 second_page_display_count = 12;
   // 备注
   string remark = 13;
+  int64 current_icon_style = 14; // 当前图标样式，1：竖版图标，2：竖版图标加名称，3：方版图标，4：横版图标
+  int64 home_column_count = 15; // 首页显示列数
+  int64 second_page_column_count = 16; // 二级页面显示列数
 }
 
 
@@ -681,6 +684,7 @@ message GameCategorySimpleDetail {
   string currency_code = 4; // 货币代码（例如 "INR"）
   string category_name = 5; // 类型名称（JSON 格式）
   string icon_url = 10; // 图标地址
+  int64 current_icon_style = 14; // 当前图标样式，1：竖版图标，2：竖版图标加名称，3：方版图标，4：横版图标
 }
 
 message CategoryNameBase {
@@ -731,6 +735,9 @@ message GamePlatformDetail{
   int64 game_num = 16;                         // 游戏数量
   int64 is_platform_active = 21;
   int64 is_under_maintenance = 22;
+  string icon_vertical = 23;  // 竖版图标URL
+  string icon_square = 24;    // 方版图标URL
+  string icon_horizontal = 25; // 横版图标URL
 }
 
 // 通过货币获取平台响应参数
@@ -748,6 +755,10 @@ message GamePlatformSimpleDetail{
   string currency_code = 6;                    // 货币代码，例如“INR”
   string icon = 7;                    // 平台图标
   string logo_url = 8;                    // 品牌LOGO
+  string icon_vertical = 9;  // 竖版图标URL
+  string icon_square = 10;    // 方版图标URL
+  string icon_horizontal = 11; // 横版图标URL
+
 }
 
 // 平台跳转方式的基础类型
@@ -778,6 +789,9 @@ message GameDetails {
   string icon_image_url = 20;
   int64 is_game_active = 21;
   int64 is_under_maintenance = 22;
+  string icon_vertical = 23;  // 竖版图标URL
+  string icon_square = 24;    // 方版图标URL
+  string icon_horizontal = 25; // 横版图标URL
 }
 
 message GameSimpleDetails {
@@ -790,6 +804,9 @@ message GameSimpleDetails {
   string game_name = 7;
   string logo_url = 19;
   string icon_image_url = 20;
+  string icon_vertical = 23;  // 竖版图标URL
+  string icon_square = 24;    // 方版图标URL
+  string icon_horizontal = 25; // 横版图标URL
 }
 
 // 通过类型获取游戏列表响应参数
