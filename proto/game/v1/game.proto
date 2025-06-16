@@ -1052,6 +1052,12 @@ message GameValueItem {
   int64 game_icon_style = 25;                 // 图标风格
   string game_logo_url = 26;                  // 游戏 Logo URL
   string game_icon_image_url = 27;            // 游戏图标图片 URL
+  string platform_icon_vertical = 28;   // 平台竖版图标URL
+  string platform_icon_square = 29;   // 平台方版图标URL
+  string platform_icon_horizontal = 30; // 平台横版图标URL
+  string game_icon_vertical = 31;    // 游戏竖版图标URL
+  string game_icon_square = 32;       // 游戏方版图标URL
+  string game_icon_horizontal = 33;    // 游戏横版图标URL
 }
 
 message BigWinGameListReq{
@@ -1078,6 +1084,9 @@ message WinGameValueItem {
   string game_logo_url = 26;                  // 游戏 Logo URL
   string game_icon_image_url = 27;            // 游戏图标图片 URL
   string game_win_amount = 28; // 赢取金额
+  string game_icon_vertical = 31;    // 游戏竖版图标URL
+  string game_icon_square = 32;       // 游戏方版图标URL
+  string game_icon_horizontal = 33;    // 游戏横版图标URL
 }
 
 service LiveGameRpcService{
