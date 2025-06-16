@@ -341,7 +341,7 @@ func (x *RewardListReply) GetData() []*RewardData {
 type RewardData struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                  // 用户id
-	Reward        int32                  `protobuf:"varint,2,opt,name=reward,proto3" json:"reward,omitempty"`                                               // 奖励金额
+	Reward        int64                  `protobuf:"varint,2,opt,name=reward,proto3" json:"reward,omitempty"`                                               // 奖励金额
 	RewardTime    int32                  `protobuf:"varint,3,opt,name=reward_time,json=rewardTime,proto3" json:"reward_time,omitempty"`                     // 奖励时间
 	SpinType      SpinType               `protobuf:"varint,4,opt,name=spin_type,json=spinType,proto3,enum=activity.v1.SpinType" json:"spin_type,omitempty"` // 转盘类型
 	unknownFields protoimpl.UnknownFields
@@ -385,7 +385,7 @@ func (x *RewardData) GetUserId() string {
 	return ""
 }
 
-func (x *RewardData) GetReward() int32 {
+func (x *RewardData) GetReward() int64 {
 	if x != nil {
 		return x.Reward
 	}
@@ -1516,7 +1516,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\n" +
 	"RewardData\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x16\n" +
-	"\x06reward\x18\x02 \x01(\x05R\x06reward\x12\x1f\n" +
+	"\x06reward\x18\x02 \x01(\x03R\x06reward\x12\x1f\n" +
 	"\vreward_time\x18\x03 \x01(\x05R\n" +
 	"rewardTime\x122\n" +
 	"\tspin_type\x18\x04 \x01(\x0e2\x15.activity.v1.SpinTypeR\bspinType\"P\n" +
