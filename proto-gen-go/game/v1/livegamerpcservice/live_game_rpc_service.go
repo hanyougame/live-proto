@@ -33,6 +33,8 @@ type (
 	CategoryNameBase                         = v1.CategoryNameBase
 	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
+	FetchGamePlatformMetaReply               = v1.FetchGamePlatformMetaReply
+	FetchGamePlatformMetaReq                 = v1.FetchGamePlatformMetaReq
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
@@ -170,6 +172,8 @@ type (
 		GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetNewGameListReply, error)
 		// 获取大胜游戏列表
 		GetBigWinGameList(ctx context.Context, in *BigWinGameListReq, opts ...grpc.CallOption) (*BigWinGameListReply, error)
+		// 根据游戏ID获取游戏详情
+		FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -331,4 +335,10 @@ func (m *defaultLiveGameRpcService) GetNewGameList(ctx context.Context, in *GetN
 func (m *defaultLiveGameRpcService) GetBigWinGameList(ctx context.Context, in *BigWinGameListReq, opts ...grpc.CallOption) (*BigWinGameListReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetBigWinGameList(ctx, in, opts...)
+}
+
+// 根据游戏ID获取游戏详情
+func (m *defaultLiveGameRpcService) FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.FetchGamePlatformMeta(ctx, in, opts...)
 }

@@ -1560,6 +1560,7 @@ const (
 	LiveGameRpcService_GetGameConfInfo_FullMethodName                 = "/game.v1.LiveGameRpcService/GetGameConfInfo"
 	LiveGameRpcService_GetNewGameList_FullMethodName                  = "/game.v1.LiveGameRpcService/GetNewGameList"
 	LiveGameRpcService_GetBigWinGameList_FullMethodName               = "/game.v1.LiveGameRpcService/GetBigWinGameList"
+	LiveGameRpcService_FetchGamePlatformMeta_FullMethodName           = "/game.v1.LiveGameRpcService/FetchGamePlatformMeta"
 )
 
 // LiveGameRpcServiceClient is the client API for LiveGameRpcService service.
@@ -1616,6 +1617,8 @@ type LiveGameRpcServiceClient interface {
 	GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetNewGameListReply, error)
 	// 获取大胜游戏列表
 	GetBigWinGameList(ctx context.Context, in *BigWinGameListReq, opts ...grpc.CallOption) (*BigWinGameListReply, error)
+	// 根据游戏ID获取游戏详情
+	FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error)
 }
 
 type liveGameRpcServiceClient struct {
@@ -1851,6 +1854,15 @@ func (c *liveGameRpcServiceClient) GetBigWinGameList(ctx context.Context, in *Bi
 	return out, nil
 }
 
+func (c *liveGameRpcServiceClient) FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error) {
+	out := new(FetchGamePlatformMetaReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_FetchGamePlatformMeta_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcServiceServer is the server API for LiveGameRpcService service.
 // All implementations must embed UnimplementedLiveGameRpcServiceServer
 // for forward compatibility
@@ -1905,6 +1917,8 @@ type LiveGameRpcServiceServer interface {
 	GetNewGameList(context.Context, *GetNewGameListReq) (*GetNewGameListReply, error)
 	// 获取大胜游戏列表
 	GetBigWinGameList(context.Context, *BigWinGameListReq) (*BigWinGameListReply, error)
+	// 根据游戏ID获取游戏详情
+	FetchGamePlatformMeta(context.Context, *FetchGamePlatformMetaReq) (*FetchGamePlatformMetaReply, error)
 	mustEmbedUnimplementedLiveGameRpcServiceServer()
 }
 
@@ -1986,6 +2000,9 @@ func (UnimplementedLiveGameRpcServiceServer) GetNewGameList(context.Context, *Ge
 }
 func (UnimplementedLiveGameRpcServiceServer) GetBigWinGameList(context.Context, *BigWinGameListReq) (*BigWinGameListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBigWinGameList not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) FetchGamePlatformMeta(context.Context, *FetchGamePlatformMetaReq) (*FetchGamePlatformMetaReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchGamePlatformMeta not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) mustEmbedUnimplementedLiveGameRpcServiceServer() {}
 
@@ -2450,6 +2467,24 @@ func _LiveGameRpcService_GetBigWinGameList_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcService_FetchGamePlatformMeta_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchGamePlatformMetaReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).FetchGamePlatformMeta(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_FetchGamePlatformMeta_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).FetchGamePlatformMeta(ctx, req.(*FetchGamePlatformMetaReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2556,6 +2591,10 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBigWinGameList",
 			Handler:    _LiveGameRpcService_GetBigWinGameList_Handler,
+		},
+		{
+			MethodName: "FetchGamePlatformMeta",
+			Handler:    _LiveGameRpcService_FetchGamePlatformMeta_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
