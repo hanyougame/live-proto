@@ -71,7 +71,26 @@ message BatchGetIPGeolocationReply {
   map<string, IPGeolocationInfo> geolocations = 1;  // IP -> 地理位置信息映射
 }
 
+message SendSmsReq {
+  string phone = 1; // 手机号
+  string country_code = 2; // 区号
+  string msg = 3; // 短信内容
+  string sms_code = 4; // 短信三方Code标识
+}
 
+message SendSmsReply {
+  string third_order_no = 1; // 三方单号
+  string resp = 2; // 三方响应
+}
+
+message SmsBalanceReq {
+  repeated string sms_codes = 1; // 三方Code标识
+}
+
+message SmsBalanceReply {
+//  repeated string balances = 1; // 余额
+  map<string, string> balances = 1; // 余额
+}
 
 service LiveManageRpcService{
   // 获取法定货币信息
@@ -85,4 +104,6 @@ service LiveManageRpcService{
   // 批量获取IP地理位置信息
   rpc BatchGetIPGeolocation (BatchGetIPGeolocationReq) returns (BatchGetIPGeolocationReply);
 
+  rpc SendSms (SendSmsReq) returns (SendSmsReply);
+  rpc SmsBalance (SmsBalanceReq) returns (SmsBalanceReply);
 }
