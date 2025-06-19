@@ -1105,6 +1105,37 @@ message FetchGamePlatformMetaReply{
   GamePlatformDetail platform_detail = 2;
 }
 
+message FetchHotManagementReq{
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 game_platform_id = 3;
+  string currency_code = 4;
+  int64 user_id = 5;
+  int64 game_category_id = 7;  // 游戏类别ID
+}
+
+message FetchHotManagementReply{
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 total = 3;
+  repeated GameHotManagement rows = 4;
+}
+
+message GameHotManagement {
+  int64 id = 1;
+  int64 hot_level = 2; // 热门级别，1：热门2，2：热门2
+  int64 rank = 3; // 排名，表示货币在列表中的排序位置
+  int64 currency_code = 4; // 货币代码，例如“INR”
+  int64 hot_category = 5; // 热门类别（1：平台、2：子游戏）
+  int64 game_category_id = 6;  // 游戏类型（例如区块链、真人、体育等）
+  int64 game_platform_id = 7;  // 平台信息（例如JDB区块链、EVO真人等）
+  int64 game_id = 8;  // 游戏信息（例如JDB区块链、EVO真人等）
+}
+
+
+
+
+
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
   rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
@@ -1158,4 +1189,6 @@ service LiveGameRpcService{
   rpc GetBigWinGameList(BigWinGameListReq) returns (BigWinGameListReply);
   // 根据游戏ID获取游戏详情
   rpc FetchGamePlatformMeta(FetchGamePlatformMetaReq) returns (FetchGamePlatformMetaReply);
+  // 获取热门游戏列表
+  rpc FetchHotGameList(FetchHotManagementReq) returns (FetchHotManagementReply);
 }

@@ -35,12 +35,15 @@ type (
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
 	FetchGamePlatformMetaReply               = v1.FetchGamePlatformMetaReply
 	FetchGamePlatformMetaReq                 = v1.FetchGamePlatformMetaReq
+	FetchHotManagementReply                  = v1.FetchHotManagementReply
+	FetchHotManagementReq                    = v1.FetchHotManagementReq
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
 	GameDetailsList                          = v1.GameDetailsList
 	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
+	GameHotManagement                        = v1.GameHotManagement
 	GamePlatformDetail                       = v1.GamePlatformDetail
 	GamePlatformDetailsReq                   = v1.GamePlatformDetailsReq
 	GamePlatformSimpleDetail                 = v1.GamePlatformSimpleDetail

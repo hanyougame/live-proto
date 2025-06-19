@@ -35,12 +35,15 @@ type (
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
 	FetchGamePlatformMetaReply               = v1.FetchGamePlatformMetaReply
 	FetchGamePlatformMetaReq                 = v1.FetchGamePlatformMetaReq
+	FetchHotManagementReply                  = v1.FetchHotManagementReply
+	FetchHotManagementReq                    = v1.FetchHotManagementReq
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
 	GameDetailsList                          = v1.GameDetailsList
 	GameDetailsReq                           = v1.GameDetailsReq
 	GameHandelFavoriteReq                    = v1.GameHandelFavoriteReq
+	GameHotManagement                        = v1.GameHotManagement
 	GamePlatformDetail                       = v1.GamePlatformDetail
 	GamePlatformDetailsReq                   = v1.GamePlatformDetailsReq
 	GamePlatformSimpleDetail                 = v1.GamePlatformSimpleDetail
@@ -174,6 +177,8 @@ type (
 		GetBigWinGameList(ctx context.Context, in *BigWinGameListReq, opts ...grpc.CallOption) (*BigWinGameListReply, error)
 		// 根据游戏ID获取游戏详情
 		FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error)
+		// 获取热门游戏列表
+		FetchHotGameList(ctx context.Context, in *FetchHotManagementReq, opts ...grpc.CallOption) (*FetchHotManagementReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -341,4 +346,10 @@ func (m *defaultLiveGameRpcService) GetBigWinGameList(ctx context.Context, in *B
 func (m *defaultLiveGameRpcService) FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.FetchGamePlatformMeta(ctx, in, opts...)
+}
+
+// 获取热门游戏列表
+func (m *defaultLiveGameRpcService) FetchHotGameList(ctx context.Context, in *FetchHotManagementReq, opts ...grpc.CallOption) (*FetchHotManagementReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.FetchHotGameList(ctx, in, opts...)
 }
