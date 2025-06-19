@@ -1135,8 +1135,6 @@ message GameHotManagement {
 
 
 
-
-
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
   rpc GetGameCategoryListByCurr(GetCategoryListByCurrReq) returns (GetCategoryListByCurrReply);
@@ -1192,4 +1190,25 @@ service LiveGameRpcService{
   rpc FetchGamePlatformMeta(FetchGamePlatformMetaReq) returns (FetchGamePlatformMetaReply);
   // 获取热门游戏列表
   rpc FetchHotGameList(FetchHotManagementReq) returns (FetchHotManagementReply);
+  // 根据游戏ID获取游戏详情
+  rpc FetchGameMapByIDs(FetchGameMapByIDReq) returns (FetchGameMapByIDReply);
+  // 根据平台ID获取平台详情
+  rpc FetchPlatformMapByIDs(FetchPlatformMapByIDReq) returns (FetchPlatformMapByIDReply);
+}
+
+message FetchGameMapByIDReq {
+  repeated  int64 game_id = 1;
+}
+
+message FetchGameMapByIDReply {
+  map<int64, GameDetails> info = 1;
+}
+
+message FetchPlatformMapByIDReq{
+  repeated int64 game_platform_id = 1;
+
+}
+
+message FetchPlatformMapByIDReply{
+  map<int64, GamePlatformDetail> info = 1;
 }

@@ -33,10 +33,14 @@ type (
 	CategoryNameBase                         = v1.CategoryNameBase
 	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
+	FetchGameMapByIDReply                    = v1.FetchGameMapByIDReply
+	FetchGameMapByIDReq                      = v1.FetchGameMapByIDReq
 	FetchGamePlatformMetaReply               = v1.FetchGamePlatformMetaReply
 	FetchGamePlatformMetaReq                 = v1.FetchGamePlatformMetaReq
 	FetchHotManagementReply                  = v1.FetchHotManagementReply
 	FetchHotManagementReq                    = v1.FetchHotManagementReq
+	FetchPlatformMapByIDReply                = v1.FetchPlatformMapByIDReply
+	FetchPlatformMapByIDReq                  = v1.FetchPlatformMapByIDReq
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
@@ -179,6 +183,10 @@ type (
 		FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error)
 		// 获取热门游戏列表
 		FetchHotGameList(ctx context.Context, in *FetchHotManagementReq, opts ...grpc.CallOption) (*FetchHotManagementReply, error)
+		// 根据游戏ID获取游戏详情
+		FetchGameMapByIDs(ctx context.Context, in *FetchGameMapByIDReq, opts ...grpc.CallOption) (*FetchGameMapByIDReply, error)
+		// 根据平台ID获取平台详情
+		FetchPlatformMapByIDs(ctx context.Context, in *FetchPlatformMapByIDReq, opts ...grpc.CallOption) (*FetchPlatformMapByIDReply, error)
 	}
 
 	defaultLiveGameRpcService struct {
@@ -352,4 +360,16 @@ func (m *defaultLiveGameRpcService) FetchGamePlatformMeta(ctx context.Context, i
 func (m *defaultLiveGameRpcService) FetchHotGameList(ctx context.Context, in *FetchHotManagementReq, opts ...grpc.CallOption) (*FetchHotManagementReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.FetchHotGameList(ctx, in, opts...)
+}
+
+// 根据游戏ID获取游戏详情
+func (m *defaultLiveGameRpcService) FetchGameMapByIDs(ctx context.Context, in *FetchGameMapByIDReq, opts ...grpc.CallOption) (*FetchGameMapByIDReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.FetchGameMapByIDs(ctx, in, opts...)
+}
+
+// 根据平台ID获取平台详情
+func (m *defaultLiveGameRpcService) FetchPlatformMapByIDs(ctx context.Context, in *FetchPlatformMapByIDReq, opts ...grpc.CallOption) (*FetchPlatformMapByIDReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.FetchPlatformMapByIDs(ctx, in, opts...)
 }

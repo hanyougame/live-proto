@@ -33,10 +33,14 @@ type (
 	CategoryNameBase                         = v1.CategoryNameBase
 	CreateCompensationRecordReq              = v1.CreateCompensationRecordReq
 	CreateCompensationRecordResp             = v1.CreateCompensationRecordResp
+	FetchGameMapByIDReply                    = v1.FetchGameMapByIDReply
+	FetchGameMapByIDReq                      = v1.FetchGameMapByIDReq
 	FetchGamePlatformMetaReply               = v1.FetchGamePlatformMetaReply
 	FetchGamePlatformMetaReq                 = v1.FetchGamePlatformMetaReq
 	FetchHotManagementReply                  = v1.FetchHotManagementReply
 	FetchHotManagementReq                    = v1.FetchHotManagementReq
+	FetchPlatformMapByIDReply                = v1.FetchPlatformMapByIDReply
+	FetchPlatformMapByIDReq                  = v1.FetchPlatformMapByIDReq
 	GameCategoryDetail                       = v1.GameCategoryDetail
 	GameCategorySimpleDetail                 = v1.GameCategorySimpleDetail
 	GameDetails                              = v1.GameDetails
