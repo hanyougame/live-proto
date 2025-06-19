@@ -81,6 +81,7 @@ message SendSmsReq {
 message SendSmsReply {
   string third_order_no = 1; // 三方单号
   string resp = 2; // 三方响应
+  int64 status = 3; // 状态 1-发送成功 2-发送失败
 }
 
 message SmsBalanceReq {

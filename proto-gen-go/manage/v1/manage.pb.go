@@ -690,6 +690,7 @@ type SendSmsReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ThirdOrderNo  string                 `protobuf:"bytes,1,opt,name=third_order_no,json=thirdOrderNo,proto3" json:"third_order_no,omitempty"` // 三方单号
 	Resp          string                 `protobuf:"bytes,2,opt,name=resp,proto3" json:"resp,omitempty"`                                       // 三方响应
+	Status        int64                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`                                  // 状态 1-发送成功 2-发送失败
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -736,6 +737,13 @@ func (x *SendSmsReply) GetResp() string {
 		return x.Resp
 	}
 	return ""
+}
+
+func (x *SendSmsReply) GetStatus() int64 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
 }
 
 type SmsBalanceReq struct {
@@ -885,10 +893,11 @@ const file_manage_v1_manage_proto_rawDesc = "" +
 	"\x05phone\x18\x01 \x01(\tR\x05phone\x12!\n" +
 	"\fcountry_code\x18\x02 \x01(\tR\vcountryCode\x12\x10\n" +
 	"\x03msg\x18\x03 \x01(\tR\x03msg\x12\x19\n" +
-	"\bsms_code\x18\x04 \x01(\tR\asmsCode\"H\n" +
+	"\bsms_code\x18\x04 \x01(\tR\asmsCode\"`\n" +
 	"\fSendSmsReply\x12$\n" +
 	"\x0ethird_order_no\x18\x01 \x01(\tR\fthirdOrderNo\x12\x12\n" +
-	"\x04resp\x18\x02 \x01(\tR\x04resp\",\n" +
+	"\x04resp\x18\x02 \x01(\tR\x04resp\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\",\n" +
 	"\rSmsBalanceReq\x12\x1b\n" +
 	"\tsms_codes\x18\x01 \x03(\tR\bsmsCodes\"\x94\x01\n" +
 	"\x0fSmsBalanceReply\x12D\n" +
