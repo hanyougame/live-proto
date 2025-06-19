@@ -738,6 +738,7 @@ message GamePlatformDetail{
   string icon_vertical = 23;  // 竖版图标URL
   string icon_square = 24;    // 方版图标URL
   string icon_horizontal = 25; // 横版图标URL
+  int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
 }
 
 // 通过货币获取平台响应参数
@@ -792,6 +793,7 @@ message GameDetails {
   string icon_vertical = 23;  // 竖版图标URL
   string icon_square = 24;    // 方版图标URL
   string icon_horizontal = 25; // 横版图标URL
+  int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
 }
 
 message GameSimpleDetails {
@@ -1058,6 +1060,7 @@ message GameValueItem {
   string game_icon_vertical = 31;    // 游戏竖版图标URL
   string game_icon_square = 32;       // 游戏方版图标URL
   string game_icon_horizontal = 33;    // 游戏横版图标URL
+  int64 is_hot = 34; //  是否hot(1:开启，2：关闭)
 }
 
 message BigWinGameListReq{
@@ -1087,6 +1090,7 @@ message WinGameValueItem {
   string icon_vertical = 31;    // 游戏竖版图标URL
   string icon_square = 32;       // 游戏方版图标URL
   string icon_horizontal = 33;    // 游戏横版图标URL
+  int64 is_hot = 34; //  是否hot(1:开启，2：关闭)
 }
 
 message FetchGamePlatformMetaReq{
