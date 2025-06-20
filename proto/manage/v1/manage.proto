@@ -94,6 +94,15 @@ message SmsBalanceReply {
   map<string, string> balances = 1; // 余额
 }
 
+message SendEmailReq {
+  repeated string to = 1; // 收件人
+  string subject = 2; // 邮件主题
+  string content = 3; //  邮件内容
+}
+
+message SendEmailReply {
+}
+
 service LiveManageRpcService{
   // 获取法定货币信息
   rpc GetLegalTenderInfo (ManageReq) returns (CurrencyDetailReplyList);
@@ -108,4 +117,6 @@ service LiveManageRpcService{
 
   rpc SendSms (SendSmsReq) returns (SendSmsReply);
   rpc SmsBalance (SmsBalanceReq) returns (SmsBalanceReply);
+
+  rpc SendEmail (SendEmailReq) returns (SendEmailReply);
 }

@@ -24,6 +24,8 @@ type (
 	IPGeolocationInfo          = v1.IPGeolocationInfo
 	ManageReply                = v1.ManageReply
 	ManageReq                  = v1.ManageReq
+	SendEmailReply             = v1.SendEmailReply
+	SendEmailReq               = v1.SendEmailReq
 	SendSmsReply               = v1.SendSmsReply
 	SendSmsReq                 = v1.SendSmsReq
 	SmsBalanceReply            = v1.SmsBalanceReply
@@ -40,6 +42,7 @@ type (
 		BatchGetIPGeolocation(ctx context.Context, in *BatchGetIPGeolocationReq, opts ...grpc.CallOption) (*BatchGetIPGeolocationReply, error)
 		SendSms(ctx context.Context, in *SendSmsReq, opts ...grpc.CallOption) (*SendSmsReply, error)
 		SmsBalance(ctx context.Context, in *SmsBalanceReq, opts ...grpc.CallOption) (*SmsBalanceReply, error)
+		SendEmail(ctx context.Context, in *SendEmailReq, opts ...grpc.CallOption) (*SendEmailReply, error)
 	}
 
 	defaultLiveManageRpcService struct {
@@ -85,4 +88,9 @@ func (m *defaultLiveManageRpcService) SendSms(ctx context.Context, in *SendSmsRe
 func (m *defaultLiveManageRpcService) SmsBalance(ctx context.Context, in *SmsBalanceReq, opts ...grpc.CallOption) (*SmsBalanceReply, error) {
 	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
 	return client.SmsBalance(ctx, in, opts...)
+}
+
+func (m *defaultLiveManageRpcService) SendEmail(ctx context.Context, in *SendEmailReq, opts ...grpc.CallOption) (*SendEmailReply, error) {
+	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
+	return client.SendEmail(ctx, in, opts...)
 }
