@@ -1098,6 +1098,7 @@ message FetchGamePlatformMetaReq{
   int64 game_platform_id = 2; // 可能是第三方平台ID也有可能是平台的平台ID
   string currency_code = 3;
   int64 user_id = 4;
+  bool is_third_party = 5; // 是否为第三方信息
 }
 
 message FetchGamePlatformMetaReply{
