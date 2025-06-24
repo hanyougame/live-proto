@@ -667,6 +667,9 @@ message GameCategoryDetail {
   int64 second_page_display_count = 12;
   // 备注
   string remark = 13;
+  int64 current_icon_style = 14; // 当前图标样式，1：竖版图标，2：竖版图标加名称，3：方版图标，4：横版图标
+  int64 home_column_count = 15; // 首页显示列数
+  int64 second_page_column_count = 16; // 二级页面显示列数
 }
 
 
@@ -681,6 +684,7 @@ message GameCategorySimpleDetail {
   string currency_code = 4; // 货币代码（例如 "INR"）
   string category_name = 5; // 类型名称（JSON 格式）
   string icon_url = 10; // 图标地址
+  int64 current_icon_style = 14; // 当前图标样式，1：竖版图标，2：竖版图标加名称，3：方版图标，4：横版图标
 }
 
 message CategoryNameBase {
@@ -731,6 +735,10 @@ message GamePlatformDetail{
   int64 game_num = 16;                         // 游戏数量
   int64 is_platform_active = 21;
   int64 is_under_maintenance = 22;
+  string icon_vertical = 23;  // 竖版图标URL
+  string icon_square = 24;    // 方版图标URL
+  string icon_horizontal = 25; // 横版图标URL
+  int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
 }
 
 // 通过货币获取平台响应参数
@@ -748,6 +756,10 @@ message GamePlatformSimpleDetail{
   string currency_code = 6;                    // 货币代码，例如“INR”
   string icon = 7;                    // 平台图标
   string logo_url = 8;                    // 品牌LOGO
+  string icon_vertical = 9;  // 竖版图标URL
+  string icon_square = 10;    // 方版图标URL
+  string icon_horizontal = 11; // 横版图标URL
+
 }
 
 // 平台跳转方式的基础类型
@@ -778,6 +790,10 @@ message GameDetails {
   string icon_image_url = 20;
   int64 is_game_active = 21;
   int64 is_under_maintenance = 22;
+  string icon_vertical = 23;  // 竖版图标URL
+  string icon_square = 24;    // 方版图标URL
+  string icon_horizontal = 25; // 横版图标URL
+  int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
 }
 
 message GameSimpleDetails {
@@ -790,6 +806,9 @@ message GameSimpleDetails {
   string game_name = 7;
   string logo_url = 19;
   string icon_image_url = 20;
+  string icon_vertical = 23;  // 竖版图标URL
+  string icon_square = 24;    // 方版图标URL
+  string icon_horizontal = 25; // 横版图标URL
 }
 
 // 通过类型获取游戏列表响应参数
@@ -1035,6 +1054,13 @@ message GameValueItem {
   int64 game_icon_style = 25;                 // 图标风格
   string game_logo_url = 26;                  // 游戏 Logo URL
   string game_icon_image_url = 27;            // 游戏图标图片 URL
+  string platform_icon_vertical = 28;   // 平台竖版图标URL
+  string platform_icon_square = 29;   // 平台方版图标URL
+  string platform_icon_horizontal = 30; // 平台横版图标URL
+  string game_icon_vertical = 31;    // 游戏竖版图标URL
+  string game_icon_square = 32;       // 游戏方版图标URL
+  string game_icon_horizontal = 33;    // 游戏横版图标URL
+  int64 is_hot = 34; //  是否hot(1:开启，2：关闭)
 }
 
 message BigWinGameListReq{
@@ -1061,7 +1087,54 @@ message WinGameValueItem {
   string game_logo_url = 26;                  // 游戏 Logo URL
   string game_icon_image_url = 27;            // 游戏图标图片 URL
   string game_win_amount = 28; // 赢取金额
+  string icon_vertical = 31;    // 游戏竖版图标URL
+  string icon_square = 32;       // 游戏方版图标URL
+  string icon_horizontal = 33;    // 游戏横版图标URL
+  int64 is_hot = 34; //  是否hot(1:开启，2：关闭)
 }
+
+message FetchGamePlatformMetaReq{
+  int64 game_id = 1; // 可能是第三方游戏ID也有可能是平台的游戏ID
+  int64 game_platform_id = 2; // 可能是第三方平台ID也有可能是平台的平台ID
+  string currency_code = 3;
+  int64 user_id = 4;
+  bool is_third_party = 5; // 是否为第三方信息
+}
+
+message FetchGamePlatformMetaReply{
+  GameDetails game_detail = 1;
+  GamePlatformDetail platform_detail = 2;
+}
+
+message FetchHotManagementReq{
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 game_platform_id = 3;
+  string currency_code = 4;
+  int64 user_id = 5;
+  int64 game_category_id = 7;  // 游戏类别ID
+}
+
+message FetchHotManagementReply{
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 total = 3;
+  int64 total_page = 4;
+  repeated GameHotManagement rows = 5;
+}
+
+message GameHotManagement {
+  int64 id = 1;
+  int64 hot_level = 2; // 热门级别，1：热门2，2：热门2
+  int64 rank = 3; // 排名，表示货币在列表中的排序位置
+  string currency_code = 4; // 货币代码，例如“INR”
+  int64 hot_category = 5; // 热门类别（1：平台、2：子游戏）
+  int64 game_category_id = 6;  // 游戏类型（例如区块链、真人、体育等）
+  int64 game_platform_id = 7;  // 平台信息（例如JDB区块链、EVO真人等）
+  int64 game_id = 8;  // 游戏信息（例如JDB区块链、EVO真人等）
+}
+
+
 
 service LiveGameRpcService{
   // 通过货币获取游戏类型列表
@@ -1114,4 +1187,29 @@ service LiveGameRpcService{
   rpc GetNewGameList(GetNewGameListReq) returns (GetNewGameListReply);
   // 获取大胜游戏列表
   rpc GetBigWinGameList(BigWinGameListReq) returns (BigWinGameListReply);
+  // 根据游戏ID获取游戏详情
+  rpc FetchGamePlatformMeta(FetchGamePlatformMetaReq) returns (FetchGamePlatformMetaReply);
+  // 获取热门游戏列表
+  rpc FetchHotGameList(FetchHotManagementReq) returns (FetchHotManagementReply);
+  // 根据游戏ID获取游戏详情
+  rpc FetchGameMapByIDs(FetchGameMapByIDReq) returns (FetchGameMapByIDReply);
+  // 根据平台ID获取平台详情
+  rpc FetchPlatformMapByIDs(FetchPlatformMapByIDReq) returns (FetchPlatformMapByIDReply);
+}
+
+message FetchGameMapByIDReq {
+  repeated  int64 game_id = 1;
+}
+
+message FetchGameMapByIDReply {
+  map<int64, GameDetails> info = 1;
+}
+
+message FetchPlatformMapByIDReq{
+  repeated int64 game_platform_id = 1;
+
+}
+
+message FetchPlatformMapByIDReply{
+  map<int64, GamePlatformDetail> info = 1;
 }

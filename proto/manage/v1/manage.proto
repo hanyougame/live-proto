@@ -34,9 +34,90 @@ message GetCurrInfoByIDReq {
   int64 id = 1;                          // 自增主键，唯一标识每条记录
 }
 
+// =============== IP相关消息定义 ===============
+
+// IP地理位置信息
+message IPGeolocationInfo {
+  string ip = 1;                         // IP地址
+  string country_code = 2;               // 国家代码 如"CN"
+  string country_name = 3;               // 国家名称 如"中国"
+  string region_name = 4;                // 地区名称 如"北京市"
+  string city_name = 5;                  // 城市名称 如"北京"
+  string isp_name = 6;                   // ISP名称 如"电信"
+  string timezone = 7;                   // 时区 如"Asia/Shanghai"
+  double latitude = 8;                   // 纬度
+  double longitude = 9;                  // 经度
+  string continent_name = 10;            // 大洲名称
+  int64 ip_type = 11; // IP类型 1 IPv4 2 IPv6
+}
+
+// 单个IP查询请求
+message GetIPGeolocationReq {
+  string ip = 1;                         // IP地址
+}
+
+// 单个IP查询响应
+message GetIPGeolocationReply {
+  IPGeolocationInfo geolocation = 1;     // IP地理位置信息
+}
+
+// 批量IP查询请求
+message BatchGetIPGeolocationReq {
+  repeated string ips = 1;               // IP地址列表
+}
+
+// 批量IP查询响应
+message BatchGetIPGeolocationReply {
+  map<string, IPGeolocationInfo> geolocations = 1;  // IP -> 地理位置信息映射
+}
+
+message SendSmsReq {
+  string phone = 1; // 手机号
+  string country_code = 2; // 区号
+  string msg = 3; // 短信内容
+  string sms_code = 4; // 短信三方Code标识
+  string captcha = 5; // 验证码
+}
+
+message SendSmsReply {
+  string third_order_no = 1; // 三方单号
+  string resp = 2; // 三方响应
+  int64 status = 3; // 状态 1-发送成功 2-发送失败
+  string phone = 4; // 实际发送手机号
+}
+
+message SmsBalanceReq {
+  repeated string sms_codes = 1; // 三方Code标识
+}
+
+message SmsBalanceReply {
+//  repeated string balances = 1; // 余额
+  map<string, string> balances = 1; // 余额
+}
+
+message SendEmailReq {
+  repeated string to = 1; // 收件人
+  string subject = 2; // 邮件主题
+  string content = 3; //  邮件内容
+}
+
+message SendEmailReply {
+}
+
 service LiveManageRpcService{
   // 获取法定货币信息
   rpc GetLegalTenderInfo (ManageReq) returns (CurrencyDetailReplyList);
   // 通过货币ID获取货币信息
   rpc GetCurrInfoById (GetCurrInfoByIDReq) returns (CurrencyDetailReply);
+  // =============== IP相关接口 ===============
+  // 获取单个IP地理位置信息
+  rpc GetIPGeolocation (GetIPGeolocationReq) returns (GetIPGeolocationReply);
+
+  // 批量获取IP地理位置信息
+  rpc BatchGetIPGeolocation (BatchGetIPGeolocationReq) returns (BatchGetIPGeolocationReply);
+
+  rpc SendSms (SendSmsReq) returns (SendSmsReply);
+  rpc SmsBalance (SmsBalanceReq) returns (SmsBalanceReply);
+
+  rpc SendEmail (SendEmailReq) returns (SendEmailReply);
 }

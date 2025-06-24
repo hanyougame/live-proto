@@ -149,16 +149,122 @@ func (*RiskReply) Descriptor() ([]byte, []int) {
 	return file_risk_v1_risk_proto_rawDescGZIP(), []int{1}
 }
 
+type IpOrDeviceUserCountReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IpAddresses   []string               `protobuf:"bytes,1,rep,name=ip_addresses,json=ipAddresses,proto3" json:"ip_addresses,omitempty"` // IP地址
+	DeviceIds     []string               `protobuf:"bytes,2,rep,name=device_ids,json=deviceIds,proto3" json:"device_ids,omitempty"`       // 设备号
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IpOrDeviceUserCountReq) Reset() {
+	*x = IpOrDeviceUserCountReq{}
+	mi := &file_risk_v1_risk_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IpOrDeviceUserCountReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IpOrDeviceUserCountReq) ProtoMessage() {}
+
+func (x *IpOrDeviceUserCountReq) ProtoReflect() protoreflect.Message {
+	mi := &file_risk_v1_risk_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IpOrDeviceUserCountReq.ProtoReflect.Descriptor instead.
+func (*IpOrDeviceUserCountReq) Descriptor() ([]byte, []int) {
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *IpOrDeviceUserCountReq) GetIpAddresses() []string {
+	if x != nil {
+		return x.IpAddresses
+	}
+	return nil
+}
+
+func (x *IpOrDeviceUserCountReq) GetDeviceIds() []string {
+	if x != nil {
+		return x.DeviceIds
+	}
+	return nil
+}
+
+type IpOrDeviceUserCountReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IpUserNum     map[string]int64       `protobuf:"bytes,2,rep,name=ip_user_num,json=ipUserNum,proto3" json:"ip_user_num,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`             // ip登录的用户数量
+	DeviceUserNum map[string]int64       `protobuf:"bytes,3,rep,name=device_user_num,json=deviceUserNum,proto3" json:"device_user_num,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"` // 设备号登录的用户数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IpOrDeviceUserCountReply) Reset() {
+	*x = IpOrDeviceUserCountReply{}
+	mi := &file_risk_v1_risk_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IpOrDeviceUserCountReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IpOrDeviceUserCountReply) ProtoMessage() {}
+
+func (x *IpOrDeviceUserCountReply) ProtoReflect() protoreflect.Message {
+	mi := &file_risk_v1_risk_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IpOrDeviceUserCountReply.ProtoReflect.Descriptor instead.
+func (*IpOrDeviceUserCountReply) Descriptor() ([]byte, []int) {
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *IpOrDeviceUserCountReply) GetIpUserNum() map[string]int64 {
+	if x != nil {
+		return x.IpUserNum
+	}
+	return nil
+}
+
+func (x *IpOrDeviceUserCountReply) GetDeviceUserNum() map[string]int64 {
+	if x != nil {
+		return x.DeviceUserNum
+	}
+	return nil
+}
+
 type NotifyRiskRuleTriggerReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"` // 用户ID
+	IsNeed        bool                   `protobuf:"varint,2,opt,name=is_need,json=isNeed,proto3" json:"is_need,omitempty"` // 是够需要用户风控标识 false 不需要 true 需要
+	Extend        string                 `protobuf:"bytes,3,opt,name=Extend,proto3" json:"Extend,omitempty"`                // 扩展信息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *NotifyRiskRuleTriggerReq) Reset() {
 	*x = NotifyRiskRuleTriggerReq{}
-	mi := &file_risk_v1_risk_proto_msgTypes[2]
+	mi := &file_risk_v1_risk_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -170,7 +276,7 @@ func (x *NotifyRiskRuleTriggerReq) String() string {
 func (*NotifyRiskRuleTriggerReq) ProtoMessage() {}
 
 func (x *NotifyRiskRuleTriggerReq) ProtoReflect() protoreflect.Message {
-	mi := &file_risk_v1_risk_proto_msgTypes[2]
+	mi := &file_risk_v1_risk_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -183,7 +289,7 @@ func (x *NotifyRiskRuleTriggerReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NotifyRiskRuleTriggerReq.ProtoReflect.Descriptor instead.
 func (*NotifyRiskRuleTriggerReq) Descriptor() ([]byte, []int) {
-	return file_risk_v1_risk_proto_rawDescGZIP(), []int{2}
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *NotifyRiskRuleTriggerReq) GetUserId() int64 {
@@ -191,6 +297,64 @@ func (x *NotifyRiskRuleTriggerReq) GetUserId() int64 {
 		return x.UserId
 	}
 	return 0
+}
+
+func (x *NotifyRiskRuleTriggerReq) GetIsNeed() bool {
+	if x != nil {
+		return x.IsNeed
+	}
+	return false
+}
+
+func (x *NotifyRiskRuleTriggerReq) GetExtend() string {
+	if x != nil {
+		return x.Extend
+	}
+	return ""
+}
+
+type NotifyRiskRuleTriggerReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserRiskList  RiskListType           `protobuf:"varint,1,opt,name=user_risk_list,json=userRiskList,proto3,enum=risk.v1.RiskListType" json:"user_risk_list,omitempty"` // 用户名单类型
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *NotifyRiskRuleTriggerReply) Reset() {
+	*x = NotifyRiskRuleTriggerReply{}
+	mi := &file_risk_v1_risk_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *NotifyRiskRuleTriggerReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NotifyRiskRuleTriggerReply) ProtoMessage() {}
+
+func (x *NotifyRiskRuleTriggerReply) ProtoReflect() protoreflect.Message {
+	mi := &file_risk_v1_risk_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NotifyRiskRuleTriggerReply.ProtoReflect.Descriptor instead.
+func (*NotifyRiskRuleTriggerReply) Descriptor() ([]byte, []int) {
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *NotifyRiskRuleTriggerReply) GetUserRiskList() RiskListType {
+	if x != nil {
+		return x.UserRiskList
+	}
+	return RiskListType_RISK_LIST_TYPE_UNSPECIFIED
 }
 
 type GetUserRiskListReq struct {
@@ -202,7 +366,7 @@ type GetUserRiskListReq struct {
 
 func (x *GetUserRiskListReq) Reset() {
 	*x = GetUserRiskListReq{}
-	mi := &file_risk_v1_risk_proto_msgTypes[3]
+	mi := &file_risk_v1_risk_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -214,7 +378,7 @@ func (x *GetUserRiskListReq) String() string {
 func (*GetUserRiskListReq) ProtoMessage() {}
 
 func (x *GetUserRiskListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_risk_v1_risk_proto_msgTypes[3]
+	mi := &file_risk_v1_risk_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -227,7 +391,7 @@ func (x *GetUserRiskListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserRiskListReq.ProtoReflect.Descriptor instead.
 func (*GetUserRiskListReq) Descriptor() ([]byte, []int) {
-	return file_risk_v1_risk_proto_rawDescGZIP(), []int{3}
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetUserRiskListReq) GetUserId() int64 {
@@ -246,7 +410,7 @@ type GetUserRiskListReply struct {
 
 func (x *GetUserRiskListReply) Reset() {
 	*x = GetUserRiskListReply{}
-	mi := &file_risk_v1_risk_proto_msgTypes[4]
+	mi := &file_risk_v1_risk_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -258,7 +422,7 @@ func (x *GetUserRiskListReply) String() string {
 func (*GetUserRiskListReply) ProtoMessage() {}
 
 func (x *GetUserRiskListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_risk_v1_risk_proto_msgTypes[4]
+	mi := &file_risk_v1_risk_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -271,7 +435,7 @@ func (x *GetUserRiskListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserRiskListReply.ProtoReflect.Descriptor instead.
 func (*GetUserRiskListReply) Descriptor() ([]byte, []int) {
-	return file_risk_v1_risk_proto_rawDescGZIP(), []int{4}
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetUserRiskListReply) GetUserRiskList() RiskListType {
@@ -291,7 +455,7 @@ type BatchGetUserRiskListReq struct {
 
 func (x *BatchGetUserRiskListReq) Reset() {
 	*x = BatchGetUserRiskListReq{}
-	mi := &file_risk_v1_risk_proto_msgTypes[5]
+	mi := &file_risk_v1_risk_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -303,7 +467,7 @@ func (x *BatchGetUserRiskListReq) String() string {
 func (*BatchGetUserRiskListReq) ProtoMessage() {}
 
 func (x *BatchGetUserRiskListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_risk_v1_risk_proto_msgTypes[5]
+	mi := &file_risk_v1_risk_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -316,7 +480,7 @@ func (x *BatchGetUserRiskListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchGetUserRiskListReq.ProtoReflect.Descriptor instead.
 func (*BatchGetUserRiskListReq) Descriptor() ([]byte, []int) {
-	return file_risk_v1_risk_proto_rawDescGZIP(), []int{5}
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *BatchGetUserRiskListReq) GetUserIds() []int64 {
@@ -336,7 +500,7 @@ type BatchGetUserRiskListReply struct {
 
 func (x *BatchGetUserRiskListReply) Reset() {
 	*x = BatchGetUserRiskListReply{}
-	mi := &file_risk_v1_risk_proto_msgTypes[6]
+	mi := &file_risk_v1_risk_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -348,7 +512,7 @@ func (x *BatchGetUserRiskListReply) String() string {
 func (*BatchGetUserRiskListReply) ProtoMessage() {}
 
 func (x *BatchGetUserRiskListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_risk_v1_risk_proto_msgTypes[6]
+	mi := &file_risk_v1_risk_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -361,7 +525,7 @@ func (x *BatchGetUserRiskListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchGetUserRiskListReply.ProtoReflect.Descriptor instead.
 func (*BatchGetUserRiskListReply) Descriptor() ([]byte, []int) {
-	return file_risk_v1_risk_proto_rawDescGZIP(), []int{6}
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *BatchGetUserRiskListReply) GetUserRiskLists() map[int64]RiskListType {
@@ -371,15 +535,116 @@ func (x *BatchGetUserRiskListReply) GetUserRiskLists() map[int64]RiskListType {
 	return nil
 }
 
+type BatchDelUserRiskListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ids           []int64                `protobuf:"varint,1,rep,packed,name=ids,proto3" json:"ids,omitempty"`
+	UserIds       []int64                `protobuf:"varint,2,rep,packed,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
+	Reason        string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
+	RiskType      RiskListType           `protobuf:"varint,4,opt,name=risk_type,json=riskType,proto3,enum=risk.v1.RiskListType" json:"risk_type,omitempty"` // 0 删除全部
+	OperatorId    int64                  `protobuf:"varint,5,opt,name=operator_id,json=operatorId,proto3" json:"operator_id,omitempty"`                     // 操作人ID
+	Operator      string                 `protobuf:"bytes,6,opt,name=operator,proto3" json:"operator,omitempty"`                                            // 操作人
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchDelUserRiskListReq) Reset() {
+	*x = BatchDelUserRiskListReq{}
+	mi := &file_risk_v1_risk_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchDelUserRiskListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchDelUserRiskListReq) ProtoMessage() {}
+
+func (x *BatchDelUserRiskListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_risk_v1_risk_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchDelUserRiskListReq.ProtoReflect.Descriptor instead.
+func (*BatchDelUserRiskListReq) Descriptor() ([]byte, []int) {
+	return file_risk_v1_risk_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *BatchDelUserRiskListReq) GetIds() []int64 {
+	if x != nil {
+		return x.Ids
+	}
+	return nil
+}
+
+func (x *BatchDelUserRiskListReq) GetUserIds() []int64 {
+	if x != nil {
+		return x.UserIds
+	}
+	return nil
+}
+
+func (x *BatchDelUserRiskListReq) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *BatchDelUserRiskListReq) GetRiskType() RiskListType {
+	if x != nil {
+		return x.RiskType
+	}
+	return RiskListType_RISK_LIST_TYPE_UNSPECIFIED
+}
+
+func (x *BatchDelUserRiskListReq) GetOperatorId() int64 {
+	if x != nil {
+		return x.OperatorId
+	}
+	return 0
+}
+
+func (x *BatchDelUserRiskListReq) GetOperator() string {
+	if x != nil {
+		return x.Operator
+	}
+	return ""
+}
+
 var File_risk_v1_risk_proto protoreflect.FileDescriptor
 
 const file_risk_v1_risk_proto_rawDesc = "" +
 	"\n" +
 	"\x12risk/v1/risk.proto\x12\arisk.v1\"\t\n" +
 	"\aRiskReq\"\v\n" +
-	"\tRiskReply\"3\n" +
+	"\tRiskReply\"Z\n" +
+	"\x16IpOrDeviceUserCountReq\x12!\n" +
+	"\fip_addresses\x18\x01 \x03(\tR\vipAddresses\x12\x1d\n" +
+	"\n" +
+	"device_ids\x18\x02 \x03(\tR\tdeviceIds\"\xca\x02\n" +
+	"\x18IpOrDeviceUserCountReply\x12P\n" +
+	"\vip_user_num\x18\x02 \x03(\v20.risk.v1.IpOrDeviceUserCountReply.IpUserNumEntryR\tipUserNum\x12\\\n" +
+	"\x0fdevice_user_num\x18\x03 \x03(\v24.risk.v1.IpOrDeviceUserCountReply.DeviceUserNumEntryR\rdeviceUserNum\x1a<\n" +
+	"\x0eIpUserNumEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\x1a@\n" +
+	"\x12DeviceUserNumEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"d\n" +
 	"\x18NotifyRiskRuleTriggerReq\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\"-\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x17\n" +
+	"\ais_need\x18\x02 \x01(\bR\x06isNeed\x12\x16\n" +
+	"\x06Extend\x18\x03 \x01(\tR\x06Extend\"Y\n" +
+	"\x1aNotifyRiskRuleTriggerReply\x12;\n" +
+	"\x0euser_risk_list\x18\x01 \x01(\x0e2\x15.risk.v1.RiskListTypeR\fuserRiskList\"-\n" +
 	"\x12GetUserRiskListReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\"S\n" +
 	"\x14GetUserRiskListReply\x12;\n" +
@@ -390,17 +655,27 @@ const file_risk_v1_risk_proto_rawDesc = "" +
 	"\x0fuser_risk_lists\x18\x01 \x03(\v25.risk.v1.BatchGetUserRiskListReply.UserRiskListsEntryR\ruserRiskLists\x1aW\n" +
 	"\x12UserRiskListsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x03R\x03key\x12+\n" +
-	"\x05value\x18\x02 \x01(\x0e2\x15.risk.v1.RiskListTypeR\x05value:\x028\x01*\x96\x01\n" +
+	"\x05value\x18\x02 \x01(\x0e2\x15.risk.v1.RiskListTypeR\x05value:\x028\x01\"\xcf\x01\n" +
+	"\x17BatchDelUserRiskListReq\x12\x10\n" +
+	"\x03ids\x18\x01 \x03(\x03R\x03ids\x12\x19\n" +
+	"\buser_ids\x18\x02 \x03(\x03R\auserIds\x12\x16\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\x122\n" +
+	"\trisk_type\x18\x04 \x01(\x0e2\x15.risk.v1.RiskListTypeR\briskType\x12\x1f\n" +
+	"\voperator_id\x18\x05 \x01(\x03R\n" +
+	"operatorId\x12\x1a\n" +
+	"\boperator\x18\x06 \x01(\tR\boperator*\x96\x01\n" +
 	"\fRiskListType\x12\x1e\n" +
 	"\x1aRISK_LIST_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15RISK_LIST_TYPE_NORMAL\x10\x01\x12\x18\n" +
 	"\x14RISK_LIST_TYPE_WHITE\x10\x02\x12\x17\n" +
 	"\x13RISK_LIST_TYPE_GRAY\x10\x03\x12\x18\n" +
-	"\x14RISK_LIST_TYPE_BLACK\x10\x042\x93\x02\n" +
-	"\x14LiveRiskInnerService\x12N\n" +
-	"\x15NotifyRiskRuleTrigger\x12!.risk.v1.NotifyRiskRuleTriggerReq\x1a\x12.risk.v1.RiskReply\x12M\n" +
+	"\x14RISK_LIST_TYPE_BLACK\x10\x042\xd0\x03\n" +
+	"\x14LiveRiskInnerService\x12_\n" +
+	"\x15NotifyRiskRuleTrigger\x12!.risk.v1.NotifyRiskRuleTriggerReq\x1a#.risk.v1.NotifyRiskRuleTriggerReply\x12M\n" +
 	"\x0fGetUserRiskList\x12\x1b.risk.v1.GetUserRiskListReq\x1a\x1d.risk.v1.GetUserRiskListReply\x12\\\n" +
-	"\x14BatchGetUserRiskList\x12 .risk.v1.BatchGetUserRiskListReq\x1a\".risk.v1.BatchGetUserRiskListReplyB\tZ\a./pb/v1b\x06proto3"
+	"\x14BatchGetUserRiskList\x12 .risk.v1.BatchGetUserRiskListReq\x1a\".risk.v1.BatchGetUserRiskListReply\x12L\n" +
+	"\x14BatchDelUserRiskList\x12 .risk.v1.BatchDelUserRiskListReq\x1a\x12.risk.v1.RiskReply\x12\\\n" +
+	"\x16GetIpOrDeviceUserCount\x12\x1f.risk.v1.IpOrDeviceUserCountReq\x1a!.risk.v1.IpOrDeviceUserCountReplyB\tZ\a./pb/v1b\x06proto3"
 
 var (
 	file_risk_v1_risk_proto_rawDescOnce sync.Once
@@ -415,33 +690,47 @@ func file_risk_v1_risk_proto_rawDescGZIP() []byte {
 }
 
 var file_risk_v1_risk_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_risk_v1_risk_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_risk_v1_risk_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_risk_v1_risk_proto_goTypes = []any{
-	(RiskListType)(0),                 // 0: risk.v1.RiskListType
-	(*RiskReq)(nil),                   // 1: risk.v1.RiskReq
-	(*RiskReply)(nil),                 // 2: risk.v1.RiskReply
-	(*NotifyRiskRuleTriggerReq)(nil),  // 3: risk.v1.NotifyRiskRuleTriggerReq
-	(*GetUserRiskListReq)(nil),        // 4: risk.v1.GetUserRiskListReq
-	(*GetUserRiskListReply)(nil),      // 5: risk.v1.GetUserRiskListReply
-	(*BatchGetUserRiskListReq)(nil),   // 6: risk.v1.BatchGetUserRiskListReq
-	(*BatchGetUserRiskListReply)(nil), // 7: risk.v1.BatchGetUserRiskListReply
-	nil,                               // 8: risk.v1.BatchGetUserRiskListReply.UserRiskListsEntry
+	(RiskListType)(0),                  // 0: risk.v1.RiskListType
+	(*RiskReq)(nil),                    // 1: risk.v1.RiskReq
+	(*RiskReply)(nil),                  // 2: risk.v1.RiskReply
+	(*IpOrDeviceUserCountReq)(nil),     // 3: risk.v1.IpOrDeviceUserCountReq
+	(*IpOrDeviceUserCountReply)(nil),   // 4: risk.v1.IpOrDeviceUserCountReply
+	(*NotifyRiskRuleTriggerReq)(nil),   // 5: risk.v1.NotifyRiskRuleTriggerReq
+	(*NotifyRiskRuleTriggerReply)(nil), // 6: risk.v1.NotifyRiskRuleTriggerReply
+	(*GetUserRiskListReq)(nil),         // 7: risk.v1.GetUserRiskListReq
+	(*GetUserRiskListReply)(nil),       // 8: risk.v1.GetUserRiskListReply
+	(*BatchGetUserRiskListReq)(nil),    // 9: risk.v1.BatchGetUserRiskListReq
+	(*BatchGetUserRiskListReply)(nil),  // 10: risk.v1.BatchGetUserRiskListReply
+	(*BatchDelUserRiskListReq)(nil),    // 11: risk.v1.BatchDelUserRiskListReq
+	nil,                                // 12: risk.v1.IpOrDeviceUserCountReply.IpUserNumEntry
+	nil,                                // 13: risk.v1.IpOrDeviceUserCountReply.DeviceUserNumEntry
+	nil,                                // 14: risk.v1.BatchGetUserRiskListReply.UserRiskListsEntry
 }
 var file_risk_v1_risk_proto_depIdxs = []int32{
-	0, // 0: risk.v1.GetUserRiskListReply.user_risk_list:type_name -> risk.v1.RiskListType
-	8, // 1: risk.v1.BatchGetUserRiskListReply.user_risk_lists:type_name -> risk.v1.BatchGetUserRiskListReply.UserRiskListsEntry
-	0, // 2: risk.v1.BatchGetUserRiskListReply.UserRiskListsEntry.value:type_name -> risk.v1.RiskListType
-	3, // 3: risk.v1.LiveRiskInnerService.NotifyRiskRuleTrigger:input_type -> risk.v1.NotifyRiskRuleTriggerReq
-	4, // 4: risk.v1.LiveRiskInnerService.GetUserRiskList:input_type -> risk.v1.GetUserRiskListReq
-	6, // 5: risk.v1.LiveRiskInnerService.BatchGetUserRiskList:input_type -> risk.v1.BatchGetUserRiskListReq
-	2, // 6: risk.v1.LiveRiskInnerService.NotifyRiskRuleTrigger:output_type -> risk.v1.RiskReply
-	5, // 7: risk.v1.LiveRiskInnerService.GetUserRiskList:output_type -> risk.v1.GetUserRiskListReply
-	7, // 8: risk.v1.LiveRiskInnerService.BatchGetUserRiskList:output_type -> risk.v1.BatchGetUserRiskListReply
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	12, // 0: risk.v1.IpOrDeviceUserCountReply.ip_user_num:type_name -> risk.v1.IpOrDeviceUserCountReply.IpUserNumEntry
+	13, // 1: risk.v1.IpOrDeviceUserCountReply.device_user_num:type_name -> risk.v1.IpOrDeviceUserCountReply.DeviceUserNumEntry
+	0,  // 2: risk.v1.NotifyRiskRuleTriggerReply.user_risk_list:type_name -> risk.v1.RiskListType
+	0,  // 3: risk.v1.GetUserRiskListReply.user_risk_list:type_name -> risk.v1.RiskListType
+	14, // 4: risk.v1.BatchGetUserRiskListReply.user_risk_lists:type_name -> risk.v1.BatchGetUserRiskListReply.UserRiskListsEntry
+	0,  // 5: risk.v1.BatchDelUserRiskListReq.risk_type:type_name -> risk.v1.RiskListType
+	0,  // 6: risk.v1.BatchGetUserRiskListReply.UserRiskListsEntry.value:type_name -> risk.v1.RiskListType
+	5,  // 7: risk.v1.LiveRiskInnerService.NotifyRiskRuleTrigger:input_type -> risk.v1.NotifyRiskRuleTriggerReq
+	7,  // 8: risk.v1.LiveRiskInnerService.GetUserRiskList:input_type -> risk.v1.GetUserRiskListReq
+	9,  // 9: risk.v1.LiveRiskInnerService.BatchGetUserRiskList:input_type -> risk.v1.BatchGetUserRiskListReq
+	11, // 10: risk.v1.LiveRiskInnerService.BatchDelUserRiskList:input_type -> risk.v1.BatchDelUserRiskListReq
+	3,  // 11: risk.v1.LiveRiskInnerService.GetIpOrDeviceUserCount:input_type -> risk.v1.IpOrDeviceUserCountReq
+	6,  // 12: risk.v1.LiveRiskInnerService.NotifyRiskRuleTrigger:output_type -> risk.v1.NotifyRiskRuleTriggerReply
+	8,  // 13: risk.v1.LiveRiskInnerService.GetUserRiskList:output_type -> risk.v1.GetUserRiskListReply
+	10, // 14: risk.v1.LiveRiskInnerService.BatchGetUserRiskList:output_type -> risk.v1.BatchGetUserRiskListReply
+	2,  // 15: risk.v1.LiveRiskInnerService.BatchDelUserRiskList:output_type -> risk.v1.RiskReply
+	4,  // 16: risk.v1.LiveRiskInnerService.GetIpOrDeviceUserCount:output_type -> risk.v1.IpOrDeviceUserCountReply
+	12, // [12:17] is the sub-list for method output_type
+	7,  // [7:12] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_risk_v1_risk_proto_init() }
@@ -455,7 +744,7 @@ func file_risk_v1_risk_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_risk_v1_risk_proto_rawDesc), len(file_risk_v1_risk_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   8,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

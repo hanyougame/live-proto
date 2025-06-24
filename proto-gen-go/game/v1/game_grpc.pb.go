@@ -1647,6 +1647,10 @@ const (
 	LiveGameRpcService_GetGameConfInfo_FullMethodName                 = "/game.v1.LiveGameRpcService/GetGameConfInfo"
 	LiveGameRpcService_GetNewGameList_FullMethodName                  = "/game.v1.LiveGameRpcService/GetNewGameList"
 	LiveGameRpcService_GetBigWinGameList_FullMethodName               = "/game.v1.LiveGameRpcService/GetBigWinGameList"
+	LiveGameRpcService_FetchGamePlatformMeta_FullMethodName           = "/game.v1.LiveGameRpcService/FetchGamePlatformMeta"
+	LiveGameRpcService_FetchHotGameList_FullMethodName                = "/game.v1.LiveGameRpcService/FetchHotGameList"
+	LiveGameRpcService_FetchGameMapByIDs_FullMethodName               = "/game.v1.LiveGameRpcService/FetchGameMapByIDs"
+	LiveGameRpcService_FetchPlatformMapByIDs_FullMethodName           = "/game.v1.LiveGameRpcService/FetchPlatformMapByIDs"
 )
 
 // LiveGameRpcServiceClient is the client API for LiveGameRpcService service.
@@ -1703,6 +1707,14 @@ type LiveGameRpcServiceClient interface {
 	GetNewGameList(ctx context.Context, in *GetNewGameListReq, opts ...grpc.CallOption) (*GetNewGameListReply, error)
 	// 获取大胜游戏列表
 	GetBigWinGameList(ctx context.Context, in *BigWinGameListReq, opts ...grpc.CallOption) (*BigWinGameListReply, error)
+	// 根据游戏ID获取游戏详情
+	FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error)
+	// 获取热门游戏列表
+	FetchHotGameList(ctx context.Context, in *FetchHotManagementReq, opts ...grpc.CallOption) (*FetchHotManagementReply, error)
+	// 根据游戏ID获取游戏详情
+	FetchGameMapByIDs(ctx context.Context, in *FetchGameMapByIDReq, opts ...grpc.CallOption) (*FetchGameMapByIDReply, error)
+	// 根据平台ID获取平台详情
+	FetchPlatformMapByIDs(ctx context.Context, in *FetchPlatformMapByIDReq, opts ...grpc.CallOption) (*FetchPlatformMapByIDReply, error)
 }
 
 type liveGameRpcServiceClient struct {
@@ -1963,6 +1975,46 @@ func (c *liveGameRpcServiceClient) GetBigWinGameList(ctx context.Context, in *Bi
 	return out, nil
 }
 
+func (c *liveGameRpcServiceClient) FetchGamePlatformMeta(ctx context.Context, in *FetchGamePlatformMetaReq, opts ...grpc.CallOption) (*FetchGamePlatformMetaReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FetchGamePlatformMetaReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_FetchGamePlatformMeta_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcServiceClient) FetchHotGameList(ctx context.Context, in *FetchHotManagementReq, opts ...grpc.CallOption) (*FetchHotManagementReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FetchHotManagementReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_FetchHotGameList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcServiceClient) FetchGameMapByIDs(ctx context.Context, in *FetchGameMapByIDReq, opts ...grpc.CallOption) (*FetchGameMapByIDReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FetchGameMapByIDReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_FetchGameMapByIDs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameRpcServiceClient) FetchPlatformMapByIDs(ctx context.Context, in *FetchPlatformMapByIDReq, opts ...grpc.CallOption) (*FetchPlatformMapByIDReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FetchPlatformMapByIDReply)
+	err := c.cc.Invoke(ctx, LiveGameRpcService_FetchPlatformMapByIDs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameRpcServiceServer is the server API for LiveGameRpcService service.
 // All implementations must embed UnimplementedLiveGameRpcServiceServer
 // for forward compatibility.
@@ -2017,6 +2069,14 @@ type LiveGameRpcServiceServer interface {
 	GetNewGameList(context.Context, *GetNewGameListReq) (*GetNewGameListReply, error)
 	// 获取大胜游戏列表
 	GetBigWinGameList(context.Context, *BigWinGameListReq) (*BigWinGameListReply, error)
+	// 根据游戏ID获取游戏详情
+	FetchGamePlatformMeta(context.Context, *FetchGamePlatformMetaReq) (*FetchGamePlatformMetaReply, error)
+	// 获取热门游戏列表
+	FetchHotGameList(context.Context, *FetchHotManagementReq) (*FetchHotManagementReply, error)
+	// 根据游戏ID获取游戏详情
+	FetchGameMapByIDs(context.Context, *FetchGameMapByIDReq) (*FetchGameMapByIDReply, error)
+	// 根据平台ID获取平台详情
+	FetchPlatformMapByIDs(context.Context, *FetchPlatformMapByIDReq) (*FetchPlatformMapByIDReply, error)
 	mustEmbedUnimplementedLiveGameRpcServiceServer()
 }
 
@@ -2101,6 +2161,18 @@ func (UnimplementedLiveGameRpcServiceServer) GetNewGameList(context.Context, *Ge
 }
 func (UnimplementedLiveGameRpcServiceServer) GetBigWinGameList(context.Context, *BigWinGameListReq) (*BigWinGameListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBigWinGameList not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) FetchGamePlatformMeta(context.Context, *FetchGamePlatformMetaReq) (*FetchGamePlatformMetaReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchGamePlatformMeta not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) FetchHotGameList(context.Context, *FetchHotManagementReq) (*FetchHotManagementReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchHotGameList not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) FetchGameMapByIDs(context.Context, *FetchGameMapByIDReq) (*FetchGameMapByIDReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchGameMapByIDs not implemented")
+}
+func (UnimplementedLiveGameRpcServiceServer) FetchPlatformMapByIDs(context.Context, *FetchPlatformMapByIDReq) (*FetchPlatformMapByIDReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchPlatformMapByIDs not implemented")
 }
 func (UnimplementedLiveGameRpcServiceServer) mustEmbedUnimplementedLiveGameRpcServiceServer() {}
 func (UnimplementedLiveGameRpcServiceServer) testEmbeddedByValue()                            {}
@@ -2573,6 +2645,78 @@ func _LiveGameRpcService_GetBigWinGameList_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameRpcService_FetchGamePlatformMeta_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchGamePlatformMetaReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).FetchGamePlatformMeta(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_FetchGamePlatformMeta_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).FetchGamePlatformMeta(ctx, req.(*FetchGamePlatformMetaReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcService_FetchHotGameList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchHotManagementReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).FetchHotGameList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_FetchHotGameList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).FetchHotGameList(ctx, req.(*FetchHotManagementReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcService_FetchGameMapByIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchGameMapByIDReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).FetchGameMapByIDs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_FetchGameMapByIDs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).FetchGameMapByIDs(ctx, req.(*FetchGameMapByIDReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameRpcService_FetchPlatformMapByIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchPlatformMapByIDReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameRpcServiceServer).FetchPlatformMapByIDs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameRpcService_FetchPlatformMapByIDs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameRpcServiceServer).FetchPlatformMapByIDs(ctx, req.(*FetchPlatformMapByIDReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameRpcService_ServiceDesc is the grpc.ServiceDesc for LiveGameRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2679,6 +2823,22 @@ var LiveGameRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBigWinGameList",
 			Handler:    _LiveGameRpcService_GetBigWinGameList_Handler,
+		},
+		{
+			MethodName: "FetchGamePlatformMeta",
+			Handler:    _LiveGameRpcService_FetchGamePlatformMeta_Handler,
+		},
+		{
+			MethodName: "FetchHotGameList",
+			Handler:    _LiveGameRpcService_FetchHotGameList_Handler,
+		},
+		{
+			MethodName: "FetchGameMapByIDs",
+			Handler:    _LiveGameRpcService_FetchGameMapByIDs_Handler,
+		},
+		{
+			MethodName: "FetchPlatformMapByIDs",
+			Handler:    _LiveGameRpcService_FetchPlatformMapByIDs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

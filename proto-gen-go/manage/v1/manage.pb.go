@@ -313,6 +313,640 @@ func (x *GetCurrInfoByIDReq) GetId() int64 {
 	return 0
 }
 
+// IP地理位置信息
+type IPGeolocationInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`                                             // IP地址
+	CountryCode   string                 `protobuf:"bytes,2,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`        // 国家代码 如"CN"
+	CountryName   string                 `protobuf:"bytes,3,opt,name=country_name,json=countryName,proto3" json:"country_name,omitempty"`        // 国家名称 如"中国"
+	RegionName    string                 `protobuf:"bytes,4,opt,name=region_name,json=regionName,proto3" json:"region_name,omitempty"`           // 地区名称 如"北京市"
+	CityName      string                 `protobuf:"bytes,5,opt,name=city_name,json=cityName,proto3" json:"city_name,omitempty"`                 // 城市名称 如"北京"
+	IspName       string                 `protobuf:"bytes,6,opt,name=isp_name,json=ispName,proto3" json:"isp_name,omitempty"`                    // ISP名称 如"电信"
+	Timezone      string                 `protobuf:"bytes,7,opt,name=timezone,proto3" json:"timezone,omitempty"`                                 // 时区 如"Asia/Shanghai"
+	Latitude      float64                `protobuf:"fixed64,8,opt,name=latitude,proto3" json:"latitude,omitempty"`                               // 纬度
+	Longitude     float64                `protobuf:"fixed64,9,opt,name=longitude,proto3" json:"longitude,omitempty"`                             // 经度
+	ContinentName string                 `protobuf:"bytes,10,opt,name=continent_name,json=continentName,proto3" json:"continent_name,omitempty"` // 大洲名称
+	IpType        int64                  `protobuf:"varint,11,opt,name=ip_type,json=ipType,proto3" json:"ip_type,omitempty"`                     // IP类型 1 IPv4 2 IPv6
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IPGeolocationInfo) Reset() {
+	*x = IPGeolocationInfo{}
+	mi := &file_manage_v1_manage_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IPGeolocationInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IPGeolocationInfo) ProtoMessage() {}
+
+func (x *IPGeolocationInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IPGeolocationInfo.ProtoReflect.Descriptor instead.
+func (*IPGeolocationInfo) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *IPGeolocationInfo) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetCountryCode() string {
+	if x != nil {
+		return x.CountryCode
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetCountryName() string {
+	if x != nil {
+		return x.CountryName
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetRegionName() string {
+	if x != nil {
+		return x.RegionName
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetCityName() string {
+	if x != nil {
+		return x.CityName
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetIspName() string {
+	if x != nil {
+		return x.IspName
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetTimezone() string {
+	if x != nil {
+		return x.Timezone
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetLatitude() float64 {
+	if x != nil {
+		return x.Latitude
+	}
+	return 0
+}
+
+func (x *IPGeolocationInfo) GetLongitude() float64 {
+	if x != nil {
+		return x.Longitude
+	}
+	return 0
+}
+
+func (x *IPGeolocationInfo) GetContinentName() string {
+	if x != nil {
+		return x.ContinentName
+	}
+	return ""
+}
+
+func (x *IPGeolocationInfo) GetIpType() int64 {
+	if x != nil {
+		return x.IpType
+	}
+	return 0
+}
+
+// 单个IP查询请求
+type GetIPGeolocationReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"` // IP地址
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIPGeolocationReq) Reset() {
+	*x = GetIPGeolocationReq{}
+	mi := &file_manage_v1_manage_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIPGeolocationReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIPGeolocationReq) ProtoMessage() {}
+
+func (x *GetIPGeolocationReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIPGeolocationReq.ProtoReflect.Descriptor instead.
+func (*GetIPGeolocationReq) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetIPGeolocationReq) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+// 单个IP查询响应
+type GetIPGeolocationReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Geolocation   *IPGeolocationInfo     `protobuf:"bytes,1,opt,name=geolocation,proto3" json:"geolocation,omitempty"` // IP地理位置信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIPGeolocationReply) Reset() {
+	*x = GetIPGeolocationReply{}
+	mi := &file_manage_v1_manage_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIPGeolocationReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIPGeolocationReply) ProtoMessage() {}
+
+func (x *GetIPGeolocationReply) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIPGeolocationReply.ProtoReflect.Descriptor instead.
+func (*GetIPGeolocationReply) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetIPGeolocationReply) GetGeolocation() *IPGeolocationInfo {
+	if x != nil {
+		return x.Geolocation
+	}
+	return nil
+}
+
+// 批量IP查询请求
+type BatchGetIPGeolocationReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ips           []string               `protobuf:"bytes,1,rep,name=ips,proto3" json:"ips,omitempty"` // IP地址列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchGetIPGeolocationReq) Reset() {
+	*x = BatchGetIPGeolocationReq{}
+	mi := &file_manage_v1_manage_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchGetIPGeolocationReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchGetIPGeolocationReq) ProtoMessage() {}
+
+func (x *BatchGetIPGeolocationReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchGetIPGeolocationReq.ProtoReflect.Descriptor instead.
+func (*BatchGetIPGeolocationReq) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *BatchGetIPGeolocationReq) GetIps() []string {
+	if x != nil {
+		return x.Ips
+	}
+	return nil
+}
+
+// 批量IP查询响应
+type BatchGetIPGeolocationReply struct {
+	state         protoimpl.MessageState        `protogen:"open.v1"`
+	Geolocations  map[string]*IPGeolocationInfo `protobuf:"bytes,1,rep,name=geolocations,proto3" json:"geolocations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // IP -> 地理位置信息映射
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchGetIPGeolocationReply) Reset() {
+	*x = BatchGetIPGeolocationReply{}
+	mi := &file_manage_v1_manage_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchGetIPGeolocationReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchGetIPGeolocationReply) ProtoMessage() {}
+
+func (x *BatchGetIPGeolocationReply) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchGetIPGeolocationReply.ProtoReflect.Descriptor instead.
+func (*BatchGetIPGeolocationReply) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *BatchGetIPGeolocationReply) GetGeolocations() map[string]*IPGeolocationInfo {
+	if x != nil {
+		return x.Geolocations
+	}
+	return nil
+}
+
+type SendSmsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Phone         string                 `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`                                // 手机号
+	CountryCode   string                 `protobuf:"bytes,2,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"` // 区号
+	Msg           string                 `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`                                    // 短信内容
+	SmsCode       string                 `protobuf:"bytes,4,opt,name=sms_code,json=smsCode,proto3" json:"sms_code,omitempty"`             // 短信三方Code标识
+	Captcha       string                 `protobuf:"bytes,5,opt,name=captcha,proto3" json:"captcha,omitempty"`                            // 验证码
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendSmsReq) Reset() {
+	*x = SendSmsReq{}
+	mi := &file_manage_v1_manage_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendSmsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendSmsReq) ProtoMessage() {}
+
+func (x *SendSmsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendSmsReq.ProtoReflect.Descriptor instead.
+func (*SendSmsReq) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *SendSmsReq) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *SendSmsReq) GetCountryCode() string {
+	if x != nil {
+		return x.CountryCode
+	}
+	return ""
+}
+
+func (x *SendSmsReq) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *SendSmsReq) GetSmsCode() string {
+	if x != nil {
+		return x.SmsCode
+	}
+	return ""
+}
+
+func (x *SendSmsReq) GetCaptcha() string {
+	if x != nil {
+		return x.Captcha
+	}
+	return ""
+}
+
+type SendSmsReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ThirdOrderNo  string                 `protobuf:"bytes,1,opt,name=third_order_no,json=thirdOrderNo,proto3" json:"third_order_no,omitempty"` // 三方单号
+	Resp          string                 `protobuf:"bytes,2,opt,name=resp,proto3" json:"resp,omitempty"`                                       // 三方响应
+	Status        int64                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`                                  // 状态 1-发送成功 2-发送失败
+	Phone         string                 `protobuf:"bytes,4,opt,name=phone,proto3" json:"phone,omitempty"`                                     // 实际发送手机号
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendSmsReply) Reset() {
+	*x = SendSmsReply{}
+	mi := &file_manage_v1_manage_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendSmsReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendSmsReply) ProtoMessage() {}
+
+func (x *SendSmsReply) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendSmsReply.ProtoReflect.Descriptor instead.
+func (*SendSmsReply) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *SendSmsReply) GetThirdOrderNo() string {
+	if x != nil {
+		return x.ThirdOrderNo
+	}
+	return ""
+}
+
+func (x *SendSmsReply) GetResp() string {
+	if x != nil {
+		return x.Resp
+	}
+	return ""
+}
+
+func (x *SendSmsReply) GetStatus() int64 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *SendSmsReply) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+type SmsBalanceReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SmsCodes      []string               `protobuf:"bytes,1,rep,name=sms_codes,json=smsCodes,proto3" json:"sms_codes,omitempty"` // 三方Code标识
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SmsBalanceReq) Reset() {
+	*x = SmsBalanceReq{}
+	mi := &file_manage_v1_manage_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SmsBalanceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SmsBalanceReq) ProtoMessage() {}
+
+func (x *SmsBalanceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SmsBalanceReq.ProtoReflect.Descriptor instead.
+func (*SmsBalanceReq) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SmsBalanceReq) GetSmsCodes() []string {
+	if x != nil {
+		return x.SmsCodes
+	}
+	return nil
+}
+
+type SmsBalanceReply struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// repeated string balances = 1; // 余额
+	Balances      map[string]string `protobuf:"bytes,1,rep,name=balances,proto3" json:"balances,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 余额
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SmsBalanceReply) Reset() {
+	*x = SmsBalanceReply{}
+	mi := &file_manage_v1_manage_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SmsBalanceReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SmsBalanceReply) ProtoMessage() {}
+
+func (x *SmsBalanceReply) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SmsBalanceReply.ProtoReflect.Descriptor instead.
+func (*SmsBalanceReply) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SmsBalanceReply) GetBalances() map[string]string {
+	if x != nil {
+		return x.Balances
+	}
+	return nil
+}
+
+type SendEmailReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	To            []string               `protobuf:"bytes,1,rep,name=to,proto3" json:"to,omitempty"`           // 收件人
+	Subject       string                 `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject,omitempty"` // 邮件主题
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"` //  邮件内容
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendEmailReq) Reset() {
+	*x = SendEmailReq{}
+	mi := &file_manage_v1_manage_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendEmailReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendEmailReq) ProtoMessage() {}
+
+func (x *SendEmailReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendEmailReq.ProtoReflect.Descriptor instead.
+func (*SendEmailReq) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SendEmailReq) GetTo() []string {
+	if x != nil {
+		return x.To
+	}
+	return nil
+}
+
+func (x *SendEmailReq) GetSubject() string {
+	if x != nil {
+		return x.Subject
+	}
+	return ""
+}
+
+func (x *SendEmailReq) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+type SendEmailReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendEmailReply) Reset() {
+	*x = SendEmailReply{}
+	mi := &file_manage_v1_manage_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendEmailReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendEmailReply) ProtoMessage() {}
+
+func (x *SendEmailReply) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendEmailReply.ProtoReflect.Descriptor instead.
+func (*SendEmailReply) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{15}
+}
+
 var File_manage_v1_manage_proto protoreflect.FileDescriptor
 
 const file_manage_v1_manage_proto_rawDesc = "" +
@@ -340,10 +974,65 @@ const file_manage_v1_manage_proto_rawDesc = "" +
 	"\x17CurrencyDetailReplyList\x122\n" +
 	"\x04list\x18\x01 \x03(\v2\x1e.manage.v1.CurrencyDetailReplyR\x04list\"$\n" +
 	"\x12GetCurrInfoByIDReq\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id2\xb8\x01\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\xd8\x02\n" +
+	"\x11IPGeolocationInfo\x12\x0e\n" +
+	"\x02ip\x18\x01 \x01(\tR\x02ip\x12!\n" +
+	"\fcountry_code\x18\x02 \x01(\tR\vcountryCode\x12!\n" +
+	"\fcountry_name\x18\x03 \x01(\tR\vcountryName\x12\x1f\n" +
+	"\vregion_name\x18\x04 \x01(\tR\n" +
+	"regionName\x12\x1b\n" +
+	"\tcity_name\x18\x05 \x01(\tR\bcityName\x12\x19\n" +
+	"\bisp_name\x18\x06 \x01(\tR\aispName\x12\x1a\n" +
+	"\btimezone\x18\a \x01(\tR\btimezone\x12\x1a\n" +
+	"\blatitude\x18\b \x01(\x01R\blatitude\x12\x1c\n" +
+	"\tlongitude\x18\t \x01(\x01R\tlongitude\x12%\n" +
+	"\x0econtinent_name\x18\n" +
+	" \x01(\tR\rcontinentName\x12\x17\n" +
+	"\aip_type\x18\v \x01(\x03R\x06ipType\"%\n" +
+	"\x13GetIPGeolocationReq\x12\x0e\n" +
+	"\x02ip\x18\x01 \x01(\tR\x02ip\"W\n" +
+	"\x15GetIPGeolocationReply\x12>\n" +
+	"\vgeolocation\x18\x01 \x01(\v2\x1c.manage.v1.IPGeolocationInfoR\vgeolocation\",\n" +
+	"\x18BatchGetIPGeolocationReq\x12\x10\n" +
+	"\x03ips\x18\x01 \x03(\tR\x03ips\"\xd8\x01\n" +
+	"\x1aBatchGetIPGeolocationReply\x12[\n" +
+	"\fgeolocations\x18\x01 \x03(\v27.manage.v1.BatchGetIPGeolocationReply.GeolocationsEntryR\fgeolocations\x1a]\n" +
+	"\x11GeolocationsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x122\n" +
+	"\x05value\x18\x02 \x01(\v2\x1c.manage.v1.IPGeolocationInfoR\x05value:\x028\x01\"\x8c\x01\n" +
+	"\n" +
+	"SendSmsReq\x12\x14\n" +
+	"\x05phone\x18\x01 \x01(\tR\x05phone\x12!\n" +
+	"\fcountry_code\x18\x02 \x01(\tR\vcountryCode\x12\x10\n" +
+	"\x03msg\x18\x03 \x01(\tR\x03msg\x12\x19\n" +
+	"\bsms_code\x18\x04 \x01(\tR\asmsCode\x12\x18\n" +
+	"\acaptcha\x18\x05 \x01(\tR\acaptcha\"v\n" +
+	"\fSendSmsReply\x12$\n" +
+	"\x0ethird_order_no\x18\x01 \x01(\tR\fthirdOrderNo\x12\x12\n" +
+	"\x04resp\x18\x02 \x01(\tR\x04resp\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\x12\x14\n" +
+	"\x05phone\x18\x04 \x01(\tR\x05phone\",\n" +
+	"\rSmsBalanceReq\x12\x1b\n" +
+	"\tsms_codes\x18\x01 \x03(\tR\bsmsCodes\"\x94\x01\n" +
+	"\x0fSmsBalanceReply\x12D\n" +
+	"\bbalances\x18\x01 \x03(\v2(.manage.v1.SmsBalanceReply.BalancesEntryR\bbalances\x1a;\n" +
+	"\rBalancesEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"R\n" +
+	"\fSendEmailReq\x12\x0e\n" +
+	"\x02to\x18\x01 \x03(\tR\x02to\x12\x18\n" +
+	"\asubject\x18\x02 \x01(\tR\asubject\x12\x18\n" +
+	"\acontent\x18\x03 \x01(\tR\acontent\"\x10\n" +
+	"\x0eSendEmailReply2\xb3\x04\n" +
 	"\x14LiveManageRpcService\x12N\n" +
 	"\x12GetLegalTenderInfo\x12\x14.manage.v1.ManageReq\x1a\".manage.v1.CurrencyDetailReplyList\x12P\n" +
-	"\x0fGetCurrInfoById\x12\x1d.manage.v1.GetCurrInfoByIDReq\x1a\x1e.manage.v1.CurrencyDetailReplyB\tZ\a./pb/v1b\x06proto3"
+	"\x0fGetCurrInfoById\x12\x1d.manage.v1.GetCurrInfoByIDReq\x1a\x1e.manage.v1.CurrencyDetailReply\x12T\n" +
+	"\x10GetIPGeolocation\x12\x1e.manage.v1.GetIPGeolocationReq\x1a .manage.v1.GetIPGeolocationReply\x12c\n" +
+	"\x15BatchGetIPGeolocation\x12#.manage.v1.BatchGetIPGeolocationReq\x1a%.manage.v1.BatchGetIPGeolocationReply\x129\n" +
+	"\aSendSms\x12\x15.manage.v1.SendSmsReq\x1a\x17.manage.v1.SendSmsReply\x12B\n" +
+	"\n" +
+	"SmsBalance\x12\x18.manage.v1.SmsBalanceReq\x1a\x1a.manage.v1.SmsBalanceReply\x12?\n" +
+	"\tSendEmail\x12\x17.manage.v1.SendEmailReq\x1a\x19.manage.v1.SendEmailReplyB\tZ\a./pb/v1b\x06proto3"
 
 var (
 	file_manage_v1_manage_proto_rawDescOnce sync.Once
@@ -357,25 +1046,52 @@ func file_manage_v1_manage_proto_rawDescGZIP() []byte {
 	return file_manage_v1_manage_proto_rawDescData
 }
 
-var file_manage_v1_manage_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_manage_v1_manage_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_manage_v1_manage_proto_goTypes = []any{
-	(*ManageReq)(nil),               // 0: manage.v1.ManageReq
-	(*ManageReply)(nil),             // 1: manage.v1.ManageReply
-	(*CurrencyDetailReply)(nil),     // 2: manage.v1.CurrencyDetailReply
-	(*CurrencyDetailReplyList)(nil), // 3: manage.v1.CurrencyDetailReplyList
-	(*GetCurrInfoByIDReq)(nil),      // 4: manage.v1.GetCurrInfoByIDReq
+	(*ManageReq)(nil),                  // 0: manage.v1.ManageReq
+	(*ManageReply)(nil),                // 1: manage.v1.ManageReply
+	(*CurrencyDetailReply)(nil),        // 2: manage.v1.CurrencyDetailReply
+	(*CurrencyDetailReplyList)(nil),    // 3: manage.v1.CurrencyDetailReplyList
+	(*GetCurrInfoByIDReq)(nil),         // 4: manage.v1.GetCurrInfoByIDReq
+	(*IPGeolocationInfo)(nil),          // 5: manage.v1.IPGeolocationInfo
+	(*GetIPGeolocationReq)(nil),        // 6: manage.v1.GetIPGeolocationReq
+	(*GetIPGeolocationReply)(nil),      // 7: manage.v1.GetIPGeolocationReply
+	(*BatchGetIPGeolocationReq)(nil),   // 8: manage.v1.BatchGetIPGeolocationReq
+	(*BatchGetIPGeolocationReply)(nil), // 9: manage.v1.BatchGetIPGeolocationReply
+	(*SendSmsReq)(nil),                 // 10: manage.v1.SendSmsReq
+	(*SendSmsReply)(nil),               // 11: manage.v1.SendSmsReply
+	(*SmsBalanceReq)(nil),              // 12: manage.v1.SmsBalanceReq
+	(*SmsBalanceReply)(nil),            // 13: manage.v1.SmsBalanceReply
+	(*SendEmailReq)(nil),               // 14: manage.v1.SendEmailReq
+	(*SendEmailReply)(nil),             // 15: manage.v1.SendEmailReply
+	nil,                                // 16: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
+	nil,                                // 17: manage.v1.SmsBalanceReply.BalancesEntry
 }
 var file_manage_v1_manage_proto_depIdxs = []int32{
-	2, // 0: manage.v1.CurrencyDetailReplyList.list:type_name -> manage.v1.CurrencyDetailReply
-	0, // 1: manage.v1.LiveManageRpcService.GetLegalTenderInfo:input_type -> manage.v1.ManageReq
-	4, // 2: manage.v1.LiveManageRpcService.GetCurrInfoById:input_type -> manage.v1.GetCurrInfoByIDReq
-	3, // 3: manage.v1.LiveManageRpcService.GetLegalTenderInfo:output_type -> manage.v1.CurrencyDetailReplyList
-	2, // 4: manage.v1.LiveManageRpcService.GetCurrInfoById:output_type -> manage.v1.CurrencyDetailReply
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2,  // 0: manage.v1.CurrencyDetailReplyList.list:type_name -> manage.v1.CurrencyDetailReply
+	5,  // 1: manage.v1.GetIPGeolocationReply.geolocation:type_name -> manage.v1.IPGeolocationInfo
+	16, // 2: manage.v1.BatchGetIPGeolocationReply.geolocations:type_name -> manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
+	17, // 3: manage.v1.SmsBalanceReply.balances:type_name -> manage.v1.SmsBalanceReply.BalancesEntry
+	5,  // 4: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry.value:type_name -> manage.v1.IPGeolocationInfo
+	0,  // 5: manage.v1.LiveManageRpcService.GetLegalTenderInfo:input_type -> manage.v1.ManageReq
+	4,  // 6: manage.v1.LiveManageRpcService.GetCurrInfoById:input_type -> manage.v1.GetCurrInfoByIDReq
+	6,  // 7: manage.v1.LiveManageRpcService.GetIPGeolocation:input_type -> manage.v1.GetIPGeolocationReq
+	8,  // 8: manage.v1.LiveManageRpcService.BatchGetIPGeolocation:input_type -> manage.v1.BatchGetIPGeolocationReq
+	10, // 9: manage.v1.LiveManageRpcService.SendSms:input_type -> manage.v1.SendSmsReq
+	12, // 10: manage.v1.LiveManageRpcService.SmsBalance:input_type -> manage.v1.SmsBalanceReq
+	14, // 11: manage.v1.LiveManageRpcService.SendEmail:input_type -> manage.v1.SendEmailReq
+	3,  // 12: manage.v1.LiveManageRpcService.GetLegalTenderInfo:output_type -> manage.v1.CurrencyDetailReplyList
+	2,  // 13: manage.v1.LiveManageRpcService.GetCurrInfoById:output_type -> manage.v1.CurrencyDetailReply
+	7,  // 14: manage.v1.LiveManageRpcService.GetIPGeolocation:output_type -> manage.v1.GetIPGeolocationReply
+	9,  // 15: manage.v1.LiveManageRpcService.BatchGetIPGeolocation:output_type -> manage.v1.BatchGetIPGeolocationReply
+	11, // 16: manage.v1.LiveManageRpcService.SendSms:output_type -> manage.v1.SendSmsReply
+	13, // 17: manage.v1.LiveManageRpcService.SmsBalance:output_type -> manage.v1.SmsBalanceReply
+	15, // 18: manage.v1.LiveManageRpcService.SendEmail:output_type -> manage.v1.SendEmailReply
+	12, // [12:19] is the sub-list for method output_type
+	5,  // [5:12] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_manage_v1_manage_proto_init() }
@@ -389,7 +1105,7 @@ func file_manage_v1_manage_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_v1_manage_proto_rawDesc), len(file_manage_v1_manage_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

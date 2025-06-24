@@ -19,9 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName = "/risk.v1.LiveRiskInnerService/NotifyRiskRuleTrigger"
-	LiveRiskInnerService_GetUserRiskList_FullMethodName       = "/risk.v1.LiveRiskInnerService/GetUserRiskList"
-	LiveRiskInnerService_BatchGetUserRiskList_FullMethodName  = "/risk.v1.LiveRiskInnerService/BatchGetUserRiskList"
+	LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName  = "/risk.v1.LiveRiskInnerService/NotifyRiskRuleTrigger"
+	LiveRiskInnerService_GetUserRiskList_FullMethodName        = "/risk.v1.LiveRiskInnerService/GetUserRiskList"
+	LiveRiskInnerService_BatchGetUserRiskList_FullMethodName   = "/risk.v1.LiveRiskInnerService/BatchGetUserRiskList"
+	LiveRiskInnerService_BatchDelUserRiskList_FullMethodName   = "/risk.v1.LiveRiskInnerService/BatchDelUserRiskList"
+	LiveRiskInnerService_GetIpOrDeviceUserCount_FullMethodName = "/risk.v1.LiveRiskInnerService/GetIpOrDeviceUserCount"
 )
 
 // LiveRiskInnerServiceClient is the client API for LiveRiskInnerService service.
@@ -29,11 +31,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LiveRiskInnerServiceClient interface {
 	// NotifyRiskRuleTrigger 处理通知风控触发规则
-	NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error)
+	NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*NotifyRiskRuleTriggerReply, error)
 	// 获取用户风控名单标识
 	GetUserRiskList(ctx context.Context, in *GetUserRiskListReq, opts ...grpc.CallOption) (*GetUserRiskListReply, error)
 	// 批量获取用户风控名单
 	BatchGetUserRiskList(ctx context.Context, in *BatchGetUserRiskListReq, opts ...grpc.CallOption) (*BatchGetUserRiskListReply, error)
+	// 删除批量用户风控名单
+	BatchDelUserRiskList(ctx context.Context, in *BatchDelUserRiskListReq, opts ...grpc.CallOption) (*RiskReply, error)
+	// 获取指定IP地址和设备号的用户使用数量
+	GetIpOrDeviceUserCount(ctx context.Context, in *IpOrDeviceUserCountReq, opts ...grpc.CallOption) (*IpOrDeviceUserCountReply, error)
 }
 
 type liveRiskInnerServiceClient struct {
@@ -44,9 +50,9 @@ func NewLiveRiskInnerServiceClient(cc grpc.ClientConnInterface) LiveRiskInnerSer
 	return &liveRiskInnerServiceClient{cc}
 }
 
-func (c *liveRiskInnerServiceClient) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*RiskReply, error) {
+func (c *liveRiskInnerServiceClient) NotifyRiskRuleTrigger(ctx context.Context, in *NotifyRiskRuleTriggerReq, opts ...grpc.CallOption) (*NotifyRiskRuleTriggerReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RiskReply)
+	out := new(NotifyRiskRuleTriggerReply)
 	err := c.cc.Invoke(ctx, LiveRiskInnerService_NotifyRiskRuleTrigger_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -74,16 +80,40 @@ func (c *liveRiskInnerServiceClient) BatchGetUserRiskList(ctx context.Context, i
 	return out, nil
 }
 
+func (c *liveRiskInnerServiceClient) BatchDelUserRiskList(ctx context.Context, in *BatchDelUserRiskListReq, opts ...grpc.CallOption) (*RiskReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RiskReply)
+	err := c.cc.Invoke(ctx, LiveRiskInnerService_BatchDelUserRiskList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveRiskInnerServiceClient) GetIpOrDeviceUserCount(ctx context.Context, in *IpOrDeviceUserCountReq, opts ...grpc.CallOption) (*IpOrDeviceUserCountReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IpOrDeviceUserCountReply)
+	err := c.cc.Invoke(ctx, LiveRiskInnerService_GetIpOrDeviceUserCount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveRiskInnerServiceServer is the server API for LiveRiskInnerService service.
 // All implementations must embed UnimplementedLiveRiskInnerServiceServer
 // for forward compatibility.
 type LiveRiskInnerServiceServer interface {
 	// NotifyRiskRuleTrigger 处理通知风控触发规则
-	NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error)
+	NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*NotifyRiskRuleTriggerReply, error)
 	// 获取用户风控名单标识
 	GetUserRiskList(context.Context, *GetUserRiskListReq) (*GetUserRiskListReply, error)
 	// 批量获取用户风控名单
 	BatchGetUserRiskList(context.Context, *BatchGetUserRiskListReq) (*BatchGetUserRiskListReply, error)
+	// 删除批量用户风控名单
+	BatchDelUserRiskList(context.Context, *BatchDelUserRiskListReq) (*RiskReply, error)
+	// 获取指定IP地址和设备号的用户使用数量
+	GetIpOrDeviceUserCount(context.Context, *IpOrDeviceUserCountReq) (*IpOrDeviceUserCountReply, error)
 	mustEmbedUnimplementedLiveRiskInnerServiceServer()
 }
 
@@ -94,7 +124,7 @@ type LiveRiskInnerServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedLiveRiskInnerServiceServer struct{}
 
-func (UnimplementedLiveRiskInnerServiceServer) NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*RiskReply, error) {
+func (UnimplementedLiveRiskInnerServiceServer) NotifyRiskRuleTrigger(context.Context, *NotifyRiskRuleTriggerReq) (*NotifyRiskRuleTriggerReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NotifyRiskRuleTrigger not implemented")
 }
 func (UnimplementedLiveRiskInnerServiceServer) GetUserRiskList(context.Context, *GetUserRiskListReq) (*GetUserRiskListReply, error) {
@@ -102,6 +132,12 @@ func (UnimplementedLiveRiskInnerServiceServer) GetUserRiskList(context.Context, 
 }
 func (UnimplementedLiveRiskInnerServiceServer) BatchGetUserRiskList(context.Context, *BatchGetUserRiskListReq) (*BatchGetUserRiskListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchGetUserRiskList not implemented")
+}
+func (UnimplementedLiveRiskInnerServiceServer) BatchDelUserRiskList(context.Context, *BatchDelUserRiskListReq) (*RiskReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchDelUserRiskList not implemented")
+}
+func (UnimplementedLiveRiskInnerServiceServer) GetIpOrDeviceUserCount(context.Context, *IpOrDeviceUserCountReq) (*IpOrDeviceUserCountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIpOrDeviceUserCount not implemented")
 }
 func (UnimplementedLiveRiskInnerServiceServer) mustEmbedUnimplementedLiveRiskInnerServiceServer() {}
 func (UnimplementedLiveRiskInnerServiceServer) testEmbeddedByValue()                              {}
@@ -178,6 +214,42 @@ func _LiveRiskInnerService_BatchGetUserRiskList_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveRiskInnerService_BatchDelUserRiskList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchDelUserRiskListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveRiskInnerServiceServer).BatchDelUserRiskList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveRiskInnerService_BatchDelUserRiskList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveRiskInnerServiceServer).BatchDelUserRiskList(ctx, req.(*BatchDelUserRiskListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveRiskInnerService_GetIpOrDeviceUserCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IpOrDeviceUserCountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveRiskInnerServiceServer).GetIpOrDeviceUserCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveRiskInnerService_GetIpOrDeviceUserCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveRiskInnerServiceServer).GetIpOrDeviceUserCount(ctx, req.(*IpOrDeviceUserCountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveRiskInnerService_ServiceDesc is the grpc.ServiceDesc for LiveRiskInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -196,6 +268,14 @@ var LiveRiskInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchGetUserRiskList",
 			Handler:    _LiveRiskInnerService_BatchGetUserRiskList_Handler,
+		},
+		{
+			MethodName: "BatchDelUserRiskList",
+			Handler:    _LiveRiskInnerService_BatchDelUserRiskList_Handler,
+		},
+		{
+			MethodName: "GetIpOrDeviceUserCount",
+			Handler:    _LiveRiskInnerService_GetIpOrDeviceUserCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
