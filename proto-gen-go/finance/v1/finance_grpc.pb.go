@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.19.4
-// source: finance/v1/finance.proto
+// source: proto/finance/v1/finance.proto
 
 package v1
 
@@ -535,7 +535,7 @@ var LivePaymentRpcService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "finance/v1/finance.proto",
+	Metadata: "proto/finance/v1/finance.proto",
 }
 
 const (
@@ -799,7 +799,7 @@ var LiveAuditRpcService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "finance/v1/finance.proto",
+	Metadata: "proto/finance/v1/finance.proto",
 }
 
 const (
@@ -944,7 +944,7 @@ var LiveWithdrawLimitRpcService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "finance/v1/finance.proto",
+	Metadata: "proto/finance/v1/finance.proto",
 }
 
 const (
@@ -1049,5 +1049,5 @@ var LiveExchangeRateRpcService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "finance/v1/finance.proto",
+	Metadata: "proto/finance/v1/finance.proto",
 }
