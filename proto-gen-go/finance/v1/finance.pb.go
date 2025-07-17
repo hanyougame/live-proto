@@ -1639,6 +1639,8 @@ type RechargeReq struct {
 	Utr                  string                 `protobuf:"bytes,20,opt,name=utr,proto3" json:"utr,omitempty"`                                                                 //utr  (暂时不适用)
 	Phone                string                 `protobuf:"bytes,21,opt,name=phone,proto3" json:"phone,omitempty"`                                                             // 手机号（必填）
 	RechargeTarget       int32                  `protobuf:"varint,22,opt,name=recharge_target,json=rechargeTarget,proto3" json:"recharge_target,omitempty"`                    // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
+	TargetId             int32                  `protobuf:"varint,23,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`                                      // 充值目标ID （默认值0)
+	SubTargetId          int32                  `protobuf:"varint,24,opt,name=sub_target_id,json=subTargetId,proto3" json:"sub_target_id,omitempty"`                           // 充值目标子ID （默认值0）
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1816,6 +1818,20 @@ func (x *RechargeReq) GetPhone() string {
 func (x *RechargeReq) GetRechargeTarget() int32 {
 	if x != nil {
 		return x.RechargeTarget
+	}
+	return 0
+}
+
+func (x *RechargeReq) GetTargetId() int32 {
+	if x != nil {
+		return x.TargetId
+	}
+	return 0
+}
+
+func (x *RechargeReq) GetSubTargetId() int32 {
+	if x != nil {
+		return x.SubTargetId
 	}
 	return 0
 }
@@ -4100,7 +4116,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\vBalanceResp\x12\x18\n" +
 	"\abalance\x18\x01 \x01(\x03R\abalance\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\x03R\x06status\"\x8f\x06\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\"\xd0\x06\n" +
 	"\vRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x120\n" +
@@ -4128,7 +4144,9 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\treal_name\x18\x12 \x01(\tR\brealName\x12\x10\n" +
 	"\x03utr\x18\x14 \x01(\tR\x03utr\x12\x14\n" +
 	"\x05phone\x18\x15 \x01(\tR\x05phone\x12'\n" +
-	"\x0frecharge_target\x18\x16 \x01(\x05R\x0erechargeTarget\"\xb9\x01\n" +
+	"\x0frecharge_target\x18\x16 \x01(\x05R\x0erechargeTarget\x12\x1b\n" +
+	"\ttarget_id\x18\x17 \x01(\x05R\btargetId\x12\"\n" +
+	"\rsub_target_id\x18\x18 \x01(\x05R\vsubTargetId\"\xb9\x01\n" +
 	"\fRechargeResp\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\x03R\x06status\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12!\n" +
