@@ -135,6 +135,9 @@ message RechargeReq {
   string real_name = 18; // 姓名
   string utr = 20; //utr  (暂时不适用)
   string phone = 21; // 手机号（必填）
+  int32 recharge_target = 22; // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
+  int32 target_id = 23; // 充值目标ID （默认值0)
+  int32 sub_target_id = 24; // 充值目标子ID （默认值0）
 }
 message RechargeResp {
   int64 status = 1; // 状态 1-Success 2-Fail
