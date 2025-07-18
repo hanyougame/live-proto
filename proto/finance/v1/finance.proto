@@ -230,6 +230,7 @@ service LivePaymentRpcService {
   rpc PayInStatus(PayInStatusReq) returns (PayInStatusResp);
   rpc PayOutStatus(PayOutStatusReq) returns (PayOutStatusResp);
   rpc Balance(BalanceReq) returns (BalanceResp);
+  rpc CalcRecharge(CalcRechargeReq) returns (CalcRechargeResp); // 充值计算
   rpc Recharge(RechargeReq) returns (RechargeResp); // 充值
   rpc Withdraw(WithdrawReq) returns (WithdrawResp); // 提现
   rpc AutoWithdrawJudge(AutoWithdrawJudgeReq) returns (AutoWithdrawJudgeResp); // 自动出款检查
