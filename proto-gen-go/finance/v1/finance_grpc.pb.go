@@ -31,6 +31,7 @@ const (
 	LivePaymentRpcService_CalcWithdrawFee_FullMethodName   = "/finance.v1.LivePaymentRpcService/CalcWithdrawFee"
 	LivePaymentRpcService_AutoWithdrawMatch_FullMethodName = "/finance.v1.LivePaymentRpcService/AutoWithdrawMatch"
 	LivePaymentRpcService_ReWithdraw_FullMethodName        = "/finance.v1.LivePaymentRpcService/ReWithdraw"
+	LivePaymentRpcService_CalcRecharge_FullMethodName      = "/finance.v1.LivePaymentRpcService/CalcRecharge"
 )
 
 // LivePaymentRpcServiceClient is the client API for LivePaymentRpcService service.
@@ -49,6 +50,7 @@ type LivePaymentRpcServiceClient interface {
 	CalcWithdrawFee(ctx context.Context, in *CalcWithdrawFeeReq, opts ...grpc.CallOption) (*CalcWithdrawFeeResp, error)
 	AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error)
 	ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error)
+	CalcRecharge(ctx context.Context, in *CalcRechargeReq, opts ...grpc.CallOption) (*CalcRechargeResp, error)
 }
 
 type livePaymentRpcServiceClient struct {
@@ -179,6 +181,16 @@ func (c *livePaymentRpcServiceClient) ReWithdraw(ctx context.Context, in *ReWith
 	return out, nil
 }
 
+func (c *livePaymentRpcServiceClient) CalcRecharge(ctx context.Context, in *CalcRechargeReq, opts ...grpc.CallOption) (*CalcRechargeResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CalcRechargeResp)
+	err := c.cc.Invoke(ctx, LivePaymentRpcService_CalcRecharge_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LivePaymentRpcServiceServer is the server API for LivePaymentRpcService service.
 // All implementations must embed UnimplementedLivePaymentRpcServiceServer
 // for forward compatibility.
@@ -195,6 +207,7 @@ type LivePaymentRpcServiceServer interface {
 	CalcWithdrawFee(context.Context, *CalcWithdrawFeeReq) (*CalcWithdrawFeeResp, error)
 	AutoWithdrawMatch(context.Context, *AutoWithdrawMatchReq) (*AutoWithdrawMatchResp, error)
 	ReWithdraw(context.Context, *ReWithdrawReq) (*ReWithdrawResp, error)
+	CalcRecharge(context.Context, *CalcRechargeReq) (*CalcRechargeResp, error)
 	mustEmbedUnimplementedLivePaymentRpcServiceServer()
 }
 
@@ -240,6 +253,9 @@ func (UnimplementedLivePaymentRpcServiceServer) AutoWithdrawMatch(context.Contex
 }
 func (UnimplementedLivePaymentRpcServiceServer) ReWithdraw(context.Context, *ReWithdrawReq) (*ReWithdrawResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReWithdraw not implemented")
+}
+func (UnimplementedLivePaymentRpcServiceServer) CalcRecharge(context.Context, *CalcRechargeReq) (*CalcRechargeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CalcRecharge not implemented")
 }
 func (UnimplementedLivePaymentRpcServiceServer) mustEmbedUnimplementedLivePaymentRpcServiceServer() {}
 func (UnimplementedLivePaymentRpcServiceServer) testEmbeddedByValue()                               {}
@@ -478,6 +494,24 @@ func _LivePaymentRpcService_ReWithdraw_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LivePaymentRpcService_CalcRecharge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CalcRechargeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LivePaymentRpcServiceServer).CalcRecharge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LivePaymentRpcService_CalcRecharge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LivePaymentRpcServiceServer).CalcRecharge(ctx, req.(*CalcRechargeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LivePaymentRpcService_ServiceDesc is the grpc.ServiceDesc for LivePaymentRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -532,6 +566,10 @@ var LivePaymentRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReWithdraw",
 			Handler:    _LivePaymentRpcService_ReWithdraw_Handler,
+		},
+		{
+			MethodName: "CalcRecharge",
+			Handler:    _LivePaymentRpcService_CalcRecharge_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

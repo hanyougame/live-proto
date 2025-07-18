@@ -30,6 +30,8 @@ type (
 	BalanceResp                   = v1.BalanceResp
 	BatchAddAuditReq              = v1.BatchAddAuditReq
 	BatchAddAuditResp             = v1.BatchAddAuditResp
+	CalcRechargeReq               = v1.CalcRechargeReq
+	CalcRechargeResp              = v1.CalcRechargeResp
 	CalcWithdrawFeeReq            = v1.CalcWithdrawFeeReq
 	CalcWithdrawFeeResp           = v1.CalcWithdrawFeeResp
 	ExchangeRateReq               = v1.ExchangeRateReq
@@ -70,6 +72,7 @@ type (
 		CalcWithdrawFee(ctx context.Context, in *CalcWithdrawFeeReq, opts ...grpc.CallOption) (*CalcWithdrawFeeResp, error)
 		AutoWithdrawMatch(ctx context.Context, in *AutoWithdrawMatchReq, opts ...grpc.CallOption) (*AutoWithdrawMatchResp, error)
 		ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error)
+		CalcRecharge(ctx context.Context, in *CalcRechargeReq, opts ...grpc.CallOption) (*CalcRechargeResp, error)
 	}
 
 	defaultLivePaymentRpcService struct {
@@ -141,4 +144,9 @@ func (m *defaultLivePaymentRpcService) AutoWithdrawMatch(ctx context.Context, in
 func (m *defaultLivePaymentRpcService) ReWithdraw(ctx context.Context, in *ReWithdrawReq, opts ...grpc.CallOption) (*ReWithdrawResp, error) {
 	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
 	return client.ReWithdraw(ctx, in, opts...)
+}
+
+func (m *defaultLivePaymentRpcService) CalcRecharge(ctx context.Context, in *CalcRechargeReq, opts ...grpc.CallOption) (*CalcRechargeResp, error) {
+	client := v1.NewLivePaymentRpcServiceClient(m.cli.Conn())
+	return client.CalcRecharge(ctx, in, opts...)
 }

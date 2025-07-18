@@ -113,6 +113,7 @@ message BalanceResp {
   string currency_code = 2; // 币种
   int64 status = 3; // 状态 1-Success 2-Fail
 }
+
 message CalcRechargeReq {
   int64 order_type = 1;// 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
   int64 recharge_category_id = 2; // 充值大类Id （必填）
@@ -120,8 +121,9 @@ message CalcRechargeReq {
   int64 recharge_channel_id = 4; // 充值通道Id （必填）
   int64 user_id = 5; // 用户Id （必填）
   int64 recharge_amount = 7; // 充值金额 （必填）
-  string recharge_currency_code = 11; // 充值币种 （必填）
+  string recharge_currency_code = 8; // 充值币种 （必填）
 }
+
 message CalcRechargeResp {
   int64 status = 1; // 状态 1-Success 2-Fail
   string msg = 2;   // 消息
@@ -130,6 +132,7 @@ message CalcRechargeResp {
   int64 channel_bonus = 5; // 渠道奖励金额
   int64 fee = 6; // 手续费
 }
+
 message RechargeReq {
   int64 order_type = 1;// 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
   int64 recharge_category_id = 2; // 充值大类Id （必填）
@@ -230,7 +233,6 @@ service LivePaymentRpcService {
   rpc PayInStatus(PayInStatusReq) returns (PayInStatusResp);
   rpc PayOutStatus(PayOutStatusReq) returns (PayOutStatusResp);
   rpc Balance(BalanceReq) returns (BalanceResp);
-  rpc CalcRecharge(CalcRechargeReq) returns (CalcRechargeResp); // 充值计算
   rpc Recharge(RechargeReq) returns (RechargeResp); // 充值
   rpc Withdraw(WithdrawReq) returns (WithdrawResp); // 提现
   rpc AutoWithdrawJudge(AutoWithdrawJudgeReq) returns (AutoWithdrawJudgeResp); // 自动出款检查
@@ -238,6 +240,7 @@ service LivePaymentRpcService {
   rpc CalcWithdrawFee(CalcWithdrawFeeReq) returns (CalcWithdrawFeeResp); //计算提现手续费
   rpc AutoWithdrawMatch(AutoWithdrawMatchReq) returns (AutoWithdrawMatchResp); // 自动出款匹配
   rpc ReWithdraw(ReWithdrawReq) returns (ReWithdrawResp); // 重新出款
+  rpc CalcRecharge(CalcRechargeReq) returns (CalcRechargeResp); // 充值计算
 }
 
 
