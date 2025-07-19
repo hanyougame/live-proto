@@ -1619,12 +1619,10 @@ func (x *BalanceResp) GetStatus() int64 {
 type CalcRechargeReq struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	OrderType            int64                  `protobuf:"varint,1,opt,name=order_type,json=orderType,proto3" json:"order_type,omitempty"`                                   // 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
-	RechargeCategoryId   int64                  `protobuf:"varint,2,opt,name=recharge_category_id,json=rechargeCategoryId,proto3" json:"recharge_category_id,omitempty"`      // 充值大类Id （必填）
-	RechargeMerchantId   int64                  `protobuf:"varint,3,opt,name=recharge_merchant_id,json=rechargeMerchantId,proto3" json:"recharge_merchant_id,omitempty"`      // 充值商户Id （在线充值）
-	RechargeChannelId    int64                  `protobuf:"varint,4,opt,name=recharge_channel_id,json=rechargeChannelId,proto3" json:"recharge_channel_id,omitempty"`         // 充值通道Id （必填）
-	UserId               int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                            // 用户Id （必填）
-	RechargeAmount       int64                  `protobuf:"varint,7,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"`                    // 充值金额 （必填）
-	RechargeCurrencyCode string                 `protobuf:"bytes,8,opt,name=recharge_currency_code,json=rechargeCurrencyCode,proto3" json:"recharge_currency_code,omitempty"` // 充值币种 （必填）
+	RechargeChannelId    int64                  `protobuf:"varint,2,opt,name=recharge_channel_id,json=rechargeChannelId,proto3" json:"recharge_channel_id,omitempty"`         // 充值通道Id （必填）
+	UserId               int64                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                            // 用户Id （必填）
+	RechargeAmount       int64                  `protobuf:"varint,4,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"`                    // 充值金额 （必填）
+	RechargeCurrencyCode string                 `protobuf:"bytes,5,opt,name=recharge_currency_code,json=rechargeCurrencyCode,proto3" json:"recharge_currency_code,omitempty"` // 充值币种 （必填）
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1666,20 +1664,6 @@ func (x *CalcRechargeReq) GetOrderType() int64 {
 	return 0
 }
 
-func (x *CalcRechargeReq) GetRechargeCategoryId() int64 {
-	if x != nil {
-		return x.RechargeCategoryId
-	}
-	return 0
-}
-
-func (x *CalcRechargeReq) GetRechargeMerchantId() int64 {
-	if x != nil {
-		return x.RechargeMerchantId
-	}
-	return 0
-}
-
 func (x *CalcRechargeReq) GetRechargeChannelId() int64 {
 	if x != nil {
 		return x.RechargeChannelId
@@ -1710,12 +1694,10 @@ func (x *CalcRechargeReq) GetRechargeCurrencyCode() string {
 
 type CalcRechargeResp struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Status               int64                  `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`                                                           // 状态 1-Success 2-Fail
-	Msg                  string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`                                                                  // 消息
-	Amount               int64                  `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`                                                           // 充值金额
-	ActualReceivedAmount int64                  `protobuf:"varint,4,opt,name=actual_received_amount,json=actualReceivedAmount,proto3" json:"actual_received_amount,omitempty"` // 实际到账金额
-	ChannelBonus         int64                  `protobuf:"varint,5,opt,name=channel_bonus,json=channelBonus,proto3" json:"channel_bonus,omitempty"`                           // 渠道奖励金额
-	Fee                  int64                  `protobuf:"varint,6,opt,name=fee,proto3" json:"fee,omitempty"`                                                                 // 手续费
+	Amount               int64                  `protobuf:"varint,1,opt,name=amount,proto3" json:"amount,omitempty"`                                                           // 充值金额
+	ActualReceivedAmount int64                  `protobuf:"varint,2,opt,name=actual_received_amount,json=actualReceivedAmount,proto3" json:"actual_received_amount,omitempty"` // 实际到账金额
+	ChannelBonus         int64                  `protobuf:"varint,3,opt,name=channel_bonus,json=channelBonus,proto3" json:"channel_bonus,omitempty"`                           // 渠道奖励金额
+	Fee                  int64                  `protobuf:"varint,4,opt,name=fee,proto3" json:"fee,omitempty"`                                                                 // 手续费
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1748,20 +1730,6 @@ func (x *CalcRechargeResp) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CalcRechargeResp.ProtoReflect.Descriptor instead.
 func (*CalcRechargeResp) Descriptor() ([]byte, []int) {
 	return file_proto_finance_v1_finance_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *CalcRechargeResp) GetStatus() int64 {
-	if x != nil {
-		return x.Status
-	}
-	return 0
-}
-
-func (x *CalcRechargeResp) GetMsg() string {
-	if x != nil {
-		return x.Msg
-	}
-	return ""
 }
 
 func (x *CalcRechargeResp) GetAmount() int64 {
@@ -4292,23 +4260,19 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\vBalanceResp\x12\x18\n" +
 	"\abalance\x18\x01 \x01(\x03R\abalance\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\x03R\x06status\"\xbc\x02\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\"\xd8\x01\n" +
 	"\x0fCalcRechargeReq\x12\x1d\n" +
 	"\n" +
-	"order_type\x18\x01 \x01(\x03R\torderType\x120\n" +
-	"\x14recharge_category_id\x18\x02 \x01(\x03R\x12rechargeCategoryId\x120\n" +
-	"\x14recharge_merchant_id\x18\x03 \x01(\x03R\x12rechargeMerchantId\x12.\n" +
-	"\x13recharge_channel_id\x18\x04 \x01(\x03R\x11rechargeChannelId\x12\x17\n" +
-	"\auser_id\x18\x05 \x01(\x03R\x06userId\x12'\n" +
-	"\x0frecharge_amount\x18\a \x01(\x03R\x0erechargeAmount\x124\n" +
-	"\x16recharge_currency_code\x18\b \x01(\tR\x14rechargeCurrencyCode\"\xc1\x01\n" +
+	"order_type\x18\x01 \x01(\x03R\torderType\x12.\n" +
+	"\x13recharge_channel_id\x18\x02 \x01(\x03R\x11rechargeChannelId\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12'\n" +
+	"\x0frecharge_amount\x18\x04 \x01(\x03R\x0erechargeAmount\x124\n" +
+	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\"\x97\x01\n" +
 	"\x10CalcRechargeResp\x12\x16\n" +
-	"\x06status\x18\x01 \x01(\x03R\x06status\x12\x10\n" +
-	"\x03msg\x18\x02 \x01(\tR\x03msg\x12\x16\n" +
-	"\x06amount\x18\x03 \x01(\x03R\x06amount\x124\n" +
-	"\x16actual_received_amount\x18\x04 \x01(\x03R\x14actualReceivedAmount\x12#\n" +
-	"\rchannel_bonus\x18\x05 \x01(\x03R\fchannelBonus\x12\x10\n" +
-	"\x03fee\x18\x06 \x01(\x03R\x03fee\"\xd0\x06\n" +
+	"\x06amount\x18\x01 \x01(\x03R\x06amount\x124\n" +
+	"\x16actual_received_amount\x18\x02 \x01(\x03R\x14actualReceivedAmount\x12#\n" +
+	"\rchannel_bonus\x18\x03 \x01(\x03R\fchannelBonus\x12\x10\n" +
+	"\x03fee\x18\x04 \x01(\x03R\x03fee\"\xd0\x06\n" +
 	"\vRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x120\n" +
