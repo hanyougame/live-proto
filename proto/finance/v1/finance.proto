@@ -120,6 +120,7 @@ message CalcRechargeReq {
   int64 user_id = 3; // 用户Id （必填）
   int64 recharge_amount = 4; // 充值金额 （必填）
   string recharge_currency_code = 5; // 充值币种 （必填）
+  int32 recharge_target = 6; // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
 }
 
 message CalcRechargeResp {

@@ -1623,6 +1623,7 @@ type CalcRechargeReq struct {
 	UserId               int64                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                            // 用户Id （必填）
 	RechargeAmount       int64                  `protobuf:"varint,4,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"`                    // 充值金额 （必填）
 	RechargeCurrencyCode string                 `protobuf:"bytes,5,opt,name=recharge_currency_code,json=rechargeCurrencyCode,proto3" json:"recharge_currency_code,omitempty"` // 充值币种 （必填）
+	RechargeTarget       int32                  `protobuf:"varint,6,opt,name=recharge_target,json=rechargeTarget,proto3" json:"recharge_target,omitempty"`                    // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1690,6 +1691,13 @@ func (x *CalcRechargeReq) GetRechargeCurrencyCode() string {
 		return x.RechargeCurrencyCode
 	}
 	return ""
+}
+
+func (x *CalcRechargeReq) GetRechargeTarget() int32 {
+	if x != nil {
+		return x.RechargeTarget
+	}
+	return 0
 }
 
 type CalcRechargeResp struct {
@@ -4260,14 +4268,15 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\vBalanceResp\x12\x18\n" +
 	"\abalance\x18\x01 \x01(\x03R\abalance\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\x03R\x06status\"\xd8\x01\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\"\x81\x02\n" +
 	"\x0fCalcRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x12.\n" +
 	"\x13recharge_channel_id\x18\x02 \x01(\x03R\x11rechargeChannelId\x12\x17\n" +
 	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12'\n" +
 	"\x0frecharge_amount\x18\x04 \x01(\x03R\x0erechargeAmount\x124\n" +
-	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\"\x97\x01\n" +
+	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\x12'\n" +
+	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\"\x97\x01\n" +
 	"\x10CalcRechargeResp\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\x03R\x06amount\x124\n" +
 	"\x16actual_received_amount\x18\x02 \x01(\x03R\x14actualReceivedAmount\x12#\n" +
