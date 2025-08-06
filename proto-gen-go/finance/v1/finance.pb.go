@@ -1706,6 +1706,7 @@ type CalcRechargeResp struct {
 	ActualReceivedAmount int64                  `protobuf:"varint,2,opt,name=actual_received_amount,json=actualReceivedAmount,proto3" json:"actual_received_amount,omitempty"` // 实际到账金额
 	ChannelBonus         int64                  `protobuf:"varint,3,opt,name=channel_bonus,json=channelBonus,proto3" json:"channel_bonus,omitempty"`                           // 渠道奖励金额
 	Fee                  int64                  `protobuf:"varint,4,opt,name=fee,proto3" json:"fee,omitempty"`                                                                 // 手续费
+	FirstDepositReward   int64                  `protobuf:"varint,5,opt,name=first_deposit_reward,json=firstDepositReward,proto3" json:"first_deposit_reward,omitempty"`       //首充奖励金额
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1764,6 +1765,13 @@ func (x *CalcRechargeResp) GetChannelBonus() int64 {
 func (x *CalcRechargeResp) GetFee() int64 {
 	if x != nil {
 		return x.Fee
+	}
+	return 0
+}
+
+func (x *CalcRechargeResp) GetFirstDepositReward() int64 {
+	if x != nil {
+		return x.FirstDepositReward
 	}
 	return 0
 }
@@ -4276,12 +4284,13 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12'\n" +
 	"\x0frecharge_amount\x18\x04 \x01(\x03R\x0erechargeAmount\x124\n" +
 	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\x12'\n" +
-	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\"\x97\x01\n" +
+	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\"\xc9\x01\n" +
 	"\x10CalcRechargeResp\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\x03R\x06amount\x124\n" +
 	"\x16actual_received_amount\x18\x02 \x01(\x03R\x14actualReceivedAmount\x12#\n" +
 	"\rchannel_bonus\x18\x03 \x01(\x03R\fchannelBonus\x12\x10\n" +
-	"\x03fee\x18\x04 \x01(\x03R\x03fee\"\xd0\x06\n" +
+	"\x03fee\x18\x04 \x01(\x03R\x03fee\x120\n" +
+	"\x14first_deposit_reward\x18\x05 \x01(\x03R\x12firstDepositReward\"\xd0\x06\n" +
 	"\vRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x120\n" +
