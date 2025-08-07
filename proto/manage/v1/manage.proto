@@ -76,6 +76,7 @@ message SendSmsReq {
   string country_code = 2; // 区号
   string msg = 3; // 短信内容
   string sms_code = 4; // 短信三方Code标识
+  string captcha = 5; // 验证码
 }
 
 message SendSmsReply {

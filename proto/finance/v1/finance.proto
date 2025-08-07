@@ -114,6 +114,25 @@ message BalanceResp {
   int64 status = 3; // 状态 1-Success 2-Fail
 }
 
+message CalcRechargeReq {
+  int64 order_type = 1;// 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
+  int64 recharge_channel_id = 2; // 充值通道Id （必填）
+  int64 user_id = 3; // 用户Id （必填）
+  int64 recharge_amount = 4; // 充值金额 （必填）
+  string recharge_currency_code = 5; // 充值币种 （必填）
+  int32 recharge_target = 6; // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
+}
+
+message CalcRechargeResp {
+  int64 amount = 1; // 充值金额
+  int64 actual_received_amount = 2; // 实际到账金额
+  int64 channel_bonus = 3; // 渠道奖励金额
+  int64 fee = 4; // 手续费
+  int64 first_deposit_reward = 5;//首充奖励金额
+  int64 first_deposit_reward_amount_from = 6;//首充奖励金额起始值(随机奖金方式)
+  int64 first_deposit_reward_amount_to = 7;//首充奖励金额结束值(随机奖金方式)
+}
+
 message RechargeReq {
   int64 order_type = 1;// 充值订单类型  1-在线充值 2-转账充值 3-客服代充 （必填）
   int64 recharge_category_id = 2; // 充值大类Id （必填）
@@ -135,6 +154,9 @@ message RechargeReq {
   string real_name = 18; // 姓名
   string utr = 20; //utr  (暂时不适用)
   string phone = 21; // 手机号（必填）
+  int32 recharge_target = 22; // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
+  int32 target_id = 23; // 充值目标ID （默认值0)
+  int32 sub_target_id = 24; // 充值目标子ID （默认值0）
 }
 message RechargeResp {
   int64 status = 1; // 状态 1-Success 2-Fail
@@ -218,6 +240,7 @@ service LivePaymentRpcService {
   rpc CalcWithdrawFee(CalcWithdrawFeeReq) returns (CalcWithdrawFeeResp); //计算提现手续费
   rpc AutoWithdrawMatch(AutoWithdrawMatchReq) returns (AutoWithdrawMatchResp); // 自动出款匹配
   rpc ReWithdraw(ReWithdrawReq) returns (ReWithdrawResp); // 重新出款
+  rpc CalcRecharge(CalcRechargeReq) returns (CalcRechargeResp); // 充值计算
 }
 
 
