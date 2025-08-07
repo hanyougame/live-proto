@@ -1091,6 +1091,7 @@ message WinGameValueItem {
   string icon_square = 32;       // 游戏方版图标URL
   string icon_horizontal = 33;    // 游戏横版图标URL
   int64 is_hot = 34; //  是否hot(1:开启，2：关闭)
+  int64 is_under_maintenance = 35; //  是否在维护中(1:是，2：否)
 }
 
 message FetchGamePlatformMetaReq{
