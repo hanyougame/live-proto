@@ -759,7 +759,7 @@ message GamePlatformSimpleDetail{
   string icon_vertical = 9;  // 竖版图标URL
   string icon_square = 10;    // 方版图标URL
   string icon_horizontal = 11; // 横版图标URL
-
+  int64  is_under_maintenance = 12; // 是否在维护中
 }
 
 // 平台跳转方式的基础类型
