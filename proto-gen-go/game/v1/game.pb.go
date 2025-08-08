@@ -8268,6 +8268,7 @@ type GameValueItem struct {
 	GameIconSquare            string                 `protobuf:"bytes,32,opt,name=game_icon_square,json=gameIconSquare,proto3" json:"game_icon_square,omitempty"`                                    // 游戏方版图标URL
 	GameIconHorizontal        string                 `protobuf:"bytes,33,opt,name=game_icon_horizontal,json=gameIconHorizontal,proto3" json:"game_icon_horizontal,omitempty"`                        // 游戏横版图标URL
 	IsHot                     int64                  `protobuf:"varint,34,opt,name=is_hot,json=isHot,proto3" json:"is_hot,omitempty"`                                                                //  是否hot(1:开启，2：关闭)
+	IsUnderMaintenance        int64                  `protobuf:"varint,35,opt,name=is_under_maintenance,json=isUnderMaintenance,proto3" json:"is_under_maintenance,omitempty"`                       // 是否在维护中 1: 是 2: 不是
 	unknownFields             protoimpl.UnknownFields
 	sizeCache                 protoimpl.SizeCache
 }
@@ -8536,6 +8537,13 @@ func (x *GameValueItem) GetGameIconHorizontal() string {
 func (x *GameValueItem) GetIsHot() int64 {
 	if x != nil {
 		return x.IsHot
+	}
+	return 0
+}
+
+func (x *GameValueItem) GetIsUnderMaintenance() int64 {
+	if x != nil {
+		return x.IsUnderMaintenance
 	}
 	return 0
 }
@@ -10254,7 +10262,7 @@ const file_game_v1_game_proto_rawDesc = "" +
 	"\x05total\x18\x03 \x01(\x03R\x05total\x12\x1d\n" +
 	"\n" +
 	"total_page\x18\x04 \x01(\x03R\ttotalPage\x12*\n" +
-	"\x04rows\x18\x05 \x03(\v2\x16.game.v1.GameValueItemR\x04rows\"\xcc\v\n" +
+	"\x04rows\x18\x05 \x03(\v2\x16.game.v1.GameValueItemR\x04rows\"\xfe\v\n" +
 	"\rGameValueItem\x12#\n" +
 	"\rcategory_type\x18\x01 \x01(\x03R\fcategoryType\x12\x12\n" +
 	"\x04rank\x18\x02 \x01(\x03R\x04rank\x12#\n" +
@@ -10292,7 +10300,8 @@ const file_game_v1_game_proto_rawDesc = "" +
 	"\x12game_icon_vertical\x18\x1f \x01(\tR\x10gameIconVertical\x12(\n" +
 	"\x10game_icon_square\x18  \x01(\tR\x0egameIconSquare\x120\n" +
 	"\x14game_icon_horizontal\x18! \x01(\tR\x12gameIconHorizontal\x12\x15\n" +
-	"\x06is_hot\x18\" \x01(\x03R\x05isHot\"8\n" +
+	"\x06is_hot\x18\" \x01(\x03R\x05isHot\x120\n" +
+	"\x14is_under_maintenance\x18# \x01(\x03R\x12isUnderMaintenance\"8\n" +
 	"\x11BigWinGameListReq\x12#\n" +
 	"\rcurrency_code\x18\x01 \x01(\tR\fcurrencyCode\"D\n" +
 	"\x13BigWinGameListReply\x12-\n" +
