@@ -130,6 +130,9 @@ message CalcRechargeResp {
   int64 actual_received_amount = 2; // 实际到账金额
   int64 channel_bonus = 3; // 渠道奖励金额
   int64 fee = 4; // 手续费
+  int64 first_deposit_reward = 5;//首充奖励金额
+  int64 first_deposit_reward_amount_from = 6;//首充奖励金额起始值(随机奖金方式)
+  int64 first_deposit_reward_amount_to = 7;//首充奖励金额结束值(随机奖金方式)
 }
 
 message RechargeReq {

@@ -1717,13 +1717,16 @@ func (x *CalcRechargeReq) GetSubTargetId() int32 {
 }
 
 type CalcRechargeResp struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	Amount               int64                  `protobuf:"varint,1,opt,name=amount,proto3" json:"amount,omitempty"`                                                           // 充值金额
-	ActualReceivedAmount int64                  `protobuf:"varint,2,opt,name=actual_received_amount,json=actualReceivedAmount,proto3" json:"actual_received_amount,omitempty"` // 实际到账金额
-	ChannelBonus         int64                  `protobuf:"varint,3,opt,name=channel_bonus,json=channelBonus,proto3" json:"channel_bonus,omitempty"`                           // 渠道奖励金额
-	Fee                  int64                  `protobuf:"varint,4,opt,name=fee,proto3" json:"fee,omitempty"`                                                                 // 手续费
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	state                        protoimpl.MessageState `protogen:"open.v1"`
+	Amount                       int64                  `protobuf:"varint,1,opt,name=amount,proto3" json:"amount,omitempty"`                                                                                       // 充值金额
+	ActualReceivedAmount         int64                  `protobuf:"varint,2,opt,name=actual_received_amount,json=actualReceivedAmount,proto3" json:"actual_received_amount,omitempty"`                             // 实际到账金额
+	ChannelBonus                 int64                  `protobuf:"varint,3,opt,name=channel_bonus,json=channelBonus,proto3" json:"channel_bonus,omitempty"`                                                       // 渠道奖励金额
+	Fee                          int64                  `protobuf:"varint,4,opt,name=fee,proto3" json:"fee,omitempty"`                                                                                             // 手续费
+	FirstDepositReward           int64                  `protobuf:"varint,5,opt,name=first_deposit_reward,json=firstDepositReward,proto3" json:"first_deposit_reward,omitempty"`                                   //首充奖励金额
+	FirstDepositRewardAmountFrom int64                  `protobuf:"varint,6,opt,name=first_deposit_reward_amount_from,json=firstDepositRewardAmountFrom,proto3" json:"first_deposit_reward_amount_from,omitempty"` //首充奖励金额起始值(随机奖金方式)
+	FirstDepositRewardAmountTo   int64                  `protobuf:"varint,7,opt,name=first_deposit_reward_amount_to,json=firstDepositRewardAmountTo,proto3" json:"first_deposit_reward_amount_to,omitempty"`       //首充奖励金额结束值(随机奖金方式)
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *CalcRechargeResp) Reset() {
@@ -1780,6 +1783,27 @@ func (x *CalcRechargeResp) GetChannelBonus() int64 {
 func (x *CalcRechargeResp) GetFee() int64 {
 	if x != nil {
 		return x.Fee
+	}
+	return 0
+}
+
+func (x *CalcRechargeResp) GetFirstDepositReward() int64 {
+	if x != nil {
+		return x.FirstDepositReward
+	}
+	return 0
+}
+
+func (x *CalcRechargeResp) GetFirstDepositRewardAmountFrom() int64 {
+	if x != nil {
+		return x.FirstDepositRewardAmountFrom
+	}
+	return 0
+}
+
+func (x *CalcRechargeResp) GetFirstDepositRewardAmountTo() int64 {
+	if x != nil {
+		return x.FirstDepositRewardAmountTo
 	}
 	return 0
 }
@@ -4294,12 +4318,15 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\x12'\n" +
 	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\x12\x1b\n" +
 	"\ttarget_id\x18\a \x01(\x05R\btargetId\x12\"\n" +
-	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\"\x97\x01\n" +
+	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\"\xd5\x02\n" +
 	"\x10CalcRechargeResp\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\x03R\x06amount\x124\n" +
 	"\x16actual_received_amount\x18\x02 \x01(\x03R\x14actualReceivedAmount\x12#\n" +
 	"\rchannel_bonus\x18\x03 \x01(\x03R\fchannelBonus\x12\x10\n" +
-	"\x03fee\x18\x04 \x01(\x03R\x03fee\"\xd0\x06\n" +
+	"\x03fee\x18\x04 \x01(\x03R\x03fee\x120\n" +
+	"\x14first_deposit_reward\x18\x05 \x01(\x03R\x12firstDepositReward\x12F\n" +
+	" first_deposit_reward_amount_from\x18\x06 \x01(\x03R\x1cfirstDepositRewardAmountFrom\x12B\n" +
+	"\x1efirst_deposit_reward_amount_to\x18\a \x01(\x03R\x1afirstDepositRewardAmountTo\"\xd0\x06\n" +
 	"\vRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x120\n" +
