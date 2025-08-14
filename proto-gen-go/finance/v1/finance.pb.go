@@ -1624,6 +1624,8 @@ type CalcRechargeReq struct {
 	RechargeAmount       int64                  `protobuf:"varint,4,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"`                    // 充值金额 （必填）
 	RechargeCurrencyCode string                 `protobuf:"bytes,5,opt,name=recharge_currency_code,json=rechargeCurrencyCode,proto3" json:"recharge_currency_code,omitempty"` // 充值币种 （必填）
 	RechargeTarget       int32                  `protobuf:"varint,6,opt,name=recharge_target,json=rechargeTarget,proto3" json:"recharge_target,omitempty"`                    // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
+	TargetId             int32                  `protobuf:"varint,7,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`                                      // 充值目标ID （默认值0)
+	SubTargetId          int32                  `protobuf:"varint,8,opt,name=sub_target_id,json=subTargetId,proto3" json:"sub_target_id,omitempty"`                           // 充值目标子ID （默认值0）
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1696,6 +1698,20 @@ func (x *CalcRechargeReq) GetRechargeCurrencyCode() string {
 func (x *CalcRechargeReq) GetRechargeTarget() int32 {
 	if x != nil {
 		return x.RechargeTarget
+	}
+	return 0
+}
+
+func (x *CalcRechargeReq) GetTargetId() int32 {
+	if x != nil {
+		return x.TargetId
+	}
+	return 0
+}
+
+func (x *CalcRechargeReq) GetSubTargetId() int32 {
+	if x != nil {
+		return x.SubTargetId
 	}
 	return 0
 }
@@ -4268,7 +4284,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\vBalanceResp\x12\x18\n" +
 	"\abalance\x18\x01 \x01(\x03R\abalance\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\x03R\x06status\"\x81\x02\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\"\xc2\x02\n" +
 	"\x0fCalcRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x12.\n" +
@@ -4276,7 +4292,9 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12'\n" +
 	"\x0frecharge_amount\x18\x04 \x01(\x03R\x0erechargeAmount\x124\n" +
 	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\x12'\n" +
-	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\"\x97\x01\n" +
+	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\x12\x1b\n" +
+	"\ttarget_id\x18\a \x01(\x05R\btargetId\x12\"\n" +
+	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\"\x97\x01\n" +
 	"\x10CalcRechargeResp\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\x03R\x06amount\x124\n" +
 	"\x16actual_received_amount\x18\x02 \x01(\x03R\x14actualReceivedAmount\x12#\n" +
