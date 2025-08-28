@@ -107,6 +107,7 @@ message LuckyPointsAddItem {
   int64  point_before = 7; // 领取前的幸运值
   int64 point_after = 8; // 领取后的幸运值
   string condition = 9; // 条件
+  int64 expire_time = 10; // 过期时间
 }
 
 message LuckyPointsAddListReply {
