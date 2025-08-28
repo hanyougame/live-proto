@@ -361,6 +361,7 @@ type WorkflowOptions struct {
 	RunTimeoutSeconds       int64                  `protobuf:"varint,2,opt,name=run_timeout_seconds,json=runTimeoutSeconds,proto3" json:"run_timeout_seconds,omitempty"`                   // 运行超时(秒)
 	TaskTimeoutSeconds      int64                  `protobuf:"varint,3,opt,name=task_timeout_seconds,json=taskTimeoutSeconds,proto3" json:"task_timeout_seconds,omitempty"`                // 任务超时(秒)
 	RetryPolicy             []*RetryPolicy         `protobuf:"bytes,4,rep,name=retry_policy,json=retryPolicy,proto3" json:"retry_policy,omitempty"`                                        // 重试策略
+	CronSchedule            string                 `protobuf:"bytes,5,opt,name=cron_schedule,json=cronSchedule,proto3" json:"cron_schedule,omitempty"`                                     // 定时调度
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -421,6 +422,13 @@ func (x *WorkflowOptions) GetRetryPolicy() []*RetryPolicy {
 		return x.RetryPolicy
 	}
 	return nil
+}
+
+func (x *WorkflowOptions) GetCronSchedule() string {
+	if x != nil {
+		return x.CronSchedule
+	}
+	return ""
 }
 
 // 重试策略
@@ -1372,12 +1380,13 @@ const file_temporal_v1_temporal_proto_rawDesc = "" +
 	"workflowId\x12\x14\n" +
 	"\x05input\x18\x04 \x01(\fR\x05input\x12'\n" +
 	"\x0ftimeout_seconds\x18\x05 \x01(\x03R\x0etimeoutSeconds\x126\n" +
-	"\aoptions\x18\x06 \x01(\v2\x1c.temporal.v1.WorkflowOptionsR\aoptions\"\xec\x01\n" +
+	"\aoptions\x18\x06 \x01(\v2\x1c.temporal.v1.WorkflowOptionsR\aoptions\"\x91\x02\n" +
 	"\x0fWorkflowOptions\x12:\n" +
 	"\x19execution_timeout_seconds\x18\x01 \x01(\x03R\x17executionTimeoutSeconds\x12.\n" +
 	"\x13run_timeout_seconds\x18\x02 \x01(\x03R\x11runTimeoutSeconds\x120\n" +
 	"\x14task_timeout_seconds\x18\x03 \x01(\x03R\x12taskTimeoutSeconds\x12;\n" +
-	"\fretry_policy\x18\x04 \x03(\v2\x18.temporal.v1.RetryPolicyR\vretryPolicy\"\xdd\x01\n" +
+	"\fretry_policy\x18\x04 \x03(\v2\x18.temporal.v1.RetryPolicyR\vretryPolicy\x12#\n" +
+	"\rcron_schedule\x18\x05 \x01(\tR\fcronSchedule\"\xdd\x01\n" +
 	"\vRetryPolicy\x128\n" +
 	"\x18initial_interval_seconds\x18\x01 \x01(\x03R\x16initialIntervalSeconds\x12/\n" +
 	"\x13backoff_coefficient\x18\x02 \x01(\x01R\x12backoffCoefficient\x128\n" +

@@ -92,6 +92,7 @@ message WorkflowOptions {
   int64 run_timeout_seconds = 2;         // 运行超时(秒)
   int64 task_timeout_seconds = 3;        // 任务超时(秒)
   repeated RetryPolicy retry_policy = 4;  // 重试策略
+  string cron_schedule = 5; // 定时调度
 }
 
 // 重试策略
