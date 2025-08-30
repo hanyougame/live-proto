@@ -1833,6 +1833,7 @@ type RechargeReq struct {
 	RechargeTarget       int32                  `protobuf:"varint,22,opt,name=recharge_target,json=rechargeTarget,proto3" json:"recharge_target,omitempty"`                    // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
 	TargetId             int32                  `protobuf:"varint,23,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`                                      // 充值目标ID （默认值0)
 	SubTargetId          int32                  `protobuf:"varint,24,opt,name=sub_target_id,json=subTargetId,proto3" json:"sub_target_id,omitempty"`                           // 充值目标子ID （默认值0）
+	Account              string                 `protobuf:"bytes,25,opt,name=account,proto3" json:"account,omitempty"`                                                         // 用户付款帐号（选填）
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -2026,6 +2027,13 @@ func (x *RechargeReq) GetSubTargetId() int32 {
 		return x.SubTargetId
 	}
 	return 0
+}
+
+func (x *RechargeReq) GetAccount() string {
+	if x != nil {
+		return x.Account
+	}
+	return ""
 }
 
 type RechargeResp struct {
@@ -4326,7 +4334,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x03fee\x18\x04 \x01(\x03R\x03fee\x120\n" +
 	"\x14first_deposit_reward\x18\x05 \x01(\x03R\x12firstDepositReward\x12F\n" +
 	" first_deposit_reward_amount_from\x18\x06 \x01(\x03R\x1cfirstDepositRewardAmountFrom\x12B\n" +
-	"\x1efirst_deposit_reward_amount_to\x18\a \x01(\x03R\x1afirstDepositRewardAmountTo\"\xd0\x06\n" +
+	"\x1efirst_deposit_reward_amount_to\x18\a \x01(\x03R\x1afirstDepositRewardAmountTo\"\xea\x06\n" +
 	"\vRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x120\n" +
@@ -4356,7 +4364,8 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x05phone\x18\x15 \x01(\tR\x05phone\x12'\n" +
 	"\x0frecharge_target\x18\x16 \x01(\x05R\x0erechargeTarget\x12\x1b\n" +
 	"\ttarget_id\x18\x17 \x01(\x05R\btargetId\x12\"\n" +
-	"\rsub_target_id\x18\x18 \x01(\x05R\vsubTargetId\"\xb9\x01\n" +
+	"\rsub_target_id\x18\x18 \x01(\x05R\vsubTargetId\x12\x18\n" +
+	"\aaccount\x18\x19 \x01(\tR\aaccount\"\xb9\x01\n" +
 	"\fRechargeResp\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\x03R\x06status\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12!\n" +
