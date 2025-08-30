@@ -829,6 +829,7 @@ type PayInReq struct {
 	CurrencyCode       string                 `protobuf:"bytes,9,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`                      // 币种
 	RechargeChannelId  int64                  `protobuf:"varint,10,opt,name=recharge_channel_id,json=rechargeChannelId,proto3" json:"recharge_channel_id,omitempty"`   // 充值通道id
 	Extra              string                 `protobuf:"bytes,11,opt,name=extra,proto3" json:"extra,omitempty"`                                                       // 扩展字段
+	Account            string                 `protobuf:"bytes,12,opt,name=account,proto3" json:"account,omitempty"`                                                   // 用户付款帐号（选填）
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -936,6 +937,13 @@ func (x *PayInReq) GetRechargeChannelId() int64 {
 func (x *PayInReq) GetExtra() string {
 	if x != nil {
 		return x.Extra
+	}
+	return ""
+}
+
+func (x *PayInReq) GetAccount() string {
+	if x != nil {
+		return x.Account
 	}
 	return ""
 }
@@ -4247,7 +4255,7 @@ var File_proto_finance_v1_finance_proto protoreflect.FileDescriptor
 const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\n" +
 	"\x1eproto/finance/v1/finance.proto\x12\n" +
-	"finance.v1\"\xfb\x02\n" +
+	"finance.v1\"\x95\x03\n" +
 	"\bPayInReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x19\n" +
 	"\border_id\x18\x02 \x01(\tR\aorderId\x12!\n" +
@@ -4260,7 +4268,8 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\rcurrency_code\x18\t \x01(\tR\fcurrencyCode\x12.\n" +
 	"\x13recharge_channel_id\x18\n" +
 	" \x01(\x03R\x11rechargeChannelId\x12\x14\n" +
-	"\x05extra\x18\v \x01(\tR\x05extra\"\xa7\x01\n" +
+	"\x05extra\x18\v \x01(\tR\x05extra\x12\x18\n" +
+	"\aaccount\x18\f \x01(\tR\aaccount\"\xa7\x01\n" +
 	"\tPayInResp\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\x03R\x06status\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12,\n" +

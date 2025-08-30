@@ -15,6 +15,7 @@ message PayInReq {
   string currency_code = 9; // 币种
   int64 recharge_channel_id = 10; // 充值通道id
   string extra = 11; // 扩展字段
+  string account = 12;// 用户付款帐号（选填）
 }
 
 message PayInResp {
