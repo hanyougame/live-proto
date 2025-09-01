@@ -21,10 +21,18 @@ message AgentDataCountTaskExecuteResp {
 
 }
 
+message AgentSettleCountReq {
+    bool FromNow = 1; // 是否从立即进行结算统计
+}
+message AgentSettleCountResp {}
+
 service LiveAgentRpcService {
     // 执行代理结算任务
     rpc AgentSettleTaskExecute (AgentSettleTaskExecuteReq) returns (AgentSettleTaskExecuteResp);
 
    // 执行代理数据统计任务
     rpc AgentDataCountTaskExecute (AgentDataCountTaskExecuteReq) returns (AgentDataCountTaskExecuteResp);
+
+    // 代理结算统计
+    rpc AgentSettleCount (AgentSettleCountReq) returns (AgentSettleCountResp);
 }
