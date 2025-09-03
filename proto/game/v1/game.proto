@@ -739,6 +739,7 @@ message GamePlatformDetail{
   string icon_square = 24;    // 方版图标URL
   string icon_horizontal = 25; // 横版图标URL
   int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
+  int64 middle_platform_type = 27; // 1 老中台 2 新中台
 }
 
 // 通过货币获取平台响应参数
