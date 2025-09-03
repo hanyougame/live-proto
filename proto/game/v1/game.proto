@@ -216,7 +216,7 @@ message GetGameTransferBetOrderListReply{
 }
 
 message GetGameTransferOrderStatusV2Req{
-  int64 platform_key = 1;    //游戏平台key  唯一标识
+  int64 user_id = 1;    //游戏平台key  唯一标识
   repeated string order_no = 2;        //订单编号 最多100个
 }
 

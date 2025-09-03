@@ -1763,8 +1763,8 @@ func (x *GetGameTransferBetOrderListReply) GetBetList() []*TransferBetRecord {
 
 type GetGameTransferOrderStatusV2Req struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PlatformKey   int64                  `protobuf:"varint,1,opt,name=platform_key,json=platformKey,proto3" json:"platform_key,omitempty"` //游戏平台key  唯一标识
-	OrderNo       []string               `protobuf:"bytes,2,rep,name=order_no,json=orderNo,proto3" json:"order_no,omitempty"`              //订单编号 最多100个
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`   //游戏平台key  唯一标识
+	OrderNo       []string               `protobuf:"bytes,2,rep,name=order_no,json=orderNo,proto3" json:"order_no,omitempty"` //订单编号 最多100个
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1799,9 +1799,9 @@ func (*GetGameTransferOrderStatusV2Req) Descriptor() ([]byte, []int) {
 	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *GetGameTransferOrderStatusV2Req) GetPlatformKey() int64 {
+func (x *GetGameTransferOrderStatusV2Req) GetUserId() int64 {
 	if x != nil {
-		return x.PlatformKey
+		return x.UserId
 	}
 	return 0
 }
@@ -10031,9 +10031,9 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"total_page\x18\x01 \x01(\x03R\ttotalPage\x12!\n" +
 	"\fcurrent_page\x18\x02 \x01(\x03R\vcurrentPage\x12(\n" +
 	"\x10last_update_date\x18\x03 \x01(\x03R\x0elastUpdateDate\x125\n" +
-	"\bbet_list\x18\x04 \x03(\v2\x1a.game.v1.TransferBetRecordR\abetList\"_\n" +
-	"\x1fGetGameTransferOrderStatusV2Req\x12!\n" +
-	"\fplatform_key\x18\x01 \x01(\x03R\vplatformKey\x12\x19\n" +
+	"\bbet_list\x18\x04 \x03(\v2\x1a.game.v1.TransferBetRecordR\abetList\"U\n" +
+	"\x1fGetGameTransferOrderStatusV2Req\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x19\n" +
 	"\border_no\x18\x02 \x03(\tR\aorderNo\"+\n" +
 	"\x15GetK9GameAccessKeyReq\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\x03R\x04type\"8\n" +
