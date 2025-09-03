@@ -215,6 +215,11 @@ message GetGameTransferBetOrderListReply{
   repeated TransferBetRecord bet_list = 4; //订单列表
 }
 
+message GetGameTransferOrderStatusV2Req{
+  int64 platform_key = 1;    //游戏平台key  唯一标识
+  repeated string order_no = 2;        //订单编号 最多100个
+}
+
 service LiveGameExternalTransferService{
   //进入游戏
   rpc EnterGame (TransferEnterGameReq) returns (TransferEnterGameReply);
@@ -226,6 +231,10 @@ service LiveGameExternalTransferService{
   rpc GetWalletTransferBalance(GetWalletTransferBalanceReq) returns (GetWalletTransferBalanceReply);
   //查询用户游戏转账（转入、转出）订单状态
   rpc GetGameTransferOrderStatus(GetGameTransferOrderStatusReq) returns (GetGameTransferOrderStatusReply);
+
+  // 查询用户游戏转账（转入、转出）订单状态  V2
+  rpc GetGameTransferOrderStatusV2(GetGameTransferOrderStatusV2Req) returns (GetGameTransferOrderStatusReply);
+
   //查询用户游戏投注订单列表
   rpc GetGameTransferBetOrderList(GetGameTransferBetOrderListReq) returns (GetGameTransferBetOrderListReply);
   //新中台转账钱包转入游戏
