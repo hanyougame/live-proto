@@ -1032,6 +1032,7 @@ type WalletTransferOutGameReply struct {
 	Amount        string                 `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`                                //金额
 	GameOrderNo   string                 `protobuf:"bytes,4,opt,name=game_order_no,json=gameOrderNo,proto3" json:"game_order_no,omitempty"` //转出订单编号
 	ErrMsg        string                 `protobuf:"bytes,5,opt,name=err_msg,json=errMsg,proto3" json:"err_msg,omitempty"`                  //失败消息
+	SkipMqDone    int32                  `protobuf:"varint,6,opt,name=skip_mq_done,json=skipMqDone,proto3" json:"skip_mq_done,omitempty"`   // 是否跳过mq回调 1:跳过 0:不跳过
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1099,6 +1100,13 @@ func (x *WalletTransferOutGameReply) GetErrMsg() string {
 		return x.ErrMsg
 	}
 	return ""
+}
+
+func (x *WalletTransferOutGameReply) GetSkipMqDone() int32 {
+	if x != nil {
+		return x.SkipMqDone
+	}
+	return 0
 }
 
 type GetWalletTransferBalanceReq struct {
@@ -9953,13 +9961,15 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12#\n" +
 	"\rcurrency_code\x18\x04 \x01(\tR\fcurrencyCode\x12\x16\n" +
 	"\x06amount\x18\x05 \x01(\tR\x06amount\x12\"\n" +
-	"\rgame_order_no\x18\x06 \x01(\tR\vgameOrderNo\"\xa2\x01\n" +
+	"\rgame_order_no\x18\x06 \x01(\tR\vgameOrderNo\"\xc4\x01\n" +
 	"\x1aWalletTransferOutGameReply\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\bR\x06status\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\x03R\x06userId\x12\x16\n" +
 	"\x06amount\x18\x03 \x01(\tR\x06amount\x12\"\n" +
 	"\rgame_order_no\x18\x04 \x01(\tR\vgameOrderNo\x12\x17\n" +
-	"\aerr_msg\x18\x05 \x01(\tR\x06errMsg\"\xcf\x01\n" +
+	"\aerr_msg\x18\x05 \x01(\tR\x06errMsg\x12 \n" +
+	"\fskip_mq_done\x18\x06 \x01(\x05R\n" +
+	"skipMqDone\"\xcf\x01\n" +
 	"\x1bGetWalletTransferBalanceReq\x12!\n" +
 	"\fplatform_key\x18\x01 \x01(\x03R\vplatformKey\x12\x19\n" +
 	"\bgame_key\x18\x02 \x01(\x03R\agameKey\x124\n" +
