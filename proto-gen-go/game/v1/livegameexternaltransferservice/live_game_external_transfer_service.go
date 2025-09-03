@@ -102,7 +102,9 @@ type (
 	GetUserFavoriteIdsReply                  = v1.GetUserFavoriteIdsReply
 	GetUserFavoriteIdsReq                    = v1.GetUserFavoriteIdsReq
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
+	GetWalletTransferBalanceReplyV2          = v1.GetWalletTransferBalanceReplyV2
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
+	GetWalletTransferBalanceReqV2            = v1.GetWalletTransferBalanceReqV2
 	PlatformDetailsList                      = v1.PlatformDetailsList
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
 	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply
@@ -123,7 +125,9 @@ type (
 	TripartiteTransferRecord                 = v1.TripartiteTransferRecord
 	TripartiteTransferRecordStatusReq        = v1.TripartiteTransferRecordStatusReq
 	WalletTransferInGameReply                = v1.WalletTransferInGameReply
+	WalletTransferInGameReplyV2              = v1.WalletTransferInGameReplyV2
 	WalletTransferInGameReq                  = v1.WalletTransferInGameReq
+	WalletTransferInGameReqV2                = v1.WalletTransferInGameReqV2
 	WalletTransferOutGameReply               = v1.WalletTransferOutGameReply
 	WalletTransferOutGameReq                 = v1.WalletTransferOutGameReq
 	WinGameValueItem                         = v1.WinGameValueItem
@@ -133,7 +137,7 @@ type (
 		EnterGame(ctx context.Context, in *TransferEnterGameReq, opts ...grpc.CallOption) (*TransferEnterGameReply, error)
 		// 转账钱包转入游戏
 		WalletTransferInGame(ctx context.Context, in *WalletTransferInGameReq, opts ...grpc.CallOption) (*WalletTransferInGameReply, error)
-		// 转账钱包转入
+		// 转账钱包转出
 		WalletTransferOutGame(ctx context.Context, in *WalletTransferOutGameReq, opts ...grpc.CallOption) (*WalletTransferOutGameReply, error)
 		// 转账钱包余额查询
 		GetWalletTransferBalance(ctx context.Context, in *GetWalletTransferBalanceReq, opts ...grpc.CallOption) (*GetWalletTransferBalanceReply, error)
@@ -141,6 +145,10 @@ type (
 		GetGameTransferOrderStatus(ctx context.Context, in *GetGameTransferOrderStatusReq, opts ...grpc.CallOption) (*GetGameTransferOrderStatusReply, error)
 		// 查询用户游戏投注订单列表
 		GetGameTransferBetOrderList(ctx context.Context, in *GetGameTransferBetOrderListReq, opts ...grpc.CallOption) (*GetGameTransferBetOrderListReply, error)
+		// 新中台转账钱包转入游戏
+		WalletTransferInGameV2(ctx context.Context, in *WalletTransferInGameReqV2, opts ...grpc.CallOption) (*WalletTransferInGameReplyV2, error)
+		// 新中台转账钱包余额查询
+		GetWalletTransferBalanceV2(ctx context.Context, in *GetWalletTransferBalanceReqV2, opts ...grpc.CallOption) (*GetWalletTransferBalanceReplyV2, error)
 	}
 
 	defaultLiveGameExternalTransferService struct {
@@ -166,7 +174,7 @@ func (m *defaultLiveGameExternalTransferService) WalletTransferInGame(ctx contex
 	return client.WalletTransferInGame(ctx, in, opts...)
 }
 
-// 转账钱包转入
+// 转账钱包转出
 func (m *defaultLiveGameExternalTransferService) WalletTransferOutGame(ctx context.Context, in *WalletTransferOutGameReq, opts ...grpc.CallOption) (*WalletTransferOutGameReply, error) {
 	client := v1.NewLiveGameExternalTransferServiceClient(m.cli.Conn())
 	return client.WalletTransferOutGame(ctx, in, opts...)
@@ -188,4 +196,16 @@ func (m *defaultLiveGameExternalTransferService) GetGameTransferOrderStatus(ctx 
 func (m *defaultLiveGameExternalTransferService) GetGameTransferBetOrderList(ctx context.Context, in *GetGameTransferBetOrderListReq, opts ...grpc.CallOption) (*GetGameTransferBetOrderListReply, error) {
 	client := v1.NewLiveGameExternalTransferServiceClient(m.cli.Conn())
 	return client.GetGameTransferBetOrderList(ctx, in, opts...)
+}
+
+// 新中台转账钱包转入游戏
+func (m *defaultLiveGameExternalTransferService) WalletTransferInGameV2(ctx context.Context, in *WalletTransferInGameReqV2, opts ...grpc.CallOption) (*WalletTransferInGameReplyV2, error) {
+	client := v1.NewLiveGameExternalTransferServiceClient(m.cli.Conn())
+	return client.WalletTransferInGameV2(ctx, in, opts...)
+}
+
+// 新中台转账钱包余额查询
+func (m *defaultLiveGameExternalTransferService) GetWalletTransferBalanceV2(ctx context.Context, in *GetWalletTransferBalanceReqV2, opts ...grpc.CallOption) (*GetWalletTransferBalanceReplyV2, error) {
+	client := v1.NewLiveGameExternalTransferServiceClient(m.cli.Conn())
+	return client.GetWalletTransferBalanceV2(ctx, in, opts...)
 }

@@ -102,7 +102,9 @@ type (
 	GetUserFavoriteIdsReply                  = v1.GetUserFavoriteIdsReply
 	GetUserFavoriteIdsReq                    = v1.GetUserFavoriteIdsReq
 	GetWalletTransferBalanceReply            = v1.GetWalletTransferBalanceReply
+	GetWalletTransferBalanceReplyV2          = v1.GetWalletTransferBalanceReplyV2
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
+	GetWalletTransferBalanceReqV2            = v1.GetWalletTransferBalanceReqV2
 	PlatformDetailsList                      = v1.PlatformDetailsList
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
 	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply
@@ -123,7 +125,9 @@ type (
 	TripartiteTransferRecord                 = v1.TripartiteTransferRecord
 	TripartiteTransferRecordStatusReq        = v1.TripartiteTransferRecordStatusReq
 	WalletTransferInGameReply                = v1.WalletTransferInGameReply
+	WalletTransferInGameReplyV2              = v1.WalletTransferInGameReplyV2
 	WalletTransferInGameReq                  = v1.WalletTransferInGameReq
+	WalletTransferInGameReqV2                = v1.WalletTransferInGameReqV2
 	WalletTransferOutGameReply               = v1.WalletTransferOutGameReply
 	WalletTransferOutGameReq                 = v1.WalletTransferOutGameReq
 	WinGameValueItem                         = v1.WinGameValueItem

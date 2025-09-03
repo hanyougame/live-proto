@@ -315,6 +315,8 @@ const (
 	LiveGameExternalTransferService_GetWalletTransferBalance_FullMethodName    = "/game.v1.LiveGameExternalTransferService/GetWalletTransferBalance"
 	LiveGameExternalTransferService_GetGameTransferOrderStatus_FullMethodName  = "/game.v1.LiveGameExternalTransferService/GetGameTransferOrderStatus"
 	LiveGameExternalTransferService_GetGameTransferBetOrderList_FullMethodName = "/game.v1.LiveGameExternalTransferService/GetGameTransferBetOrderList"
+	LiveGameExternalTransferService_WalletTransferInGameV2_FullMethodName      = "/game.v1.LiveGameExternalTransferService/WalletTransferInGameV2"
+	LiveGameExternalTransferService_GetWalletTransferBalanceV2_FullMethodName  = "/game.v1.LiveGameExternalTransferService/GetWalletTransferBalanceV2"
 )
 
 // LiveGameExternalTransferServiceClient is the client API for LiveGameExternalTransferService service.
@@ -325,7 +327,7 @@ type LiveGameExternalTransferServiceClient interface {
 	EnterGame(ctx context.Context, in *TransferEnterGameReq, opts ...grpc.CallOption) (*TransferEnterGameReply, error)
 	// 转账钱包转入游戏
 	WalletTransferInGame(ctx context.Context, in *WalletTransferInGameReq, opts ...grpc.CallOption) (*WalletTransferInGameReply, error)
-	// 转账钱包转入
+	// 转账钱包转出
 	WalletTransferOutGame(ctx context.Context, in *WalletTransferOutGameReq, opts ...grpc.CallOption) (*WalletTransferOutGameReply, error)
 	// 转账钱包余额查询
 	GetWalletTransferBalance(ctx context.Context, in *GetWalletTransferBalanceReq, opts ...grpc.CallOption) (*GetWalletTransferBalanceReply, error)
@@ -333,6 +335,10 @@ type LiveGameExternalTransferServiceClient interface {
 	GetGameTransferOrderStatus(ctx context.Context, in *GetGameTransferOrderStatusReq, opts ...grpc.CallOption) (*GetGameTransferOrderStatusReply, error)
 	// 查询用户游戏投注订单列表
 	GetGameTransferBetOrderList(ctx context.Context, in *GetGameTransferBetOrderListReq, opts ...grpc.CallOption) (*GetGameTransferBetOrderListReply, error)
+	// 新中台转账钱包转入游戏
+	WalletTransferInGameV2(ctx context.Context, in *WalletTransferInGameReqV2, opts ...grpc.CallOption) (*WalletTransferInGameReplyV2, error)
+	// 新中台转账钱包余额查询
+	GetWalletTransferBalanceV2(ctx context.Context, in *GetWalletTransferBalanceReqV2, opts ...grpc.CallOption) (*GetWalletTransferBalanceReplyV2, error)
 }
 
 type liveGameExternalTransferServiceClient struct {
@@ -403,6 +409,26 @@ func (c *liveGameExternalTransferServiceClient) GetGameTransferBetOrderList(ctx 
 	return out, nil
 }
 
+func (c *liveGameExternalTransferServiceClient) WalletTransferInGameV2(ctx context.Context, in *WalletTransferInGameReqV2, opts ...grpc.CallOption) (*WalletTransferInGameReplyV2, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletTransferInGameReplyV2)
+	err := c.cc.Invoke(ctx, LiveGameExternalTransferService_WalletTransferInGameV2_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveGameExternalTransferServiceClient) GetWalletTransferBalanceV2(ctx context.Context, in *GetWalletTransferBalanceReqV2, opts ...grpc.CallOption) (*GetWalletTransferBalanceReplyV2, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWalletTransferBalanceReplyV2)
+	err := c.cc.Invoke(ctx, LiveGameExternalTransferService_GetWalletTransferBalanceV2_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveGameExternalTransferServiceServer is the server API for LiveGameExternalTransferService service.
 // All implementations must embed UnimplementedLiveGameExternalTransferServiceServer
 // for forward compatibility.
@@ -411,7 +437,7 @@ type LiveGameExternalTransferServiceServer interface {
 	EnterGame(context.Context, *TransferEnterGameReq) (*TransferEnterGameReply, error)
 	// 转账钱包转入游戏
 	WalletTransferInGame(context.Context, *WalletTransferInGameReq) (*WalletTransferInGameReply, error)
-	// 转账钱包转入
+	// 转账钱包转出
 	WalletTransferOutGame(context.Context, *WalletTransferOutGameReq) (*WalletTransferOutGameReply, error)
 	// 转账钱包余额查询
 	GetWalletTransferBalance(context.Context, *GetWalletTransferBalanceReq) (*GetWalletTransferBalanceReply, error)
@@ -419,6 +445,10 @@ type LiveGameExternalTransferServiceServer interface {
 	GetGameTransferOrderStatus(context.Context, *GetGameTransferOrderStatusReq) (*GetGameTransferOrderStatusReply, error)
 	// 查询用户游戏投注订单列表
 	GetGameTransferBetOrderList(context.Context, *GetGameTransferBetOrderListReq) (*GetGameTransferBetOrderListReply, error)
+	// 新中台转账钱包转入游戏
+	WalletTransferInGameV2(context.Context, *WalletTransferInGameReqV2) (*WalletTransferInGameReplyV2, error)
+	// 新中台转账钱包余额查询
+	GetWalletTransferBalanceV2(context.Context, *GetWalletTransferBalanceReqV2) (*GetWalletTransferBalanceReplyV2, error)
 	mustEmbedUnimplementedLiveGameExternalTransferServiceServer()
 }
 
@@ -446,6 +476,12 @@ func (UnimplementedLiveGameExternalTransferServiceServer) GetGameTransferOrderSt
 }
 func (UnimplementedLiveGameExternalTransferServiceServer) GetGameTransferBetOrderList(context.Context, *GetGameTransferBetOrderListReq) (*GetGameTransferBetOrderListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGameTransferBetOrderList not implemented")
+}
+func (UnimplementedLiveGameExternalTransferServiceServer) WalletTransferInGameV2(context.Context, *WalletTransferInGameReqV2) (*WalletTransferInGameReplyV2, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletTransferInGameV2 not implemented")
+}
+func (UnimplementedLiveGameExternalTransferServiceServer) GetWalletTransferBalanceV2(context.Context, *GetWalletTransferBalanceReqV2) (*GetWalletTransferBalanceReplyV2, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWalletTransferBalanceV2 not implemented")
 }
 func (UnimplementedLiveGameExternalTransferServiceServer) mustEmbedUnimplementedLiveGameExternalTransferServiceServer() {
 }
@@ -577,6 +613,42 @@ func _LiveGameExternalTransferService_GetGameTransferBetOrderList_Handler(srv in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveGameExternalTransferService_WalletTransferInGameV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletTransferInGameReqV2)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameExternalTransferServiceServer).WalletTransferInGameV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameExternalTransferService_WalletTransferInGameV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameExternalTransferServiceServer).WalletTransferInGameV2(ctx, req.(*WalletTransferInGameReqV2))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveGameExternalTransferService_GetWalletTransferBalanceV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWalletTransferBalanceReqV2)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveGameExternalTransferServiceServer).GetWalletTransferBalanceV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveGameExternalTransferService_GetWalletTransferBalanceV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveGameExternalTransferServiceServer).GetWalletTransferBalanceV2(ctx, req.(*GetWalletTransferBalanceReqV2))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveGameExternalTransferService_ServiceDesc is the grpc.ServiceDesc for LiveGameExternalTransferService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -607,6 +679,14 @@ var LiveGameExternalTransferService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGameTransferBetOrderList",
 			Handler:    _LiveGameExternalTransferService_GetGameTransferBetOrderList_Handler,
+		},
+		{
+			MethodName: "WalletTransferInGameV2",
+			Handler:    _LiveGameExternalTransferService_WalletTransferInGameV2_Handler,
+		},
+		{
+			MethodName: "GetWalletTransferBalanceV2",
+			Handler:    _LiveGameExternalTransferService_GetWalletTransferBalanceV2_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
