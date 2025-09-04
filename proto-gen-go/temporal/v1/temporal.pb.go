@@ -25,9 +25,10 @@ const (
 type ScheduleTaskType int32
 
 const (
-	ScheduleTaskType_UNDEFINED             ScheduleTaskType = 0 // 未定义（默认值）
-	ScheduleTaskType_GRAYLIST_EXPIRE_TASK  ScheduleTaskType = 1 // 灰名单失效任务
-	ScheduleTaskType_WHITELIST_EXPIRE_TASK ScheduleTaskType = 2 // 白名单失效任务
+	ScheduleTaskType_UNDEFINED                          ScheduleTaskType = 0 // 未定义（默认值）
+	ScheduleTaskType_GRAYLIST_EXPIRE_TASK               ScheduleTaskType = 1 // 灰名单失效任务
+	ScheduleTaskType_WHITELIST_EXPIRE_TASK              ScheduleTaskType = 2 // 白名单失效任务
+	ScheduleTaskType_RED_PACKET_ACTIVITY_COUNTDOWN_TASK ScheduleTaskType = 3 // 红包活动倒计时任务
 )
 
 // Enum value maps for ScheduleTaskType.
@@ -36,11 +37,13 @@ var (
 		0: "UNDEFINED",
 		1: "GRAYLIST_EXPIRE_TASK",
 		2: "WHITELIST_EXPIRE_TASK",
+		3: "RED_PACKET_ACTIVITY_COUNTDOWN_TASK",
 	}
 	ScheduleTaskType_value = map[string]int32{
-		"UNDEFINED":             0,
-		"GRAYLIST_EXPIRE_TASK":  1,
-		"WHITELIST_EXPIRE_TASK": 2,
+		"UNDEFINED":                          0,
+		"GRAYLIST_EXPIRE_TASK":               1,
+		"WHITELIST_EXPIRE_TASK":              2,
+		"RED_PACKET_ACTIVITY_COUNTDOWN_TASK": 3,
 	}
 )
 
@@ -1454,11 +1457,12 @@ const file_temporal_v1_temporal_proto_rawDesc = "" +
 	"workflowId\x12\x15\n" +
 	"\x06run_id\x18\x03 \x01(\tR\x05runId\x12\x18\n" +
 	"\asuccess\x18\x04 \x01(\bR\asuccess\x12#\n" +
-	"\rerror_message\x18\x05 \x01(\tR\ferrorMessage*V\n" +
+	"\rerror_message\x18\x05 \x01(\tR\ferrorMessage*~\n" +
 	"\x10ScheduleTaskType\x12\r\n" +
 	"\tUNDEFINED\x10\x00\x12\x18\n" +
 	"\x14GRAYLIST_EXPIRE_TASK\x10\x01\x12\x19\n" +
-	"\x15WHITELIST_EXPIRE_TASK\x10\x02*\xe5\x02\n" +
+	"\x15WHITELIST_EXPIRE_TASK\x10\x02\x12&\n" +
+	"\"RED_PACKET_ACTIVITY_COUNTDOWN_TASK\x10\x03*\xe5\x02\n" +
 	"\x17WorkflowExecutionStatus\x12)\n" +
 	"%WORKFLOW_EXECUTION_STATUS_UNSPECIFIED\x10\x00\x12%\n" +
 	"!WORKFLOW_EXECUTION_STATUS_RUNNING\x10\x01\x12'\n" +

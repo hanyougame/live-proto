@@ -42,6 +42,7 @@ enum ScheduleTaskType {
   UNDEFINED = 0;               // 未定义（默认值）
   GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
   WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
+  RED_PACKET_ACTIVITY_COUNTDOWN_TASK = 3;   // 红包活动倒计时任务
 }
 
 // 工作流执行状态
