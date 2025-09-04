@@ -115,6 +115,7 @@ type (
 	SingleEnterGameReq                       = v1.SingleEnterGameReq
 	SingleEnterGameTryReply                  = v1.SingleEnterGameTryReply
 	SingleEnterGameTryReq                    = v1.SingleEnterGameTryReq
+	SubGameInfo                              = v1.SubGameInfo
 	TransferBetRecord                        = v1.TransferBetRecord
 	TransferCallbackReply                    = v1.TransferCallbackReply
 	TransferCallbackReq                      = v1.TransferCallbackReq

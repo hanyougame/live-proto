@@ -794,7 +794,21 @@ message GameDetails {
   string icon_square = 24;    // 方版图标URL
   string icon_horizontal = 25; // 横版图标URL
   int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
+  optional int64  is_sub_factory = 27;  // 是否开启分流
+  repeated SubGameInfo sub_factory_params = 28; // 分流参数
 }
+
+// 子游戏信息
+message SubGameInfo {
+  int64 game_id = 1;                // 游戏ID
+  int64 tripartite_game_id = 2;     // 三方游戏ID
+  string game_name = 3;             // 游戏名称
+  int64 game_platform_id = 4;       // 游戏平台ID
+  string game_platform_name = 5;    // 游戏平台名称
+  int64 game_category_id = 6;       // 游戏类型ID
+  int64 weight = 7;                 // 权重
+}
+
 
 message GameSimpleDetails {
   int64 game_id = 1;
