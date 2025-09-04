@@ -98,6 +98,25 @@ message WalletTransferInGameReply{
   string err_msg = 5;       //失败消息
 }
 
+message WalletTransferInGameReqV2{
+  int64 game_id = 1;        //游戏标志
+  int64  user_id = 2;         //用户ID
+  int64 amount = 3;          //金额  整数且大于0
+  string game_order_no = 4;        // 订单号
+  string device_os = 5;     //设备类型
+  string device_id = 6;    //设备ID
+  string client_ip = 7;            //IP
+  string language = 8; // 语言code
+}
+
+message WalletTransferInGameReplyV2{
+  int64 user_id = 1;        //用户ID
+  int64 amount = 2;        //金额
+  string game_order_no = 3; //转入订单编号
+  string game_link = 4; // 游戏链接
+  int64 transfer_status = 5; // 转账状态 0 处理中 1 成功 2 失败 3 未处理
+}
+
 
 message WalletTransferOutGameReq{
   int64 platform_key = 1;    //游戏平台key  唯一标识
@@ -115,6 +134,7 @@ message WalletTransferOutGameReply{
   string amount = 3;        //金额
   string game_order_no = 4; //转出订单编号
   string err_msg = 5;       //失败消息
+  int32  skip_mq_done = 6;   // 是否跳过mq回调 1:跳过 0:不跳过
 }
 
 message GetWalletTransferBalanceReq{
@@ -131,6 +151,19 @@ message GetWalletTransferBalanceReply{
   string amount = 3;        //金额
 }
 
+message GetWalletTransferBalanceReqV2{
+  int64 platform_key = 1;    // 三方平台ID
+  int64 game_key = 2;        // 游戏id
+  int64 tripartite_platform_id = 3; // 三方平台ID
+  int64  user_id = 4;         //用户ID
+  string currency_code = 5;     //货币Code
+}
+
+message GetWalletTransferBalanceReplyV2{
+  int64 user_id = 1;        //用户ID
+  string currency_code = 2;     //货币Code
+  string amount = 3;        //金额
+}
 
 message GetGameTransferOrderStatusReq{
   string platform_key = 1;    //游戏平台key  唯一标识
@@ -183,19 +216,32 @@ message GetGameTransferBetOrderListReply{
   repeated TransferBetRecord bet_list = 4; //订单列表
 }
 
+message GetGameTransferOrderStatusV2Req{
+  int64 user_id = 1;    //游戏平台key  唯一标识
+  repeated string order_no = 2;        //订单编号 最多100个
+}
+
 service LiveGameExternalTransferService{
   //进入游戏
   rpc EnterGame (TransferEnterGameReq) returns (TransferEnterGameReply);
   //转账钱包转入游戏
   rpc WalletTransferInGame(WalletTransferInGameReq) returns (WalletTransferInGameReply);
-  //转账钱包转入
+  //转账钱包转出
   rpc WalletTransferOutGame(WalletTransferOutGameReq) returns (WalletTransferOutGameReply);
   //转账钱包余额查询
   rpc GetWalletTransferBalance(GetWalletTransferBalanceReq) returns (GetWalletTransferBalanceReply);
   //查询用户游戏转账（转入、转出）订单状态
   rpc GetGameTransferOrderStatus(GetGameTransferOrderStatusReq) returns (GetGameTransferOrderStatusReply);
+
+  // 查询用户游戏转账（转入、转出）订单状态  V2
+  rpc GetGameTransferOrderStatusV2(GetGameTransferOrderStatusV2Req) returns (GetGameTransferOrderStatusReply);
+
   //查询用户游戏投注订单列表
   rpc GetGameTransferBetOrderList(GetGameTransferBetOrderListReq) returns (GetGameTransferBetOrderListReply);
+  //新中台转账钱包转入游戏
+  rpc WalletTransferInGameV2(WalletTransferInGameReqV2) returns (WalletTransferInGameReplyV2);
+  //新中台转账钱包余额查询
+  rpc GetWalletTransferBalanceV2(GetWalletTransferBalanceReqV2) returns (GetWalletTransferBalanceReplyV2);
 }
 
 // 获取K9游戏接入key
@@ -739,6 +785,7 @@ message GamePlatformDetail{
   string icon_square = 24;    // 方版图标URL
   string icon_horizontal = 25; // 横版图标URL
   int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
+  int64 middle_platform_type = 27; // 1 老中台 2 新中台
 }
 
 // 通过货币获取平台响应参数
@@ -760,6 +807,7 @@ message GamePlatformSimpleDetail{
   string icon_square = 10;    // 方版图标URL
   string icon_horizontal = 11; // 横版图标URL
   int64  is_under_maintenance = 12; // 是否在维护中
+  int64  middle_platform_type = 13;// 1 老中台 2 新中台
 }
 
 // 平台跳转方式的基础类型
