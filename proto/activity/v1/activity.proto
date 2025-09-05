@@ -27,6 +27,8 @@ message ActivityReply{
 service LiveActivityInnerService{
   // 抢红包活动事件
   rpc RedPacketCampaignEvent(RedPacketCampaignEventReq) returns (ActivityReply);
+  // 抢红包活动倒计时事件
+  rpc RedPacketCountdownEvent(RedPacketCountdownEventReq) returns (ActivityReply);
   // 判断用户抢红包条件
   rpc CheckUserRedPacketCondition(CheckUserRedPacketConditionReq) returns (CheckUserRedPacketConditionReply);
   // 增加用户领取红包次数缓存
@@ -160,6 +162,10 @@ message AddLuckyValReq {
 
 message RedPacketCampaignEventReq {
   int64 user_id = 1;   // 用户id
+}
+
+message RedPacketCountdownEventReq {
+  int64 activity_id = 1; // 活动id
 }
 
 message LuckySpinEventReq {
