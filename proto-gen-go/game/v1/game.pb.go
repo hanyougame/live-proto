@@ -5662,6 +5662,7 @@ type GetPlatformListByCurrReq struct {
 	GameCategoryId       int64                  `protobuf:"varint,3,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"`
 	TripartiteCategoryId int64                  `protobuf:"varint,4,opt,name=tripartite_category_id,json=tripartiteCategoryId,proto3" json:"tripartite_category_id,omitempty"`
 	UserId               int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	IncludeAllPlatforms  bool                   `protobuf:"varint,6,opt,name=include_all_platforms,json=includeAllPlatforms,proto3" json:"include_all_platforms,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -5729,6 +5730,13 @@ func (x *GetPlatformListByCurrReq) GetUserId() int64 {
 		return x.UserId
 	}
 	return 0
+}
+
+func (x *GetPlatformListByCurrReq) GetIncludeAllPlatforms() bool {
+	if x != nil {
+		return x.IncludeAllPlatforms
+	}
+	return false
 }
 
 // 通过货币获取平台响应参数
@@ -10518,14 +10526,15 @@ const file_game_v1_game_proto_rawDesc = "" +
 	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\x12(\n" +
 	"\x10game_category_id\x18\x03 \x01(\x03R\x0egameCategoryId\x12#\n" +
 	"\rcurrency_code\x18\x04 \x01(\tR\fcurrencyCode\x12\x17\n" +
-	"\auser_id\x18\x05 \x01(\x03R\x06userId\"\xd9\x01\n" +
+	"\auser_id\x18\x05 \x01(\x03R\x06userId\"\x8d\x02\n" +
 	"\x18GetPlatformListByCurrReq\x12\x1f\n" +
 	"\vcurrency_id\x18\x01 \x01(\x03R\n" +
 	"currencyId\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12(\n" +
 	"\x10game_category_id\x18\x03 \x01(\x03R\x0egameCategoryId\x124\n" +
 	"\x16tripartite_category_id\x18\x04 \x01(\x03R\x14tripartiteCategoryId\x12\x17\n" +
-	"\auser_id\x18\x05 \x01(\x03R\x06userId\"M\n" +
+	"\auser_id\x18\x05 \x01(\x03R\x06userId\x122\n" +
+	"\x15include_all_platforms\x18\x06 \x01(\bR\x13includeAllPlatforms\"M\n" +
 	"\x1aGetPlatformListByCurrReply\x12/\n" +
 	"\x04rows\x18\x14 \x03(\v2\x1b.game.v1.GamePlatformDetailR\x04rows\"\x96\a\n" +
 	"\x12GamePlatformDetail\x12(\n" +
