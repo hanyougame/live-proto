@@ -135,6 +135,7 @@ message WalletTransferOutGameReply{
   string game_order_no = 4; //转出订单编号
   string err_msg = 5;       //失败消息
   int32  skip_mq_done = 6;   // 是否跳过mq回调 1:跳过 0:不跳过
+  int32 middle_platform_type = 7;// 中台类型 1 老中台 2 新中台
 }
 
 message GetWalletTransferBalanceReq{
