@@ -37,6 +37,9 @@ service TemporalService {
 
   // 创建自定义调度
   rpc CreateSchedule(ScheduleOptions) returns (TemporalReply) {}
+
+  // 删除自定义调度
+  rpc DeleteSchedule(DeleteScheduleReq) returns (TemporalReply) {}
 }
 
 
@@ -328,3 +331,6 @@ enum ScheduleOverlapPolicy {
     SCHEDULE_OVERLAP_POLICY_ALLOW_ALL = 6;
 }
 
+message DeleteScheduleReq {
+  string ID = 1; // ID - The business identifier of the schedule.
+}

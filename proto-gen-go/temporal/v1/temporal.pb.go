@@ -1722,6 +1722,50 @@ func (x *ScheduleWorkflowAction) GetRetryPolicy() *RetryPolicy {
 	return nil
 }
 
+type DeleteScheduleReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ID            string                 `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"` // ID - The business identifier of the schedule.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteScheduleReq) Reset() {
+	*x = DeleteScheduleReq{}
+	mi := &file_temporal_v1_temporal_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteScheduleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteScheduleReq) ProtoMessage() {}
+
+func (x *DeleteScheduleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_temporal_v1_temporal_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteScheduleReq.ProtoReflect.Descriptor instead.
+func (*DeleteScheduleReq) Descriptor() ([]byte, []int) {
+	return file_temporal_v1_temporal_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *DeleteScheduleReq) GetID() string {
+	if x != nil {
+		return x.ID
+	}
+	return ""
+}
+
 type BatchCancelWorkflowResponse_Result struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	WorkflowId    string                 `protobuf:"bytes,1,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`       // 工作流ID
@@ -1733,7 +1777,7 @@ type BatchCancelWorkflowResponse_Result struct {
 
 func (x *BatchCancelWorkflowResponse_Result) Reset() {
 	*x = BatchCancelWorkflowResponse_Result{}
-	mi := &file_temporal_v1_temporal_proto_msgTypes[23]
+	mi := &file_temporal_v1_temporal_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1745,7 +1789,7 @@ func (x *BatchCancelWorkflowResponse_Result) String() string {
 func (*BatchCancelWorkflowResponse_Result) ProtoMessage() {}
 
 func (x *BatchCancelWorkflowResponse_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_v1_temporal_proto_msgTypes[23]
+	mi := &file_temporal_v1_temporal_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1795,7 +1839,7 @@ type BatchScheduleTaskResponse_Result struct {
 
 func (x *BatchScheduleTaskResponse_Result) Reset() {
 	*x = BatchScheduleTaskResponse_Result{}
-	mi := &file_temporal_v1_temporal_proto_msgTypes[24]
+	mi := &file_temporal_v1_temporal_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1807,7 +1851,7 @@ func (x *BatchScheduleTaskResponse_Result) String() string {
 func (*BatchScheduleTaskResponse_Result) ProtoMessage() {}
 
 func (x *BatchScheduleTaskResponse_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_v1_temporal_proto_msgTypes[24]
+	mi := &file_temporal_v1_temporal_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1979,7 +2023,9 @@ const file_temporal_v1_temporal_proto_rawDesc = "" +
 	"\x18WorkflowExecutionTimeout\x18\x05 \x01(\x03R\x18WorkflowExecutionTimeout\x12.\n" +
 	"\x12WorkflowRunTimeout\x18\x06 \x01(\x03R\x12WorkflowRunTimeout\x120\n" +
 	"\x13WorkflowTaskTimeout\x18\a \x01(\x03R\x13WorkflowTaskTimeout\x12:\n" +
-	"\vRetryPolicy\x18\b \x01(\v2\x18.temporal.v1.RetryPolicyR\vRetryPolicy*V\n" +
+	"\vRetryPolicy\x18\b \x01(\v2\x18.temporal.v1.RetryPolicyR\vRetryPolicy\"#\n" +
+	"\x11DeleteScheduleReq\x12\x0e\n" +
+	"\x02ID\x18\x01 \x01(\tR\x02ID*V\n" +
 	"\x10ScheduleTaskType\x12\r\n" +
 	"\tUNDEFINED\x10\x00\x12\x18\n" +
 	"\x14GRAYLIST_EXPIRE_TASK\x10\x01\x12\x19\n" +
@@ -2006,7 +2052,7 @@ const file_temporal_v1_temporal_proto_rawDesc = "" +
 	"\"SCHEDULE_OVERLAP_POLICY_BUFFER_ALL\x10\x03\x12(\n" +
 	"$SCHEDULE_OVERLAP_POLICY_CANCEL_OTHER\x10\x04\x12+\n" +
 	"'SCHEDULE_OVERLAP_POLICY_TERMINATE_OTHER\x10\x05\x12%\n" +
-	"!SCHEDULE_OVERLAP_POLICY_ALLOW_ALL\x10\x062\x97\x06\n" +
+	"!SCHEDULE_OVERLAP_POLICY_ALLOW_ALL\x10\x062\xe7\x06\n" +
 	"\x0fTemporalService\x12X\n" +
 	"\rStartWorkflow\x12!.temporal.v1.StartWorkflowRequest\x1a\".temporal.v1.StartWorkflowResponse\"\x00\x12[\n" +
 	"\x0eCancelWorkflow\x12\".temporal.v1.CancelWorkflowRequest\x1a#.temporal.v1.CancelWorkflowResponse\"\x00\x12[\n" +
@@ -2015,7 +2061,8 @@ const file_temporal_v1_temporal_proto_rawDesc = "" +
 	"\x11StartScheduleTask\x12 .temporal.v1.ScheduleTaskRequest\x1a!.temporal.v1.ScheduleTaskResponse\"\x00\x12k\n" +
 	"\x14BatchCancelWorkflows\x12'.temporal.v1.BatchCancelWorkflowRequest\x1a(.temporal.v1.BatchCancelWorkflowResponse\"\x00\x12j\n" +
 	"\x17BatchStartScheduleTasks\x12%.temporal.v1.BatchScheduleTaskRequest\x1a&.temporal.v1.BatchScheduleTaskResponse\"\x00\x12L\n" +
-	"\x0eCreateSchedule\x12\x1c.temporal.v1.ScheduleOptions\x1a\x1a.temporal.v1.TemporalReply\"\x00B\tZ\a./pb/v1b\x06proto3"
+	"\x0eCreateSchedule\x12\x1c.temporal.v1.ScheduleOptions\x1a\x1a.temporal.v1.TemporalReply\"\x00\x12N\n" +
+	"\x0eDeleteSchedule\x12\x1e.temporal.v1.DeleteScheduleReq\x1a\x1a.temporal.v1.TemporalReply\"\x00B\tZ\a./pb/v1b\x06proto3"
 
 var (
 	file_temporal_v1_temporal_proto_rawDescOnce sync.Once
@@ -2030,7 +2077,7 @@ func file_temporal_v1_temporal_proto_rawDescGZIP() []byte {
 }
 
 var file_temporal_v1_temporal_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_temporal_v1_temporal_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_temporal_v1_temporal_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_temporal_v1_temporal_proto_goTypes = []any{
 	(ScheduleTaskType)(0),                      // 0: temporal.v1.ScheduleTaskType
 	(WorkflowExecutionStatus)(0),               // 1: temporal.v1.WorkflowExecutionStatus
@@ -2059,8 +2106,9 @@ var file_temporal_v1_temporal_proto_goTypes = []any{
 	(*ScheduleCalendarSpec)(nil),               // 24: temporal.v1.ScheduleCalendarSpec
 	(*ScheduleRange)(nil),                      // 25: temporal.v1.ScheduleRange
 	(*ScheduleWorkflowAction)(nil),             // 26: temporal.v1.ScheduleWorkflowAction
-	(*BatchCancelWorkflowResponse_Result)(nil), // 27: temporal.v1.BatchCancelWorkflowResponse.Result
-	(*BatchScheduleTaskResponse_Result)(nil),   // 28: temporal.v1.BatchScheduleTaskResponse.Result
+	(*DeleteScheduleReq)(nil),                  // 27: temporal.v1.DeleteScheduleReq
+	(*BatchCancelWorkflowResponse_Result)(nil), // 28: temporal.v1.BatchCancelWorkflowResponse.Result
+	(*BatchScheduleTaskResponse_Result)(nil),   // 29: temporal.v1.BatchScheduleTaskResponse.Result
 }
 var file_temporal_v1_temporal_proto_depIdxs = []int32{
 	7,  // 0: temporal.v1.StartWorkflowRequest.options:type_name -> temporal.v1.WorkflowOptions
@@ -2069,9 +2117,9 @@ var file_temporal_v1_temporal_proto_depIdxs = []int32{
 	0,  // 3: temporal.v1.ScheduleTaskRequest.task_type:type_name -> temporal.v1.ScheduleTaskType
 	2,  // 4: temporal.v1.ScheduleTaskRequest.workflow_id_policy:type_name -> temporal.v1.WorkflowIdReusePolicy
 	10, // 5: temporal.v1.BatchCancelWorkflowRequest.workflows:type_name -> temporal.v1.CancelWorkflowRequest
-	27, // 6: temporal.v1.BatchCancelWorkflowResponse.results:type_name -> temporal.v1.BatchCancelWorkflowResponse.Result
+	28, // 6: temporal.v1.BatchCancelWorkflowResponse.results:type_name -> temporal.v1.BatchCancelWorkflowResponse.Result
 	16, // 7: temporal.v1.BatchScheduleTaskRequest.tasks:type_name -> temporal.v1.ScheduleTaskRequest
-	28, // 8: temporal.v1.BatchScheduleTaskResponse.results:type_name -> temporal.v1.BatchScheduleTaskResponse.Result
+	29, // 8: temporal.v1.BatchScheduleTaskResponse.results:type_name -> temporal.v1.BatchScheduleTaskResponse.Result
 	23, // 9: temporal.v1.ScheduleOptions.Spec:type_name -> temporal.v1.ScheduleSpec
 	26, // 10: temporal.v1.ScheduleOptions.Action:type_name -> temporal.v1.ScheduleWorkflowAction
 	3,  // 11: temporal.v1.ScheduleOptions.Overlap:type_name -> temporal.v1.ScheduleOverlapPolicy
@@ -2092,16 +2140,18 @@ var file_temporal_v1_temporal_proto_depIdxs = []int32{
 	18, // 26: temporal.v1.TemporalService.BatchCancelWorkflows:input_type -> temporal.v1.BatchCancelWorkflowRequest
 	20, // 27: temporal.v1.TemporalService.BatchStartScheduleTasks:input_type -> temporal.v1.BatchScheduleTaskRequest
 	22, // 28: temporal.v1.TemporalService.CreateSchedule:input_type -> temporal.v1.ScheduleOptions
-	9,  // 29: temporal.v1.TemporalService.StartWorkflow:output_type -> temporal.v1.StartWorkflowResponse
-	11, // 30: temporal.v1.TemporalService.CancelWorkflow:output_type -> temporal.v1.CancelWorkflowResponse
-	13, // 31: temporal.v1.TemporalService.SignalWorkflow:output_type -> temporal.v1.SignalWorkflowResponse
-	15, // 32: temporal.v1.TemporalService.GetWorkflowExecution:output_type -> temporal.v1.GetWorkflowExecutionResponse
-	17, // 33: temporal.v1.TemporalService.StartScheduleTask:output_type -> temporal.v1.ScheduleTaskResponse
-	19, // 34: temporal.v1.TemporalService.BatchCancelWorkflows:output_type -> temporal.v1.BatchCancelWorkflowResponse
-	21, // 35: temporal.v1.TemporalService.BatchStartScheduleTasks:output_type -> temporal.v1.BatchScheduleTaskResponse
-	5,  // 36: temporal.v1.TemporalService.CreateSchedule:output_type -> temporal.v1.TemporalReply
-	29, // [29:37] is the sub-list for method output_type
-	21, // [21:29] is the sub-list for method input_type
+	27, // 29: temporal.v1.TemporalService.DeleteSchedule:input_type -> temporal.v1.DeleteScheduleReq
+	9,  // 30: temporal.v1.TemporalService.StartWorkflow:output_type -> temporal.v1.StartWorkflowResponse
+	11, // 31: temporal.v1.TemporalService.CancelWorkflow:output_type -> temporal.v1.CancelWorkflowResponse
+	13, // 32: temporal.v1.TemporalService.SignalWorkflow:output_type -> temporal.v1.SignalWorkflowResponse
+	15, // 33: temporal.v1.TemporalService.GetWorkflowExecution:output_type -> temporal.v1.GetWorkflowExecutionResponse
+	17, // 34: temporal.v1.TemporalService.StartScheduleTask:output_type -> temporal.v1.ScheduleTaskResponse
+	19, // 35: temporal.v1.TemporalService.BatchCancelWorkflows:output_type -> temporal.v1.BatchCancelWorkflowResponse
+	21, // 36: temporal.v1.TemporalService.BatchStartScheduleTasks:output_type -> temporal.v1.BatchScheduleTaskResponse
+	5,  // 37: temporal.v1.TemporalService.CreateSchedule:output_type -> temporal.v1.TemporalReply
+	5,  // 38: temporal.v1.TemporalService.DeleteSchedule:output_type -> temporal.v1.TemporalReply
+	30, // [30:39] is the sub-list for method output_type
+	21, // [21:30] is the sub-list for method input_type
 	21, // [21:21] is the sub-list for extension type_name
 	21, // [21:21] is the sub-list for extension extendee
 	0,  // [0:21] is the sub-list for field type_name
@@ -2118,7 +2168,7 @@ func file_temporal_v1_temporal_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_temporal_v1_temporal_proto_rawDesc), len(file_temporal_v1_temporal_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   25,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -27,6 +27,7 @@ const (
 	TemporalService_BatchCancelWorkflows_FullMethodName    = "/temporal.v1.TemporalService/BatchCancelWorkflows"
 	TemporalService_BatchStartScheduleTasks_FullMethodName = "/temporal.v1.TemporalService/BatchStartScheduleTasks"
 	TemporalService_CreateSchedule_FullMethodName          = "/temporal.v1.TemporalService/CreateSchedule"
+	TemporalService_DeleteSchedule_FullMethodName          = "/temporal.v1.TemporalService/DeleteSchedule"
 )
 
 // TemporalServiceClient is the client API for TemporalService service.
@@ -51,6 +52,8 @@ type TemporalServiceClient interface {
 	BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error)
 	// 创建自定义调度
 	CreateSchedule(ctx context.Context, in *ScheduleOptions, opts ...grpc.CallOption) (*TemporalReply, error)
+	// 删除自定义调度
+	DeleteSchedule(ctx context.Context, in *DeleteScheduleReq, opts ...grpc.CallOption) (*TemporalReply, error)
 }
 
 type temporalServiceClient struct {
@@ -141,6 +144,16 @@ func (c *temporalServiceClient) CreateSchedule(ctx context.Context, in *Schedule
 	return out, nil
 }
 
+func (c *temporalServiceClient) DeleteSchedule(ctx context.Context, in *DeleteScheduleReq, opts ...grpc.CallOption) (*TemporalReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TemporalReply)
+	err := c.cc.Invoke(ctx, TemporalService_DeleteSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TemporalServiceServer is the server API for TemporalService service.
 // All implementations must embed UnimplementedTemporalServiceServer
 // for forward compatibility.
@@ -163,6 +176,8 @@ type TemporalServiceServer interface {
 	BatchStartScheduleTasks(context.Context, *BatchScheduleTaskRequest) (*BatchScheduleTaskResponse, error)
 	// 创建自定义调度
 	CreateSchedule(context.Context, *ScheduleOptions) (*TemporalReply, error)
+	// 删除自定义调度
+	DeleteSchedule(context.Context, *DeleteScheduleReq) (*TemporalReply, error)
 	mustEmbedUnimplementedTemporalServiceServer()
 }
 
@@ -196,6 +211,9 @@ func (UnimplementedTemporalServiceServer) BatchStartScheduleTasks(context.Contex
 }
 func (UnimplementedTemporalServiceServer) CreateSchedule(context.Context, *ScheduleOptions) (*TemporalReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSchedule not implemented")
+}
+func (UnimplementedTemporalServiceServer) DeleteSchedule(context.Context, *DeleteScheduleReq) (*TemporalReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSchedule not implemented")
 }
 func (UnimplementedTemporalServiceServer) mustEmbedUnimplementedTemporalServiceServer() {}
 func (UnimplementedTemporalServiceServer) testEmbeddedByValue()                         {}
@@ -362,6 +380,24 @@ func _TemporalService_CreateSchedule_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TemporalService_DeleteSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TemporalServiceServer).DeleteSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TemporalService_DeleteSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TemporalServiceServer).DeleteSchedule(ctx, req.(*DeleteScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TemporalService_ServiceDesc is the grpc.ServiceDesc for TemporalService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -400,6 +436,10 @@ var TemporalService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateSchedule",
 			Handler:    _TemporalService_CreateSchedule_Handler,
+		},
+		{
+			MethodName: "DeleteSchedule",
+			Handler:    _TemporalService_DeleteSchedule_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

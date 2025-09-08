@@ -22,6 +22,7 @@ type (
 	BatchScheduleTaskResponse_Result   = v1.BatchScheduleTaskResponse_Result
 	CancelWorkflowRequest              = v1.CancelWorkflowRequest
 	CancelWorkflowResponse             = v1.CancelWorkflowResponse
+	DeleteScheduleReq                  = v1.DeleteScheduleReq
 	GetWorkflowExecutionRequest        = v1.GetWorkflowExecutionRequest
 	GetWorkflowExecutionResponse       = v1.GetWorkflowExecutionResponse
 	RetryPolicy                        = v1.RetryPolicy
@@ -57,6 +58,8 @@ type (
 		BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error)
 		// 创建自定义调度
 		CreateSchedule(ctx context.Context, in *ScheduleOptions, opts ...grpc.CallOption) (*TemporalReply, error)
+		// 删除自定义调度
+		DeleteSchedule(ctx context.Context, in *DeleteScheduleReq, opts ...grpc.CallOption) (*TemporalReply, error)
 	}
 
 	defaultTemporalService struct {
@@ -116,4 +119,10 @@ func (m *defaultTemporalService) BatchStartScheduleTasks(ctx context.Context, in
 func (m *defaultTemporalService) CreateSchedule(ctx context.Context, in *ScheduleOptions, opts ...grpc.CallOption) (*TemporalReply, error) {
 	client := v1.NewTemporalServiceClient(m.cli.Conn())
 	return client.CreateSchedule(ctx, in, opts...)
+}
+
+// 删除自定义调度
+func (m *defaultTemporalService) DeleteSchedule(ctx context.Context, in *DeleteScheduleReq, opts ...grpc.CallOption) (*TemporalReply, error) {
+	client := v1.NewTemporalServiceClient(m.cli.Conn())
+	return client.DeleteSchedule(ctx, in, opts...)
 }
