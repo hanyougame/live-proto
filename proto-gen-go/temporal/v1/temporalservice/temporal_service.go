@@ -25,8 +25,13 @@ type (
 	GetWorkflowExecutionRequest        = v1.GetWorkflowExecutionRequest
 	GetWorkflowExecutionResponse       = v1.GetWorkflowExecutionResponse
 	RetryPolicy                        = v1.RetryPolicy
+	ScheduleCalendarSpec               = v1.ScheduleCalendarSpec
+	ScheduleOptions                    = v1.ScheduleOptions
+	ScheduleRange                      = v1.ScheduleRange
+	ScheduleSpec                       = v1.ScheduleSpec
 	ScheduleTaskRequest                = v1.ScheduleTaskRequest
 	ScheduleTaskResponse               = v1.ScheduleTaskResponse
+	ScheduleWorkflowAction             = v1.ScheduleWorkflowAction
 	SignalWorkflowRequest              = v1.SignalWorkflowRequest
 	SignalWorkflowResponse             = v1.SignalWorkflowResponse
 	StartWorkflowRequest               = v1.StartWorkflowRequest
@@ -50,6 +55,8 @@ type (
 		BatchCancelWorkflows(ctx context.Context, in *BatchCancelWorkflowRequest, opts ...grpc.CallOption) (*BatchCancelWorkflowResponse, error)
 		// 批量创建定时任务
 		BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error)
+		// 创建自定义调度
+		CreateSchedule(ctx context.Context, in *ScheduleOptions, opts ...grpc.CallOption) (*TemporalReply, error)
 	}
 
 	defaultTemporalService struct {
@@ -103,4 +110,10 @@ func (m *defaultTemporalService) BatchCancelWorkflows(ctx context.Context, in *B
 func (m *defaultTemporalService) BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequest, opts ...grpc.CallOption) (*BatchScheduleTaskResponse, error) {
 	client := v1.NewTemporalServiceClient(m.cli.Conn())
 	return client.BatchStartScheduleTasks(ctx, in, opts...)
+}
+
+// 创建自定义调度
+func (m *defaultTemporalService) CreateSchedule(ctx context.Context, in *ScheduleOptions, opts ...grpc.CallOption) (*TemporalReply, error) {
+	client := v1.NewTemporalServiceClient(m.cli.Conn())
+	return client.CreateSchedule(ctx, in, opts...)
 }

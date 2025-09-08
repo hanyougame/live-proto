@@ -34,6 +34,9 @@ service TemporalService {
 
   // 批量创建定时任务
   rpc BatchStartScheduleTasks(BatchScheduleTaskRequest) returns (BatchScheduleTaskResponse) {}
+
+  // 创建自定义调度
+  rpc CreateSchedule(ScheduleOptions) returns (TemporalReply) {}
 }
 
 
@@ -42,7 +45,6 @@ enum ScheduleTaskType {
   UNDEFINED = 0;               // 未定义（默认值）
   GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
   WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
-  RED_PACKET_ACTIVITY_COUNTDOWN_TASK = 3;   // 红包活动倒计时任务
 }
 
 // 工作流执行状态
@@ -207,6 +209,122 @@ message BatchScheduleTaskResponse {
   repeated Result results = 1; // 每个任务的创建结果
 }
 
+message ScheduleOptions {
+  string ID = 1; // ID - The business identifier of the schedule.
+  ScheduleSpec Spec = 2; // Schedule - Describes when Actions should be taken.
+  ScheduleWorkflowAction Action = 3; // Action - Which Action to take.
+  // Overlap - Controls what happens when an Action would be started by a Schedule at the same time that an older Action is still
+  // running. This can be changed after a Schedule has taken some Actions, and some changes might produce
+  // unintuitive results. In general, the later policy overrides the earlier policy.
+  //
+  // Optional: defaulted to SCHEDULE_OVERLAP_POLICY_SKIP
+  ScheduleOverlapPolicy Overlap = 4;
+  string Note = 5;
+}
 
+message ScheduleSpec {
+  repeated ScheduleCalendarSpec Calendars =1;
+}
 
+message  ScheduleCalendarSpec {
+  // Second range to match (0-59).
+  //
+  // default: matches 0
+  repeated ScheduleRange Second=1;
+
+  // Minute range to match (0-59).
+  //
+  // default: matches 0
+  repeated ScheduleRange Minute=2;
+
+  // Hour range to match (0-23).
+  //
+  // default: matches 0
+  repeated ScheduleRange Hour=3;
+
+  // DayOfMonth range to match (1-31)
+  //
+  // default: matches all days
+  repeated ScheduleRange DayOfMonth=4;
+
+  // Month range to match (1-12)
+  //
+  // default: matches all months
+  repeated ScheduleRange Month=5;
+
+  // Year range to match.
+  //
+  // default: empty that matches all years
+  repeated ScheduleRange Year=6;
+
+  // DayOfWeek range to match (0-6; 0 is Sunday)
+  //
+  // default: matches all days of the week
+  repeated ScheduleRange DayOfWeek=7;
+
+  // Comment - Description of the intention of this schedule.
+  string Comment =8;
+}
+
+message ScheduleRange {
+  // Start of the range (inclusive)
+  int64 Start=1;
+
+  // End of the range (inclusive)
+  //
+  // Optional: defaulted to Start
+  int64 End=2;
+
+  // Step to be take between each value
+  //
+  // Optional: defaulted to 1
+  int64 Step=3;
+}
+
+message ScheduleWorkflowAction {
+  // ID - The business identifier of the workflow execution.
+  // The workflow ID of the started workflow may not match this exactly,
+  // it may have a timestamp appended for uniqueness.
+  //
+  // Optional: defaulted to a uuid.
+  string ID = 1;
+
+  // Workflow - What workflow to run.
+  // Workflow can either be the function or workflow type name as a string.
+  // On ScheduleHandle.Describe() or ScheduleHandle.Update() it will be the workflow type name.
+  string Workflow = 2;
+
+  // Args - Arguments to pass to the workflow.
+  // On ScheduleHandle.Describe() or ScheduleHandle.Update() Args will be returned as *commonpb.Payload.
+  bytes Args = 3;
+
+  // TaskQueue - The workflow tasks of the workflow are scheduled on the queue with this name.
+  // This is also the name of the activity task queue on which activities are scheduled.
+  string TaskQueue = 4;
+
+  // WorkflowExecutionTimeout - The timeout for duration of workflow execution. (seconds)
+  int64 WorkflowExecutionTimeout = 5;
+
+  // WorkflowRunTimeout - The timeout for duration of a single workflow run.
+  int64 WorkflowRunTimeout = 6;
+
+  // WorkflowTaskTimeout - The timeout for processing workflow task from the time the worker
+  // pulled this task.
+  int64 WorkflowTaskTimeout = 7;
+
+  // RetryPolicy - Retry policy for workflow. If a retry policy is specified, in case of workflow failure
+  // server will start new workflow execution if needed based on the retry policy.
+  RetryPolicy RetryPolicy = 8;
+
+}
+
+enum ScheduleOverlapPolicy {
+    SCHEDULE_OVERLAP_POLICY_UNSPECIFIED = 0;
+    SCHEDULE_OVERLAP_POLICY_SKIP = 1;
+    SCHEDULE_OVERLAP_POLICY_BUFFER_ONE = 2;
+    SCHEDULE_OVERLAP_POLICY_BUFFER_ALL = 3;
+    SCHEDULE_OVERLAP_POLICY_CANCEL_OTHER = 4;
+    SCHEDULE_OVERLAP_POLICY_TERMINATE_OTHER = 5;
+    SCHEDULE_OVERLAP_POLICY_ALLOW_ALL = 6;
+}
 
