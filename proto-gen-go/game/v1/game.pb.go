@@ -5251,6 +5251,7 @@ type GameCategoryDetail struct {
 	CurrentIconStyle      int64  `protobuf:"varint,14,opt,name=current_icon_style,json=currentIconStyle,proto3" json:"current_icon_style,omitempty"`                  // 当前图标样式，1：竖版图标，2：竖版图标加名称，3：方版图标，4：横版图标
 	HomeColumnCount       int64  `protobuf:"varint,15,opt,name=home_column_count,json=homeColumnCount,proto3" json:"home_column_count,omitempty"`                     // 首页显示列数
 	SecondPageColumnCount int64  `protobuf:"varint,16,opt,name=second_page_column_count,json=secondPageColumnCount,proto3" json:"second_page_column_count,omitempty"` // 二级页面显示列数
+	UnselectIcon          string `protobuf:"bytes,17,opt,name=unselect_icon,json=unselectIcon,proto3" json:"unselect_icon,omitempty"`                                 // 未选中图标
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -5395,6 +5396,13 @@ func (x *GameCategoryDetail) GetSecondPageColumnCount() int64 {
 		return x.SecondPageColumnCount
 	}
 	return 0
+}
+
+func (x *GameCategoryDetail) GetUnselectIcon() string {
+	if x != nil {
+		return x.UnselectIcon
+	}
+	return ""
 }
 
 type GetCategorySimpleListByCurrReply struct {
@@ -10496,7 +10504,7 @@ const file_game_v1_game_proto_rawDesc = "" +
 	"\vlanguage_id\x18\x04 \x01(\tR\n" +
 	"languageId\"M\n" +
 	"\x1aGetCategoryListByCurrReply\x12/\n" +
-	"\x04rows\x18\x14 \x03(\v2\x1b.game.v1.GameCategoryDetailR\x04rows\"\x83\x05\n" +
+	"\x04rows\x18\x14 \x03(\v2\x1b.game.v1.GameCategoryDetailR\x04rows\"\xa8\x05\n" +
 	"\x12GameCategoryDetail\x12(\n" +
 	"\x10game_category_id\x18\x01 \x01(\x03R\x0egameCategoryId\x124\n" +
 	"\x16tripartite_category_id\x18\x02 \x01(\x03R\x14tripartiteCategoryId\x12\x12\n" +
@@ -10515,7 +10523,8 @@ const file_game_v1_game_proto_rawDesc = "" +
 	"\x06remark\x18\r \x01(\tR\x06remark\x12,\n" +
 	"\x12current_icon_style\x18\x0e \x01(\x03R\x10currentIconStyle\x12*\n" +
 	"\x11home_column_count\x18\x0f \x01(\x03R\x0fhomeColumnCount\x127\n" +
-	"\x18second_page_column_count\x18\x10 \x01(\x03R\x15secondPageColumnCount\"Y\n" +
+	"\x18second_page_column_count\x18\x10 \x01(\x03R\x15secondPageColumnCount\x12#\n" +
+	"\runselect_icon\x18\x11 \x01(\tR\funselectIcon\"Y\n" +
 	" GetCategorySimpleListByCurrReply\x125\n" +
 	"\x04rows\x18\x01 \x03(\v2!.game.v1.GameCategorySimpleDetailR\x04rows\"\xa1\x02\n" +
 	"\x18GameCategorySimpleDetail\x12(\n" +

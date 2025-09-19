@@ -717,6 +717,7 @@ message GameCategoryDetail {
   int64 current_icon_style = 14; // 当前图标样式，1：竖版图标，2：竖版图标加名称，3：方版图标，4：横版图标
   int64 home_column_count = 15; // 首页显示列数
   int64 second_page_column_count = 16; // 二级页面显示列数
+  string unselect_icon = 17; // 未选中图标
 }
 
 
