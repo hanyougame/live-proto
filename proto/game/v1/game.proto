@@ -107,6 +107,7 @@ message WalletTransferInGameReqV2{
   string device_id = 6;    //设备ID
   string client_ip = 7;            //IP
   string language = 8; // 语言code
+  int64  action_type = 9; // 操作类型 0 转入并获取游戏链接 1 获取游戏链接 2 转入游戏
 }
 
 message WalletTransferInGameReplyV2{
