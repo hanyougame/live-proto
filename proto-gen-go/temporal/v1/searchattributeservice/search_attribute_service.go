@@ -2,7 +2,7 @@
 // goctl 1.8.4
 // Source: temporal.proto
 
-package temporalservice
+package searchattributeservice
 
 import (
 	"context"
@@ -146,88 +146,56 @@ type (
 	WorkflowStatus                       = v1.WorkflowStatus
 	WorkflowTarget                       = v1.WorkflowTarget
 
-	TemporalService interface {
-		// 启动工作流
-		StartWorkflow(ctx context.Context, in *StartWorkflowRequestV1, opts ...grpc.CallOption) (*StartWorkflowResponseV1, error)
-		// 取消工作流
-		CancelWorkflow(ctx context.Context, in *CancelWorkflowRequestV1, opts ...grpc.CallOption) (*CancelWorkflowResponseV1, error)
-		// 发送信号到工作流
-		SignalWorkflow(ctx context.Context, in *SignalWorkflowRequestV1, opts ...grpc.CallOption) (*SignalWorkflowResponseV1, error)
-		// 获取工作流执行状态
-		GetWorkflowExecution(ctx context.Context, in *GetWorkflowExecutionRequestV1, opts ...grpc.CallOption) (*GetWorkflowExecutionResponseV1, error)
-		// 创建定时任务
-		StartScheduleTask(ctx context.Context, in *ScheduleTaskRequestV1, opts ...grpc.CallOption) (*ScheduleTaskResponseV1, error)
-		// 批量取消工作流
-		BatchCancelWorkflows(ctx context.Context, in *BatchCancelWorkflowRequestV1, opts ...grpc.CallOption) (*BatchCancelWorkflowResponseV1, error)
-		// 批量创建定时任务
-		BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequestV1, opts ...grpc.CallOption) (*BatchScheduleTaskResponseV1, error)
-		// 创建自定义调度
-		CreateSchedule(ctx context.Context, in *ScheduleOptions, opts ...grpc.CallOption) (*TemporalReply, error)
-		// 删除自定义调度
-		DeleteSchedule(ctx context.Context, in *DeleteScheduleReqV1, opts ...grpc.CallOption) (*TemporalReply, error)
+	SearchAttributeService interface {
+		// 注册搜索属性
+		RegisterSearchAttributes(ctx context.Context, in *RegisterSearchAttributesRequest, opts ...grpc.CallOption) (*RegisterSearchAttributesResponse, error)
+		// 列出搜索属性
+		ListSearchAttributes(ctx context.Context, in *ListSearchAttributesRequest, opts ...grpc.CallOption) (*ListSearchAttributesResponse, error)
+		// 删除搜索属性（谨慎使用）
+		RemoveSearchAttributes(ctx context.Context, in *RemoveSearchAttributesRequest, opts ...grpc.CallOption) (*RemoveSearchAttributesResponse, error)
+		// 查询搜索属性使用情况
+		QuerySearchAttributeUsage(ctx context.Context, in *QuerySearchAttributeUsageRequest, opts ...grpc.CallOption) (*QuerySearchAttributeUsageResponse, error)
+		// 验证搜索属性
+		ValidateSearchAttributes(ctx context.Context, in *ValidateSearchAttributesRequest, opts ...grpc.CallOption) (*ValidateSearchAttributesResponse, error)
 	}
 
-	defaultTemporalService struct {
+	defaultSearchAttributeService struct {
 		cli zrpc.Client
 	}
 )
 
-func NewTemporalService(cli zrpc.Client) TemporalService {
-	return &defaultTemporalService{
+func NewSearchAttributeService(cli zrpc.Client) SearchAttributeService {
+	return &defaultSearchAttributeService{
 		cli: cli,
 	}
 }
 
-// 启动工作流
-func (m *defaultTemporalService) StartWorkflow(ctx context.Context, in *StartWorkflowRequestV1, opts ...grpc.CallOption) (*StartWorkflowResponseV1, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.StartWorkflow(ctx, in, opts...)
+// 注册搜索属性
+func (m *defaultSearchAttributeService) RegisterSearchAttributes(ctx context.Context, in *RegisterSearchAttributesRequest, opts ...grpc.CallOption) (*RegisterSearchAttributesResponse, error) {
+	client := v1.NewSearchAttributeServiceClient(m.cli.Conn())
+	return client.RegisterSearchAttributes(ctx, in, opts...)
 }
 
-// 取消工作流
-func (m *defaultTemporalService) CancelWorkflow(ctx context.Context, in *CancelWorkflowRequestV1, opts ...grpc.CallOption) (*CancelWorkflowResponseV1, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.CancelWorkflow(ctx, in, opts...)
+// 列出搜索属性
+func (m *defaultSearchAttributeService) ListSearchAttributes(ctx context.Context, in *ListSearchAttributesRequest, opts ...grpc.CallOption) (*ListSearchAttributesResponse, error) {
+	client := v1.NewSearchAttributeServiceClient(m.cli.Conn())
+	return client.ListSearchAttributes(ctx, in, opts...)
 }
 
-// 发送信号到工作流
-func (m *defaultTemporalService) SignalWorkflow(ctx context.Context, in *SignalWorkflowRequestV1, opts ...grpc.CallOption) (*SignalWorkflowResponseV1, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.SignalWorkflow(ctx, in, opts...)
+// 删除搜索属性（谨慎使用）
+func (m *defaultSearchAttributeService) RemoveSearchAttributes(ctx context.Context, in *RemoveSearchAttributesRequest, opts ...grpc.CallOption) (*RemoveSearchAttributesResponse, error) {
+	client := v1.NewSearchAttributeServiceClient(m.cli.Conn())
+	return client.RemoveSearchAttributes(ctx, in, opts...)
 }
 
-// 获取工作流执行状态
-func (m *defaultTemporalService) GetWorkflowExecution(ctx context.Context, in *GetWorkflowExecutionRequestV1, opts ...grpc.CallOption) (*GetWorkflowExecutionResponseV1, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.GetWorkflowExecution(ctx, in, opts...)
+// 查询搜索属性使用情况
+func (m *defaultSearchAttributeService) QuerySearchAttributeUsage(ctx context.Context, in *QuerySearchAttributeUsageRequest, opts ...grpc.CallOption) (*QuerySearchAttributeUsageResponse, error) {
+	client := v1.NewSearchAttributeServiceClient(m.cli.Conn())
+	return client.QuerySearchAttributeUsage(ctx, in, opts...)
 }
 
-// 创建定时任务
-func (m *defaultTemporalService) StartScheduleTask(ctx context.Context, in *ScheduleTaskRequestV1, opts ...grpc.CallOption) (*ScheduleTaskResponseV1, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.StartScheduleTask(ctx, in, opts...)
-}
-
-// 批量取消工作流
-func (m *defaultTemporalService) BatchCancelWorkflows(ctx context.Context, in *BatchCancelWorkflowRequestV1, opts ...grpc.CallOption) (*BatchCancelWorkflowResponseV1, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.BatchCancelWorkflows(ctx, in, opts...)
-}
-
-// 批量创建定时任务
-func (m *defaultTemporalService) BatchStartScheduleTasks(ctx context.Context, in *BatchScheduleTaskRequestV1, opts ...grpc.CallOption) (*BatchScheduleTaskResponseV1, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.BatchStartScheduleTasks(ctx, in, opts...)
-}
-
-// 创建自定义调度
-func (m *defaultTemporalService) CreateSchedule(ctx context.Context, in *ScheduleOptions, opts ...grpc.CallOption) (*TemporalReply, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.CreateSchedule(ctx, in, opts...)
-}
-
-// 删除自定义调度
-func (m *defaultTemporalService) DeleteSchedule(ctx context.Context, in *DeleteScheduleReqV1, opts ...grpc.CallOption) (*TemporalReply, error) {
-	client := v1.NewTemporalServiceClient(m.cli.Conn())
-	return client.DeleteSchedule(ctx, in, opts...)
+// 验证搜索属性
+func (m *defaultSearchAttributeService) ValidateSearchAttributes(ctx context.Context, in *ValidateSearchAttributesRequest, opts ...grpc.CallOption) (*ValidateSearchAttributesResponse, error) {
+	client := v1.NewSearchAttributeServiceClient(m.cli.Conn())
+	return client.ValidateSearchAttributes(ctx, in, opts...)
 }

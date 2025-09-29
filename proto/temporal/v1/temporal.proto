@@ -3,51 +3,1199 @@ syntax = "proto3";
 package temporal.v1;
 option go_package = "./pb/v1";
 
+// ===========================================================================================
+// 通用基础定义 (Common Base Definitions)
+// ===========================================================================================
 
-message TemporalReq{
-
+// 通用错误码枚举
+enum ErrorCode {
+  ERROR_CODE_UNSPECIFIED = 0;                    // 未知状态
+  // 成功状态码
+  ERROR_CODE_SUCCESS = 200;                      // 操作成功
+  // 客户端错误 4xx
+  ERROR_CODE_BAD_REQUEST = 400;                  // 请求参数错误
+  ERROR_CODE_UNAUTHORIZED = 401;                 // 未授权
+  ERROR_CODE_FORBIDDEN = 403;                    // 禁止访问
+  ERROR_CODE_NOT_FOUND = 404;                    // 资源未找到
+  ERROR_CODE_METHOD_NOT_ALLOWED = 405;           // 方法不允许
+  ERROR_CODE_CONFLICT = 409;                     // 资源冲突
+  ERROR_CODE_UNPROCESSABLE_ENTITY = 422;         // 请求格式正确但语义错误
+  ERROR_CODE_TOO_MANY_REQUESTS = 429;            // 请求过于频繁
+  // 服务端错误 5xx
+  ERROR_CODE_INTERNAL_SERVER_ERROR = 500;       // 服务器内部错误
+  ERROR_CODE_NOT_IMPLEMENTED = 501;             // 功能未实现
+  ERROR_CODE_BAD_GATEWAY = 502;                 // 网关错误或第三方服务异常
+  ERROR_CODE_SERVICE_UNAVAILABLE = 503;         // 服务不可用
+  ERROR_CODE_GATEWAY_TIMEOUT = 504;             // 网关超时
 }
-message TemporalReply{
 
+// 统一基础响应结构
+message BaseResponse {
+  ErrorCode code = 1;                            // 错误码
+  string message = 2;                            // 错误消息
 }
 
+// 分页请求
+message PageRequest {
+  int64 page = 1;
+  int64 page_size = 2;
+  string sort_by = 3;
+  bool desc = 4;
+}
 
-// Temporal服务定义
-service TemporalService {
-  // 启动工作流
-  rpc StartWorkflow(StartWorkflowRequest) returns (StartWorkflowResponse) {}
+// 分页响应
+message PageResponse {
+  int64 page = 1;
+  int64 page_size = 2;
+  int64 total = 3;
+  int64 total_page = 4;
+}
 
-  // 取消工作流
-  rpc CancelWorkflow(CancelWorkflowRequest) returns (CancelWorkflowResponse) {}
+// ===========================================================================================
+// V2 版本 - 类型定义 (V2 Type Definitions)
+// ===========================================================================================
 
+// --------------------------------
+// V2 枚举类型 (V2 Enums)
+// --------------------------------
+
+// 执行模式
+enum ExecutionMode {
+  MODE_UNSPECIFIED = 0;                          // 未知类型
+  IMMEDIATE = 1;                                 // 立即执行
+  DELAYED = 2;                                   // 延迟执行
+  SCHEDULED = 3;                                 // 调度执行 (Cron)
+  AT_TIME = 4;                                   // 指定时间执行
+  BATCH = 5;                                     // 批量执行
+}
+
+// 控制操作
+enum ControlOperation {
+  OPT_UNSPECIFIED = 0;                           // 未知类型
+  CANCEL = 1;                                    // 优雅取消
+  TERMINATE = 2;                                 // 强制终止
+  PAUSE = 3;                                     // 暂停 (调度)
+  RESUME = 4;                                    // 恢复 (调度)
+  RESET = 5;                                     // 重置到某个点
+}
+
+// 统一的控制操作结果枚举
+enum ControlOperationResult {
+  CONTROL_OPERATION_RESULT_UNSPECIFIED = 0;      // 未指定
+  // 操作状态类
+  CONTROL_OPERATION_RESULT_INITIATED = 1;        // 已发起（异步操作）
+  CONTROL_OPERATION_RESULT_IN_PROGRESS = 2;      // 进行中（异步操作）
+  CONTROL_OPERATION_RESULT_SUCCESS = 3;          // 操作成功
+  // 业务状态类
+  CONTROL_OPERATION_RESULT_ALREADY_COMPLETED = 4;   // 工作流已完成
+  CONTROL_OPERATION_RESULT_ALREADY_CANCELLED = 5;   // 工作流已取消
+  CONTROL_OPERATION_RESULT_NOT_FOUND = 6;           // 工作流不存在
+  // 失败类
+  CONTROL_OPERATION_RESULT_FAILED = 7;           // 操作失败
+  CONTROL_OPERATION_RESULT_TIMED_OUT = 8;        // 操作超时
+  CONTROL_OPERATION_RESULT_REJECTED = 9;         // 操作被拒绝（权限不足等）
+}
+
+// 查询类型
+enum QueryType {
+  QUERY_UNSPECIFIED = 0;                         // 未知类型
+  STATUS = 1;                                    // 查询状态
+  HISTORY = 2;                                   // 查询历史
+  STACK_TRACE = 3;                               // 查询堆栈跟踪
+}
+
+// 工作流状态枚举
+enum WorkflowState {
+  STATE_UNSPECIFIED = 0;                         // 未知类型
+  RUNNING = 1;
+  COMPLETED = 2;
+  FAILED = 3;
+  CANCELLED = 4;
+  TERMINATED = 5;
+  CONTINUED_AS_NEW = 6;
+  TIMED_OUT = 7;
+}
+
+// 调度操作
+enum ScheduleOperation {
+  SCHEDULE_UNSPECIFIED = 0;                      // 未知类型
+  CREATE = 1;
+  UPDATE = 2;
+  DELETE = 3;
+  SCHEDULE_PAUSE = 4;
+  SCHEDULE_RESUME = 5;
+}
+
+// 重叠策略
+enum OverlapPolicy {
+  OVERLAP_UNSPECIFIED = 0;                       // 未知类型
+  SKIP = 1;                                      // 跳过
+  BUFFER_ONE = 2;                                // 缓存一个
+  BUFFER_ALL = 3;                                // 缓存全部
+  CANCEL_OTHER = 4;                              // 取消其他
+  TERMINATE_OTHER = 5;                           // 终止其他
+  ALLOW_ALL = 6;                                 // 允许全部
+}
+
+// 调度状态
+enum ScheduleState {
+  SCHEDULE_STATE_UNSPECIFIED = 0;                // 未知类型
+  ACTIVE = 1;
+  PAUSED = 2;
+  DELETED = 3;
+}
+
+// 搜索属性类别
+enum SearchAttributeCategory {
+  SEARCH_ATTRIBUTE_CATEGORY_UNSPECIFIED = 0;
+  SEARCH_ATTRIBUTE_CATEGORY_ALL = 1;             // 所有属性
+  SEARCH_ATTRIBUTE_CATEGORY_SYSTEM = 2;          // 系统属性
+  SEARCH_ATTRIBUTE_CATEGORY_CUSTOM = 3;          // 自定义属性
+}
+
+// 搜索属性类型
+enum SearchAttributeType {
+  SEARCH_ATTRIBUTE_TYPE_UNSPECIFIED = 0;
+  SEARCH_ATTRIBUTE_TYPE_KEYWORD = 1;             // 关键词（精确匹配）
+  SEARCH_ATTRIBUTE_TYPE_TEXT = 2;                // 文本（全文搜索）
+  SEARCH_ATTRIBUTE_TYPE_INT = 3;                 // 整数
+  SEARCH_ATTRIBUTE_TYPE_DOUBLE = 4;              // 浮点数
+  SEARCH_ATTRIBUTE_TYPE_BOOL = 5;                // 布尔值
+  SEARCH_ATTRIBUTE_TYPE_DATETIME = 6;            // 日期时间
+  SEARCH_ATTRIBUTE_TYPE_KEYWORD_LIST = 7;        // 关键词列表
+}
+
+// --------------------------------
+// V2 消息类型 (V2 Messages)
+// --------------------------------
+
+// 统一的工作流选项
+message WorkflowOpts {
+  int32 execution_timeout_seconds = 1;
+  int32 run_timeout_seconds = 2;
+  int32 task_timeout_seconds = 3;
+  RetryPolicyOpt retry_policy = 4;
+}
+
+// 统一的重试策略
+message RetryPolicyOpt {
+  int32 initial_interval_seconds = 1;
+  float backoff_coefficient = 2;
+  int32 maximum_interval_seconds = 3;
+  int32 maximum_attempts = 4;
+  repeated string non_retryable_error_types = 5;
+}
+
+// ===========================================================================================
+// V2 版本 - 服务定义 (V2 Service Definitions)
+// ===========================================================================================
+
+// --------------------------------
+// 1. 工作流管理服务 (合并执行和控制)
+// --------------------------------
+service WorkflowService {
+  // 启动工作流 (支持立即/延迟/调度/批量)
+  rpc StartWorkflow(StartFlowRequest) returns (StartFlowResponse);
+
+  // 控制工作流 (取消/终止/暂停/恢复)
+  rpc ControlWorkflow(ControlWorkflowRequest) returns (ControlWorkflowResponse);
+
+  // 查询控制操作状态
+  rpc QueryControlOperation(QueryControlOperationRequest) returns (QueryControlOperationResponse);
+
+  // 查询工作流状态和历史
+  rpc QueryWorkflow(QueryWorkflowRequest) returns (QueryWorkflowResponse);
+
+  // 列出工作流
+  rpc ListWorkflows(ListWorkflowsRequest) returns (ListWorkflowsResponse);
+
+  // 原子替换工作流
+  rpc ReplaceWorkflow(ReplaceWorkflowRequest) returns (ReplaceWorkflowResponse);
+
+  // 删除工作流（新增）
+  rpc DeleteWorkflow(DeleteWorkflowRequest) returns (DeleteWorkflowResponse);
+}
+
+// --------------------------------
+// 2. 工作流交互服务
+// --------------------------------
+service WorkflowInteractionService {
   // 发送信号到工作流
-  rpc SignalWorkflow(SignalWorkflowRequest) returns (SignalWorkflowResponse) {}
+  rpc SignalWorkflow(SignalFlowRequest) returns (SignalFlowResponse);
 
-  // 获取工作流执行状态
-  rpc GetWorkflowExecution(GetWorkflowExecutionRequest) returns (GetWorkflowExecutionResponse) {}
+  // 信号并启动工作流 (如果不存在则启动)
+  rpc SignalWithStart(SignalWithStartRequest) returns (SignalWithStartResponse);
 
-  // 创建定时任务
-  rpc StartScheduleTask(ScheduleTaskRequest) returns (ScheduleTaskResponse) {}
-
-  // 批量取消工作流
-  rpc BatchCancelWorkflows(BatchCancelWorkflowRequest) returns (BatchCancelWorkflowResponse) {}
-
-  // 批量创建定时任务
-  rpc BatchStartScheduleTasks(BatchScheduleTaskRequest) returns (BatchScheduleTaskResponse) {}
-
-  // 创建自定义调度
-  rpc CreateSchedule(ScheduleOptions) returns (TemporalReply) {}
-
-  // 删除自定义调度
-  rpc DeleteSchedule(DeleteScheduleReq) returns (TemporalReply) {}
+  // 查询工作流内部状态
+  rpc QueryWorkflowState(QueryWorkflowStateRequest) returns (QueryWorkflowStateResponse);
 }
 
+// --------------------------------
+// 3. 调度管理服务
+// --------------------------------
+service ScheduleService {
+  // 管理调度 (创建/更新/删除/暂停/恢复)
+  rpc ManageSchedule(ManageScheduleRequest) returns (ManageScheduleResponse);
+
+  // 查询调度
+  rpc QuerySchedule(QueryScheduleRequest) returns (QueryScheduleResponse);
+
+  // 列出调度
+  rpc ListSchedules(ListSchedulesRequest) returns (ListSchedulesResponse);
+}
+
+// --------------------------------
+// 4. 搜索属性服务
+// --------------------------------
+service SearchAttributeService {
+  // 注册搜索属性
+  rpc RegisterSearchAttributes(RegisterSearchAttributesRequest) returns (RegisterSearchAttributesResponse);
+
+  // 列出搜索属性
+  rpc ListSearchAttributes(ListSearchAttributesRequest) returns (ListSearchAttributesResponse);
+
+  // 删除搜索属性（谨慎使用）
+  rpc RemoveSearchAttributes(RemoveSearchAttributesRequest) returns (RemoveSearchAttributesResponse);
+
+  // 查询搜索属性使用情况
+  rpc QuerySearchAttributeUsage(QuerySearchAttributeUsageRequest) returns (QuerySearchAttributeUsageResponse);
+
+  // 验证搜索属性
+  rpc ValidateSearchAttributes(ValidateSearchAttributesRequest) returns (ValidateSearchAttributesResponse);
+}
+
+// ===========================================================================================
+// V2 版本 - 核心消息定义 (V2 Core Messages)
+// ===========================================================================================
+
+// --------------------------------
+// 启动工作流相关消息
+// --------------------------------
+
+// 统一的启动工作流请求
+message StartFlowRequest {
+  // 基础信息
+  string workflow_id = 1;
+  string workflow_type = 2;
+  string task_queue = 3;
+  bytes input = 4;                               // 使用 bytes 而不是 string，更灵活
+
+  // 执行模式
+  ExecutionMode execution_mode = 5;
+  ExecutionConfig execution_config = 6;
+
+  // 批量执行
+  BatchConfig batch_config = 7;                  // 批量执行配置
+
+  // 配置选项
+  WorkflowOpts options = 8;
+  map<string, string> search_attributes = 9;
+  map<string, string> memo = 10;
+}
+
+// 执行配置
+message ExecutionConfig {
+  // 延迟配置
+  int64 delay_milliseconds = 1;                  // 延迟毫秒数
+  string start_time = 2;                         // 指定启动时间 (RFC3339)
+
+  // 调度配置
+  string cron_expression = 3;                    // Cron 表达式
+  string timezone = 4;                           // 时区
+  string schedule_end_time = 5;                  // 调度结束时间
+
+  // 高级延迟选项
+  DelayOptions delay_options = 6;
+}
+
+// 延迟选项
+message DelayOptions {
+  string business_hours = 1;                     // 工作时间 "09:00-18:00"
+  repeated string exclude_days = 2;              // 排除日期 ["Saturday", "Sunday"]
+  bool allow_past_execution = 3;                 // 允许过去时间立即执行
+}
+
+// 批量配置
+message BatchConfig {
+  repeated WorkflowItem workflows = 1;           // 批量工作流列表
+  int32 batch_size = 2;                          // 批次大小
+  int32 max_concurrent = 3;                      // 最大并发数
+  bool continue_on_error = 4;                    // 遇错继续
+}
+
+// 批量工作流项
+message WorkflowItem {
+  string workflow_id = 1;
+  string workflow_type = 2;
+  string task_queue = 3;
+  bytes input = 4;
+  WorkflowOpts options = 5;
+}
+
+// 启动工作流响应
+message StartFlowResponse {
+  BaseResponse base = 1;                         // 基础响应
+  StartWorkflowData data = 2;                    // 业务数据
+}
+
+// 启动响应
+message StartWorkflowData {
+  oneof result {
+    SingleResult single_result = 3;              // 单个工作流结果
+    BatchResult batch_result = 4;                // 批量结果
+    ScheduleResult schedule_result = 5;          // 调度结果
+  }
+}
+
+// 单个结果
+message SingleResult {
+  string workflow_id = 1;
+  string run_id = 2;
+  ExecutionInfo execution_info = 3;
+}
+
+// 批量结果
+message BatchResult {
+  int32 total_count = 1;
+  int32 success_count = 2;
+  int32 failed_count = 3;
+  repeated SingleResult results = 4;
+}
+
+// 调度结果
+message ScheduleResult {
+  string schedule_id = 1;
+  string next_execution_time = 2;
+}
+
+// 执行信息
+message ExecutionInfo {
+  ExecutionMode mode = 1;
+  int64 start_delay_seconds = 2;
+  string scheduled_time = 3;
+  string actual_start_time = 4;
+}
+
+// --------------------------------
+// 控制工作流相关消息
+// --------------------------------
+
+// 控制工作流请求
+message ControlWorkflowRequest {
+  // 目标选择
+  oneof target {
+    WorkflowTarget single_target = 1;            // 单个工作流
+    BatchTarget batch_target = 2;                // 批量工作流
+  }
+
+  // 控制操作
+  ControlOperation operation = 3;
+  ControlOptions options = 4;
+}
+
+// 工作流目标
+message WorkflowTarget {
+  string workflow_id = 1;
+  string run_id = 2;                             // 可选
+  string namespace = 3;                          // 可选
+}
+
+// 批量目标
+message BatchTarget {
+  repeated string workflow_ids = 1;
+  string query_filter = 2;                       // 查询过滤器
+  int32 batch_size = 3;
+  int32 max_concurrent = 4;
+}
+
+// 控制选项
+message ControlOptions {
+  string reason = 1;
+  bytes details = 2;
+  // 执行模式控制
+  bool async_mode = 3;                           // 明确的异步模式标识
+  bool wait_for_completion = 4;                  // 是否等待完成（仅在sync模式下有效）
+  // 超时控制
+  int32 operation_timeout_seconds = 5;           // 操作本身的超时
+  int32 wait_timeout_seconds = 6;                // 等待完成的超时（同步模式）
+  string reset_event_id = 7;                     // 重置到的事件ID (RESET操作用)
+  // 异步操作选项
+  string callback_url = 8;                       // 回调通知URL
+  bool auto_cleanup = 9;                         // 是否自动清理操作记录
+}
+
+// 控制响应
+message ControlWorkflowResponse {
+  BaseResponse base = 1;                         // 基础响应
+  ControlWorkflowData data = 2;                  // 业务数据
+}
+
+message ControlWorkflowData {
+  oneof result {
+    ControlOperationInfo single_result = 1;      // 单个操作结果
+    BatchControlResult batch_result = 2;         // 批量操作结果
+  }
+}
+
+// 批量控制结果
+message BatchControlResult {
+  int32 total_count = 1;
+  int32 success_count = 2;
+  int32 failed_count = 3;
+  repeated ControlOperationInfo results = 4;     // 使用详细信息
+}
+
+message ControlOperationInfo {
+  string workflow_id = 1;
+  string run_id = 2;
+  ControlOperation operation = 3;
+
+  // 统一的操作结果
+  ControlOperationResult result = 4;
+
+  // 扩展信息
+  string operation_id = 5;                       // 操作ID，用于异步查询
+  int64 operation_time = 6;                      // 操作时间戳
+  string completion_time = 7;                    // 完成时间（如果完成）
+  string failure_reason = 8;                     // 失败原因（如果失败）
+  map<string, string> metadata = 9;              // 额外的元数据
+}
+
+// --------------------------------
+// 查询控制操作状态
+// --------------------------------
+
+// 查询控制操作状态请求
+message QueryControlOperationRequest {
+  string operation_id = 1;                       // 操作ID
+  string workflow_id = 2;                        // 工作流ID（可选，用于过滤）
+}
+
+// 查询控制操作状态响应
+message QueryControlOperationResponse {
+  BaseResponse base = 1;
+  QueryControlOperationData data = 2;
+}
+
+// 新增：查询控制操作数据
+message QueryControlOperationData {
+  string operation_id = 1;
+  ControlOperationInfo operation_info = 2;
+  repeated string related_workflows = 3;
+}
+
+// --------------------------------
+// 查询工作流
+// --------------------------------
+
+// 查询工作流请求
+message QueryWorkflowRequest {
+  string workflow_id = 1;
+  string run_id = 2;                             // 可选
+
+  // 查询类型
+  QueryType query_type = 3;
+  QueryOptions query_options = 4;
+}
+
+// 查询选项
+message QueryOptions {
+  // 历史查询选项
+  int32 page_size = 1;
+  string next_page_token = 2;
+  bool include_raw_history = 3;
+
+  // 状态查询选项
+  bool include_activities = 4;
+  bool include_child_workflows = 5;
+}
+
+// 查询工作流响应
+message QueryWorkflowResponse {
+  BaseResponse base = 1;                         // 基础响应
+  QueryWorkflowData data = 2;                    // 业务数据
+}
+
+// 查询响应
+message QueryWorkflowData {
+  oneof result {
+    WorkflowStatus status = 3;                   // 状态结果
+    WorkflowHistory history = 4;                 // 历史结果
+    WorkflowStackTrace stack_trace = 5;          // 堆栈跟踪结果
+  }
+}
+
+// 工作流状态
+message WorkflowStatus {
+  string workflow_id = 1;
+  string run_id = 2;
+  string workflow_type = 3;
+  string task_queue = 4;
+  WorkflowState state = 5;
+  int64 start_time = 6;
+  int64 close_time = 7;
+  int64 execution_time = 8;
+  bytes result = 9;                              // 执行结果
+  string error_message = 10;                     // 错误信息
+  map<string, string> search_attributes = 11;
+  map<string, string> memo = 12;
+}
+
+// 工作流历史
+message WorkflowHistory {
+  repeated WorkflowEvent events = 1;
+  string next_page_token = 2;
+  bool has_more = 3;
+}
+
+// 工作流事件
+message WorkflowEvent {
+  int64 event_id = 1;
+  int64 timestamp = 2;
+  string event_type = 3;
+  bytes attributes = 4;                          // 事件属性 (JSON)
+}
+
+// 工作流堆栈跟踪
+message WorkflowStackTrace {
+  repeated StackFrame frames = 1;
+}
+
+// 堆栈帧
+message StackFrame {
+  string function_name = 1;
+  string file_name = 2;
+  int32 line_number = 3;
+  bool is_workflow_code = 4;
+}
+
+// --------------------------------
+// 列出工作流
+// --------------------------------
+
+// 列出工作流请求
+message ListWorkflowsRequest {
+  string query = 1;                              // 搜索查询
+  int32 page_size = 2;
+  string next_page_token = 3;
+  ListOptions options = 4;
+  string namespace = 5;
+}
+
+// 列表选项
+message ListOptions {
+  repeated WorkflowState states = 1;             // 过滤状态
+  repeated string workflow_types = 2;            // 过滤工作流类型
+  string start_time_filter = 3;                  // 开始时间过滤
+  string close_time_filter = 4;                  // 结束时间过滤
+  map<string, string> search_attributes_filter = 5; // 搜索属性过滤
+}
+
+// 列出工作流响应
+message ListWorkflowsResponse {
+  BaseResponse base = 1;                         // 基础响应
+  ListWorkflowsData data = 2;                    // 业务数据
+}
+
+// 列出工作流响应
+message ListWorkflowsData {
+  repeated WorkflowInfo workflows = 1;
+  string next_page_token = 2;
+  bool has_more = 3;
+}
+
+// 工作流信息
+message WorkflowInfo {
+  string workflow_id = 1;
+  string run_id = 2;
+  string workflow_type = 3;
+  string task_queue = 4;
+  WorkflowState state = 5;
+  int64 start_time = 6;
+  int64 close_time = 7;
+  int64 execution_time = 8;
+  map<string, string> search_attributes = 9;
+}
+
+// --------------------------------
+// 原子替换工作流接口
+// --------------------------------
+
+// 替换工作流请求 (原子操作：取消旧的 + 启动新的)
+message ReplaceWorkflowRequest {
+  // 要取消的旧工作流
+  string old_workflow_id = 1;                    // 要取消的工作流ID
+  string old_run_id = 2;                         // 要取消的运行ID (可选)
+  string cancel_reason = 3;                      // 取消原因
+
+  // 要启动的新工作流
+  StartWorkflowRequestV1 new_workflow = 4;       // 复用现有的启动请求
+
+  // 原子操作选项
+  bool wait_for_cancel = 5;                      // 是否等待取消完成再启动新的
+  int32 cancel_timeout_seconds = 6;              // 取消超时时间
+}
+
+// 替换工作流响应
+message ReplaceWorkflowResponse {
+  BaseResponse base = 1;                         // 基础响应
+  ReplaceWorkflowData data = 2;                  // 业务数据
+}
+
+// 替换工作流数据
+message ReplaceWorkflowData {
+  // 取消结果
+  ControlOperationInfo cancel_result = 1;
+  string cancelled_workflow_id = 2;
+
+  // 启动结果
+  StartWorkflowData start_result = 3;
+}
+
+// --------------------------------
+// 删除工作流相关消息定义
+// --------------------------------
+
+// 删除工作流请求
+message DeleteWorkflowRequest {
+  // 删除目标
+  oneof target {
+    SingleDeleteTarget single = 1;               // 单个删除
+    BatchDeleteTarget batch = 2;                 // 批量删除
+    QueryDeleteTarget query = 3;                 // 基于查询删除
+  }
+
+  // 删除选项
+  DeleteOptions options = 4;
+
+  string namespace = 5;                          // 可选
+}
+
+// 单个删除目标
+message SingleDeleteTarget {
+  string workflow_id = 1;
+  string run_id = 2;                             // 可选，不指定则删除所有运行
+}
+
+// 批量删除目标
+message BatchDeleteTarget {
+  repeated string workflow_ids = 1;              // 工作流ID列表
+  bool delete_all_runs = 2;                      // 是否删除所有运行记录
+  int32 batch_size = 3;                          // 批处理大小
+}
+
+// 基于查询删除
+message QueryDeleteTarget {
+  string query = 1;                              // 查询条件，如: "ExecutionStatus='Completed' AND StartTime < '2025-08-20T00:00:00Z'"
+  int32 max_delete = 2;                          // 最大删除数量（防止误删太多）
+  bool dry_run = 3;                              // 预演模式，只返回将要删除的数量
+}
+
+// 删除选项
+message DeleteOptions {
+  string reason = 1;                             // 删除原因
+  bool hard_delete = 2;                          // 硬删除（彻底删除）vs 软删除（标记删除）
+  bool cascade = 3;                              // 是否级联删除子工作流
+  bool skip_archival = 4;                        // 跳过归档
+  int32 timeout_seconds = 5;                     // 删除操作超时
+
+  // 安全选项
+  bool require_confirmation = 6;                 // 需要二次确认
+  string confirmation_token = 7;                 // 确认令牌
+
+  // 保留策略
+  RetentionPolicy retention = 8;
+}
+
+// 保留策略
+message RetentionPolicy {
+  bool archive_before_delete = 1;                // 删除前归档
+  string archive_location = 2;                   // 归档位置
+  int32 retain_days = 3;                         // 软删除保留天数
+}
+
+// 删除工作流响应
+message DeleteWorkflowResponse {
+  BaseResponse base = 1;
+  DeleteWorkflowData data = 2;
+}
+
+// 删除工作流数据
+message DeleteWorkflowData {
+  oneof result {
+    SingleDeleteResult single_result = 1;
+    BatchDeleteResult batch_result = 2;
+    QueryDeleteResult query_result = 3;
+  }
+  // 删除统计
+  DeleteStatistics statistics = 4;
+}
+
+// 单个删除结果
+message SingleDeleteResult {
+  string workflow_id = 1;
+  string run_id = 2;
+  bool deleted = 3;
+  string error_message = 4;
+  int64 deleted_at = 5;
+}
+
+// 批量删除结果
+message BatchDeleteResult {
+  int32 total_requested = 1;
+  int32 successfully_deleted = 2;
+  int32 failed = 3;
+  repeated SingleDeleteResult results = 4;
+}
+
+// 查询删除结果
+message QueryDeleteResult {
+  string query = 1;
+  int32 matched_count = 2;                       // 匹配的数量
+  int32 deleted_count = 3;                       // 实际删除的数量
+  bool dry_run = 4;                              // 是否为预演
+  repeated string deleted_workflow_ids = 5;      // 已删除的工作流ID（限制返回前100个）
+}
+
+// 删除统计
+message DeleteStatistics {
+  int64 start_time = 1;
+  int64 end_time = 2;
+  int64 duration_ms = 3;
+  int32 total_deleted = 4;
+  int32 archived_count = 5;                      // 归档数量
+  map<string, int32> deleted_by_type = 6;        // 按工作流类型统计
+  map<string, int32> deleted_by_status = 7;      // 按状态统计
+}
+
+// --------------------------------
+// 工作流交互 (信号)
+// --------------------------------
+
+// 发送信号请求
+message SignalFlowRequest {
+  string workflow_id = 1;
+  string run_id = 2;                             // 可选
+  string signal_name = 3;
+  bytes input = 4;                               // 信号输入
+}
+
+// 发送信号响应
+message SignalFlowResponse {
+  BaseResponse base = 1;                         // 基础响应
+  SignalWorkflowData data = 2;                   // 业务数据
+}
+
+// 发送信号数据
+message SignalWorkflowData {
+  string workflow_id = 1;
+  string run_id = 2;
+  string signal_name = 3;
+}
+
+// 信号并启动请求
+message SignalWithStartRequest {
+  // 工作流启动参数
+  string workflow_id = 1;
+  string workflow_type = 2;
+  string task_queue = 3;
+  bytes workflow_input = 4;
+
+  // 信号参数
+  string signal_name = 5;
+  bytes signal_input = 6;
+
+  // 选项
+  WorkflowOpts options = 7;
+  map<string, string> search_attributes = 8;
+}
+
+// 信号并启动响应
+message SignalWithStartResponse {
+  BaseResponse base = 1;                         // 基础响应
+  SignalWithStartData data = 2;                  // 业务数据
+}
+
+// 信号并启动数据
+message SignalWithStartData {
+  string workflow_id = 1;
+  string run_id = 2;
+  bool workflow_started = 3;                     // 是否新启动了工作流
+}
+
+// 查询工作流状态请求
+message QueryWorkflowStateRequest {
+  string workflow_id = 1;
+  string run_id = 2;                             // 可选
+  string query_type = 3;                         // 查询类型名称
+  bytes input = 4;                               // 查询输入
+}
+
+// 查询工作流状态响应
+message QueryWorkflowStateResponse {
+  BaseResponse base = 1;                         // 基础响应
+  QueryWorkflowStateData data = 2;               // 业务数据
+}
+
+// 查询工作流状态数据
+message QueryWorkflowStateData {
+  string query_type = 1;
+  bytes result = 2;                              // 查询结果
+}
+
+// --------------------------------
+// 调度管理
+// --------------------------------
+
+// 管理调度请求
+message ManageScheduleRequest {
+  string schedule_id = 1;
+  ScheduleOperation operation = 2;
+  ScheduleSpecDesc spec = 3;                     // 创建/更新时需要
+  string reason = 4;                             // 操作原因
+}
+
+// 调度规格
+message ScheduleSpecDesc {
+  // 调度配置
+  repeated string cron_expressions = 1;          // 支持多个 Cron 表达式
+  string timezone = 2;
+  string start_time = 3;                         // 调度开始时间
+  string end_time = 4;                           // 调度结束时间
+
+  // 执行配置
+  WorkflowAction action = 5;
+  SchedulePolicy policy = 6;
+
+  // 元数据
+  string description = 7;
+  map<string, string> memo = 8;
+  bool paused = 9;                               // 创建时是否暂停
+}
+
+// 工作流动作
+message WorkflowAction {
+  string workflow_type = 1;
+  string task_queue = 2;
+  bytes input = 3;
+  WorkflowOpts options = 4;
+  map<string, string> search_attributes = 5;
+}
+
+// 调度策略
+message SchedulePolicy {
+  OverlapPolicy overlap_policy = 1;
+  string catchup_window = 2;                     // 补忘执行窗口 "PT1H"
+  bool pause_on_failure = 3;                     // 失败时暂停
+}
+
+// 管理调度响应
+message ManageScheduleResponse {
+  BaseResponse base = 1;                         // 基础响应
+  ManageScheduleData data = 2;                   // 业务数据
+}
+
+// 管理调度数据
+message ManageScheduleData {
+  string schedule_id = 1;
+  ScheduleOperation operation = 2;
+  string next_execution_time = 3;                // 下次执行时间
+}
+
+// 查询调度请求
+message QueryScheduleRequest {
+  string schedule_id = 1;
+}
+
+// 查询调度响应
+message QueryScheduleResponse {
+  BaseResponse base = 1;                         // 基础响应
+  ScheduleInfo data = 2;                         // 业务数据
+}
+
+// 调度信息
+message ScheduleInfo {
+  string schedule_id = 1;
+  ScheduleSpecDesc spec = 2;
+  ScheduleState state = 3;
+  int64 created_time = 4;
+  int64 last_update_time = 5;
+  string next_execution_time = 6;
+  string last_execution_time = 7;
+  int64 total_runs = 8;                          // 总执行次数
+}
+
+// 列出调度请求
+message ListSchedulesRequest {
+  int32 page_size = 1;
+  string next_page_token = 2;
+  string query = 3;                              // 搜索查询
+  ListScheduleOptions options = 4;
+}
+
+// 列出调度选项
+message ListScheduleOptions {
+  repeated ScheduleState states = 1;             // 过滤状态
+  string start_time_filter = 2;                  // 创建时间过滤
+  string workflow_type_filter = 3;               // 工作流类型过滤
+}
+
+// 列出调度响应
+message ListSchedulesResponse {
+  BaseResponse base = 1;                         // 基础响应
+  ListSchedulesData data = 2;                    // 业务数据
+}
+
+// 列出调度数据
+message ListSchedulesData {
+  repeated ScheduleInfo schedules = 1;
+  string next_page_token = 2;
+  bool has_more = 3;
+  int32 total_count = 4;
+}
+
+// --------------------------------
+// 搜索属性相关消息定义
+// --------------------------------
+
+// 注册搜索属性请求
+message RegisterSearchAttributesRequest {
+  string namespace = 1;                          // 命名空间
+  map<string, SearchAttributeType> attributes = 2; // 属性名称 -> 类型映射
+  bool skip_if_exists = 3;                       // 如果已存在则跳过
+  string reason = 4;                             // 注册原因
+}
+
+// 注册搜索属性响应
+message RegisterSearchAttributesResponse {
+  BaseResponse base = 1;
+  RegisterSearchAttributesData data = 2;
+}
+
+// 注册搜索属性数据
+message RegisterSearchAttributesData {
+  int32 total_requested = 1;                     // 请求注册的总数
+  int32 successfully_registered = 2;             // 成功注册的数量
+  int32 already_existed = 3;                     // 已存在的数量
+  int32 failed = 4;                              // 失败的数量
+  repeated SearchAttributeRegistrationResult results = 5; // 详细结果
+}
+
+// 单个属性注册结果
+message SearchAttributeRegistrationResult {
+  string attribute_name = 1;
+  SearchAttributeType attribute_type = 2;
+  bool success = 3;
+  string error_message = 4;                      // 如果失败，错误信息
+  bool already_existed = 5;                      // 是否已存在
+}
+
+// 列出搜索属性请求
+message ListSearchAttributesRequest {
+  string namespace = 1;                          // 命名空间
+  SearchAttributeFilter filter = 2;              // 过滤条件
+  int32 page_size = 3;
+  string next_page_token = 4;
+}
+
+// 搜索属性过滤器
+message SearchAttributeFilter {
+  repeated SearchAttributeType types = 1;        // 按类型过滤
+  repeated string name_patterns = 2;             // 名称模式（支持通配符）
+  SearchAttributeCategory category = 3;          // 属性类别
+  bool include_system = 4;                       // 是否包含系统属性
+}
+
+// 列出搜索属性响应
+message ListSearchAttributesResponse {
+  BaseResponse base = 1;
+  ListSearchAttributesData data = 2;
+}
+
+// 列出搜索属性数据
+message ListSearchAttributesData {
+  repeated SearchAttributeInfo attributes = 1;   // 属性列表
+  int32 total_count = 2;                         // 总数量
+  string next_page_token = 3;
+  bool has_more = 4;
+  SearchAttributeStats stats = 5;                // 统计信息
+}
+
+// 搜索属性信息
+message SearchAttributeInfo {
+  string name = 1;                               // 属性名称
+  SearchAttributeType type = 2;                  // 属性类型
+  SearchAttributeCategory category = 3;          // 属性类别
+  string description = 4;                        // 描述
+  int64 created_time = 5;                        // 创建时间
+  int64 last_modified_time = 6;                  // 最后修改时间
+  bool is_reserved = 7;                          // 是否为保留属性
+  bool is_alias = 8;                             // 是否为别名
+  string alias_for = 9;                          // 如果是别名，指向的原始属性
+  map<string, string> metadata = 10;             // 额外元数据
+}
+
+// 搜索属性统计
+message SearchAttributeStats {
+  int32 total_system_attributes = 1;             // 系统属性总数
+  int32 total_custom_attributes = 2;             // 自定义属性总数
+  int32 max_custom_attributes = 3;               // 最大自定义属性数量限制
+  int32 remaining_slots = 4;                     // 剩余可用槽位
+  map<string, int32> type_distribution = 5;      // 类型分布统计
+}
+
+// 删除搜索属性请求
+message RemoveSearchAttributesRequest {
+  string namespace = 1;                          // 命名空间
+  repeated string attribute_names = 2;           // 要删除的属性名称列表
+  bool force = 3;                                // 强制删除（即使有工作流在使用）
+  string reason = 4;                             // 删除原因
+}
+
+// 删除搜索属性响应
+message RemoveSearchAttributesResponse {
+  BaseResponse base = 1;
+  RemoveSearchAttributesData data = 2;
+}
+
+// 删除搜索属性数据
+message RemoveSearchAttributesData {
+  int32 total_requested = 1;                     // 请求删除的总数
+  int32 successfully_removed = 2;                // 成功删除的数量
+  int32 not_found = 3;                           // 未找到的数量
+  int32 failed = 4;                              // 失败的数量
+  repeated SearchAttributeRemovalResult results = 5; // 详细结果
+}
+
+// 单个属性删除结果
+message SearchAttributeRemovalResult {
+  string attribute_name = 1;
+  bool success = 2;
+  string error_message = 3;                      // 如果失败，错误信息
+  bool not_found = 4;                            // 是否未找到
+  int32 affected_workflows = 5;                  // 受影响的工作流数量
+}
+
+// 查询搜索属性使用情况请求
+message QuerySearchAttributeUsageRequest {
+  string namespace = 1;                          // 命名空间
+  repeated string attribute_names = 2;           // 要查询的属性名称（空则查询所有）
+  UsageQueryOptions options = 3;                 // 查询选项
+}
+
+// 使用情况查询选项
+message UsageQueryOptions {
+  bool include_workflow_counts = 1;              // 包含工作流计数
+  bool include_value_distribution = 2;           // 包含值分布
+  bool include_recent_workflows = 3;             // 包含最近的工作流
+  int32 recent_workflows_limit = 4;              // 最近工作流数量限制
+  string time_range_start = 5;                   // 时间范围开始（RFC3339）
+  string time_range_end = 6;                     // 时间范围结束（RFC3339）
+}
+
+// 查询搜索属性使用情况响应
+message QuerySearchAttributeUsageResponse {
+  BaseResponse base = 1;
+  QuerySearchAttributeUsageData data = 2;
+}
+
+// 查询搜索属性使用情况数据
+message QuerySearchAttributeUsageData {
+  repeated SearchAttributeUsage usages = 1;      // 使用情况列表
+  int64 query_time = 2;                          // 查询时间
+}
+
+// 搜索属性使用情况
+message SearchAttributeUsage {
+  string attribute_name = 1;                     // 属性名称
+  SearchAttributeType attribute_type = 2;        // 属性类型
+  int64 total_workflows = 3;                     // 使用该属性的工作流总数
+  int64 active_workflows = 4;                    // 活跃工作流数量
+  int64 closed_workflows = 5;                    // 已关闭工作流数量
+  repeated ValueDistribution value_distribution = 6; // 值分布
+  repeated string recent_workflow_ids = 7;       // 最近使用的工作流ID
+  int64 last_used_time = 8;                      // 最后使用时间
+  UsageStats stats = 9;                          // 使用统计
+}
+
+// 值分布
+message ValueDistribution {
+  string value = 1;                              // 值（字符串表示）
+  int64 count = 2;                               // 出现次数
+  double percentage = 3;                         // 百分比
+}
+
+// 使用统计
+message UsageStats {
+  int64 queries_per_day = 1;                     // 每天查询次数
+  int64 updates_per_day = 2;                     // 每天更新次数
+  double avg_value_length = 3;                   // 平均值长度
+  int64 unique_values = 4;                       // 唯一值数量
+}
+
+// 验证搜索属性请求
+message ValidateSearchAttributesRequest {
+  string namespace = 1;                          // 命名空间
+  map<string, SearchAttributeValidation> validations = 2; // 要验证的属性
+}
+
+// 搜索属性验证
+message SearchAttributeValidation {
+  string attribute_name = 1;
+  SearchAttributeType expected_type = 2;
+  oneof value {
+    string string_value = 3;
+    int64 int_value = 4;
+    double double_value = 5;
+    bool bool_value = 6;
+    string datetime_value = 7;                   // RFC3339 格式
+    StringList keyword_list_value = 8;
+  }
+}
+
+// 字符串列表
+message StringList {
+  repeated string values = 1;
+}
+
+// 验证搜索属性响应
+message ValidateSearchAttributesResponse {
+  BaseResponse base = 1;
+  ValidateSearchAttributesData data = 2;
+}
+
+// 验证搜索属性数据
+message ValidateSearchAttributesData {
+  bool all_valid = 1;                            // 是否全部有效
+  repeated ValidationResult results = 2;         // 验证结果列表
+}
+
+// 验证结果
+message ValidationResult {
+  string attribute_name = 1;
+  bool is_valid = 2;
+  bool is_registered = 3;                        // 是否已注册
+  bool type_matches = 4;                         // 类型是否匹配
+  bool value_valid = 5;                          // 值是否有效
+  string error_message = 6;                      // 错误信息
+  SearchAttributeType registered_type = 7;       // 已注册的类型
+  SearchAttributeType provided_type = 8;         // 提供的类型
+  repeated string suggestions = 9;               // 修正建议
+}
+
+// ===========================================================================================
+// V1 版本 - 类型定义（向后兼容）(V1 Type Definitions - Backward Compatibility)
+// ===========================================================================================
+
+// --------------------------------
+// V1 枚举类型 (V1 Enums)
+// --------------------------------
 
 // 任务类型的枚举
 enum ScheduleTaskType {
-  UNDEFINED = 0;               // 未定义（默认值）
-  GRAYLIST_EXPIRE_TASK = 1;    // 灰名单失效任务
-  WHITELIST_EXPIRE_TASK = 2;   // 白名单失效任务
+  UNDEFINED = 0;                                 // 未定义（默认值）
+  GRAYLIST_EXPIRE_TASK = 1;                      // 灰名单失效任务
+  WHITELIST_EXPIRE_TASK = 2;                     // 白名单失效任务
 }
 
 // 工作流执行状态
@@ -62,275 +1210,231 @@ enum WorkflowExecutionStatus {
   WORKFLOW_EXECUTION_STATUS_TIMED_OUT = 7;
 }
 
-
 // 工作流 ID 重用策略枚举
 enum WorkflowIdReusePolicy {
-  // 未指定策略（默认）
-  WORKFLOW_ID_REUSE_POLICY_UNSPECIFIED = 0;
-
-  // 允许使用相同的 workflow ID 启动新的 workflow
-  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE = 1;
-
-  // 仅当上一次执行结果为终止、取消、超时或失败时才允许使用相同的 workflow ID 启动新的 workflow
-  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE_FAILED_ONLY = 2;
-
-  // 不允许重复使用 workflow ID
-  WORKFLOW_ID_REUSE_POLICY_REJECT_DUPLICATE = 3;
-
-  // 与 ALLOW_DUPLICATE 类似，但如果有运行中的 workflow，则会终止当前的并启动新的
-  WORKFLOW_ID_REUSE_POLICY_TERMINATE_IF_RUNNING = 4;
+  WORKFLOW_ID_REUSE_POLICY_UNSPECIFIED = 0;      // 未指定策略（默认）
+  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE = 1;  // 允许使用相同的 workflow ID 启动新的 workflow
+  WORKFLOW_ID_REUSE_POLICY_ALLOW_DUPLICATE_FAILED_ONLY = 2; // 仅当上一次执行结果为终止、取消、超时或失败时才允许使用相同的 workflow ID 启动新的 workflow
+  WORKFLOW_ID_REUSE_POLICY_REJECT_DUPLICATE = 3; // 不允许重复使用 workflow ID
+  WORKFLOW_ID_REUSE_POLICY_TERMINATE_IF_RUNNING = 4; // 与 ALLOW_DUPLICATE 类似，但如果有运行中的 workflow，则会终止当前的并启动新的
 }
 
+enum ScheduleOverlapPolicy {
+  SCHEDULE_OVERLAP_POLICY_UNSPECIFIED = 0;
+  SCHEDULE_OVERLAP_POLICY_SKIP = 1;
+  SCHEDULE_OVERLAP_POLICY_BUFFER_ONE = 2;
+  SCHEDULE_OVERLAP_POLICY_BUFFER_ALL = 3;
+  SCHEDULE_OVERLAP_POLICY_CANCEL_OTHER = 4;
+  SCHEDULE_OVERLAP_POLICY_TERMINATE_OTHER = 5;
+  SCHEDULE_OVERLAP_POLICY_ALLOW_ALL = 6;
+}
+
+// --------------------------------
+// V1 消息类型 (V1 Messages)
+// --------------------------------
 
 // 启动工作流请求
-message StartWorkflowRequest {
-  string workflow_type = 1;       // 工作流类型
-  string task_queue = 2;          // 任务队列
-  string workflow_id = 3;         // 工作流ID(可选)
-  bytes input = 4;                // 工作流输入参数(JSON编码)
-  int64 timeout_seconds = 5;      // 超时时间(秒)
-  WorkflowOptions options = 6;    // 工作流选项
+message StartWorkflowRequestV1 {
+  string workflow_type = 1;                      // 工作流类型
+  string task_queue = 2;                         // 任务队列
+  string workflow_id = 3;                        // 工作流ID(可选)
+  bytes input = 4;                               // 工作流输入参数(JSON编码)
+  int64 timeout_seconds = 5;                     // 超时时间(秒)
+  WorkflowOptions options = 6;                   // 工作流选项
 }
 
 // 工作流选项
 message WorkflowOptions {
-  int64 execution_timeout_seconds = 1;   // 执行超时(秒)
-  int64 run_timeout_seconds = 2;         // 运行超时(秒)
-  int64 task_timeout_seconds = 3;        // 任务超时(秒)
-  repeated RetryPolicy retry_policy = 4;  // 重试策略
-  string cron_schedule = 5; // 定时调度
+  int64 execution_timeout_seconds = 1;           // 执行超时(秒)
+  int64 run_timeout_seconds = 2;                 // 运行超时(秒)
+  int64 task_timeout_seconds = 3;                // 任务超时(秒)
+  repeated RetryPolicy retry_policy = 4;         // 重试策略
+  string cron_schedule = 5;                      // 定时调度
 }
 
 // 重试策略
 message RetryPolicy {
-  int64 initial_interval_seconds = 1;    // 初始重试间隔(秒)
-  double backoff_coefficient = 2;        // 退避系数
-  int64 maximum_interval_seconds = 3;    // 最大重试间隔(秒)
-  int32 maximum_attempts = 4;            // 最大重试次数
+  int64 initial_interval_seconds = 1;            // 初始重试间隔(秒)
+  double backoff_coefficient = 2;                // 退避系数
+  int64 maximum_interval_seconds = 3;            // 最大重试间隔(秒)
+  int32 maximum_attempts = 4;                    // 最大重试次数
 }
 
 // 启动工作流响应
-message StartWorkflowResponse {
-  string workflow_id = 1;    // 工作流ID
-  string run_id = 2;         // 运行ID
+message StartWorkflowResponseV1 {
+  string workflow_id = 1;                        // 工作流ID
+  string run_id = 2;                             // 运行ID
 }
 
 // 取消工作流请求
-message CancelWorkflowRequest {
-  string workflow_id = 1;   // 工作流ID
-  string run_id = 2;        // 运行ID(可选)
-  string reason = 3;        // 取消原因
+message CancelWorkflowRequestV1 {
+  string workflow_id = 1;                        // 工作流ID
+  string run_id = 2;                             // 运行ID(可选)
+  string reason = 3;                             // 取消原因
 }
 
 // 取消工作流响应
-message CancelWorkflowResponse {
-  bool success = 1;         // 是否成功
+message CancelWorkflowResponseV1 {
+  bool success = 1;                              // 是否成功
 }
 
 // 发送信号请求
-message SignalWorkflowRequest {
-  string workflow_id = 1;     // 工作流ID
-  string run_id = 2;          // 运行ID(可选)
-  string signal_name = 3;     // 信号名称
-  bytes signal_input = 4;     // 信号数据(JSON编码)
+message SignalWorkflowRequestV1 {
+  string workflow_id = 1;                        // 工作流ID
+  string run_id = 2;                             // 运行ID(可选)
+  string signal_name = 3;                        // 信号名称
+  bytes signal_input = 4;                        // 信号数据(JSON编码)
 }
 
 // 发送信号响应
-message SignalWorkflowResponse {
-  bool success = 1;           // 是否成功
+message SignalWorkflowResponseV1 {
+  bool success = 1;                              // 是否成功
 }
 
 // 获取工作流执行请求
-message GetWorkflowExecutionRequest {
-  string workflow_id = 1;     // 工作流ID
-  string run_id = 2;          // 运行ID(可选)
+message GetWorkflowExecutionRequestV1 {
+  string workflow_id = 1;                        // 工作流ID
+  string run_id = 2;                             // 运行ID(可选)
 }
-
-
 
 // 获取工作流执行响应
-message GetWorkflowExecutionResponse {
-  string workflow_id = 1;                           // 工作流ID
-  string run_id = 2;                                // 运行ID
-  WorkflowExecutionStatus status = 3;               // 状态
-  bytes result = 4;                                 // 结果(JSON编码，如果已完成)
-  string error_message = 5;                         // 错误信息(如果失败)
-  int64 start_time_unix = 6;                        // 开始时间(Unix时间戳)
-  int64 close_time_unix = 7;                        // 结束时间(Unix时间戳，如果已结束)
+message GetWorkflowExecutionResponseV1 {
+  string workflow_id = 1;                        // 工作流ID
+  string run_id = 2;                             // 运行ID
+  WorkflowExecutionStatus status = 3;            // 状态
+  bytes result = 4;                              // 结果(JSON编码，如果已完成)
+  string error_message = 5;                      // 错误信息(如果失败)
+  int64 start_time_unix = 6;                     // 开始时间(Unix时间戳)
+  int64 close_time_unix = 7;                     // 结束时间(Unix时间戳，如果已结束)
 }
-
-
-
-
 
 // 定时任务请求
-message ScheduleTaskRequest {
-  string task_id = 1;               // 任务ID
-  ScheduleTaskType task_type = 2;              // 任务类型
-  int64 delay_seconds = 3;          // 延迟时间(秒)
-  bytes data = 4;                   // 任务数据(JSON编码)
-  WorkflowIdReusePolicy workflow_id_policy = 5;            // 工作流 ID 重用策略枚举
+message ScheduleTaskRequestV1 {
+  string task_id = 1;                            // 任务ID
+  ScheduleTaskType task_type = 2;                // 任务类型
+  int64 delay_seconds = 3;                       // 延迟时间(秒)
+  bytes data = 4;                                // 任务数据(JSON编码)
+  WorkflowIdReusePolicy workflow_id_policy = 5;  // 工作流 ID 重用策略枚举
 }
 
-
-
 // 定时任务响应
-message ScheduleTaskResponse {
-  string workflow_id = 1;           // 工作流ID
-  string run_id = 2;                // 运行ID
+message ScheduleTaskResponseV1 {
+  string workflow_id = 1;                        // 工作流ID
+  string run_id = 2;                             // 运行ID
 }
 
 // 批量取消工作流请求
-message BatchCancelWorkflowRequest {
-  repeated CancelWorkflowRequest workflows = 1; // 需要取消的工作流列表
+message BatchCancelWorkflowRequestV1 {
+  repeated CancelWorkflowRequestV1 workflows = 1; // 需要取消的工作流列表
 }
 
 // 批量取消工作流响应
-message BatchCancelWorkflowResponse {
+message BatchCancelWorkflowResponseV1 {
   message Result {
-    string workflow_id = 1;     // 工作流ID
-    bool success = 2;           // 是否成功
-    string error_message = 3;   // 错误信息(如果失败)
+    string workflow_id = 1;                      // 工作流ID
+    bool success = 2;                            // 是否成功
+    string error_message = 3;                    // 错误信息(如果失败)
   }
-  repeated Result results = 1;  // 每个工作流的取消结果
+  repeated Result results = 1;                   // 每个工作流的取消结果
 }
 
 // 批量创建定时任务请求
-message BatchScheduleTaskRequest {
-  repeated ScheduleTaskRequest tasks = 1; // 需要创建的定时任务列表
+message BatchScheduleTaskRequestV1 {
+  repeated ScheduleTaskRequestV1 tasks = 1;      // 需要创建的定时任务列表
 }
 
 // 批量创建定时任务响应
-message BatchScheduleTaskResponse {
+message BatchScheduleTaskResponseV1 {
   message Result {
-    string task_id = 1;        // 任务ID
-    string workflow_id = 2;    // 工作流ID
-    string run_id = 3;         // 运行ID
-    bool success = 4;          // 是否成功
-    string error_message = 5;  // 错误信息(如果失败)
+    string task_id = 1;                          // 任务ID
+    string workflow_id = 2;                      // 工作流ID
+    string run_id = 3;                           // 运行ID
+    bool success = 4;                            // 是否成功
+    string error_message = 5;                    // 错误信息(如果失败)
   }
-  repeated Result results = 1; // 每个任务的创建结果
+  repeated Result results = 1;                   // 每个任务的创建结果
 }
 
 message ScheduleOptions {
-  string ID = 1; // ID - The business identifier of the schedule.
-  ScheduleSpec Spec = 2; // Schedule - Describes when Actions should be taken.
-  ScheduleWorkflowAction Action = 3; // Action - Which Action to take.
-  // Overlap - Controls what happens when an Action would be started by a Schedule at the same time that an older Action is still
-  // running. This can be changed after a Schedule has taken some Actions, and some changes might produce
-  // unintuitive results. In general, the later policy overrides the earlier policy.
-  //
-  // Optional: defaulted to SCHEDULE_OVERLAP_POLICY_SKIP
-  ScheduleOverlapPolicy Overlap = 4;
+  string ID = 1;                                 // ID - The business identifier of the schedule.
+  ScheduleSpec Spec = 2;                         // Schedule - Describes when Actions should be taken.
+  ScheduleWorkflowAction Action = 3;             // Action - Which Action to take.
+  ScheduleOverlapPolicy Overlap = 4;             // Overlap - Controls what happens when an Action would be started by a Schedule at the same time that an older Action is still running.
   string Note = 5;
 }
 
 message ScheduleSpec {
-  repeated ScheduleCalendarSpec Calendars =1;
+  repeated ScheduleCalendarSpec Calendars = 1;
 }
 
-message  ScheduleCalendarSpec {
-  // Second range to match (0-59).
-  //
-  // default: matches 0
-  repeated ScheduleRange Second=1;
-
-  // Minute range to match (0-59).
-  //
-  // default: matches 0
-  repeated ScheduleRange Minute=2;
-
-  // Hour range to match (0-23).
-  //
-  // default: matches 0
-  repeated ScheduleRange Hour=3;
-
-  // DayOfMonth range to match (1-31)
-  //
-  // default: matches all days
-  repeated ScheduleRange DayOfMonth=4;
-
-  // Month range to match (1-12)
-  //
-  // default: matches all months
-  repeated ScheduleRange Month=5;
-
-  // Year range to match.
-  //
-  // default: empty that matches all years
-  repeated ScheduleRange Year=6;
-
-  // DayOfWeek range to match (0-6; 0 is Sunday)
-  //
-  // default: matches all days of the week
-  repeated ScheduleRange DayOfWeek=7;
-
-  // Comment - Description of the intention of this schedule.
-  string Comment =8;
+message ScheduleCalendarSpec {
+  repeated ScheduleRange Second = 1;             // Second range to match (0-59). default: matches 0
+  repeated ScheduleRange Minute = 2;             // Minute range to match (0-59). default: matches 0
+  repeated ScheduleRange Hour = 3;               // Hour range to match (0-23). default: matches 0
+  repeated ScheduleRange DayOfMonth = 4;         // DayOfMonth range to match (1-31). default: matches all days
+  repeated ScheduleRange Month = 5;              // Month range to match (1-12). default: matches all months
+  repeated ScheduleRange Year = 6;               // Year range to match. default: empty that matches all years
+  repeated ScheduleRange DayOfWeek = 7;          // DayOfWeek range to match (0-6; 0 is Sunday). default: matches all days of the week
+  string Comment = 8;                            // Comment - Description of the intention of this schedule.
 }
 
 message ScheduleRange {
-  // Start of the range (inclusive)
-  int64 Start=1;
-
-  // End of the range (inclusive)
-  //
-  // Optional: defaulted to Start
-  int64 End=2;
-
-  // Step to be take between each value
-  //
-  // Optional: defaulted to 1
-  int64 Step=3;
+  int64 Start = 1;                               // Start of the range (inclusive)
+  int64 End = 2;                                 // End of the range (inclusive). Optional: defaulted to Start
+  int64 Step = 3;                                // Step to be take between each value. Optional: defaulted to 1
 }
 
 message ScheduleWorkflowAction {
-  // ID - The business identifier of the workflow execution.
-  // The workflow ID of the started workflow may not match this exactly,
-  // it may have a timestamp appended for uniqueness.
-  //
-  // Optional: defaulted to a uuid.
-  string ID = 1;
-
-  // Workflow - What workflow to run.
-  // Workflow can either be the function or workflow type name as a string.
-  // On ScheduleHandle.Describe() or ScheduleHandle.Update() it will be the workflow type name.
-  string Workflow = 2;
-
-  // Args - Arguments to pass to the workflow.
-  // On ScheduleHandle.Describe() or ScheduleHandle.Update() Args will be returned as *commonpb.Payload.
-  bytes Args = 3;
-
-  // TaskQueue - The workflow tasks of the workflow are scheduled on the queue with this name.
-  // This is also the name of the activity task queue on which activities are scheduled.
-  string TaskQueue = 4;
-
-  // WorkflowExecutionTimeout - The timeout for duration of workflow execution. (seconds)
-  int64 WorkflowExecutionTimeout = 5;
-
-  // WorkflowRunTimeout - The timeout for duration of a single workflow run.
-  int64 WorkflowRunTimeout = 6;
-
-  // WorkflowTaskTimeout - The timeout for processing workflow task from the time the worker
-  // pulled this task.
-  int64 WorkflowTaskTimeout = 7;
-
-  // RetryPolicy - Retry policy for workflow. If a retry policy is specified, in case of workflow failure
-  // server will start new workflow execution if needed based on the retry policy.
-  RetryPolicy RetryPolicy = 8;
-
+  string ID = 1;                                 // ID - The business identifier of the workflow execution.
+  string Workflow = 2;                           // Workflow - What workflow to run.
+  bytes Args = 3;                                // Args - Arguments to pass to the workflow.
+  string TaskQueue = 4;                          // TaskQueue - The workflow tasks of the workflow are scheduled on the queue with this name.
+  int64 WorkflowExecutionTimeout = 5;            // WorkflowExecutionTimeout - The timeout for duration of workflow execution. (seconds)
+  int64 WorkflowRunTimeout = 6;                  // WorkflowRunTimeout - The timeout for duration of a single workflow run.
+  int64 WorkflowTaskTimeout = 7;                 // WorkflowTaskTimeout - The timeout for processing workflow task from the time the worker pulled this task.
+  RetryPolicy RetryPolicy = 8;                   // RetryPolicy - Retry policy for workflow.
 }
 
-enum ScheduleOverlapPolicy {
-    SCHEDULE_OVERLAP_POLICY_UNSPECIFIED = 0;
-    SCHEDULE_OVERLAP_POLICY_SKIP = 1;
-    SCHEDULE_OVERLAP_POLICY_BUFFER_ONE = 2;
-    SCHEDULE_OVERLAP_POLICY_BUFFER_ALL = 3;
-    SCHEDULE_OVERLAP_POLICY_CANCEL_OTHER = 4;
-    SCHEDULE_OVERLAP_POLICY_TERMINATE_OTHER = 5;
-    SCHEDULE_OVERLAP_POLICY_ALLOW_ALL = 6;
+message DeleteScheduleReqV1 {
+  string ID = 1;                                 // ID - The business identifier of the schedule.
 }
 
-message DeleteScheduleReq {
-  string ID = 1; // ID - The business identifier of the schedule.
+message TemporalReq {
+}
+
+message TemporalReply {
+}
+
+// ===========================================================================================
+// V1 版本 - 服务定义（向后兼容）(V1 Service Definitions - Backward Compatibility)
+// ===========================================================================================
+
+// Temporal服务定义
+service TemporalService {
+  // 启动工作流
+  rpc StartWorkflow(StartWorkflowRequestV1) returns (StartWorkflowResponseV1) {}
+
+  // 取消工作流
+  rpc CancelWorkflow(CancelWorkflowRequestV1) returns (CancelWorkflowResponseV1) {}
+
+  // 发送信号到工作流
+  rpc SignalWorkflow(SignalWorkflowRequestV1) returns (SignalWorkflowResponseV1) {}
+
+  // 获取工作流执行状态
+  rpc GetWorkflowExecution(GetWorkflowExecutionRequestV1) returns (GetWorkflowExecutionResponseV1) {}
+
+  // 创建定时任务
+  rpc StartScheduleTask(ScheduleTaskRequestV1) returns (ScheduleTaskResponseV1) {}
+
+  // 批量取消工作流
+  rpc BatchCancelWorkflows(BatchCancelWorkflowRequestV1) returns (BatchCancelWorkflowResponseV1) {}
+
+  // 批量创建定时任务
+  rpc BatchStartScheduleTasks(BatchScheduleTaskRequestV1) returns (BatchScheduleTaskResponseV1) {}
+
+  // 创建自定义调度
+  rpc CreateSchedule(ScheduleOptions) returns (TemporalReply) {}
+
+  // 删除自定义调度
+  rpc DeleteSchedule(DeleteScheduleReqV1) returns (TemporalReply) {}
 }

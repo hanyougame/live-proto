@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package workflow.v1;
+option go_package = "./pb/v1";
+
+
+message WorkflowReq {
+
+}
+
+message WorkflowResp {
+
+}
+
+service WorkflowInnerService {
+  rpc Test(WorkflowReq) returns (WorkflowResp);
+}
