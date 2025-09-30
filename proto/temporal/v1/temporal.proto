@@ -174,7 +174,7 @@ message WorkflowOpts {
   int32 execution_timeout_seconds = 1;
   int32 run_timeout_seconds = 2;
   int32 task_timeout_seconds = 3;
-  RetryPolicyOpt retry_policy = 4;
+  RetryPolicyOpt retry_policy_opt = 4;
 }
 
 // 统一的重试策略
@@ -629,7 +629,7 @@ message ReplaceWorkflowRequest {
   string cancel_reason = 3;                      // 取消原因
 
   // 要启动的新工作流
-  StartWorkflowRequestV1 new_workflow = 4;       // 复用现有的启动请求
+  StartFlowRequest new_workflow = 4;       // 复用现有的启动请求
 
   // 原子操作选项
   bool wait_for_cancel = 5;                      // 是否等待取消完成再启动新的
@@ -1234,7 +1234,7 @@ enum ScheduleOverlapPolicy {
 // --------------------------------
 
 // 启动工作流请求
-message StartWorkflowRequestV1 {
+message StartWorkflowRequest {
   string workflow_type = 1;                      // 工作流类型
   string task_queue = 2;                         // 任务队列
   string workflow_id = 3;                        // 工作流ID(可选)
@@ -1261,25 +1261,25 @@ message RetryPolicy {
 }
 
 // 启动工作流响应
-message StartWorkflowResponseV1 {
+message StartWorkflowResponse {
   string workflow_id = 1;                        // 工作流ID
   string run_id = 2;                             // 运行ID
 }
 
 // 取消工作流请求
-message CancelWorkflowRequestV1 {
+message CancelWorkflowRequest {
   string workflow_id = 1;                        // 工作流ID
   string run_id = 2;                             // 运行ID(可选)
   string reason = 3;                             // 取消原因
 }
 
 // 取消工作流响应
-message CancelWorkflowResponseV1 {
+message CancelWorkflowResponse {
   bool success = 1;                              // 是否成功
 }
 
 // 发送信号请求
-message SignalWorkflowRequestV1 {
+message SignalWorkflowRequest {
   string workflow_id = 1;                        // 工作流ID
   string run_id = 2;                             // 运行ID(可选)
   string signal_name = 3;                        // 信号名称
@@ -1287,18 +1287,18 @@ message SignalWorkflowRequestV1 {
 }
 
 // 发送信号响应
-message SignalWorkflowResponseV1 {
+message SignalWorkflowResponse {
   bool success = 1;                              // 是否成功
 }
 
 // 获取工作流执行请求
-message GetWorkflowExecutionRequestV1 {
+message GetWorkflowExecutionRequest {
   string workflow_id = 1;                        // 工作流ID
   string run_id = 2;                             // 运行ID(可选)
 }
 
 // 获取工作流执行响应
-message GetWorkflowExecutionResponseV1 {
+message GetWorkflowExecutionResponse {
   string workflow_id = 1;                        // 工作流ID
   string run_id = 2;                             // 运行ID
   WorkflowExecutionStatus status = 3;            // 状态
@@ -1309,7 +1309,7 @@ message GetWorkflowExecutionResponseV1 {
 }
 
 // 定时任务请求
-message ScheduleTaskRequestV1 {
+message ScheduleTaskRequest {
   string task_id = 1;                            // 任务ID
   ScheduleTaskType task_type = 2;                // 任务类型
   int64 delay_seconds = 3;                       // 延迟时间(秒)
@@ -1318,18 +1318,18 @@ message ScheduleTaskRequestV1 {
 }
 
 // 定时任务响应
-message ScheduleTaskResponseV1 {
+message ScheduleTaskResponse {
   string workflow_id = 1;                        // 工作流ID
   string run_id = 2;                             // 运行ID
 }
 
 // 批量取消工作流请求
-message BatchCancelWorkflowRequestV1 {
-  repeated CancelWorkflowRequestV1 workflows = 1; // 需要取消的工作流列表
+message BatchCancelWorkflowRequest {
+  repeated CancelWorkflowRequest workflows = 1; // 需要取消的工作流列表
 }
 
 // 批量取消工作流响应
-message BatchCancelWorkflowResponseV1 {
+message BatchCancelWorkflowResponse {
   message Result {
     string workflow_id = 1;                      // 工作流ID
     bool success = 2;                            // 是否成功
@@ -1339,12 +1339,12 @@ message BatchCancelWorkflowResponseV1 {
 }
 
 // 批量创建定时任务请求
-message BatchScheduleTaskRequestV1 {
-  repeated ScheduleTaskRequestV1 tasks = 1;      // 需要创建的定时任务列表
+message BatchScheduleTaskRequest {
+  repeated ScheduleTaskRequest tasks = 1;      // 需要创建的定时任务列表
 }
 
 // 批量创建定时任务响应
-message BatchScheduleTaskResponseV1 {
+message BatchScheduleTaskResponse {
   message Result {
     string task_id = 1;                          // 任务ID
     string workflow_id = 2;                      // 工作流ID
@@ -1395,7 +1395,7 @@ message ScheduleWorkflowAction {
   RetryPolicy RetryPolicy = 8;                   // RetryPolicy - Retry policy for workflow.
 }
 
-message DeleteScheduleReqV1 {
+message DeleteScheduleReq {
   string ID = 1;                                 // ID - The business identifier of the schedule.
 }
 
@@ -1412,29 +1412,29 @@ message TemporalReply {
 // Temporal服务定义
 service TemporalService {
   // 启动工作流
-  rpc StartWorkflow(StartWorkflowRequestV1) returns (StartWorkflowResponseV1) {}
+  rpc StartWorkflow(StartWorkflowRequest) returns (StartWorkflowResponse) {}
 
   // 取消工作流
-  rpc CancelWorkflow(CancelWorkflowRequestV1) returns (CancelWorkflowResponseV1) {}
+  rpc CancelWorkflow(CancelWorkflowRequest) returns (CancelWorkflowResponse) {}
 
   // 发送信号到工作流
-  rpc SignalWorkflow(SignalWorkflowRequestV1) returns (SignalWorkflowResponseV1) {}
+  rpc SignalWorkflow(SignalWorkflowRequest) returns (SignalWorkflowResponse) {}
 
   // 获取工作流执行状态
-  rpc GetWorkflowExecution(GetWorkflowExecutionRequestV1) returns (GetWorkflowExecutionResponseV1) {}
+  rpc GetWorkflowExecution(GetWorkflowExecutionRequest) returns (GetWorkflowExecutionResponse) {}
 
   // 创建定时任务
-  rpc StartScheduleTask(ScheduleTaskRequestV1) returns (ScheduleTaskResponseV1) {}
+  rpc StartScheduleTask(ScheduleTaskRequest) returns (ScheduleTaskResponse) {}
 
   // 批量取消工作流
-  rpc BatchCancelWorkflows(BatchCancelWorkflowRequestV1) returns (BatchCancelWorkflowResponseV1) {}
+  rpc BatchCancelWorkflows(BatchCancelWorkflowRequest) returns (BatchCancelWorkflowResponse) {}
 
   // 批量创建定时任务
-  rpc BatchStartScheduleTasks(BatchScheduleTaskRequestV1) returns (BatchScheduleTaskResponseV1) {}
+  rpc BatchStartScheduleTasks(BatchScheduleTaskRequest) returns (BatchScheduleTaskResponse) {}
 
   // 创建自定义调度
   rpc CreateSchedule(ScheduleOptions) returns (TemporalReply) {}
 
   // 删除自定义调度
-  rpc DeleteSchedule(DeleteScheduleReqV1) returns (TemporalReply) {}
+  rpc DeleteSchedule(DeleteScheduleReq) returns (TemporalReply) {}
 }
