@@ -104,6 +104,14 @@ message SendEmailReq {
 message SendEmailReply {
 }
 
+message SendWhatsappVerificationCodeReq {
+  repeated string to = 1; // 收件人
+  string captcha = 2; // 验证码
+}
+message SendWhatsappVerificationCodeRsp {
+  
+}
+
 service LiveManageRpcService{
   // 获取法定货币信息
   rpc GetLegalTenderInfo (ManageReq) returns (CurrencyDetailReplyList);
@@ -120,4 +128,6 @@ service LiveManageRpcService{
   rpc SmsBalance (SmsBalanceReq) returns (SmsBalanceReply);
 
   rpc SendEmail (SendEmailReq) returns (SendEmailReply);
+  // 发送whatsapp验证码
+  rpc SendWhatsappVerificationCode (SendWhatsappVerificationCodeReq) returns (SendWhatsappVerificationCodeRsp);
 }
