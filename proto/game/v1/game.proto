@@ -1229,6 +1229,8 @@ service LiveGameRpcService{
   rpc GameRemoveFavorite(GameHandelFavoriteReq) returns (GameReply);
   // 收藏列表
   rpc GameFavoriteList(GetGameFavoriteListReq) returns (GetGameDetailsListReply);
+  // 推荐列表
+  rpc GameRecommendList(GetHotGameListReq) returns (GetGameDetailsListReply);
   // 热门游戏列表
   rpc GetHotGameList(GetHotGameListReq) returns (GetGameDetailsListReply);
   // 最近游戏列表
