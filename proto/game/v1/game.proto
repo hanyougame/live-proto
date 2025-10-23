@@ -916,6 +916,8 @@ message GetGameListBySearchReq {
   int64 user_id = 5;
   int64 game_platform_id = 6;
   int64 game_category_id = 7;
+  repeated int64 game_platform_ids = 8; // 多平台ID
+  string order_by = 9; // 排序字段：hot（人气），a-z（游戏名称），z-a（游戏名称）
 }
 
 // 添加收藏

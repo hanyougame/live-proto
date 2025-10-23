@@ -7014,16 +7014,18 @@ func (x *GamePlatformDetailsReq) GetGamePlatformId() int64 {
 
 // 通过搜索获取游戏列表请求参数
 type GetGameListBySearchReq struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Page           int64                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize       int64                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	SearchValue    string                 `protobuf:"bytes,3,opt,name=search_value,json=searchValue,proto3" json:"search_value,omitempty"`
-	CurrencyCode   string                 `protobuf:"bytes,4,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
-	UserId         int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	GamePlatformId int64                  `protobuf:"varint,6,opt,name=game_platform_id,json=gamePlatformId,proto3" json:"game_platform_id,omitempty"`
-	GameCategoryId int64                  `protobuf:"varint,7,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Page            int64                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize        int64                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	SearchValue     string                 `protobuf:"bytes,3,opt,name=search_value,json=searchValue,proto3" json:"search_value,omitempty"`
+	CurrencyCode    string                 `protobuf:"bytes,4,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
+	UserId          int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	GamePlatformId  int64                  `protobuf:"varint,6,opt,name=game_platform_id,json=gamePlatformId,proto3" json:"game_platform_id,omitempty"`
+	GameCategoryId  int64                  `protobuf:"varint,7,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"`
+	GamePlatformIds []int64                `protobuf:"varint,8,rep,packed,name=game_platform_ids,json=gamePlatformIds,proto3" json:"game_platform_ids,omitempty"` // 多平台ID
+	OrderBy         string                 `protobuf:"bytes,9,opt,name=order_by,json=orderBy,proto3" json:"order_by,omitempty"`                                   // 排序字段：hot（人气），a-z（游戏名称），z-a（游戏名称）
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *GetGameListBySearchReq) Reset() {
@@ -7103,6 +7105,20 @@ func (x *GetGameListBySearchReq) GetGameCategoryId() int64 {
 		return x.GameCategoryId
 	}
 	return 0
+}
+
+func (x *GetGameListBySearchReq) GetGamePlatformIds() []int64 {
+	if x != nil {
+		return x.GamePlatformIds
+	}
+	return nil
+}
+
+func (x *GetGameListBySearchReq) GetOrderBy() string {
+	if x != nil {
+		return x.OrderBy
+	}
+	return ""
 }
 
 // 添加收藏
@@ -10686,7 +10702,7 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x16GamePlatformDetailsReq\x12\x17\n" +
 	"\agame_id\x18\x01 \x01(\x03R\x06gameId\x12(\n" +
 	"\x10game_category_id\x18\x02 \x01(\x03R\x0egameCategoryId\x12(\n" +
-	"\x10game_platform_id\x18\x03 \x01(\x03R\x0egamePlatformId\"\xfe\x01\n" +
+	"\x10game_platform_id\x18\x03 \x01(\x03R\x0egamePlatformId\"\xc5\x02\n" +
 	"\x16GetGameListBySearchReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x03R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\x12!\n" +
@@ -10694,7 +10710,9 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\rcurrency_code\x18\x04 \x01(\tR\fcurrencyCode\x12\x17\n" +
 	"\auser_id\x18\x05 \x01(\x03R\x06userId\x12(\n" +
 	"\x10game_platform_id\x18\x06 \x01(\x03R\x0egamePlatformId\x12(\n" +
-	"\x10game_category_id\x18\a \x01(\x03R\x0egameCategoryId\"n\n" +
+	"\x10game_category_id\x18\a \x01(\x03R\x0egameCategoryId\x12*\n" +
+	"\x11game_platform_ids\x18\b \x03(\x03R\x0fgamePlatformIds\x12\x19\n" +
+	"\border_by\x18\t \x01(\tR\aorderBy\"n\n" +
 	"\x15GameHandelFavoriteReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x17\n" +
 	"\agame_id\x18\x02 \x01(\x03R\x06gameId\x12#\n" +
