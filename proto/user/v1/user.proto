@@ -98,6 +98,7 @@ message GetUserFullInfoByIdReply{
   int64 vip_level = 12;                      //vip等级
   int64 parent_agent_id = 13; // 上级代理id
   repeated UserWalletInfo wallet_info = 14; // 钱包信息
+  int64 channel_id = 15;  // 用户渠道ID
 }
 message UserWalletInfo {
   int64 wallet_type = 1; // 钱包类型 1：用户钱包,2：代理钱包,3：奖励钱包,4：余额宝
