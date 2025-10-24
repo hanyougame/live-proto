@@ -96,6 +96,7 @@ type (
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
+	GetPlatformListByDataReq                 = v1.GetPlatformListByDataReq
 	GetUserBetRecordListReply                = v1.GetUserBetRecordListReply
 	GetUserBetRecordListReq                  = v1.GetUserBetRecordListReq
 	GetUserBetRecordSummaryReply             = v1.GetUserBetRecordSummaryReply

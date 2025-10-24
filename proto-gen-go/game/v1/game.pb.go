@@ -5763,6 +5763,67 @@ func (x *GetPlatformListByCurrReq) GetIncludeAllPlatforms() bool {
 	return false
 }
 
+// 通过查询游戏结果获取平台请求参数
+type GetPlatformListByDataReq struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	CurrencyCode   string                 `protobuf:"bytes,1,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
+	GameCategoryId int64                  `protobuf:"varint,2,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"`
+	SearchGameName string                 `protobuf:"bytes,3,opt,name=search_game_name,json=searchGameName,proto3" json:"search_game_name,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetPlatformListByDataReq) Reset() {
+	*x = GetPlatformListByDataReq{}
+	mi := &file_proto_game_v1_game_proto_msgTypes[68]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPlatformListByDataReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPlatformListByDataReq) ProtoMessage() {}
+
+func (x *GetPlatformListByDataReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_game_v1_game_proto_msgTypes[68]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPlatformListByDataReq.ProtoReflect.Descriptor instead.
+func (*GetPlatformListByDataReq) Descriptor() ([]byte, []int) {
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *GetPlatformListByDataReq) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
+}
+
+func (x *GetPlatformListByDataReq) GetGameCategoryId() int64 {
+	if x != nil {
+		return x.GameCategoryId
+	}
+	return 0
+}
+
+func (x *GetPlatformListByDataReq) GetSearchGameName() string {
+	if x != nil {
+		return x.SearchGameName
+	}
+	return ""
+}
+
 // 通过货币获取平台响应参数
 type GetPlatformListByCurrReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -5773,7 +5834,7 @@ type GetPlatformListByCurrReply struct {
 
 func (x *GetPlatformListByCurrReply) Reset() {
 	*x = GetPlatformListByCurrReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[68]
+	mi := &file_proto_game_v1_game_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5785,7 +5846,7 @@ func (x *GetPlatformListByCurrReply) String() string {
 func (*GetPlatformListByCurrReply) ProtoMessage() {}
 
 func (x *GetPlatformListByCurrReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[68]
+	mi := &file_proto_game_v1_game_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5798,7 +5859,7 @@ func (x *GetPlatformListByCurrReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPlatformListByCurrReply.ProtoReflect.Descriptor instead.
 func (*GetPlatformListByCurrReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{68}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *GetPlatformListByCurrReply) GetRows() []*GamePlatformDetail {
@@ -5840,7 +5901,7 @@ type GamePlatformDetail struct {
 
 func (x *GamePlatformDetail) Reset() {
 	*x = GamePlatformDetail{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[69]
+	mi := &file_proto_game_v1_game_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5852,7 +5913,7 @@ func (x *GamePlatformDetail) String() string {
 func (*GamePlatformDetail) ProtoMessage() {}
 
 func (x *GamePlatformDetail) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[69]
+	mi := &file_proto_game_v1_game_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5865,7 +5926,7 @@ func (x *GamePlatformDetail) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GamePlatformDetail.ProtoReflect.Descriptor instead.
 func (*GamePlatformDetail) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{69}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *GamePlatformDetail) GetGamePlatformId() int64 {
@@ -6039,7 +6100,7 @@ type GetPlatListSimpleByCurrReply struct {
 
 func (x *GetPlatListSimpleByCurrReply) Reset() {
 	*x = GetPlatListSimpleByCurrReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[70]
+	mi := &file_proto_game_v1_game_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6051,7 +6112,7 @@ func (x *GetPlatListSimpleByCurrReply) String() string {
 func (*GetPlatListSimpleByCurrReply) ProtoMessage() {}
 
 func (x *GetPlatListSimpleByCurrReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[70]
+	mi := &file_proto_game_v1_game_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6064,7 +6125,7 @@ func (x *GetPlatListSimpleByCurrReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPlatListSimpleByCurrReply.ProtoReflect.Descriptor instead.
 func (*GetPlatListSimpleByCurrReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{70}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *GetPlatListSimpleByCurrReply) GetRows() []*GamePlatformSimpleDetail {
@@ -6096,7 +6157,7 @@ type GamePlatformSimpleDetail struct {
 
 func (x *GamePlatformSimpleDetail) Reset() {
 	*x = GamePlatformSimpleDetail{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[71]
+	mi := &file_proto_game_v1_game_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6108,7 +6169,7 @@ func (x *GamePlatformSimpleDetail) String() string {
 func (*GamePlatformSimpleDetail) ProtoMessage() {}
 
 func (x *GamePlatformSimpleDetail) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[71]
+	mi := &file_proto_game_v1_game_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6121,7 +6182,7 @@ func (x *GamePlatformSimpleDetail) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GamePlatformSimpleDetail.ProtoReflect.Descriptor instead.
 func (*GamePlatformSimpleDetail) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{71}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *GamePlatformSimpleDetail) GetGamePlatformId() int64 {
@@ -6226,7 +6287,7 @@ type PlatformRedirectionBase struct {
 
 func (x *PlatformRedirectionBase) Reset() {
 	*x = PlatformRedirectionBase{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[72]
+	mi := &file_proto_game_v1_game_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6238,7 +6299,7 @@ func (x *PlatformRedirectionBase) String() string {
 func (*PlatformRedirectionBase) ProtoMessage() {}
 
 func (x *PlatformRedirectionBase) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[72]
+	mi := &file_proto_game_v1_game_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6251,7 +6312,7 @@ func (x *PlatformRedirectionBase) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlatformRedirectionBase.ProtoReflect.Descriptor instead.
 func (*PlatformRedirectionBase) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{72}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *PlatformRedirectionBase) GetPlatformOsType() int64 {
@@ -6303,7 +6364,7 @@ type GameDetails struct {
 
 func (x *GameDetails) Reset() {
 	*x = GameDetails{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[73]
+	mi := &file_proto_game_v1_game_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6315,7 +6376,7 @@ func (x *GameDetails) String() string {
 func (*GameDetails) ProtoMessage() {}
 
 func (x *GameDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[73]
+	mi := &file_proto_game_v1_game_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6328,7 +6389,7 @@ func (x *GameDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameDetails.ProtoReflect.Descriptor instead.
 func (*GameDetails) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{73}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *GameDetails) GetGameId() int64 {
@@ -6529,7 +6590,7 @@ type SubGameInfo struct {
 
 func (x *SubGameInfo) Reset() {
 	*x = SubGameInfo{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[74]
+	mi := &file_proto_game_v1_game_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6541,7 +6602,7 @@ func (x *SubGameInfo) String() string {
 func (*SubGameInfo) ProtoMessage() {}
 
 func (x *SubGameInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[74]
+	mi := &file_proto_game_v1_game_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6554,7 +6615,7 @@ func (x *SubGameInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubGameInfo.ProtoReflect.Descriptor instead.
 func (*SubGameInfo) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{74}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *SubGameInfo) GetGameId() int64 {
@@ -6626,7 +6687,7 @@ type GameSimpleDetails struct {
 
 func (x *GameSimpleDetails) Reset() {
 	*x = GameSimpleDetails{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[75]
+	mi := &file_proto_game_v1_game_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6638,7 +6699,7 @@ func (x *GameSimpleDetails) String() string {
 func (*GameSimpleDetails) ProtoMessage() {}
 
 func (x *GameSimpleDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[75]
+	mi := &file_proto_game_v1_game_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6651,7 +6712,7 @@ func (x *GameSimpleDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameSimpleDetails.ProtoReflect.Descriptor instead.
 func (*GameSimpleDetails) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{75}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *GameSimpleDetails) GetGameId() int64 {
@@ -6751,7 +6812,7 @@ type GetGameDetailsListReply struct {
 
 func (x *GetGameDetailsListReply) Reset() {
 	*x = GetGameDetailsListReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[76]
+	mi := &file_proto_game_v1_game_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6763,7 +6824,7 @@ func (x *GetGameDetailsListReply) String() string {
 func (*GetGameDetailsListReply) ProtoMessage() {}
 
 func (x *GetGameDetailsListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[76]
+	mi := &file_proto_game_v1_game_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6776,7 +6837,7 @@ func (x *GetGameDetailsListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameDetailsListReply.ProtoReflect.Descriptor instead.
 func (*GetGameDetailsListReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{76}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *GetGameDetailsListReply) GetPage() int64 {
@@ -6819,7 +6880,7 @@ type GetGameSimpleListBySearchReply struct {
 
 func (x *GetGameSimpleListBySearchReply) Reset() {
 	*x = GetGameSimpleListBySearchReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[77]
+	mi := &file_proto_game_v1_game_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6831,7 +6892,7 @@ func (x *GetGameSimpleListBySearchReply) String() string {
 func (*GetGameSimpleListBySearchReply) ProtoMessage() {}
 
 func (x *GetGameSimpleListBySearchReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[77]
+	mi := &file_proto_game_v1_game_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6844,7 +6905,7 @@ func (x *GetGameSimpleListBySearchReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameSimpleListBySearchReply.ProtoReflect.Descriptor instead.
 func (*GetGameSimpleListBySearchReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{77}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *GetGameSimpleListBySearchReply) GetPage() int64 {
@@ -6889,7 +6950,7 @@ type GetGameListByPlatformReq struct {
 
 func (x *GetGameListByPlatformReq) Reset() {
 	*x = GetGameListByPlatformReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[78]
+	mi := &file_proto_game_v1_game_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6901,7 +6962,7 @@ func (x *GetGameListByPlatformReq) String() string {
 func (*GetGameListByPlatformReq) ProtoMessage() {}
 
 func (x *GetGameListByPlatformReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[78]
+	mi := &file_proto_game_v1_game_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6914,7 +6975,7 @@ func (x *GetGameListByPlatformReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameListByPlatformReq.ProtoReflect.Descriptor instead.
 func (*GetGameListByPlatformReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{78}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *GetGameListByPlatformReq) GetPage() int64 {
@@ -6963,7 +7024,7 @@ type GamePlatformDetailsReq struct {
 
 func (x *GamePlatformDetailsReq) Reset() {
 	*x = GamePlatformDetailsReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[79]
+	mi := &file_proto_game_v1_game_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6975,7 +7036,7 @@ func (x *GamePlatformDetailsReq) String() string {
 func (*GamePlatformDetailsReq) ProtoMessage() {}
 
 func (x *GamePlatformDetailsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[79]
+	mi := &file_proto_game_v1_game_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6988,7 +7049,7 @@ func (x *GamePlatformDetailsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GamePlatformDetailsReq.ProtoReflect.Descriptor instead.
 func (*GamePlatformDetailsReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{79}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *GamePlatformDetailsReq) GetGameId() int64 {
@@ -7030,7 +7091,7 @@ type GetGameListBySearchReq struct {
 
 func (x *GetGameListBySearchReq) Reset() {
 	*x = GetGameListBySearchReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[80]
+	mi := &file_proto_game_v1_game_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7042,7 +7103,7 @@ func (x *GetGameListBySearchReq) String() string {
 func (*GetGameListBySearchReq) ProtoMessage() {}
 
 func (x *GetGameListBySearchReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[80]
+	mi := &file_proto_game_v1_game_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7055,7 +7116,7 @@ func (x *GetGameListBySearchReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameListBySearchReq.ProtoReflect.Descriptor instead.
 func (*GetGameListBySearchReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{80}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *GetGameListBySearchReq) GetPage() int64 {
@@ -7133,7 +7194,7 @@ type GameHandelFavoriteReq struct {
 
 func (x *GameHandelFavoriteReq) Reset() {
 	*x = GameHandelFavoriteReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[81]
+	mi := &file_proto_game_v1_game_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7145,7 +7206,7 @@ func (x *GameHandelFavoriteReq) String() string {
 func (*GameHandelFavoriteReq) ProtoMessage() {}
 
 func (x *GameHandelFavoriteReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[81]
+	mi := &file_proto_game_v1_game_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7158,7 +7219,7 @@ func (x *GameHandelFavoriteReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameHandelFavoriteReq.ProtoReflect.Descriptor instead.
 func (*GameHandelFavoriteReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{81}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *GameHandelFavoriteReq) GetUserId() int64 {
@@ -7196,7 +7257,7 @@ type GetGameFavoriteListReq struct {
 
 func (x *GetGameFavoriteListReq) Reset() {
 	*x = GetGameFavoriteListReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[82]
+	mi := &file_proto_game_v1_game_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7208,7 +7269,7 @@ func (x *GetGameFavoriteListReq) String() string {
 func (*GetGameFavoriteListReq) ProtoMessage() {}
 
 func (x *GetGameFavoriteListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[82]
+	mi := &file_proto_game_v1_game_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7221,7 +7282,7 @@ func (x *GetGameFavoriteListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameFavoriteListReq.ProtoReflect.Descriptor instead.
 func (*GetGameFavoriteListReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{82}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *GetGameFavoriteListReq) GetPage() int64 {
@@ -7268,7 +7329,7 @@ type GetUserFavoriteIdsReq struct {
 
 func (x *GetUserFavoriteIdsReq) Reset() {
 	*x = GetUserFavoriteIdsReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[83]
+	mi := &file_proto_game_v1_game_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7280,7 +7341,7 @@ func (x *GetUserFavoriteIdsReq) String() string {
 func (*GetUserFavoriteIdsReq) ProtoMessage() {}
 
 func (x *GetUserFavoriteIdsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[83]
+	mi := &file_proto_game_v1_game_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7293,7 +7354,7 @@ func (x *GetUserFavoriteIdsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserFavoriteIdsReq.ProtoReflect.Descriptor instead.
 func (*GetUserFavoriteIdsReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{83}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *GetUserFavoriteIdsReq) GetUserId() int64 {
@@ -7312,7 +7373,7 @@ type GetUserFavoriteIdsReply struct {
 
 func (x *GetUserFavoriteIdsReply) Reset() {
 	*x = GetUserFavoriteIdsReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[84]
+	mi := &file_proto_game_v1_game_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7324,7 +7385,7 @@ func (x *GetUserFavoriteIdsReply) String() string {
 func (*GetUserFavoriteIdsReply) ProtoMessage() {}
 
 func (x *GetUserFavoriteIdsReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[84]
+	mi := &file_proto_game_v1_game_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7337,7 +7398,7 @@ func (x *GetUserFavoriteIdsReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserFavoriteIdsReply.ProtoReflect.Descriptor instead.
 func (*GetUserFavoriteIdsReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{84}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *GetUserFavoriteIdsReply) GetFavoriteIds() map[int64]bool {
@@ -7362,7 +7423,7 @@ type GetGameRecentlyListReq struct {
 
 func (x *GetGameRecentlyListReq) Reset() {
 	*x = GetGameRecentlyListReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[85]
+	mi := &file_proto_game_v1_game_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7374,7 +7435,7 @@ func (x *GetGameRecentlyListReq) String() string {
 func (*GetGameRecentlyListReq) ProtoMessage() {}
 
 func (x *GetGameRecentlyListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[85]
+	mi := &file_proto_game_v1_game_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7387,7 +7448,7 @@ func (x *GetGameRecentlyListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameRecentlyListReq.ProtoReflect.Descriptor instead.
 func (*GetGameRecentlyListReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{85}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *GetGameRecentlyListReq) GetPage() int64 {
@@ -7447,7 +7508,7 @@ type GetHotGameListReq struct {
 
 func (x *GetHotGameListReq) Reset() {
 	*x = GetHotGameListReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[86]
+	mi := &file_proto_game_v1_game_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7459,7 +7520,7 @@ func (x *GetHotGameListReq) String() string {
 func (*GetHotGameListReq) ProtoMessage() {}
 
 func (x *GetHotGameListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[86]
+	mi := &file_proto_game_v1_game_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7472,7 +7533,7 @@ func (x *GetHotGameListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHotGameListReq.ProtoReflect.Descriptor instead.
 func (*GetHotGameListReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{86}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *GetHotGameListReq) GetPage() int64 {
@@ -7527,7 +7588,7 @@ type GetHotPlatformListReq struct {
 
 func (x *GetHotPlatformListReq) Reset() {
 	*x = GetHotPlatformListReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[87]
+	mi := &file_proto_game_v1_game_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7539,7 +7600,7 @@ func (x *GetHotPlatformListReq) String() string {
 func (*GetHotPlatformListReq) ProtoMessage() {}
 
 func (x *GetHotPlatformListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[87]
+	mi := &file_proto_game_v1_game_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7552,7 +7613,7 @@ func (x *GetHotPlatformListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHotPlatformListReq.ProtoReflect.Descriptor instead.
 func (*GetHotPlatformListReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{87}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *GetHotPlatformListReq) GetCurrencyCode() string {
@@ -7571,7 +7632,7 @@ type GetHotPlatformListReply struct {
 
 func (x *GetHotPlatformListReply) Reset() {
 	*x = GetHotPlatformListReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[88]
+	mi := &file_proto_game_v1_game_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7583,7 +7644,7 @@ func (x *GetHotPlatformListReply) String() string {
 func (*GetHotPlatformListReply) ProtoMessage() {}
 
 func (x *GetHotPlatformListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[88]
+	mi := &file_proto_game_v1_game_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7596,7 +7657,7 @@ func (x *GetHotPlatformListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHotPlatformListReply.ProtoReflect.Descriptor instead.
 func (*GetHotPlatformListReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{88}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *GetHotPlatformListReply) GetRows() []*GamePlatformDetail {
@@ -7616,7 +7677,7 @@ type GameDetailsReq struct {
 
 func (x *GameDetailsReq) Reset() {
 	*x = GameDetailsReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[89]
+	mi := &file_proto_game_v1_game_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7628,7 +7689,7 @@ func (x *GameDetailsReq) String() string {
 func (*GameDetailsReq) ProtoMessage() {}
 
 func (x *GameDetailsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[89]
+	mi := &file_proto_game_v1_game_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7641,7 +7702,7 @@ func (x *GameDetailsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameDetailsReq.ProtoReflect.Descriptor instead.
 func (*GameDetailsReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{89}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *GameDetailsReq) GetGameId() int64 {
@@ -7677,7 +7738,7 @@ type GetUserBetRecordListReq struct {
 
 func (x *GetUserBetRecordListReq) Reset() {
 	*x = GetUserBetRecordListReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[90]
+	mi := &file_proto_game_v1_game_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7689,7 +7750,7 @@ func (x *GetUserBetRecordListReq) String() string {
 func (*GetUserBetRecordListReq) ProtoMessage() {}
 
 func (x *GetUserBetRecordListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[90]
+	mi := &file_proto_game_v1_game_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7702,7 +7763,7 @@ func (x *GetUserBetRecordListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserBetRecordListReq.ProtoReflect.Descriptor instead.
 func (*GetUserBetRecordListReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{90}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *GetUserBetRecordListReq) GetUserId() int64 {
@@ -7795,7 +7856,7 @@ type GetUserBetRecordListReply struct {
 
 func (x *GetUserBetRecordListReply) Reset() {
 	*x = GetUserBetRecordListReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[91]
+	mi := &file_proto_game_v1_game_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7807,7 +7868,7 @@ func (x *GetUserBetRecordListReply) String() string {
 func (*GetUserBetRecordListReply) ProtoMessage() {}
 
 func (x *GetUserBetRecordListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[91]
+	mi := &file_proto_game_v1_game_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7820,7 +7881,7 @@ func (x *GetUserBetRecordListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserBetRecordListReply.ProtoReflect.Descriptor instead.
 func (*GetUserBetRecordListReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{91}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *GetUserBetRecordListReply) GetPage() int64 {
@@ -7873,7 +7934,7 @@ type BetRecordInfo struct {
 
 func (x *BetRecordInfo) Reset() {
 	*x = BetRecordInfo{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[92]
+	mi := &file_proto_game_v1_game_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7885,7 +7946,7 @@ func (x *BetRecordInfo) String() string {
 func (*BetRecordInfo) ProtoMessage() {}
 
 func (x *BetRecordInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[92]
+	mi := &file_proto_game_v1_game_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7898,7 +7959,7 @@ func (x *BetRecordInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BetRecordInfo.ProtoReflect.Descriptor instead.
 func (*BetRecordInfo) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{92}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *BetRecordInfo) GetOrderId() string {
@@ -8007,7 +8068,7 @@ type GetUserBetRecordSummaryReq struct {
 
 func (x *GetUserBetRecordSummaryReq) Reset() {
 	*x = GetUserBetRecordSummaryReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[93]
+	mi := &file_proto_game_v1_game_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8019,7 +8080,7 @@ func (x *GetUserBetRecordSummaryReq) String() string {
 func (*GetUserBetRecordSummaryReq) ProtoMessage() {}
 
 func (x *GetUserBetRecordSummaryReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[93]
+	mi := &file_proto_game_v1_game_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8032,7 +8093,7 @@ func (x *GetUserBetRecordSummaryReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserBetRecordSummaryReq.ProtoReflect.Descriptor instead.
 func (*GetUserBetRecordSummaryReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{93}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *GetUserBetRecordSummaryReq) GetUserId() int64 {
@@ -8096,7 +8157,7 @@ type GetUserBetRecordSummaryReply struct {
 
 func (x *GetUserBetRecordSummaryReply) Reset() {
 	*x = GetUserBetRecordSummaryReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[94]
+	mi := &file_proto_game_v1_game_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8108,7 +8169,7 @@ func (x *GetUserBetRecordSummaryReply) String() string {
 func (*GetUserBetRecordSummaryReply) ProtoMessage() {}
 
 func (x *GetUserBetRecordSummaryReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[94]
+	mi := &file_proto_game_v1_game_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8121,7 +8182,7 @@ func (x *GetUserBetRecordSummaryReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserBetRecordSummaryReply.ProtoReflect.Descriptor instead.
 func (*GetUserBetRecordSummaryReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{94}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *GetUserBetRecordSummaryReply) GetBetSummaryList() []*BetSummaryInfo {
@@ -8170,7 +8231,7 @@ type BetSummaryInfo struct {
 
 func (x *BetSummaryInfo) Reset() {
 	*x = BetSummaryInfo{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[95]
+	mi := &file_proto_game_v1_game_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8182,7 +8243,7 @@ func (x *BetSummaryInfo) String() string {
 func (*BetSummaryInfo) ProtoMessage() {}
 
 func (x *BetSummaryInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[95]
+	mi := &file_proto_game_v1_game_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8195,7 +8256,7 @@ func (x *BetSummaryInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BetSummaryInfo.ProtoReflect.Descriptor instead.
 func (*BetSummaryInfo) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{95}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *BetSummaryInfo) GetBetTime() string {
@@ -8280,7 +8341,7 @@ type GetHomeGameItemReq struct {
 
 func (x *GetHomeGameItemReq) Reset() {
 	*x = GetHomeGameItemReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[96]
+	mi := &file_proto_game_v1_game_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8292,7 +8353,7 @@ func (x *GetHomeGameItemReq) String() string {
 func (*GetHomeGameItemReq) ProtoMessage() {}
 
 func (x *GetHomeGameItemReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[96]
+	mi := &file_proto_game_v1_game_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8305,7 +8366,7 @@ func (x *GetHomeGameItemReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHomeGameItemReq.ProtoReflect.Descriptor instead.
 func (*GetHomeGameItemReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{96}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *GetHomeGameItemReq) GetNum() int64 {
@@ -8345,7 +8406,7 @@ type PlatformDetailsList struct {
 
 func (x *PlatformDetailsList) Reset() {
 	*x = PlatformDetailsList{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[97]
+	mi := &file_proto_game_v1_game_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8357,7 +8418,7 @@ func (x *PlatformDetailsList) String() string {
 func (*PlatformDetailsList) ProtoMessage() {}
 
 func (x *PlatformDetailsList) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[97]
+	mi := &file_proto_game_v1_game_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8370,7 +8431,7 @@ func (x *PlatformDetailsList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlatformDetailsList.ProtoReflect.Descriptor instead.
 func (*PlatformDetailsList) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{97}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *PlatformDetailsList) GetItems() []*GamePlatformDetail {
@@ -8389,7 +8450,7 @@ type GameDetailsList struct {
 
 func (x *GameDetailsList) Reset() {
 	*x = GameDetailsList{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[98]
+	mi := &file_proto_game_v1_game_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8401,7 +8462,7 @@ func (x *GameDetailsList) String() string {
 func (*GameDetailsList) ProtoMessage() {}
 
 func (x *GameDetailsList) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[98]
+	mi := &file_proto_game_v1_game_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8414,7 +8475,7 @@ func (x *GameDetailsList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameDetailsList.ProtoReflect.Descriptor instead.
 func (*GameDetailsList) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{98}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *GameDetailsList) GetItems() []*GameDetails {
@@ -8433,7 +8494,7 @@ type GetHomePlatformItemsReply struct {
 
 func (x *GetHomePlatformItemsReply) Reset() {
 	*x = GetHomePlatformItemsReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[99]
+	mi := &file_proto_game_v1_game_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8445,7 +8506,7 @@ func (x *GetHomePlatformItemsReply) String() string {
 func (*GetHomePlatformItemsReply) ProtoMessage() {}
 
 func (x *GetHomePlatformItemsReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[99]
+	mi := &file_proto_game_v1_game_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8458,7 +8519,7 @@ func (x *GetHomePlatformItemsReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHomePlatformItemsReply.ProtoReflect.Descriptor instead.
 func (*GetHomePlatformItemsReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{99}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *GetHomePlatformItemsReply) GetHomeItem() map[int64]*PlatformDetailsList {
@@ -8477,7 +8538,7 @@ type GetHomeGameItemsReply struct {
 
 func (x *GetHomeGameItemsReply) Reset() {
 	*x = GetHomeGameItemsReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[100]
+	mi := &file_proto_game_v1_game_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8489,7 +8550,7 @@ func (x *GetHomeGameItemsReply) String() string {
 func (*GetHomeGameItemsReply) ProtoMessage() {}
 
 func (x *GetHomeGameItemsReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[100]
+	mi := &file_proto_game_v1_game_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8502,7 +8563,7 @@ func (x *GetHomeGameItemsReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHomeGameItemsReply.ProtoReflect.Descriptor instead.
 func (*GetHomeGameItemsReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{100}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *GetHomeGameItemsReply) GetHomeItem() map[int64]*GameDetailsList {
@@ -8521,7 +8582,7 @@ type GetGameConfInfoReq struct {
 
 func (x *GetGameConfInfoReq) Reset() {
 	*x = GetGameConfInfoReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[101]
+	mi := &file_proto_game_v1_game_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8533,7 +8594,7 @@ func (x *GetGameConfInfoReq) String() string {
 func (*GetGameConfInfoReq) ProtoMessage() {}
 
 func (x *GetGameConfInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[101]
+	mi := &file_proto_game_v1_game_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8546,7 +8607,7 @@ func (x *GetGameConfInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameConfInfoReq.ProtoReflect.Descriptor instead.
 func (*GetGameConfInfoReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{101}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *GetGameConfInfoReq) GetConfigKey() string {
@@ -8565,7 +8626,7 @@ type GetGameConfInfoReply struct {
 
 func (x *GetGameConfInfoReply) Reset() {
 	*x = GetGameConfInfoReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[102]
+	mi := &file_proto_game_v1_game_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8577,7 +8638,7 @@ func (x *GetGameConfInfoReply) String() string {
 func (*GetGameConfInfoReply) ProtoMessage() {}
 
 func (x *GetGameConfInfoReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[102]
+	mi := &file_proto_game_v1_game_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8590,7 +8651,7 @@ func (x *GetGameConfInfoReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameConfInfoReply.ProtoReflect.Descriptor instead.
 func (*GetGameConfInfoReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{102}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *GetGameConfInfoReply) GetConfigValue() string {
@@ -8617,7 +8678,7 @@ type GetNewGameListReq struct {
 
 func (x *GetNewGameListReq) Reset() {
 	*x = GetNewGameListReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[103]
+	mi := &file_proto_game_v1_game_proto_msgTypes[104]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8629,7 +8690,7 @@ func (x *GetNewGameListReq) String() string {
 func (*GetNewGameListReq) ProtoMessage() {}
 
 func (x *GetNewGameListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[103]
+	mi := &file_proto_game_v1_game_proto_msgTypes[104]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8642,7 +8703,7 @@ func (x *GetNewGameListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetNewGameListReq.ProtoReflect.Descriptor instead.
 func (*GetNewGameListReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{103}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *GetNewGameListReq) GetPage() int64 {
@@ -8714,7 +8775,7 @@ type GetNewGameListReply struct {
 
 func (x *GetNewGameListReply) Reset() {
 	*x = GetNewGameListReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[104]
+	mi := &file_proto_game_v1_game_proto_msgTypes[105]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8726,7 +8787,7 @@ func (x *GetNewGameListReply) String() string {
 func (*GetNewGameListReply) ProtoMessage() {}
 
 func (x *GetNewGameListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[104]
+	mi := &file_proto_game_v1_game_proto_msgTypes[105]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8739,7 +8800,7 @@ func (x *GetNewGameListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetNewGameListReply.ProtoReflect.Descriptor instead.
 func (*GetNewGameListReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{104}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{105}
 }
 
 func (x *GetNewGameListReply) GetPage() int64 {
@@ -8820,7 +8881,7 @@ type GameValueItem struct {
 
 func (x *GameValueItem) Reset() {
 	*x = GameValueItem{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[105]
+	mi := &file_proto_game_v1_game_proto_msgTypes[106]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8832,7 +8893,7 @@ func (x *GameValueItem) String() string {
 func (*GameValueItem) ProtoMessage() {}
 
 func (x *GameValueItem) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[105]
+	mi := &file_proto_game_v1_game_proto_msgTypes[106]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8845,7 +8906,7 @@ func (x *GameValueItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameValueItem.ProtoReflect.Descriptor instead.
 func (*GameValueItem) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{105}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{106}
 }
 
 func (x *GameValueItem) GetCategoryType() int64 {
@@ -9102,7 +9163,7 @@ type BigWinGameListReq struct {
 
 func (x *BigWinGameListReq) Reset() {
 	*x = BigWinGameListReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[106]
+	mi := &file_proto_game_v1_game_proto_msgTypes[107]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9114,7 +9175,7 @@ func (x *BigWinGameListReq) String() string {
 func (*BigWinGameListReq) ProtoMessage() {}
 
 func (x *BigWinGameListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[106]
+	mi := &file_proto_game_v1_game_proto_msgTypes[107]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9127,7 +9188,7 @@ func (x *BigWinGameListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BigWinGameListReq.ProtoReflect.Descriptor instead.
 func (*BigWinGameListReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{106}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{107}
 }
 
 func (x *BigWinGameListReq) GetCurrencyCode() string {
@@ -9146,7 +9207,7 @@ type BigWinGameListReply struct {
 
 func (x *BigWinGameListReply) Reset() {
 	*x = BigWinGameListReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[107]
+	mi := &file_proto_game_v1_game_proto_msgTypes[108]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9158,7 +9219,7 @@ func (x *BigWinGameListReply) String() string {
 func (*BigWinGameListReply) ProtoMessage() {}
 
 func (x *BigWinGameListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[107]
+	mi := &file_proto_game_v1_game_proto_msgTypes[108]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9171,7 +9232,7 @@ func (x *BigWinGameListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BigWinGameListReply.ProtoReflect.Descriptor instead.
 func (*BigWinGameListReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{107}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{108}
 }
 
 func (x *BigWinGameListReply) GetRows() []*WinGameValueItem {
@@ -9209,7 +9270,7 @@ type WinGameValueItem struct {
 
 func (x *WinGameValueItem) Reset() {
 	*x = WinGameValueItem{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[108]
+	mi := &file_proto_game_v1_game_proto_msgTypes[109]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9221,7 +9282,7 @@ func (x *WinGameValueItem) String() string {
 func (*WinGameValueItem) ProtoMessage() {}
 
 func (x *WinGameValueItem) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[108]
+	mi := &file_proto_game_v1_game_proto_msgTypes[109]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9234,7 +9295,7 @@ func (x *WinGameValueItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WinGameValueItem.ProtoReflect.Descriptor instead.
 func (*WinGameValueItem) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{108}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{109}
 }
 
 func (x *WinGameValueItem) GetCurrencyCode() string {
@@ -9390,7 +9451,7 @@ type FetchGamePlatformMetaReq struct {
 
 func (x *FetchGamePlatformMetaReq) Reset() {
 	*x = FetchGamePlatformMetaReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[109]
+	mi := &file_proto_game_v1_game_proto_msgTypes[110]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9402,7 +9463,7 @@ func (x *FetchGamePlatformMetaReq) String() string {
 func (*FetchGamePlatformMetaReq) ProtoMessage() {}
 
 func (x *FetchGamePlatformMetaReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[109]
+	mi := &file_proto_game_v1_game_proto_msgTypes[110]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9415,7 +9476,7 @@ func (x *FetchGamePlatformMetaReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchGamePlatformMetaReq.ProtoReflect.Descriptor instead.
 func (*FetchGamePlatformMetaReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{109}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{110}
 }
 
 func (x *FetchGamePlatformMetaReq) GetGameId() int64 {
@@ -9463,7 +9524,7 @@ type FetchGamePlatformMetaReply struct {
 
 func (x *FetchGamePlatformMetaReply) Reset() {
 	*x = FetchGamePlatformMetaReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[110]
+	mi := &file_proto_game_v1_game_proto_msgTypes[111]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9475,7 +9536,7 @@ func (x *FetchGamePlatformMetaReply) String() string {
 func (*FetchGamePlatformMetaReply) ProtoMessage() {}
 
 func (x *FetchGamePlatformMetaReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[110]
+	mi := &file_proto_game_v1_game_proto_msgTypes[111]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9488,7 +9549,7 @@ func (x *FetchGamePlatformMetaReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchGamePlatformMetaReply.ProtoReflect.Descriptor instead.
 func (*FetchGamePlatformMetaReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{110}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{111}
 }
 
 func (x *FetchGamePlatformMetaReply) GetGameDetail() *GameDetails {
@@ -9519,7 +9580,7 @@ type FetchHotManagementReq struct {
 
 func (x *FetchHotManagementReq) Reset() {
 	*x = FetchHotManagementReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[111]
+	mi := &file_proto_game_v1_game_proto_msgTypes[112]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9531,7 +9592,7 @@ func (x *FetchHotManagementReq) String() string {
 func (*FetchHotManagementReq) ProtoMessage() {}
 
 func (x *FetchHotManagementReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[111]
+	mi := &file_proto_game_v1_game_proto_msgTypes[112]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9544,7 +9605,7 @@ func (x *FetchHotManagementReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchHotManagementReq.ProtoReflect.Descriptor instead.
 func (*FetchHotManagementReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{111}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{112}
 }
 
 func (x *FetchHotManagementReq) GetPage() int64 {
@@ -9602,7 +9663,7 @@ type FetchHotManagementReply struct {
 
 func (x *FetchHotManagementReply) Reset() {
 	*x = FetchHotManagementReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[112]
+	mi := &file_proto_game_v1_game_proto_msgTypes[113]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9614,7 +9675,7 @@ func (x *FetchHotManagementReply) String() string {
 func (*FetchHotManagementReply) ProtoMessage() {}
 
 func (x *FetchHotManagementReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[112]
+	mi := &file_proto_game_v1_game_proto_msgTypes[113]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9627,7 +9688,7 @@ func (x *FetchHotManagementReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchHotManagementReply.ProtoReflect.Descriptor instead.
 func (*FetchHotManagementReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{112}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{113}
 }
 
 func (x *FetchHotManagementReply) GetPage() int64 {
@@ -9681,7 +9742,7 @@ type GameHotManagement struct {
 
 func (x *GameHotManagement) Reset() {
 	*x = GameHotManagement{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[113]
+	mi := &file_proto_game_v1_game_proto_msgTypes[114]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9693,7 +9754,7 @@ func (x *GameHotManagement) String() string {
 func (*GameHotManagement) ProtoMessage() {}
 
 func (x *GameHotManagement) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[113]
+	mi := &file_proto_game_v1_game_proto_msgTypes[114]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9706,7 +9767,7 @@ func (x *GameHotManagement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameHotManagement.ProtoReflect.Descriptor instead.
 func (*GameHotManagement) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{113}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{114}
 }
 
 func (x *GameHotManagement) GetId() int64 {
@@ -9774,7 +9835,7 @@ type FetchGameMapByIDReq struct {
 
 func (x *FetchGameMapByIDReq) Reset() {
 	*x = FetchGameMapByIDReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[114]
+	mi := &file_proto_game_v1_game_proto_msgTypes[115]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9786,7 +9847,7 @@ func (x *FetchGameMapByIDReq) String() string {
 func (*FetchGameMapByIDReq) ProtoMessage() {}
 
 func (x *FetchGameMapByIDReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[114]
+	mi := &file_proto_game_v1_game_proto_msgTypes[115]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9799,7 +9860,7 @@ func (x *FetchGameMapByIDReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchGameMapByIDReq.ProtoReflect.Descriptor instead.
 func (*FetchGameMapByIDReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{114}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{115}
 }
 
 func (x *FetchGameMapByIDReq) GetGameId() []int64 {
@@ -9818,7 +9879,7 @@ type FetchGameMapByIDReply struct {
 
 func (x *FetchGameMapByIDReply) Reset() {
 	*x = FetchGameMapByIDReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[115]
+	mi := &file_proto_game_v1_game_proto_msgTypes[116]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9830,7 +9891,7 @@ func (x *FetchGameMapByIDReply) String() string {
 func (*FetchGameMapByIDReply) ProtoMessage() {}
 
 func (x *FetchGameMapByIDReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[115]
+	mi := &file_proto_game_v1_game_proto_msgTypes[116]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9843,7 +9904,7 @@ func (x *FetchGameMapByIDReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchGameMapByIDReply.ProtoReflect.Descriptor instead.
 func (*FetchGameMapByIDReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{115}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{116}
 }
 
 func (x *FetchGameMapByIDReply) GetInfo() map[int64]*GameDetails {
@@ -9862,7 +9923,7 @@ type FetchPlatformMapByIDReq struct {
 
 func (x *FetchPlatformMapByIDReq) Reset() {
 	*x = FetchPlatformMapByIDReq{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[116]
+	mi := &file_proto_game_v1_game_proto_msgTypes[117]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9874,7 +9935,7 @@ func (x *FetchPlatformMapByIDReq) String() string {
 func (*FetchPlatformMapByIDReq) ProtoMessage() {}
 
 func (x *FetchPlatformMapByIDReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[116]
+	mi := &file_proto_game_v1_game_proto_msgTypes[117]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9887,7 +9948,7 @@ func (x *FetchPlatformMapByIDReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchPlatformMapByIDReq.ProtoReflect.Descriptor instead.
 func (*FetchPlatformMapByIDReq) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{116}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{117}
 }
 
 func (x *FetchPlatformMapByIDReq) GetGamePlatformId() []int64 {
@@ -9906,7 +9967,7 @@ type FetchPlatformMapByIDReply struct {
 
 func (x *FetchPlatformMapByIDReply) Reset() {
 	*x = FetchPlatformMapByIDReply{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[117]
+	mi := &file_proto_game_v1_game_proto_msgTypes[118]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9918,7 +9979,7 @@ func (x *FetchPlatformMapByIDReply) String() string {
 func (*FetchPlatformMapByIDReply) ProtoMessage() {}
 
 func (x *FetchPlatformMapByIDReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[117]
+	mi := &file_proto_game_v1_game_proto_msgTypes[118]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9931,7 +9992,7 @@ func (x *FetchPlatformMapByIDReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchPlatformMapByIDReply.ProtoReflect.Descriptor instead.
 func (*FetchPlatformMapByIDReply) Descriptor() ([]byte, []int) {
-	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{117}
+	return file_proto_game_v1_game_proto_rawDescGZIP(), []int{118}
 }
 
 func (x *FetchPlatformMapByIDReply) GetInfo() map[int64]*GamePlatformDetail {
@@ -9955,7 +10016,7 @@ type GetGameTransferOrderStatusReplyOrderInfo struct {
 
 func (x *GetGameTransferOrderStatusReplyOrderInfo) Reset() {
 	*x = GetGameTransferOrderStatusReplyOrderInfo{}
-	mi := &file_proto_game_v1_game_proto_msgTypes[119]
+	mi := &file_proto_game_v1_game_proto_msgTypes[120]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9967,7 +10028,7 @@ func (x *GetGameTransferOrderStatusReplyOrderInfo) String() string {
 func (*GetGameTransferOrderStatusReplyOrderInfo) ProtoMessage() {}
 
 func (x *GetGameTransferOrderStatusReplyOrderInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_game_v1_game_proto_msgTypes[119]
+	mi := &file_proto_game_v1_game_proto_msgTypes[120]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10578,7 +10639,11 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x10game_category_id\x18\x03 \x01(\x03R\x0egameCategoryId\x124\n" +
 	"\x16tripartite_category_id\x18\x04 \x01(\x03R\x14tripartiteCategoryId\x12\x17\n" +
 	"\auser_id\x18\x05 \x01(\x03R\x06userId\x122\n" +
-	"\x15include_all_platforms\x18\x06 \x01(\bR\x13includeAllPlatforms\"M\n" +
+	"\x15include_all_platforms\x18\x06 \x01(\bR\x13includeAllPlatforms\"\x93\x01\n" +
+	"\x18GetPlatformListByDataReq\x12#\n" +
+	"\rcurrency_code\x18\x01 \x01(\tR\fcurrencyCode\x12(\n" +
+	"\x10game_category_id\x18\x02 \x01(\x03R\x0egameCategoryId\x12(\n" +
+	"\x10search_game_name\x18\x03 \x01(\tR\x0esearchGameName\"M\n" +
 	"\x1aGetPlatformListByCurrReply\x12/\n" +
 	"\x04rows\x18\x14 \x03(\v2\x1b.game.v1.GamePlatformDetailR\x04rows\"\x96\a\n" +
 	"\x12GamePlatformDetail\x12(\n" +
@@ -11009,13 +11074,14 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x10SendGameBetBetMQ\x12\x1c.game.v1.SendGameBetBetMQReq\x1a\x12.game.v1.GameReply\x12X\n" +
 	"\x1aSendGameBetBetSettlementMQ\x12&.game.v1.SendGameBetBetSettlementMQReq\x1a\x12.game.v1.GameReply\x12J\n" +
 	"\x13AddRecentlyGamePlay\x12\x1f.game.v1.AddRecentlyGamePlayReq\x1a\x12.game.v1.GameReply\x12B\n" +
-	"\x1aSyncGameBetSummaryToPGTask\x12\x10.game.v1.GameReq\x1a\x12.game.v1.GameReply2\xe3\x14\n" +
+	"\x1aSyncGameBetSummaryToPGTask\x12\x10.game.v1.GameReq\x1a\x12.game.v1.GameReply2\xc8\x15\n" +
 	"\x12LiveGameRpcService\x12c\n" +
 	"\x19GetGameCategoryListByCurr\x12!.game.v1.GetCategoryListByCurrReq\x1a#.game.v1.GetCategoryListByCurrReply\x12o\n" +
 	"\x1fGetGameCategorySimpleListByCurr\x12!.game.v1.GetCategoryListByCurrReq\x1a).game.v1.GetCategorySimpleListByCurrReply\x12\\\n" +
 	"\x15GetGameListByCategory\x12!.game.v1.GetGameListByCategoryReq\x1a .game.v1.GetGameDetailsListReply\x12_\n" +
 	"\x15GetPlatformListByCurr\x12!.game.v1.GetPlatformListByCurrReq\x1a#.game.v1.GetPlatformListByCurrReply\x12c\n" +
-	"\x17GetPlatListSimpleByCurr\x12!.game.v1.GetPlatformListByCurrReq\x1a%.game.v1.GetPlatListSimpleByCurrReply\x12R\n" +
+	"\x17GetPlatListSimpleByCurr\x12!.game.v1.GetPlatformListByCurrReq\x1a%.game.v1.GetPlatListSimpleByCurrReply\x12c\n" +
+	"\x17GetPlatListSimpleByData\x12!.game.v1.GetPlatformListByDataReq\x1a%.game.v1.GetPlatListSimpleByCurrReply\x12R\n" +
 	"\x12GetPlatformDetails\x12\x1f.game.v1.GamePlatformDetailsReq\x1a\x1b.game.v1.GamePlatformDetail\x12\\\n" +
 	"\x15GetGameListByPlatform\x12!.game.v1.GetGameListByPlatformReq\x1a .game.v1.GetGameDetailsListReply\x12X\n" +
 	"\x13GetGameListBySearch\x12\x1f.game.v1.GetGameListBySearchReq\x1a .game.v1.GetGameDetailsListReply\x12e\n" +
@@ -11054,7 +11120,7 @@ func file_proto_game_v1_game_proto_rawDescGZIP() []byte {
 	return file_proto_game_v1_game_proto_rawDescData
 }
 
-var file_proto_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 125)
+var file_proto_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 126)
 var file_proto_game_v1_game_proto_goTypes = []any{
 	(*GameReq)(nil),                                  // 0: game.v1.GameReq
 	(*GameReply)(nil),                                // 1: game.v1.GameReply
@@ -11124,98 +11190,99 @@ var file_proto_game_v1_game_proto_goTypes = []any{
 	(*CategoryNameBase)(nil),                         // 65: game.v1.CategoryNameBase
 	(*GetGameListByCategoryReq)(nil),                 // 66: game.v1.GetGameListByCategoryReq
 	(*GetPlatformListByCurrReq)(nil),                 // 67: game.v1.GetPlatformListByCurrReq
-	(*GetPlatformListByCurrReply)(nil),               // 68: game.v1.GetPlatformListByCurrReply
-	(*GamePlatformDetail)(nil),                       // 69: game.v1.GamePlatformDetail
-	(*GetPlatListSimpleByCurrReply)(nil),             // 70: game.v1.GetPlatListSimpleByCurrReply
-	(*GamePlatformSimpleDetail)(nil),                 // 71: game.v1.GamePlatformSimpleDetail
-	(*PlatformRedirectionBase)(nil),                  // 72: game.v1.PlatformRedirectionBase
-	(*GameDetails)(nil),                              // 73: game.v1.GameDetails
-	(*SubGameInfo)(nil),                              // 74: game.v1.SubGameInfo
-	(*GameSimpleDetails)(nil),                        // 75: game.v1.GameSimpleDetails
-	(*GetGameDetailsListReply)(nil),                  // 76: game.v1.GetGameDetailsListReply
-	(*GetGameSimpleListBySearchReply)(nil),           // 77: game.v1.GetGameSimpleListBySearchReply
-	(*GetGameListByPlatformReq)(nil),                 // 78: game.v1.GetGameListByPlatformReq
-	(*GamePlatformDetailsReq)(nil),                   // 79: game.v1.GamePlatformDetailsReq
-	(*GetGameListBySearchReq)(nil),                   // 80: game.v1.GetGameListBySearchReq
-	(*GameHandelFavoriteReq)(nil),                    // 81: game.v1.GameHandelFavoriteReq
-	(*GetGameFavoriteListReq)(nil),                   // 82: game.v1.GetGameFavoriteListReq
-	(*GetUserFavoriteIdsReq)(nil),                    // 83: game.v1.GetUserFavoriteIdsReq
-	(*GetUserFavoriteIdsReply)(nil),                  // 84: game.v1.GetUserFavoriteIdsReply
-	(*GetGameRecentlyListReq)(nil),                   // 85: game.v1.GetGameRecentlyListReq
-	(*GetHotGameListReq)(nil),                        // 86: game.v1.GetHotGameListReq
-	(*GetHotPlatformListReq)(nil),                    // 87: game.v1.GetHotPlatformListReq
-	(*GetHotPlatformListReply)(nil),                  // 88: game.v1.GetHotPlatformListReply
-	(*GameDetailsReq)(nil),                           // 89: game.v1.GameDetailsReq
-	(*GetUserBetRecordListReq)(nil),                  // 90: game.v1.GetUserBetRecordListReq
-	(*GetUserBetRecordListReply)(nil),                // 91: game.v1.GetUserBetRecordListReply
-	(*BetRecordInfo)(nil),                            // 92: game.v1.BetRecordInfo
-	(*GetUserBetRecordSummaryReq)(nil),               // 93: game.v1.GetUserBetRecordSummaryReq
-	(*GetUserBetRecordSummaryReply)(nil),             // 94: game.v1.GetUserBetRecordSummaryReply
-	(*BetSummaryInfo)(nil),                           // 95: game.v1.BetSummaryInfo
-	(*GetHomeGameItemReq)(nil),                       // 96: game.v1.GetHomeGameItemReq
-	(*PlatformDetailsList)(nil),                      // 97: game.v1.PlatformDetailsList
-	(*GameDetailsList)(nil),                          // 98: game.v1.GameDetailsList
-	(*GetHomePlatformItemsReply)(nil),                // 99: game.v1.GetHomePlatformItemsReply
-	(*GetHomeGameItemsReply)(nil),                    // 100: game.v1.GetHomeGameItemsReply
-	(*GetGameConfInfoReq)(nil),                       // 101: game.v1.GetGameConfInfoReq
-	(*GetGameConfInfoReply)(nil),                     // 102: game.v1.GetGameConfInfoReply
-	(*GetNewGameListReq)(nil),                        // 103: game.v1.GetNewGameListReq
-	(*GetNewGameListReply)(nil),                      // 104: game.v1.GetNewGameListReply
-	(*GameValueItem)(nil),                            // 105: game.v1.GameValueItem
-	(*BigWinGameListReq)(nil),                        // 106: game.v1.BigWinGameListReq
-	(*BigWinGameListReply)(nil),                      // 107: game.v1.BigWinGameListReply
-	(*WinGameValueItem)(nil),                         // 108: game.v1.WinGameValueItem
-	(*FetchGamePlatformMetaReq)(nil),                 // 109: game.v1.FetchGamePlatformMetaReq
-	(*FetchGamePlatformMetaReply)(nil),               // 110: game.v1.FetchGamePlatformMetaReply
-	(*FetchHotManagementReq)(nil),                    // 111: game.v1.FetchHotManagementReq
-	(*FetchHotManagementReply)(nil),                  // 112: game.v1.FetchHotManagementReply
-	(*GameHotManagement)(nil),                        // 113: game.v1.GameHotManagement
-	(*FetchGameMapByIDReq)(nil),                      // 114: game.v1.FetchGameMapByIDReq
-	(*FetchGameMapByIDReply)(nil),                    // 115: game.v1.FetchGameMapByIDReply
-	(*FetchPlatformMapByIDReq)(nil),                  // 116: game.v1.FetchPlatformMapByIDReq
-	(*FetchPlatformMapByIDReply)(nil),                // 117: game.v1.FetchPlatformMapByIDReply
-	nil,                                              // 118: game.v1.GetGameTransferOrderStatusReply.OrdersEntry
-	(*GetGameTransferOrderStatusReplyOrderInfo)(nil), // 119: game.v1.GetGameTransferOrderStatusReply.order_info
-	nil, // 120: game.v1.GetUserFavoriteIdsReply.FavoriteIdsEntry
-	nil, // 121: game.v1.GetHomePlatformItemsReply.HomeItemEntry
-	nil, // 122: game.v1.GetHomeGameItemsReply.HomeItemEntry
-	nil, // 123: game.v1.FetchGameMapByIDReply.InfoEntry
-	nil, // 124: game.v1.FetchPlatformMapByIDReply.InfoEntry
+	(*GetPlatformListByDataReq)(nil),                 // 68: game.v1.GetPlatformListByDataReq
+	(*GetPlatformListByCurrReply)(nil),               // 69: game.v1.GetPlatformListByCurrReply
+	(*GamePlatformDetail)(nil),                       // 70: game.v1.GamePlatformDetail
+	(*GetPlatListSimpleByCurrReply)(nil),             // 71: game.v1.GetPlatListSimpleByCurrReply
+	(*GamePlatformSimpleDetail)(nil),                 // 72: game.v1.GamePlatformSimpleDetail
+	(*PlatformRedirectionBase)(nil),                  // 73: game.v1.PlatformRedirectionBase
+	(*GameDetails)(nil),                              // 74: game.v1.GameDetails
+	(*SubGameInfo)(nil),                              // 75: game.v1.SubGameInfo
+	(*GameSimpleDetails)(nil),                        // 76: game.v1.GameSimpleDetails
+	(*GetGameDetailsListReply)(nil),                  // 77: game.v1.GetGameDetailsListReply
+	(*GetGameSimpleListBySearchReply)(nil),           // 78: game.v1.GetGameSimpleListBySearchReply
+	(*GetGameListByPlatformReq)(nil),                 // 79: game.v1.GetGameListByPlatformReq
+	(*GamePlatformDetailsReq)(nil),                   // 80: game.v1.GamePlatformDetailsReq
+	(*GetGameListBySearchReq)(nil),                   // 81: game.v1.GetGameListBySearchReq
+	(*GameHandelFavoriteReq)(nil),                    // 82: game.v1.GameHandelFavoriteReq
+	(*GetGameFavoriteListReq)(nil),                   // 83: game.v1.GetGameFavoriteListReq
+	(*GetUserFavoriteIdsReq)(nil),                    // 84: game.v1.GetUserFavoriteIdsReq
+	(*GetUserFavoriteIdsReply)(nil),                  // 85: game.v1.GetUserFavoriteIdsReply
+	(*GetGameRecentlyListReq)(nil),                   // 86: game.v1.GetGameRecentlyListReq
+	(*GetHotGameListReq)(nil),                        // 87: game.v1.GetHotGameListReq
+	(*GetHotPlatformListReq)(nil),                    // 88: game.v1.GetHotPlatformListReq
+	(*GetHotPlatformListReply)(nil),                  // 89: game.v1.GetHotPlatformListReply
+	(*GameDetailsReq)(nil),                           // 90: game.v1.GameDetailsReq
+	(*GetUserBetRecordListReq)(nil),                  // 91: game.v1.GetUserBetRecordListReq
+	(*GetUserBetRecordListReply)(nil),                // 92: game.v1.GetUserBetRecordListReply
+	(*BetRecordInfo)(nil),                            // 93: game.v1.BetRecordInfo
+	(*GetUserBetRecordSummaryReq)(nil),               // 94: game.v1.GetUserBetRecordSummaryReq
+	(*GetUserBetRecordSummaryReply)(nil),             // 95: game.v1.GetUserBetRecordSummaryReply
+	(*BetSummaryInfo)(nil),                           // 96: game.v1.BetSummaryInfo
+	(*GetHomeGameItemReq)(nil),                       // 97: game.v1.GetHomeGameItemReq
+	(*PlatformDetailsList)(nil),                      // 98: game.v1.PlatformDetailsList
+	(*GameDetailsList)(nil),                          // 99: game.v1.GameDetailsList
+	(*GetHomePlatformItemsReply)(nil),                // 100: game.v1.GetHomePlatformItemsReply
+	(*GetHomeGameItemsReply)(nil),                    // 101: game.v1.GetHomeGameItemsReply
+	(*GetGameConfInfoReq)(nil),                       // 102: game.v1.GetGameConfInfoReq
+	(*GetGameConfInfoReply)(nil),                     // 103: game.v1.GetGameConfInfoReply
+	(*GetNewGameListReq)(nil),                        // 104: game.v1.GetNewGameListReq
+	(*GetNewGameListReply)(nil),                      // 105: game.v1.GetNewGameListReply
+	(*GameValueItem)(nil),                            // 106: game.v1.GameValueItem
+	(*BigWinGameListReq)(nil),                        // 107: game.v1.BigWinGameListReq
+	(*BigWinGameListReply)(nil),                      // 108: game.v1.BigWinGameListReply
+	(*WinGameValueItem)(nil),                         // 109: game.v1.WinGameValueItem
+	(*FetchGamePlatformMetaReq)(nil),                 // 110: game.v1.FetchGamePlatformMetaReq
+	(*FetchGamePlatformMetaReply)(nil),               // 111: game.v1.FetchGamePlatformMetaReply
+	(*FetchHotManagementReq)(nil),                    // 112: game.v1.FetchHotManagementReq
+	(*FetchHotManagementReply)(nil),                  // 113: game.v1.FetchHotManagementReply
+	(*GameHotManagement)(nil),                        // 114: game.v1.GameHotManagement
+	(*FetchGameMapByIDReq)(nil),                      // 115: game.v1.FetchGameMapByIDReq
+	(*FetchGameMapByIDReply)(nil),                    // 116: game.v1.FetchGameMapByIDReply
+	(*FetchPlatformMapByIDReq)(nil),                  // 117: game.v1.FetchPlatformMapByIDReq
+	(*FetchPlatformMapByIDReply)(nil),                // 118: game.v1.FetchPlatformMapByIDReply
+	nil,                                              // 119: game.v1.GetGameTransferOrderStatusReply.OrdersEntry
+	(*GetGameTransferOrderStatusReplyOrderInfo)(nil), // 120: game.v1.GetGameTransferOrderStatusReply.order_info
+	nil, // 121: game.v1.GetUserFavoriteIdsReply.FavoriteIdsEntry
+	nil, // 122: game.v1.GetHomePlatformItemsReply.HomeItemEntry
+	nil, // 123: game.v1.GetHomeGameItemsReply.HomeItemEntry
+	nil, // 124: game.v1.FetchGameMapByIDReply.InfoEntry
+	nil, // 125: game.v1.FetchPlatformMapByIDReply.InfoEntry
 }
 var file_proto_game_v1_game_proto_depIdxs = []int32{
-	118, // 0: game.v1.GetGameTransferOrderStatusReply.orders:type_name -> game.v1.GetGameTransferOrderStatusReply.OrdersEntry
+	119, // 0: game.v1.GetGameTransferOrderStatusReply.orders:type_name -> game.v1.GetGameTransferOrderStatusReply.OrdersEntry
 	21,  // 1: game.v1.GetGameTransferBetOrderListReply.bet_list:type_name -> game.v1.TransferBetRecord
 	49,  // 2: game.v1.BatchAddGameBetRecordReq.add_game_bet_record_req:type_name -> game.v1.AddGameBetRecordReq
 	52,  // 3: game.v1.BatchAddGameSettledRecordReq.add_game_settled_record_req:type_name -> game.v1.AddGameSettledRecordReq
 	21,  // 4: game.v1.AddTransferGameBetRecordReq.record_list:type_name -> game.v1.TransferBetRecord
 	62,  // 5: game.v1.GetCategoryListByCurrReply.rows:type_name -> game.v1.GameCategoryDetail
 	64,  // 6: game.v1.GetCategorySimpleListByCurrReply.rows:type_name -> game.v1.GameCategorySimpleDetail
-	69,  // 7: game.v1.GetPlatformListByCurrReply.rows:type_name -> game.v1.GamePlatformDetail
-	72,  // 8: game.v1.GamePlatformDetail.platform_redirection:type_name -> game.v1.PlatformRedirectionBase
-	71,  // 9: game.v1.GetPlatListSimpleByCurrReply.rows:type_name -> game.v1.GamePlatformSimpleDetail
-	74,  // 10: game.v1.GameDetails.sub_factory_params:type_name -> game.v1.SubGameInfo
-	73,  // 11: game.v1.GetGameDetailsListReply.rows:type_name -> game.v1.GameDetails
-	75,  // 12: game.v1.GetGameSimpleListBySearchReply.rows:type_name -> game.v1.GameSimpleDetails
-	120, // 13: game.v1.GetUserFavoriteIdsReply.favoriteIds:type_name -> game.v1.GetUserFavoriteIdsReply.FavoriteIdsEntry
-	69,  // 14: game.v1.GetHotPlatformListReply.rows:type_name -> game.v1.GamePlatformDetail
-	92,  // 15: game.v1.GetUserBetRecordListReply.rows:type_name -> game.v1.BetRecordInfo
-	95,  // 16: game.v1.GetUserBetRecordSummaryReply.bet_summary_list:type_name -> game.v1.BetSummaryInfo
-	69,  // 17: game.v1.PlatformDetailsList.items:type_name -> game.v1.GamePlatformDetail
-	73,  // 18: game.v1.GameDetailsList.items:type_name -> game.v1.GameDetails
-	121, // 19: game.v1.GetHomePlatformItemsReply.home_item:type_name -> game.v1.GetHomePlatformItemsReply.HomeItemEntry
-	122, // 20: game.v1.GetHomeGameItemsReply.home_item:type_name -> game.v1.GetHomeGameItemsReply.HomeItemEntry
-	105, // 21: game.v1.GetNewGameListReply.rows:type_name -> game.v1.GameValueItem
-	108, // 22: game.v1.BigWinGameListReply.rows:type_name -> game.v1.WinGameValueItem
-	73,  // 23: game.v1.FetchGamePlatformMetaReply.game_detail:type_name -> game.v1.GameDetails
-	69,  // 24: game.v1.FetchGamePlatformMetaReply.platform_detail:type_name -> game.v1.GamePlatformDetail
-	113, // 25: game.v1.FetchHotManagementReply.rows:type_name -> game.v1.GameHotManagement
-	123, // 26: game.v1.FetchGameMapByIDReply.info:type_name -> game.v1.FetchGameMapByIDReply.InfoEntry
-	124, // 27: game.v1.FetchPlatformMapByIDReply.info:type_name -> game.v1.FetchPlatformMapByIDReply.InfoEntry
-	119, // 28: game.v1.GetGameTransferOrderStatusReply.OrdersEntry.value:type_name -> game.v1.GetGameTransferOrderStatusReply.order_info
-	97,  // 29: game.v1.GetHomePlatformItemsReply.HomeItemEntry.value:type_name -> game.v1.PlatformDetailsList
-	98,  // 30: game.v1.GetHomeGameItemsReply.HomeItemEntry.value:type_name -> game.v1.GameDetailsList
-	73,  // 31: game.v1.FetchGameMapByIDReply.InfoEntry.value:type_name -> game.v1.GameDetails
-	69,  // 32: game.v1.FetchPlatformMapByIDReply.InfoEntry.value:type_name -> game.v1.GamePlatformDetail
+	70,  // 7: game.v1.GetPlatformListByCurrReply.rows:type_name -> game.v1.GamePlatformDetail
+	73,  // 8: game.v1.GamePlatformDetail.platform_redirection:type_name -> game.v1.PlatformRedirectionBase
+	72,  // 9: game.v1.GetPlatListSimpleByCurrReply.rows:type_name -> game.v1.GamePlatformSimpleDetail
+	75,  // 10: game.v1.GameDetails.sub_factory_params:type_name -> game.v1.SubGameInfo
+	74,  // 11: game.v1.GetGameDetailsListReply.rows:type_name -> game.v1.GameDetails
+	76,  // 12: game.v1.GetGameSimpleListBySearchReply.rows:type_name -> game.v1.GameSimpleDetails
+	121, // 13: game.v1.GetUserFavoriteIdsReply.favoriteIds:type_name -> game.v1.GetUserFavoriteIdsReply.FavoriteIdsEntry
+	70,  // 14: game.v1.GetHotPlatformListReply.rows:type_name -> game.v1.GamePlatformDetail
+	93,  // 15: game.v1.GetUserBetRecordListReply.rows:type_name -> game.v1.BetRecordInfo
+	96,  // 16: game.v1.GetUserBetRecordSummaryReply.bet_summary_list:type_name -> game.v1.BetSummaryInfo
+	70,  // 17: game.v1.PlatformDetailsList.items:type_name -> game.v1.GamePlatformDetail
+	74,  // 18: game.v1.GameDetailsList.items:type_name -> game.v1.GameDetails
+	122, // 19: game.v1.GetHomePlatformItemsReply.home_item:type_name -> game.v1.GetHomePlatformItemsReply.HomeItemEntry
+	123, // 20: game.v1.GetHomeGameItemsReply.home_item:type_name -> game.v1.GetHomeGameItemsReply.HomeItemEntry
+	106, // 21: game.v1.GetNewGameListReply.rows:type_name -> game.v1.GameValueItem
+	109, // 22: game.v1.BigWinGameListReply.rows:type_name -> game.v1.WinGameValueItem
+	74,  // 23: game.v1.FetchGamePlatformMetaReply.game_detail:type_name -> game.v1.GameDetails
+	70,  // 24: game.v1.FetchGamePlatformMetaReply.platform_detail:type_name -> game.v1.GamePlatformDetail
+	114, // 25: game.v1.FetchHotManagementReply.rows:type_name -> game.v1.GameHotManagement
+	124, // 26: game.v1.FetchGameMapByIDReply.info:type_name -> game.v1.FetchGameMapByIDReply.InfoEntry
+	125, // 27: game.v1.FetchPlatformMapByIDReply.info:type_name -> game.v1.FetchPlatformMapByIDReply.InfoEntry
+	120, // 28: game.v1.GetGameTransferOrderStatusReply.OrdersEntry.value:type_name -> game.v1.GetGameTransferOrderStatusReply.order_info
+	98,  // 29: game.v1.GetHomePlatformItemsReply.HomeItemEntry.value:type_name -> game.v1.PlatformDetailsList
+	99,  // 30: game.v1.GetHomeGameItemsReply.HomeItemEntry.value:type_name -> game.v1.GameDetailsList
+	74,  // 31: game.v1.FetchGameMapByIDReply.InfoEntry.value:type_name -> game.v1.GameDetails
+	70,  // 32: game.v1.FetchPlatformMapByIDReply.InfoEntry.value:type_name -> game.v1.GamePlatformDetail
 	0,   // 33: game.v1.LiveGameExternalService.K9GameResourceListSync:input_type -> game.v1.GameReq
 	0,   // 34: game.v1.LiveGameExternalService.K9GameTransferBetRecordListSync:input_type -> game.v1.GameReq
 	2,   // 35: game.v1.LiveGameExternalSingleService.EnterGame:input_type -> game.v1.SingleEnterGameReq
@@ -11256,98 +11323,100 @@ var file_proto_game_v1_game_proto_depIdxs = []int32{
 	66,  // 70: game.v1.LiveGameRpcService.GetGameListByCategory:input_type -> game.v1.GetGameListByCategoryReq
 	67,  // 71: game.v1.LiveGameRpcService.GetPlatformListByCurr:input_type -> game.v1.GetPlatformListByCurrReq
 	67,  // 72: game.v1.LiveGameRpcService.GetPlatListSimpleByCurr:input_type -> game.v1.GetPlatformListByCurrReq
-	79,  // 73: game.v1.LiveGameRpcService.GetPlatformDetails:input_type -> game.v1.GamePlatformDetailsReq
-	78,  // 74: game.v1.LiveGameRpcService.GetGameListByPlatform:input_type -> game.v1.GetGameListByPlatformReq
-	80,  // 75: game.v1.LiveGameRpcService.GetGameListBySearch:input_type -> game.v1.GetGameListBySearchReq
-	80,  // 76: game.v1.LiveGameRpcService.GetGameSimpleListBySearch:input_type -> game.v1.GetGameListBySearchReq
-	81,  // 77: game.v1.LiveGameRpcService.GameAddFavorite:input_type -> game.v1.GameHandelFavoriteReq
-	81,  // 78: game.v1.LiveGameRpcService.GameRemoveFavorite:input_type -> game.v1.GameHandelFavoriteReq
-	82,  // 79: game.v1.LiveGameRpcService.GameFavoriteList:input_type -> game.v1.GetGameFavoriteListReq
-	86,  // 80: game.v1.LiveGameRpcService.GameRecommendList:input_type -> game.v1.GetHotGameListReq
-	86,  // 81: game.v1.LiveGameRpcService.GetHotGameList:input_type -> game.v1.GetHotGameListReq
-	85,  // 82: game.v1.LiveGameRpcService.GetRecentlyGameList:input_type -> game.v1.GetGameRecentlyListReq
-	87,  // 83: game.v1.LiveGameRpcService.GetHotPlatformList:input_type -> game.v1.GetHotPlatformListReq
-	89,  // 84: game.v1.LiveGameRpcService.GetGameDetails:input_type -> game.v1.GameDetailsReq
-	83,  // 85: game.v1.LiveGameRpcService.GetUserFavoriteIds:input_type -> game.v1.GetUserFavoriteIdsReq
-	90,  // 86: game.v1.LiveGameRpcService.GetUserBetRecordList:input_type -> game.v1.GetUserBetRecordListReq
-	93,  // 87: game.v1.LiveGameRpcService.GetUserBetRecordSummary:input_type -> game.v1.GetUserBetRecordSummaryReq
-	96,  // 88: game.v1.LiveGameRpcService.GetHomePlatformItems:input_type -> game.v1.GetHomeGameItemReq
-	96,  // 89: game.v1.LiveGameRpcService.GetHomeGameItems:input_type -> game.v1.GetHomeGameItemReq
-	96,  // 90: game.v1.LiveGameRpcService.GetHomeGameList:input_type -> game.v1.GetHomeGameItemReq
-	101, // 91: game.v1.LiveGameRpcService.GetGameConfInfo:input_type -> game.v1.GetGameConfInfoReq
-	103, // 92: game.v1.LiveGameRpcService.GetNewGameList:input_type -> game.v1.GetNewGameListReq
-	106, // 93: game.v1.LiveGameRpcService.GetBigWinGameList:input_type -> game.v1.BigWinGameListReq
-	109, // 94: game.v1.LiveGameRpcService.FetchGamePlatformMeta:input_type -> game.v1.FetchGamePlatformMetaReq
-	111, // 95: game.v1.LiveGameRpcService.FetchHotGameList:input_type -> game.v1.FetchHotManagementReq
-	114, // 96: game.v1.LiveGameRpcService.FetchGameMapByIDs:input_type -> game.v1.FetchGameMapByIDReq
-	116, // 97: game.v1.LiveGameRpcService.FetchPlatformMapByIDs:input_type -> game.v1.FetchPlatformMapByIDReq
-	1,   // 98: game.v1.LiveGameExternalService.K9GameResourceListSync:output_type -> game.v1.GameReply
-	1,   // 99: game.v1.LiveGameExternalService.K9GameTransferBetRecordListSync:output_type -> game.v1.GameReply
-	3,   // 100: game.v1.LiveGameExternalSingleService.EnterGame:output_type -> game.v1.SingleEnterGameReply
-	5,   // 101: game.v1.LiveGameExternalSingleService.EnterGameTry:output_type -> game.v1.SingleEnterGameTryReply
-	7,   // 102: game.v1.LiveGameExternalTransferService.EnterGame:output_type -> game.v1.TransferEnterGameReply
-	9,   // 103: game.v1.LiveGameExternalTransferService.WalletTransferInGame:output_type -> game.v1.WalletTransferInGameReply
-	13,  // 104: game.v1.LiveGameExternalTransferService.WalletTransferOutGame:output_type -> game.v1.WalletTransferOutGameReply
-	15,  // 105: game.v1.LiveGameExternalTransferService.GetWalletTransferBalance:output_type -> game.v1.GetWalletTransferBalanceReply
-	19,  // 106: game.v1.LiveGameExternalTransferService.GetGameTransferOrderStatus:output_type -> game.v1.GetGameTransferOrderStatusReply
-	19,  // 107: game.v1.LiveGameExternalTransferService.GetGameTransferOrderStatusV2:output_type -> game.v1.GetGameTransferOrderStatusReply
-	22,  // 108: game.v1.LiveGameExternalTransferService.GetGameTransferBetOrderList:output_type -> game.v1.GetGameTransferBetOrderListReply
-	11,  // 109: game.v1.LiveGameExternalTransferService.WalletTransferInGameV2:output_type -> game.v1.WalletTransferInGameReplyV2
-	17,  // 110: game.v1.LiveGameExternalTransferService.GetWalletTransferBalanceV2:output_type -> game.v1.GetWalletTransferBalanceReplyV2
-	25,  // 111: game.v1.LiveGameCallbackRpcService.GetK9GameAccessKey:output_type -> game.v1.GetK9GameAccessKeyReply
-	27,  // 112: game.v1.LiveGameCallbackRpcService.GameUserBet:output_type -> game.v1.GameUserBetReply
-	29,  // 113: game.v1.LiveGameCallbackRpcService.GameUserReward:output_type -> game.v1.GameUserRewardReply
-	31,  // 114: game.v1.LiveGameCallbackRpcService.GameUserBetCancel:output_type -> game.v1.GameUserBetCancelReply
-	33,  // 115: game.v1.LiveGameCallbackRpcService.GameUserAdjustment:output_type -> game.v1.GameUserAdjustmentReply
-	35,  // 116: game.v1.LiveGameCallbackRpcService.TransferCallback:output_type -> game.v1.TransferCallbackReply
-	1,   // 117: game.v1.LiveGameRpcInnerService.AddTripartiteTransferRecord:output_type -> game.v1.GameReply
-	1,   // 118: game.v1.LiveGameRpcInnerService.AddTripartiteTransferRecordStatus:output_type -> game.v1.GameReply
-	40,  // 119: game.v1.LiveGameRpcInnerService.ProcessMessageTransferData:output_type -> game.v1.ProcessMessageTransferDataReply
-	42,  // 120: game.v1.LiveGameRpcInnerService.ProcessMessageTransferSend:output_type -> game.v1.ProcessMessageTransferSendReply
-	43,  // 121: game.v1.LiveGameRpcInnerService.TripartiteTransferRecordStatus:output_type -> game.v1.TripartiteTransferRecord
-	45,  // 122: game.v1.LiveGameRpcInnerService.CreateCompensationFailedRecord:output_type -> game.v1.CreateCompensationRecordResp
-	47,  // 123: game.v1.LiveGameRpcInnerService.GetGameDetailsByThird:output_type -> game.v1.GetGameDetailsByThirdReply
-	50,  // 124: game.v1.LiveGameRpcInnerService.AddGameBetRecord:output_type -> game.v1.AddGameBetRecordReply
-	48,  // 125: game.v1.LiveGameRpcInnerService.AddGameSettledRecord:output_type -> game.v1.AddGameBetBaseReply
-	48,  // 126: game.v1.LiveGameRpcInnerService.AddGameCancelRecord:output_type -> game.v1.AddGameBetBaseReply
-	48,  // 127: game.v1.LiveGameRpcInnerService.AddGameAdjustmentRecord:output_type -> game.v1.AddGameBetBaseReply
-	1,   // 128: game.v1.LiveGameRpcInnerService.AddTransferGameBetRecord:output_type -> game.v1.GameReply
-	1,   // 129: game.v1.LiveGameRpcInnerService.SendGameBetBetMQ:output_type -> game.v1.GameReply
-	1,   // 130: game.v1.LiveGameRpcInnerService.SendGameBetBetSettlementMQ:output_type -> game.v1.GameReply
-	1,   // 131: game.v1.LiveGameRpcInnerService.AddRecentlyGamePlay:output_type -> game.v1.GameReply
-	1,   // 132: game.v1.LiveGameRpcInnerService.SyncGameBetSummaryToPGTask:output_type -> game.v1.GameReply
-	61,  // 133: game.v1.LiveGameRpcService.GetGameCategoryListByCurr:output_type -> game.v1.GetCategoryListByCurrReply
-	63,  // 134: game.v1.LiveGameRpcService.GetGameCategorySimpleListByCurr:output_type -> game.v1.GetCategorySimpleListByCurrReply
-	76,  // 135: game.v1.LiveGameRpcService.GetGameListByCategory:output_type -> game.v1.GetGameDetailsListReply
-	68,  // 136: game.v1.LiveGameRpcService.GetPlatformListByCurr:output_type -> game.v1.GetPlatformListByCurrReply
-	70,  // 137: game.v1.LiveGameRpcService.GetPlatListSimpleByCurr:output_type -> game.v1.GetPlatListSimpleByCurrReply
-	69,  // 138: game.v1.LiveGameRpcService.GetPlatformDetails:output_type -> game.v1.GamePlatformDetail
-	76,  // 139: game.v1.LiveGameRpcService.GetGameListByPlatform:output_type -> game.v1.GetGameDetailsListReply
-	76,  // 140: game.v1.LiveGameRpcService.GetGameListBySearch:output_type -> game.v1.GetGameDetailsListReply
-	77,  // 141: game.v1.LiveGameRpcService.GetGameSimpleListBySearch:output_type -> game.v1.GetGameSimpleListBySearchReply
-	1,   // 142: game.v1.LiveGameRpcService.GameAddFavorite:output_type -> game.v1.GameReply
-	1,   // 143: game.v1.LiveGameRpcService.GameRemoveFavorite:output_type -> game.v1.GameReply
-	76,  // 144: game.v1.LiveGameRpcService.GameFavoriteList:output_type -> game.v1.GetGameDetailsListReply
-	76,  // 145: game.v1.LiveGameRpcService.GameRecommendList:output_type -> game.v1.GetGameDetailsListReply
-	76,  // 146: game.v1.LiveGameRpcService.GetHotGameList:output_type -> game.v1.GetGameDetailsListReply
-	76,  // 147: game.v1.LiveGameRpcService.GetRecentlyGameList:output_type -> game.v1.GetGameDetailsListReply
-	88,  // 148: game.v1.LiveGameRpcService.GetHotPlatformList:output_type -> game.v1.GetHotPlatformListReply
-	73,  // 149: game.v1.LiveGameRpcService.GetGameDetails:output_type -> game.v1.GameDetails
-	84,  // 150: game.v1.LiveGameRpcService.GetUserFavoriteIds:output_type -> game.v1.GetUserFavoriteIdsReply
-	91,  // 151: game.v1.LiveGameRpcService.GetUserBetRecordList:output_type -> game.v1.GetUserBetRecordListReply
-	94,  // 152: game.v1.LiveGameRpcService.GetUserBetRecordSummary:output_type -> game.v1.GetUserBetRecordSummaryReply
-	99,  // 153: game.v1.LiveGameRpcService.GetHomePlatformItems:output_type -> game.v1.GetHomePlatformItemsReply
-	100, // 154: game.v1.LiveGameRpcService.GetHomeGameItems:output_type -> game.v1.GetHomeGameItemsReply
-	98,  // 155: game.v1.LiveGameRpcService.GetHomeGameList:output_type -> game.v1.GameDetailsList
-	102, // 156: game.v1.LiveGameRpcService.GetGameConfInfo:output_type -> game.v1.GetGameConfInfoReply
-	104, // 157: game.v1.LiveGameRpcService.GetNewGameList:output_type -> game.v1.GetNewGameListReply
-	107, // 158: game.v1.LiveGameRpcService.GetBigWinGameList:output_type -> game.v1.BigWinGameListReply
-	110, // 159: game.v1.LiveGameRpcService.FetchGamePlatformMeta:output_type -> game.v1.FetchGamePlatformMetaReply
-	112, // 160: game.v1.LiveGameRpcService.FetchHotGameList:output_type -> game.v1.FetchHotManagementReply
-	115, // 161: game.v1.LiveGameRpcService.FetchGameMapByIDs:output_type -> game.v1.FetchGameMapByIDReply
-	117, // 162: game.v1.LiveGameRpcService.FetchPlatformMapByIDs:output_type -> game.v1.FetchPlatformMapByIDReply
-	98,  // [98:163] is the sub-list for method output_type
-	33,  // [33:98] is the sub-list for method input_type
+	68,  // 73: game.v1.LiveGameRpcService.GetPlatListSimpleByData:input_type -> game.v1.GetPlatformListByDataReq
+	80,  // 74: game.v1.LiveGameRpcService.GetPlatformDetails:input_type -> game.v1.GamePlatformDetailsReq
+	79,  // 75: game.v1.LiveGameRpcService.GetGameListByPlatform:input_type -> game.v1.GetGameListByPlatformReq
+	81,  // 76: game.v1.LiveGameRpcService.GetGameListBySearch:input_type -> game.v1.GetGameListBySearchReq
+	81,  // 77: game.v1.LiveGameRpcService.GetGameSimpleListBySearch:input_type -> game.v1.GetGameListBySearchReq
+	82,  // 78: game.v1.LiveGameRpcService.GameAddFavorite:input_type -> game.v1.GameHandelFavoriteReq
+	82,  // 79: game.v1.LiveGameRpcService.GameRemoveFavorite:input_type -> game.v1.GameHandelFavoriteReq
+	83,  // 80: game.v1.LiveGameRpcService.GameFavoriteList:input_type -> game.v1.GetGameFavoriteListReq
+	87,  // 81: game.v1.LiveGameRpcService.GameRecommendList:input_type -> game.v1.GetHotGameListReq
+	87,  // 82: game.v1.LiveGameRpcService.GetHotGameList:input_type -> game.v1.GetHotGameListReq
+	86,  // 83: game.v1.LiveGameRpcService.GetRecentlyGameList:input_type -> game.v1.GetGameRecentlyListReq
+	88,  // 84: game.v1.LiveGameRpcService.GetHotPlatformList:input_type -> game.v1.GetHotPlatformListReq
+	90,  // 85: game.v1.LiveGameRpcService.GetGameDetails:input_type -> game.v1.GameDetailsReq
+	84,  // 86: game.v1.LiveGameRpcService.GetUserFavoriteIds:input_type -> game.v1.GetUserFavoriteIdsReq
+	91,  // 87: game.v1.LiveGameRpcService.GetUserBetRecordList:input_type -> game.v1.GetUserBetRecordListReq
+	94,  // 88: game.v1.LiveGameRpcService.GetUserBetRecordSummary:input_type -> game.v1.GetUserBetRecordSummaryReq
+	97,  // 89: game.v1.LiveGameRpcService.GetHomePlatformItems:input_type -> game.v1.GetHomeGameItemReq
+	97,  // 90: game.v1.LiveGameRpcService.GetHomeGameItems:input_type -> game.v1.GetHomeGameItemReq
+	97,  // 91: game.v1.LiveGameRpcService.GetHomeGameList:input_type -> game.v1.GetHomeGameItemReq
+	102, // 92: game.v1.LiveGameRpcService.GetGameConfInfo:input_type -> game.v1.GetGameConfInfoReq
+	104, // 93: game.v1.LiveGameRpcService.GetNewGameList:input_type -> game.v1.GetNewGameListReq
+	107, // 94: game.v1.LiveGameRpcService.GetBigWinGameList:input_type -> game.v1.BigWinGameListReq
+	110, // 95: game.v1.LiveGameRpcService.FetchGamePlatformMeta:input_type -> game.v1.FetchGamePlatformMetaReq
+	112, // 96: game.v1.LiveGameRpcService.FetchHotGameList:input_type -> game.v1.FetchHotManagementReq
+	115, // 97: game.v1.LiveGameRpcService.FetchGameMapByIDs:input_type -> game.v1.FetchGameMapByIDReq
+	117, // 98: game.v1.LiveGameRpcService.FetchPlatformMapByIDs:input_type -> game.v1.FetchPlatformMapByIDReq
+	1,   // 99: game.v1.LiveGameExternalService.K9GameResourceListSync:output_type -> game.v1.GameReply
+	1,   // 100: game.v1.LiveGameExternalService.K9GameTransferBetRecordListSync:output_type -> game.v1.GameReply
+	3,   // 101: game.v1.LiveGameExternalSingleService.EnterGame:output_type -> game.v1.SingleEnterGameReply
+	5,   // 102: game.v1.LiveGameExternalSingleService.EnterGameTry:output_type -> game.v1.SingleEnterGameTryReply
+	7,   // 103: game.v1.LiveGameExternalTransferService.EnterGame:output_type -> game.v1.TransferEnterGameReply
+	9,   // 104: game.v1.LiveGameExternalTransferService.WalletTransferInGame:output_type -> game.v1.WalletTransferInGameReply
+	13,  // 105: game.v1.LiveGameExternalTransferService.WalletTransferOutGame:output_type -> game.v1.WalletTransferOutGameReply
+	15,  // 106: game.v1.LiveGameExternalTransferService.GetWalletTransferBalance:output_type -> game.v1.GetWalletTransferBalanceReply
+	19,  // 107: game.v1.LiveGameExternalTransferService.GetGameTransferOrderStatus:output_type -> game.v1.GetGameTransferOrderStatusReply
+	19,  // 108: game.v1.LiveGameExternalTransferService.GetGameTransferOrderStatusV2:output_type -> game.v1.GetGameTransferOrderStatusReply
+	22,  // 109: game.v1.LiveGameExternalTransferService.GetGameTransferBetOrderList:output_type -> game.v1.GetGameTransferBetOrderListReply
+	11,  // 110: game.v1.LiveGameExternalTransferService.WalletTransferInGameV2:output_type -> game.v1.WalletTransferInGameReplyV2
+	17,  // 111: game.v1.LiveGameExternalTransferService.GetWalletTransferBalanceV2:output_type -> game.v1.GetWalletTransferBalanceReplyV2
+	25,  // 112: game.v1.LiveGameCallbackRpcService.GetK9GameAccessKey:output_type -> game.v1.GetK9GameAccessKeyReply
+	27,  // 113: game.v1.LiveGameCallbackRpcService.GameUserBet:output_type -> game.v1.GameUserBetReply
+	29,  // 114: game.v1.LiveGameCallbackRpcService.GameUserReward:output_type -> game.v1.GameUserRewardReply
+	31,  // 115: game.v1.LiveGameCallbackRpcService.GameUserBetCancel:output_type -> game.v1.GameUserBetCancelReply
+	33,  // 116: game.v1.LiveGameCallbackRpcService.GameUserAdjustment:output_type -> game.v1.GameUserAdjustmentReply
+	35,  // 117: game.v1.LiveGameCallbackRpcService.TransferCallback:output_type -> game.v1.TransferCallbackReply
+	1,   // 118: game.v1.LiveGameRpcInnerService.AddTripartiteTransferRecord:output_type -> game.v1.GameReply
+	1,   // 119: game.v1.LiveGameRpcInnerService.AddTripartiteTransferRecordStatus:output_type -> game.v1.GameReply
+	40,  // 120: game.v1.LiveGameRpcInnerService.ProcessMessageTransferData:output_type -> game.v1.ProcessMessageTransferDataReply
+	42,  // 121: game.v1.LiveGameRpcInnerService.ProcessMessageTransferSend:output_type -> game.v1.ProcessMessageTransferSendReply
+	43,  // 122: game.v1.LiveGameRpcInnerService.TripartiteTransferRecordStatus:output_type -> game.v1.TripartiteTransferRecord
+	45,  // 123: game.v1.LiveGameRpcInnerService.CreateCompensationFailedRecord:output_type -> game.v1.CreateCompensationRecordResp
+	47,  // 124: game.v1.LiveGameRpcInnerService.GetGameDetailsByThird:output_type -> game.v1.GetGameDetailsByThirdReply
+	50,  // 125: game.v1.LiveGameRpcInnerService.AddGameBetRecord:output_type -> game.v1.AddGameBetRecordReply
+	48,  // 126: game.v1.LiveGameRpcInnerService.AddGameSettledRecord:output_type -> game.v1.AddGameBetBaseReply
+	48,  // 127: game.v1.LiveGameRpcInnerService.AddGameCancelRecord:output_type -> game.v1.AddGameBetBaseReply
+	48,  // 128: game.v1.LiveGameRpcInnerService.AddGameAdjustmentRecord:output_type -> game.v1.AddGameBetBaseReply
+	1,   // 129: game.v1.LiveGameRpcInnerService.AddTransferGameBetRecord:output_type -> game.v1.GameReply
+	1,   // 130: game.v1.LiveGameRpcInnerService.SendGameBetBetMQ:output_type -> game.v1.GameReply
+	1,   // 131: game.v1.LiveGameRpcInnerService.SendGameBetBetSettlementMQ:output_type -> game.v1.GameReply
+	1,   // 132: game.v1.LiveGameRpcInnerService.AddRecentlyGamePlay:output_type -> game.v1.GameReply
+	1,   // 133: game.v1.LiveGameRpcInnerService.SyncGameBetSummaryToPGTask:output_type -> game.v1.GameReply
+	61,  // 134: game.v1.LiveGameRpcService.GetGameCategoryListByCurr:output_type -> game.v1.GetCategoryListByCurrReply
+	63,  // 135: game.v1.LiveGameRpcService.GetGameCategorySimpleListByCurr:output_type -> game.v1.GetCategorySimpleListByCurrReply
+	77,  // 136: game.v1.LiveGameRpcService.GetGameListByCategory:output_type -> game.v1.GetGameDetailsListReply
+	69,  // 137: game.v1.LiveGameRpcService.GetPlatformListByCurr:output_type -> game.v1.GetPlatformListByCurrReply
+	71,  // 138: game.v1.LiveGameRpcService.GetPlatListSimpleByCurr:output_type -> game.v1.GetPlatListSimpleByCurrReply
+	71,  // 139: game.v1.LiveGameRpcService.GetPlatListSimpleByData:output_type -> game.v1.GetPlatListSimpleByCurrReply
+	70,  // 140: game.v1.LiveGameRpcService.GetPlatformDetails:output_type -> game.v1.GamePlatformDetail
+	77,  // 141: game.v1.LiveGameRpcService.GetGameListByPlatform:output_type -> game.v1.GetGameDetailsListReply
+	77,  // 142: game.v1.LiveGameRpcService.GetGameListBySearch:output_type -> game.v1.GetGameDetailsListReply
+	78,  // 143: game.v1.LiveGameRpcService.GetGameSimpleListBySearch:output_type -> game.v1.GetGameSimpleListBySearchReply
+	1,   // 144: game.v1.LiveGameRpcService.GameAddFavorite:output_type -> game.v1.GameReply
+	1,   // 145: game.v1.LiveGameRpcService.GameRemoveFavorite:output_type -> game.v1.GameReply
+	77,  // 146: game.v1.LiveGameRpcService.GameFavoriteList:output_type -> game.v1.GetGameDetailsListReply
+	77,  // 147: game.v1.LiveGameRpcService.GameRecommendList:output_type -> game.v1.GetGameDetailsListReply
+	77,  // 148: game.v1.LiveGameRpcService.GetHotGameList:output_type -> game.v1.GetGameDetailsListReply
+	77,  // 149: game.v1.LiveGameRpcService.GetRecentlyGameList:output_type -> game.v1.GetGameDetailsListReply
+	89,  // 150: game.v1.LiveGameRpcService.GetHotPlatformList:output_type -> game.v1.GetHotPlatformListReply
+	74,  // 151: game.v1.LiveGameRpcService.GetGameDetails:output_type -> game.v1.GameDetails
+	85,  // 152: game.v1.LiveGameRpcService.GetUserFavoriteIds:output_type -> game.v1.GetUserFavoriteIdsReply
+	92,  // 153: game.v1.LiveGameRpcService.GetUserBetRecordList:output_type -> game.v1.GetUserBetRecordListReply
+	95,  // 154: game.v1.LiveGameRpcService.GetUserBetRecordSummary:output_type -> game.v1.GetUserBetRecordSummaryReply
+	100, // 155: game.v1.LiveGameRpcService.GetHomePlatformItems:output_type -> game.v1.GetHomePlatformItemsReply
+	101, // 156: game.v1.LiveGameRpcService.GetHomeGameItems:output_type -> game.v1.GetHomeGameItemsReply
+	99,  // 157: game.v1.LiveGameRpcService.GetHomeGameList:output_type -> game.v1.GameDetailsList
+	103, // 158: game.v1.LiveGameRpcService.GetGameConfInfo:output_type -> game.v1.GetGameConfInfoReply
+	105, // 159: game.v1.LiveGameRpcService.GetNewGameList:output_type -> game.v1.GetNewGameListReply
+	108, // 160: game.v1.LiveGameRpcService.GetBigWinGameList:output_type -> game.v1.BigWinGameListReply
+	111, // 161: game.v1.LiveGameRpcService.FetchGamePlatformMeta:output_type -> game.v1.FetchGamePlatformMetaReply
+	113, // 162: game.v1.LiveGameRpcService.FetchHotGameList:output_type -> game.v1.FetchHotManagementReply
+	116, // 163: game.v1.LiveGameRpcService.FetchGameMapByIDs:output_type -> game.v1.FetchGameMapByIDReply
+	118, // 164: game.v1.LiveGameRpcService.FetchPlatformMapByIDs:output_type -> game.v1.FetchPlatformMapByIDReply
+	99,  // [99:165] is the sub-list for method output_type
+	33,  // [33:99] is the sub-list for method input_type
 	33,  // [33:33] is the sub-list for extension type_name
 	33,  // [33:33] is the sub-list for extension extendee
 	0,   // [0:33] is the sub-list for field type_name
@@ -11358,14 +11427,14 @@ func file_proto_game_v1_game_proto_init() {
 	if File_proto_game_v1_game_proto != nil {
 		return
 	}
-	file_proto_game_v1_game_proto_msgTypes[73].OneofWrappers = []any{}
+	file_proto_game_v1_game_proto_msgTypes[74].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_game_v1_game_proto_rawDesc), len(file_proto_game_v1_game_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   125,
+			NumMessages:   126,
 			NumExtensions: 0,
 			NumServices:   6,
 		},

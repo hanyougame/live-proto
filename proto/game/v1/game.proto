@@ -760,6 +760,12 @@ message GetPlatformListByCurrReq {
   int64 user_id = 5;
   bool include_all_platforms = 6;
 }
+// 通过查询游戏结果获取平台请求参数
+message GetPlatformListByDataReq {
+  string currency_code = 1;
+  int64 game_category_id = 2;
+  string search_game_name = 3;
+}
 // 通过货币获取平台响应参数
 message GetPlatformListByCurrReply {
   repeated GamePlatformDetail rows = 20;
@@ -1217,6 +1223,8 @@ service LiveGameRpcService{
   rpc GetPlatformListByCurr(GetPlatformListByCurrReq) returns (GetPlatformListByCurrReply);
   // 通过货币获取平台列表(简单信息)
   rpc GetPlatListSimpleByCurr(GetPlatformListByCurrReq) returns (GetPlatListSimpleByCurrReply);
+  // 通过查询游戏结果获取平台列表(简单信息)
+  rpc GetPlatListSimpleByData(GetPlatformListByDataReq) returns (GetPlatListSimpleByCurrReply);
   // 获取平台详情
   rpc GetPlatformDetails(GamePlatformDetailsReq) returns (GamePlatformDetail);
   // 通过平台获取游戏列表

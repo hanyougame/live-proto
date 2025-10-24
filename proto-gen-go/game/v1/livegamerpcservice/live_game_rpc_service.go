@@ -96,6 +96,7 @@ type (
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
 	GetPlatformListByCurrReply               = v1.GetPlatformListByCurrReply
 	GetPlatformListByCurrReq                 = v1.GetPlatformListByCurrReq
+	GetPlatformListByDataReq                 = v1.GetPlatformListByDataReq
 	GetUserBetRecordListReply                = v1.GetUserBetRecordListReply
 	GetUserBetRecordListReq                  = v1.GetUserBetRecordListReq
 	GetUserBetRecordSummaryReply             = v1.GetUserBetRecordSummaryReply
@@ -145,6 +146,8 @@ type (
 		GetPlatformListByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatformListByCurrReply, error)
 		// 通过货币获取平台列表(简单信息)
 		GetPlatListSimpleByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatListSimpleByCurrReply, error)
+		// 通过查询游戏结果获取平台列表(简单信息)
+		GetPlatListSimpleByData(ctx context.Context, in *GetPlatformListByDataReq, opts ...grpc.CallOption) (*GetPlatListSimpleByCurrReply, error)
 		// 获取平台详情
 		GetPlatformDetails(ctx context.Context, in *GamePlatformDetailsReq, opts ...grpc.CallOption) (*GamePlatformDetail, error)
 		// 通过平台获取游戏列表
@@ -236,6 +239,12 @@ func (m *defaultLiveGameRpcService) GetPlatformListByCurr(ctx context.Context, i
 func (m *defaultLiveGameRpcService) GetPlatListSimpleByCurr(ctx context.Context, in *GetPlatformListByCurrReq, opts ...grpc.CallOption) (*GetPlatListSimpleByCurrReply, error) {
 	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
 	return client.GetPlatListSimpleByCurr(ctx, in, opts...)
+}
+
+// 通过查询游戏结果获取平台列表(简单信息)
+func (m *defaultLiveGameRpcService) GetPlatListSimpleByData(ctx context.Context, in *GetPlatformListByDataReq, opts ...grpc.CallOption) (*GetPlatListSimpleByCurrReply, error) {
+	client := v1.NewLiveGameRpcServiceClient(m.cli.Conn())
+	return client.GetPlatListSimpleByData(ctx, in, opts...)
 }
 
 // 获取平台详情
