@@ -50,8 +50,97 @@ service LiveActivityInnerService{
   rpc RewardList(RewardListReq) returns (RewardListReply);
   // 获取用户当前周期内有效邀请人数
   rpc GetUserInviteCount(GetUserInviteCountReq) returns (GetUserInviteCountReply);
+
+  // 领取优惠奖励
+  rpc ReceivePromotionReward(PromotionRewardReceiveReq) returns (PromotionRewardReceiveReply);
+  // 活动优惠奖励风控校验
+  rpc PromotionActivityRiskCheck(ActivityRiskCheckReq) returns (PromotionRiskCheckReply);
+  // 申请优惠奖励
+  rpc ApplyPromotionReward(PromotionRewardApplyReq) returns (PromotionRewardApplyReply);
+  // 任务优惠奖励风控校验
+  rpc PromotionTaskRiskCheck(TaskRiskCheckReq) returns (PromotionRiskCheckReply);
+
+
 }
 
+
+
+
+// 优惠奖励领取请求
+message PromotionRewardReceiveReq{
+  string reward = 1; // 优惠奖励信息
+  string activity = 2; // 活动信息
+  PromotionRiskCheckInfo risk_check = 3; // 优惠奖励风控信息
+  int64 cycle_start = 4; // 周期开始时间(任务奖励参数)
+  int64 cycle_end = 5; // 周期结束时间(任务奖励参数)
+  uint32 receive_type = 6; // 领取方式
+  uint32 receive_status = 7; // 领取状态
+  int64 last_receive_amount = 8; // 父级最后领取金额(用于推广活动逻辑)
+  string param = 9; // 更新参数
+}
+
+// 优惠奖励风控校验
+message PromotionRewardReceiveReply{
+
+}
+
+// 活动奖励风控校验请求
+message ActivityRiskCheckReq{
+  PromotionRiskCheckInfo risk_check = 1; // 优惠风控信息
+  string activity = 2; // 活动信息
+}
+
+// 任务奖励风控校验请求
+message TaskRiskCheckReq{
+  PromotionRiskCheckInfo risk_check = 1; // 优惠风控信息
+  string task = 2; // 任务信息
+}
+
+// 优惠奖励风控校验返回
+message PromotionRiskCheckReply{
+  repeated string risk_ips = 1; // 已被风控ip列表
+  repeated string risk_devices = 2; // 已被风控设备列表
+  repeated string current_ips = 3; // 本次被风控ip列表
+  repeated string current_devices = 4; // 本次被风控设备列表
+  map<string, uint32> ip_limit = 5; // ip限制数量map
+  map<string, uint32> device_limit = 6; // 设备限制数量map
+}
+
+// 优惠奖励风控校验返回
+message PromotionRiskCheckInfo{
+  int64 user_id = 1; // 用户id
+  string login_ip = 2; // 登录ip
+  string login_device = 3; // 登录设备
+  repeated string history_ips = 4; // 历史登录ip列表
+  repeated string history_devices = 5; // 历史登录设备列表
+}
+
+// 优惠奖励风控校验返回
+message ActivityRewardReceiveReply{
+
+}
+
+
+// 优惠奖励申请请求
+message PromotionRewardApplyReq{
+  string reward = 1; // 优惠奖励信息
+  uint32 activity_type = 2; // 活动类型
+  RequestInfo request_info = 3; // 请求信息
+  bool available_reward = 4; // 是否有可领取优惠奖励
+}
+
+// 优惠奖励申请请求返回
+message PromotionRewardApplyReply{
+  int64 large_amount = 1; // 大额奖励金额
+  bool apply_alert = 2; // 是否用户申请提示
+}
+
+// 优惠奖励申请请求返回
+message RequestInfo{
+  string os = 1; // 终端, 如PC, Android_APP
+  string ip = 2; // ip
+  string device_model = 3; // 设备型号
+}
 message GetUserInviteCountReq {
   int64 user_id = 1;      // 用户id
   int64 activity_id = 2;  // 活动id
