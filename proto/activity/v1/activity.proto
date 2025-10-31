@@ -88,12 +88,15 @@ message PromotionRewardReceiveReply{
 message ActivityRiskCheckReq{
   PromotionRiskCheckInfo risk_check = 1; // 优惠风控信息
   string activity = 2; // 活动信息
+  bool force_add = 3; // 是否强制添加风控信息
 }
 
 // 任务奖励风控校验请求
 message TaskRiskCheckReq{
   PromotionRiskCheckInfo risk_check = 1; // 优惠风控信息
   string task = 2; // 任务信息
+  int32 sub_source = 3; // 任务子来源
+  bool force_add = 4; // 是否强制添加风控信息
 }
 
 // 优惠奖励风控校验返回

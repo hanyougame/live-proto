@@ -349,6 +349,7 @@ type ActivityRiskCheckReq struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
 	RiskCheck     *PromotionRiskCheckInfo `protobuf:"bytes,1,opt,name=risk_check,json=riskCheck,proto3" json:"risk_check,omitempty"` // 优惠风控信息
 	Activity      string                  `protobuf:"bytes,2,opt,name=activity,proto3" json:"activity,omitempty"`                    // 活动信息
+	ForceAdd      bool                    `protobuf:"varint,3,opt,name=force_add,json=forceAdd,proto3" json:"force_add,omitempty"`   // 是否强制添加风控信息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -397,11 +398,20 @@ func (x *ActivityRiskCheckReq) GetActivity() string {
 	return ""
 }
 
+func (x *ActivityRiskCheckReq) GetForceAdd() bool {
+	if x != nil {
+		return x.ForceAdd
+	}
+	return false
+}
+
 // 任务奖励风控校验请求
 type TaskRiskCheckReq struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
-	RiskCheck     *PromotionRiskCheckInfo `protobuf:"bytes,1,opt,name=risk_check,json=riskCheck,proto3" json:"risk_check,omitempty"` // 优惠风控信息
-	Task          string                  `protobuf:"bytes,2,opt,name=task,proto3" json:"task,omitempty"`                            // 任务信息
+	RiskCheck     *PromotionRiskCheckInfo `protobuf:"bytes,1,opt,name=risk_check,json=riskCheck,proto3" json:"risk_check,omitempty"`  // 优惠风控信息
+	Task          string                  `protobuf:"bytes,2,opt,name=task,proto3" json:"task,omitempty"`                             // 任务信息
+	SubSource     int32                   `protobuf:"varint,3,opt,name=sub_source,json=subSource,proto3" json:"sub_source,omitempty"` // 任务子来源
+	ForceAdd      bool                    `protobuf:"varint,4,opt,name=force_add,json=forceAdd,proto3" json:"force_add,omitempty"`    // 是否强制添加风控信息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -448,6 +458,20 @@ func (x *TaskRiskCheckReq) GetTask() string {
 		return x.Task
 	}
 	return ""
+}
+
+func (x *TaskRiskCheckReq) GetSubSource() int32 {
+	if x != nil {
+		return x.SubSource
+	}
+	return 0
+}
+
+func (x *TaskRiskCheckReq) GetForceAdd() bool {
+	if x != nil {
+		return x.ForceAdd
+	}
+	return false
 }
 
 // 优惠奖励风控校验返回
@@ -2203,15 +2227,19 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x0ereceive_status\x18\a \x01(\rR\rreceiveStatus\x12.\n" +
 	"\x13last_receive_amount\x18\b \x01(\x03R\x11lastReceiveAmount\x12\x14\n" +
 	"\x05param\x18\t \x01(\tR\x05param\"\x1d\n" +
-	"\x1bPromotionRewardReceiveReply\"v\n" +
+	"\x1bPromotionRewardReceiveReply\"\x93\x01\n" +
 	"\x14ActivityRiskCheckReq\x12B\n" +
 	"\n" +
 	"risk_check\x18\x01 \x01(\v2#.activity.v1.PromotionRiskCheckInfoR\triskCheck\x12\x1a\n" +
-	"\bactivity\x18\x02 \x01(\tR\bactivity\"j\n" +
+	"\bactivity\x18\x02 \x01(\tR\bactivity\x12\x1b\n" +
+	"\tforce_add\x18\x03 \x01(\bR\bforceAdd\"\xa6\x01\n" +
 	"\x10TaskRiskCheckReq\x12B\n" +
 	"\n" +
 	"risk_check\x18\x01 \x01(\v2#.activity.v1.PromotionRiskCheckInfoR\triskCheck\x12\x12\n" +
-	"\x04task\x18\x02 \x01(\tR\x04task\"\xc5\x03\n" +
+	"\x04task\x18\x02 \x01(\tR\x04task\x12\x1d\n" +
+	"\n" +
+	"sub_source\x18\x03 \x01(\x05R\tsubSource\x12\x1b\n" +
+	"\tforce_add\x18\x04 \x01(\bR\bforceAdd\"\xc5\x03\n" +
 	"\x17PromotionRiskCheckReply\x12\x19\n" +
 	"\brisk_ips\x18\x01 \x03(\tR\ariskIps\x12!\n" +
 	"\frisk_devices\x18\x02 \x03(\tR\vriskDevices\x12\x1f\n" +
