@@ -519,6 +519,15 @@ message BatchAddAuditResp {
 
 }
 
+message UpdateWithdrawAmountReq {
+  int64 user_id = 1; // 用户ID
+  string currency_code = 2; // 币种
+  int64 withdraw_amount = 3; // 提现金额
+}
+
+message UpdateWithdrawAmountResp {
+}
+
 service LiveAuditRpcService {
   // 添加稽核 传递用户币种和金额
   rpc AddAudit(AddAuditReq) returns (AddAuditResp);
@@ -530,6 +539,8 @@ service LiveAuditRpcService {
   rpc GetAuditList(GetAuditListReq) returns (GetAuditListResp);
   // 批量添加稽核信息
   rpc BatchAddAudit(BatchAddAuditReq) returns (BatchAddAuditResp);
+  // 更新提现稽核信息（单笔稽核模式）
+  rpc UpdateWithdrawAmount(UpdateWithdrawAmountReq) returns (UpdateWithdrawAmountResp);
 }
 
 // 提现限制类型
