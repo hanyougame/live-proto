@@ -3111,17 +3111,21 @@ func (x *GetAuditInfoReq) GetCurrencyCode() string {
 }
 
 type GetAuditInfoResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	NeedBetAmount int64                  `protobuf:"varint,1,opt,name=need_bet_amount,json=needBetAmount,proto3" json:"need_bet_amount,omitempty"` // 需要投注金额
-	NeedBetCount  int64                  `protobuf:"varint,2,opt,name=need_bet_count,json=needBetCount,proto3" json:"need_bet_count,omitempty"`    // 需要投注次数
-	Balance       int64                  `protobuf:"varint,3,opt,name=balance,proto3" json:"balance,omitempty"`                                    // 可用餘額
-	CurrencyCode  string                 `protobuf:"bytes,4,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`       //货币代码
-	Username      string                 `protobuf:"bytes,5,opt,name=username,proto3" json:"username,omitempty"`                                   // 用户名
-	UserId        int64                  `protobuf:"varint,6,opt,name=userId,proto3" json:"userId,omitempty"`                                      // 用户Id
-	CanWithdraw   bool                   `protobuf:"varint,7,opt,name=can_withdraw,json=canWithdraw,proto3" json:"can_withdraw,omitempty"`         // 是否可提现 true 可以 false 不可以
-	UnFinishNum   int64                  `protobuf:"varint,8,opt,name=un_finish_num,json=unFinishNum,proto3" json:"un_finish_num,omitempty"`       // 未完成稽核任務數量
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                     protoimpl.MessageState `protogen:"open.v1"`
+	NeedBetAmount             int64                  `protobuf:"varint,1,opt,name=need_bet_amount,json=needBetAmount,proto3" json:"need_bet_amount,omitempty"`                                          // 需要投注金额
+	NeedBetCount              int64                  `protobuf:"varint,2,opt,name=need_bet_count,json=needBetCount,proto3" json:"need_bet_count,omitempty"`                                             // 需要投注次数
+	Balance                   int64                  `protobuf:"varint,3,opt,name=balance,proto3" json:"balance,omitempty"`                                                                             // 可用餘額
+	CurrencyCode              string                 `protobuf:"bytes,4,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`                                                //货币代码
+	Username                  string                 `protobuf:"bytes,5,opt,name=username,proto3" json:"username,omitempty"`                                                                            // 用户名
+	UserId                    int64                  `protobuf:"varint,6,opt,name=userId,proto3" json:"userId,omitempty"`                                                                               // 用户Id
+	CanWithdraw               bool                   `protobuf:"varint,7,opt,name=can_withdraw,json=canWithdraw,proto3" json:"can_withdraw,omitempty"`                                                  // 是否可提现 true 可以 false 不可以
+	UnFinishNum               int64                  `protobuf:"varint,8,opt,name=un_finish_num,json=unFinishNum,proto3" json:"un_finish_num,omitempty"`                                                // 未完成稽核任務數量
+	CanWithdrawBalance        int64                  `protobuf:"varint,9,opt,name=can_withdraw_balance,json=canWithdrawBalance,proto3" json:"can_withdraw_balance,omitempty"`                           // 可以提现的金额
+	NextWithdrawNeedBetAmount int64                  `protobuf:"varint,10,opt,name=next_withdraw_need_bet_amount,json=nextWithdrawNeedBetAmount,proto3" json:"next_withdraw_need_bet_amount,omitempty"` // 下笔稽核需要投注金额
+	NextWithdrawAmount        int64                  `protobuf:"varint,11,opt,name=next_withdraw_amount,json=nextWithdrawAmount,proto3" json:"next_withdraw_amount,omitempty"`                          // 完成下笔稽核可以增加提现金额
+	ExistUnWithdrawAudit      bool                   `protobuf:"varint,12,opt,name=exist_un_withdraw_audit,json=existUnWithdrawAudit,proto3" json:"exist_un_withdraw_audit,omitempty"`                  // 存在未提现完成单笔稽核
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *GetAuditInfoResp) Reset() {
@@ -3208,6 +3212,34 @@ func (x *GetAuditInfoResp) GetUnFinishNum() int64 {
 		return x.UnFinishNum
 	}
 	return 0
+}
+
+func (x *GetAuditInfoResp) GetCanWithdrawBalance() int64 {
+	if x != nil {
+		return x.CanWithdrawBalance
+	}
+	return 0
+}
+
+func (x *GetAuditInfoResp) GetNextWithdrawNeedBetAmount() int64 {
+	if x != nil {
+		return x.NextWithdrawNeedBetAmount
+	}
+	return 0
+}
+
+func (x *GetAuditInfoResp) GetNextWithdrawAmount() int64 {
+	if x != nil {
+		return x.NextWithdrawAmount
+	}
+	return 0
+}
+
+func (x *GetAuditInfoResp) GetExistUnWithdrawAudit() bool {
+	if x != nil {
+		return x.ExistUnWithdrawAudit
+	}
+	return false
 }
 
 type GetAuditListReq struct {
@@ -4559,7 +4591,7 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"\x15UpdateAuditAmountResp\"O\n" +
 	"\x0fGetAuditInfoReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12#\n" +
-	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\"\x9a\x02\n" +
+	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\"\xf7\x03\n" +
 	"\x10GetAuditInfoResp\x12&\n" +
 	"\x0fneed_bet_amount\x18\x01 \x01(\x03R\rneedBetAmount\x12$\n" +
 	"\x0eneed_bet_count\x18\x02 \x01(\x03R\fneedBetCount\x12\x18\n" +
@@ -4568,7 +4600,12 @@ const file_finance_v1_finance_proto_rawDesc = "" +
 	"\busername\x18\x05 \x01(\tR\busername\x12\x16\n" +
 	"\x06userId\x18\x06 \x01(\x03R\x06userId\x12!\n" +
 	"\fcan_withdraw\x18\a \x01(\bR\vcanWithdraw\x12\"\n" +
-	"\run_finish_num\x18\b \x01(\x03R\vunFinishNum\"s\n" +
+	"\run_finish_num\x18\b \x01(\x03R\vunFinishNum\x120\n" +
+	"\x14can_withdraw_balance\x18\t \x01(\x03R\x12canWithdrawBalance\x12@\n" +
+	"\x1dnext_withdraw_need_bet_amount\x18\n" +
+	" \x01(\x03R\x19nextWithdrawNeedBetAmount\x120\n" +
+	"\x14next_withdraw_amount\x18\v \x01(\x03R\x12nextWithdrawAmount\x125\n" +
+	"\x17exist_un_withdraw_audit\x18\f \x01(\bR\x14existUnWithdrawAudit\"s\n" +
 	"\x0fGetAuditListReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x16\n" +
 	"\x06status\x18\x02 \x03(\x03R\x06status\x12\x12\n" +
