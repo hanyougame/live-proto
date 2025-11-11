@@ -191,6 +191,7 @@ message GetGameTransferBetOrderListReq{
   string start_time = 1;       //开始时间 查询玩家投注记录，按最后更新时间查询，最多查询上一个月数据。
   string end_time = 2;       //结束时间 投注记录统一使用 UTC 时区，且投注记录会有 2 分钟左右的延迟，请查询当前时间前
   int64 page_number = 3;
+  string currency_code = 4;
 }
 
 message TransferBetRecord{

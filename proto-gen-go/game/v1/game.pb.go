@@ -1506,6 +1506,7 @@ type GetGameTransferBetOrderListReq struct {
 	StartTime     string                 `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"` //开始时间 查询玩家投注记录，按最后更新时间查询，最多查询上一个月数据。
 	EndTime       string                 `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`       //结束时间 投注记录统一使用 UTC 时区，且投注记录会有 2 分钟左右的延迟，请查询当前时间前
 	PageNumber    int64                  `protobuf:"varint,3,opt,name=page_number,json=pageNumber,proto3" json:"page_number,omitempty"`
+	CurrencyCode  string                 `protobuf:"bytes,4,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1559,6 +1560,13 @@ func (x *GetGameTransferBetOrderListReq) GetPageNumber() int64 {
 		return x.PageNumber
 	}
 	return 0
+}
+
+func (x *GetGameTransferBetOrderListReq) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
 }
 
 type TransferBetRecord struct {
@@ -10235,13 +10243,14 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\rtransfer_type\x18\x04 \x01(\x03R\ftransferType\x12\x16\n" +
 	"\x06status\x18\x05 \x01(\x03R\x06status\x12\x18\n" +
 	"\aamounts\x18\x06 \x01(\tR\aamounts\x12\x10\n" +
-	"\x03msg\x18\a \x01(\tR\x03msg\"{\n" +
+	"\x03msg\x18\a \x01(\tR\x03msg\"\xa0\x01\n" +
 	"\x1eGetGameTransferBetOrderListReq\x12\x1d\n" +
 	"\n" +
 	"start_time\x18\x01 \x01(\tR\tstartTime\x12\x19\n" +
 	"\bend_time\x18\x02 \x01(\tR\aendTime\x12\x1f\n" +
 	"\vpage_number\x18\x03 \x01(\x03R\n" +
-	"pageNumber\"\x86\x04\n" +
+	"pageNumber\x12#\n" +
+	"\rcurrency_code\x18\x04 \x01(\tR\fcurrencyCode\"\x86\x04\n" +
 	"\x11TransferBetRecord\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12!\n" +
 	"\fmerchant_key\x18\x02 \x01(\tR\vmerchantKey\x12\x17\n" +
