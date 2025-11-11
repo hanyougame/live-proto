@@ -170,6 +170,7 @@ message GetWalletTransferBalanceReplyV2{
 message GetGameTransferOrderStatusReq{
   string platform_key = 1;    //游戏平台key  唯一标识
   repeated string order_no = 2;        //订单编号 最多100个
+  string currency_code = 3;
 }
 
 message GetGameTransferOrderStatusReply{

@@ -1401,6 +1401,7 @@ type GetGameTransferOrderStatusReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PlatformKey   string                 `protobuf:"bytes,1,opt,name=platform_key,json=platformKey,proto3" json:"platform_key,omitempty"` //游戏平台key  唯一标识
 	OrderNo       []string               `protobuf:"bytes,2,rep,name=order_no,json=orderNo,proto3" json:"order_no,omitempty"`             //订单编号 最多100个
+	CurrencyCode  string                 `protobuf:"bytes,3,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1447,6 +1448,13 @@ func (x *GetGameTransferOrderStatusReq) GetOrderNo() []string {
 		return x.OrderNo
 	}
 	return nil
+}
+
+func (x *GetGameTransferOrderStatusReq) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
 }
 
 type GetGameTransferOrderStatusReply struct {
@@ -10210,10 +10218,11 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x1fGetWalletTransferBalanceReplyV2\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12\x16\n" +
-	"\x06amount\x18\x03 \x01(\tR\x06amount\"]\n" +
+	"\x06amount\x18\x03 \x01(\tR\x06amount\"\x82\x01\n" +
 	"\x1dGetGameTransferOrderStatusReq\x12!\n" +
 	"\fplatform_key\x18\x01 \x01(\tR\vplatformKey\x12\x19\n" +
-	"\border_no\x18\x02 \x03(\tR\aorderNo\"\x8b\x03\n" +
+	"\border_no\x18\x02 \x03(\tR\aorderNo\x12#\n" +
+	"\rcurrency_code\x18\x03 \x01(\tR\fcurrencyCode\"\x8b\x03\n" +
 	"\x1fGetGameTransferOrderStatusReply\x12L\n" +
 	"\x06orders\x18\x01 \x03(\v24.game.v1.GetGameTransferOrderStatusReply.OrdersEntryR\x06orders\x1an\n" +
 	"\vOrdersEntry\x12\x10\n" +
