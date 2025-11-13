@@ -251,7 +251,7 @@ service LiveGameExternalTransferService{
 // 获取K9游戏接入key
 message GetK9GameAccessKeyReq{
   int64 type = 1;  // 1：单一钱包，2：转账钱包
-
+  string currency_code = 2; // 玩家货币code
 }
 // 获取K9游戏接入key
 message GetK9GameAccessKeyReply{
