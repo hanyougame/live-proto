@@ -941,6 +941,7 @@ message GetGameFavoriteListReq {
   int64 user_id = 3;
   int64 game_platform_id = 4;
   int64 game_category_id = 7;  // 游戏类别ID
+  string search_key = 8;
 }
 
 message GetUserFavoriteIdsReq {
@@ -958,6 +959,7 @@ message GetGameRecentlyListReq {
   int64 game_platform_id = 4;
   int64 game_category_id = 7;  // 游戏类别ID
   string currency_code = 5;
+  string search_key = 8;
 }
 
 
@@ -970,6 +972,7 @@ message GetHotGameListReq {
   string currency_code = 4;
   int64 user_id = 5;
   int64 game_category_id = 7;  // 游戏类别ID
+  string search_key = 8;
 }
 
 // 热门平台列表
