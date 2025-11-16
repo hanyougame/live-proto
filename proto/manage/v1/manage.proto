@@ -91,7 +91,7 @@ message SmsBalanceReq {
 }
 
 message SmsBalanceReply {
-//  repeated string balances = 1; // 余额
+  //  repeated string balances = 1; // 余额
   map<string, string> balances = 1; // 余额
 }
 
@@ -102,6 +102,14 @@ message SendEmailReq {
 }
 
 message SendEmailReply {
+}
+
+message GetShortUrlBatchReq {
+  repeated string urls = 1; // 链接
+}
+
+message GetShortUrlBatchReply {
+  repeated string short_url = 1; // 链接
 }
 
 service LiveManageRpcService{
@@ -120,4 +128,7 @@ service LiveManageRpcService{
   rpc SmsBalance (SmsBalanceReq) returns (SmsBalanceReply);
 
   rpc SendEmail (SendEmailReq) returns (SendEmailReply);
+
+  // 批量获取短链接
+  rpc GetShortUrlBatch (GetShortUrlBatchReq) returns (GetShortUrlBatchReply);
 }

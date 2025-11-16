@@ -21,6 +21,8 @@ type (
 	GetCurrInfoByIDReq         = v1.GetCurrInfoByIDReq
 	GetIPGeolocationReply      = v1.GetIPGeolocationReply
 	GetIPGeolocationReq        = v1.GetIPGeolocationReq
+	GetShortUrlBatchReply      = v1.GetShortUrlBatchReply
+	GetShortUrlBatchReq        = v1.GetShortUrlBatchReq
 	IPGeolocationInfo          = v1.IPGeolocationInfo
 	ManageReply                = v1.ManageReply
 	ManageReq                  = v1.ManageReq
@@ -43,6 +45,8 @@ type (
 		SendSms(ctx context.Context, in *SendSmsReq, opts ...grpc.CallOption) (*SendSmsReply, error)
 		SmsBalance(ctx context.Context, in *SmsBalanceReq, opts ...grpc.CallOption) (*SmsBalanceReply, error)
 		SendEmail(ctx context.Context, in *SendEmailReq, opts ...grpc.CallOption) (*SendEmailReply, error)
+		// 批量获取短链接
+		GetShortUrlBatch(ctx context.Context, in *GetShortUrlBatchReq, opts ...grpc.CallOption) (*GetShortUrlBatchReply, error)
 	}
 
 	defaultLiveManageRpcService struct {
@@ -93,4 +97,10 @@ func (m *defaultLiveManageRpcService) SmsBalance(ctx context.Context, in *SmsBal
 func (m *defaultLiveManageRpcService) SendEmail(ctx context.Context, in *SendEmailReq, opts ...grpc.CallOption) (*SendEmailReply, error) {
 	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
 	return client.SendEmail(ctx, in, opts...)
+}
+
+// 批量获取短链接
+func (m *defaultLiveManageRpcService) GetShortUrlBatch(ctx context.Context, in *GetShortUrlBatchReq, opts ...grpc.CallOption) (*GetShortUrlBatchReply, error) {
+	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
+	return client.GetShortUrlBatch(ctx, in, opts...)
 }
