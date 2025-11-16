@@ -993,7 +993,7 @@ func (x *GetShortUrlBatchReq) GetUrls() []string {
 
 type GetShortUrlBatchReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ShortUrl      []string               `protobuf:"bytes,1,rep,name=short_url,json=shortUrl,proto3" json:"short_url,omitempty"` // 链接
+	ShortUrls     []string               `protobuf:"bytes,1,rep,name=short_urls,json=shortUrls,proto3" json:"short_urls,omitempty"` // 链接
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1028,9 +1028,9 @@ func (*GetShortUrlBatchReply) Descriptor() ([]byte, []int) {
 	return file_manage_v1_manage_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *GetShortUrlBatchReply) GetShortUrl() []string {
+func (x *GetShortUrlBatchReply) GetShortUrls() []string {
 	if x != nil {
-		return x.ShortUrl
+		return x.ShortUrls
 	}
 	return nil
 }
@@ -1113,9 +1113,10 @@ const file_manage_v1_manage_proto_rawDesc = "" +
 	"\acontent\x18\x03 \x01(\tR\acontent\"\x10\n" +
 	"\x0eSendEmailReply\")\n" +
 	"\x13GetShortUrlBatchReq\x12\x12\n" +
-	"\x04urls\x18\x01 \x03(\tR\x04urls\"4\n" +
-	"\x15GetShortUrlBatchReply\x12\x1b\n" +
-	"\tshort_url\x18\x01 \x03(\tR\bshortUrl2\x89\x05\n" +
+	"\x04urls\x18\x01 \x03(\tR\x04urls\"6\n" +
+	"\x15GetShortUrlBatchReply\x12\x1d\n" +
+	"\n" +
+	"short_urls\x18\x01 \x03(\tR\tshortUrls2\x89\x05\n" +
 	"\x14LiveManageRpcService\x12N\n" +
 	"\x12GetLegalTenderInfo\x12\x14.manage.v1.ManageReq\x1a\".manage.v1.CurrencyDetailReplyList\x12P\n" +
 	"\x0fGetCurrInfoById\x12\x1d.manage.v1.GetCurrInfoByIDReq\x1a\x1e.manage.v1.CurrencyDetailReply\x12T\n" +

@@ -109,7 +109,7 @@ message GetShortUrlBatchReq {
 }
 
 message GetShortUrlBatchReply {
-  repeated string short_url = 1; // 链接
+  repeated string short_urls = 1; // 链接
 }
 
 service LiveManageRpcService{
