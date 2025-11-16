@@ -26,6 +26,7 @@ const (
 	LiveManageRpcService_SendSms_FullMethodName               = "/manage.v1.LiveManageRpcService/SendSms"
 	LiveManageRpcService_SmsBalance_FullMethodName            = "/manage.v1.LiveManageRpcService/SmsBalance"
 	LiveManageRpcService_SendEmail_FullMethodName             = "/manage.v1.LiveManageRpcService/SendEmail"
+	LiveManageRpcService_GetShortUrlBatch_FullMethodName      = "/manage.v1.LiveManageRpcService/GetShortUrlBatch"
 )
 
 // LiveManageRpcServiceClient is the client API for LiveManageRpcService service.
@@ -44,6 +45,8 @@ type LiveManageRpcServiceClient interface {
 	SendSms(ctx context.Context, in *SendSmsReq, opts ...grpc.CallOption) (*SendSmsReply, error)
 	SmsBalance(ctx context.Context, in *SmsBalanceReq, opts ...grpc.CallOption) (*SmsBalanceReply, error)
 	SendEmail(ctx context.Context, in *SendEmailReq, opts ...grpc.CallOption) (*SendEmailReply, error)
+	// 批量获取短链接
+	GetShortUrlBatch(ctx context.Context, in *GetShortUrlBatchReq, opts ...grpc.CallOption) (*GetShortUrlBatchReply, error)
 }
 
 type liveManageRpcServiceClient struct {
@@ -124,6 +127,16 @@ func (c *liveManageRpcServiceClient) SendEmail(ctx context.Context, in *SendEmai
 	return out, nil
 }
 
+func (c *liveManageRpcServiceClient) GetShortUrlBatch(ctx context.Context, in *GetShortUrlBatchReq, opts ...grpc.CallOption) (*GetShortUrlBatchReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetShortUrlBatchReply)
+	err := c.cc.Invoke(ctx, LiveManageRpcService_GetShortUrlBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveManageRpcServiceServer is the server API for LiveManageRpcService service.
 // All implementations must embed UnimplementedLiveManageRpcServiceServer
 // for forward compatibility.
@@ -140,6 +153,8 @@ type LiveManageRpcServiceServer interface {
 	SendSms(context.Context, *SendSmsReq) (*SendSmsReply, error)
 	SmsBalance(context.Context, *SmsBalanceReq) (*SmsBalanceReply, error)
 	SendEmail(context.Context, *SendEmailReq) (*SendEmailReply, error)
+	// 批量获取短链接
+	GetShortUrlBatch(context.Context, *GetShortUrlBatchReq) (*GetShortUrlBatchReply, error)
 	mustEmbedUnimplementedLiveManageRpcServiceServer()
 }
 
@@ -170,6 +185,9 @@ func (UnimplementedLiveManageRpcServiceServer) SmsBalance(context.Context, *SmsB
 }
 func (UnimplementedLiveManageRpcServiceServer) SendEmail(context.Context, *SendEmailReq) (*SendEmailReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendEmail not implemented")
+}
+func (UnimplementedLiveManageRpcServiceServer) GetShortUrlBatch(context.Context, *GetShortUrlBatchReq) (*GetShortUrlBatchReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShortUrlBatch not implemented")
 }
 func (UnimplementedLiveManageRpcServiceServer) mustEmbedUnimplementedLiveManageRpcServiceServer() {}
 func (UnimplementedLiveManageRpcServiceServer) testEmbeddedByValue()                              {}
@@ -318,6 +336,24 @@ func _LiveManageRpcService_SendEmail_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveManageRpcService_GetShortUrlBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShortUrlBatchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveManageRpcServiceServer).GetShortUrlBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveManageRpcService_GetShortUrlBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveManageRpcServiceServer).GetShortUrlBatch(ctx, req.(*GetShortUrlBatchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveManageRpcService_ServiceDesc is the grpc.ServiceDesc for LiveManageRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -352,6 +388,10 @@ var LiveManageRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendEmail",
 			Handler:    _LiveManageRpcService_SendEmail_Handler,
+		},
+		{
+			MethodName: "GetShortUrlBatch",
+			Handler:    _LiveManageRpcService_GetShortUrlBatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

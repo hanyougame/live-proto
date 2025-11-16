@@ -947,6 +947,94 @@ func (*SendEmailReply) Descriptor() ([]byte, []int) {
 	return file_manage_v1_manage_proto_rawDescGZIP(), []int{15}
 }
 
+type GetShortUrlBatchReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Urls          []string               `protobuf:"bytes,1,rep,name=urls,proto3" json:"urls,omitempty"` // 链接
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetShortUrlBatchReq) Reset() {
+	*x = GetShortUrlBatchReq{}
+	mi := &file_manage_v1_manage_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetShortUrlBatchReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetShortUrlBatchReq) ProtoMessage() {}
+
+func (x *GetShortUrlBatchReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetShortUrlBatchReq.ProtoReflect.Descriptor instead.
+func (*GetShortUrlBatchReq) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetShortUrlBatchReq) GetUrls() []string {
+	if x != nil {
+		return x.Urls
+	}
+	return nil
+}
+
+type GetShortUrlBatchReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ShortUrl      []string               `protobuf:"bytes,1,rep,name=short_url,json=shortUrl,proto3" json:"short_url,omitempty"` // 链接
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetShortUrlBatchReply) Reset() {
+	*x = GetShortUrlBatchReply{}
+	mi := &file_manage_v1_manage_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetShortUrlBatchReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetShortUrlBatchReply) ProtoMessage() {}
+
+func (x *GetShortUrlBatchReply) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetShortUrlBatchReply.ProtoReflect.Descriptor instead.
+func (*GetShortUrlBatchReply) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetShortUrlBatchReply) GetShortUrl() []string {
+	if x != nil {
+		return x.ShortUrl
+	}
+	return nil
+}
+
 var File_manage_v1_manage_proto protoreflect.FileDescriptor
 
 const file_manage_v1_manage_proto_rawDesc = "" +
@@ -1023,7 +1111,11 @@ const file_manage_v1_manage_proto_rawDesc = "" +
 	"\x02to\x18\x01 \x03(\tR\x02to\x12\x18\n" +
 	"\asubject\x18\x02 \x01(\tR\asubject\x12\x18\n" +
 	"\acontent\x18\x03 \x01(\tR\acontent\"\x10\n" +
-	"\x0eSendEmailReply2\xb3\x04\n" +
+	"\x0eSendEmailReply\")\n" +
+	"\x13GetShortUrlBatchReq\x12\x12\n" +
+	"\x04urls\x18\x01 \x03(\tR\x04urls\"4\n" +
+	"\x15GetShortUrlBatchReply\x12\x1b\n" +
+	"\tshort_url\x18\x01 \x03(\tR\bshortUrl2\x89\x05\n" +
 	"\x14LiveManageRpcService\x12N\n" +
 	"\x12GetLegalTenderInfo\x12\x14.manage.v1.ManageReq\x1a\".manage.v1.CurrencyDetailReplyList\x12P\n" +
 	"\x0fGetCurrInfoById\x12\x1d.manage.v1.GetCurrInfoByIDReq\x1a\x1e.manage.v1.CurrencyDetailReply\x12T\n" +
@@ -1032,7 +1124,8 @@ const file_manage_v1_manage_proto_rawDesc = "" +
 	"\aSendSms\x12\x15.manage.v1.SendSmsReq\x1a\x17.manage.v1.SendSmsReply\x12B\n" +
 	"\n" +
 	"SmsBalance\x12\x18.manage.v1.SmsBalanceReq\x1a\x1a.manage.v1.SmsBalanceReply\x12?\n" +
-	"\tSendEmail\x12\x17.manage.v1.SendEmailReq\x1a\x19.manage.v1.SendEmailReplyB\tZ\a./pb/v1b\x06proto3"
+	"\tSendEmail\x12\x17.manage.v1.SendEmailReq\x1a\x19.manage.v1.SendEmailReply\x12T\n" +
+	"\x10GetShortUrlBatch\x12\x1e.manage.v1.GetShortUrlBatchReq\x1a .manage.v1.GetShortUrlBatchReplyB\tZ\a./pb/v1b\x06proto3"
 
 var (
 	file_manage_v1_manage_proto_rawDescOnce sync.Once
@@ -1046,7 +1139,7 @@ func file_manage_v1_manage_proto_rawDescGZIP() []byte {
 	return file_manage_v1_manage_proto_rawDescData
 }
 
-var file_manage_v1_manage_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_manage_v1_manage_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_manage_v1_manage_proto_goTypes = []any{
 	(*ManageReq)(nil),                  // 0: manage.v1.ManageReq
 	(*ManageReply)(nil),                // 1: manage.v1.ManageReply
@@ -1064,14 +1157,16 @@ var file_manage_v1_manage_proto_goTypes = []any{
 	(*SmsBalanceReply)(nil),            // 13: manage.v1.SmsBalanceReply
 	(*SendEmailReq)(nil),               // 14: manage.v1.SendEmailReq
 	(*SendEmailReply)(nil),             // 15: manage.v1.SendEmailReply
-	nil,                                // 16: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
-	nil,                                // 17: manage.v1.SmsBalanceReply.BalancesEntry
+	(*GetShortUrlBatchReq)(nil),        // 16: manage.v1.GetShortUrlBatchReq
+	(*GetShortUrlBatchReply)(nil),      // 17: manage.v1.GetShortUrlBatchReply
+	nil,                                // 18: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
+	nil,                                // 19: manage.v1.SmsBalanceReply.BalancesEntry
 }
 var file_manage_v1_manage_proto_depIdxs = []int32{
 	2,  // 0: manage.v1.CurrencyDetailReplyList.list:type_name -> manage.v1.CurrencyDetailReply
 	5,  // 1: manage.v1.GetIPGeolocationReply.geolocation:type_name -> manage.v1.IPGeolocationInfo
-	16, // 2: manage.v1.BatchGetIPGeolocationReply.geolocations:type_name -> manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
-	17, // 3: manage.v1.SmsBalanceReply.balances:type_name -> manage.v1.SmsBalanceReply.BalancesEntry
+	18, // 2: manage.v1.BatchGetIPGeolocationReply.geolocations:type_name -> manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
+	19, // 3: manage.v1.SmsBalanceReply.balances:type_name -> manage.v1.SmsBalanceReply.BalancesEntry
 	5,  // 4: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry.value:type_name -> manage.v1.IPGeolocationInfo
 	0,  // 5: manage.v1.LiveManageRpcService.GetLegalTenderInfo:input_type -> manage.v1.ManageReq
 	4,  // 6: manage.v1.LiveManageRpcService.GetCurrInfoById:input_type -> manage.v1.GetCurrInfoByIDReq
@@ -1080,15 +1175,17 @@ var file_manage_v1_manage_proto_depIdxs = []int32{
 	10, // 9: manage.v1.LiveManageRpcService.SendSms:input_type -> manage.v1.SendSmsReq
 	12, // 10: manage.v1.LiveManageRpcService.SmsBalance:input_type -> manage.v1.SmsBalanceReq
 	14, // 11: manage.v1.LiveManageRpcService.SendEmail:input_type -> manage.v1.SendEmailReq
-	3,  // 12: manage.v1.LiveManageRpcService.GetLegalTenderInfo:output_type -> manage.v1.CurrencyDetailReplyList
-	2,  // 13: manage.v1.LiveManageRpcService.GetCurrInfoById:output_type -> manage.v1.CurrencyDetailReply
-	7,  // 14: manage.v1.LiveManageRpcService.GetIPGeolocation:output_type -> manage.v1.GetIPGeolocationReply
-	9,  // 15: manage.v1.LiveManageRpcService.BatchGetIPGeolocation:output_type -> manage.v1.BatchGetIPGeolocationReply
-	11, // 16: manage.v1.LiveManageRpcService.SendSms:output_type -> manage.v1.SendSmsReply
-	13, // 17: manage.v1.LiveManageRpcService.SmsBalance:output_type -> manage.v1.SmsBalanceReply
-	15, // 18: manage.v1.LiveManageRpcService.SendEmail:output_type -> manage.v1.SendEmailReply
-	12, // [12:19] is the sub-list for method output_type
-	5,  // [5:12] is the sub-list for method input_type
+	16, // 12: manage.v1.LiveManageRpcService.GetShortUrlBatch:input_type -> manage.v1.GetShortUrlBatchReq
+	3,  // 13: manage.v1.LiveManageRpcService.GetLegalTenderInfo:output_type -> manage.v1.CurrencyDetailReplyList
+	2,  // 14: manage.v1.LiveManageRpcService.GetCurrInfoById:output_type -> manage.v1.CurrencyDetailReply
+	7,  // 15: manage.v1.LiveManageRpcService.GetIPGeolocation:output_type -> manage.v1.GetIPGeolocationReply
+	9,  // 16: manage.v1.LiveManageRpcService.BatchGetIPGeolocation:output_type -> manage.v1.BatchGetIPGeolocationReply
+	11, // 17: manage.v1.LiveManageRpcService.SendSms:output_type -> manage.v1.SendSmsReply
+	13, // 18: manage.v1.LiveManageRpcService.SmsBalance:output_type -> manage.v1.SmsBalanceReply
+	15, // 19: manage.v1.LiveManageRpcService.SendEmail:output_type -> manage.v1.SendEmailReply
+	17, // 20: manage.v1.LiveManageRpcService.GetShortUrlBatch:output_type -> manage.v1.GetShortUrlBatchReply
+	13, // [13:21] is the sub-list for method output_type
+	5,  // [5:13] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -1105,7 +1202,7 @@ func file_manage_v1_manage_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_v1_manage_proto_rawDesc), len(file_manage_v1_manage_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
