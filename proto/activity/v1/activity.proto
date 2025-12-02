@@ -116,6 +116,8 @@ message PromotionRiskCheckInfo{
   string login_device = 3; // 登录设备
   repeated string history_ips = 4; // 历史登录ip列表
   repeated string history_devices = 5; // 历史登录设备列表
+  bool skip = 6; // 跳过风控
+  string currency = 7; // 币种
 }
 
 // 优惠奖励风控校验返回
@@ -281,5 +283,3 @@ message IncreaseUserRedPacketCountReq{
   int64 period_index = 3;
   string current_date = 4;
 }
-
-
