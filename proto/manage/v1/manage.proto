@@ -112,6 +112,20 @@ message GetShortUrlBatchReply {
   repeated string short_urls = 1; // 链接
 }
 
+message SmsStatusQueryReq {
+  repeated  string sms_codes = 1;
+}
+
+message SmsStatusQueryResp {
+  repeated SmsStatusQueryItem list =1;
+}
+
+message SmsStatusQueryItem {
+  string third_order_no = 1; // 三方单号
+  int64 status = 3; // 状态 1-发送成功 2-发送失败
+  string phone = 4; // 发送手机号
+}
+
 service LiveManageRpcService{
   // 获取法定货币信息
   rpc GetLegalTenderInfo (ManageReq) returns (CurrencyDetailReplyList);
@@ -128,6 +142,9 @@ service LiveManageRpcService{
   rpc SmsBalance (SmsBalanceReq) returns (SmsBalanceReply);
 
   rpc SendEmail (SendEmailReq) returns (SendEmailReply);
+
+  // 短信状态查询
+  rpc SmsStatusQuery (SmsStatusQueryReq) returns (SmsStatusQueryResp);
 
   // 批量获取短链接
   rpc GetShortUrlBatch (GetShortUrlBatchReq) returns (GetShortUrlBatchReply);
