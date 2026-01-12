@@ -18,6 +18,8 @@ type (
 	BatchGetIPGeolocationReq   = v1.BatchGetIPGeolocationReq
 	CurrencyDetailReply        = v1.CurrencyDetailReply
 	CurrencyDetailReplyList    = v1.CurrencyDetailReplyList
+	DtmDemoReq                 = v1.DtmDemoReq
+	DtmDemoResp                = v1.DtmDemoResp
 	GetCurrInfoByIDReq         = v1.GetCurrInfoByIDReq
 	GetIPGeolocationReply      = v1.GetIPGeolocationReply
 	GetIPGeolocationReq        = v1.GetIPGeolocationReq
@@ -52,6 +54,8 @@ type (
 		SmsStatusQuery(ctx context.Context, in *SmsStatusQueryReq, opts ...grpc.CallOption) (*SmsStatusQueryResp, error)
 		// 批量获取短链接
 		GetShortUrlBatch(ctx context.Context, in *GetShortUrlBatchReq, opts ...grpc.CallOption) (*GetShortUrlBatchReply, error)
+		DtmDemo(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error)
+		DtmDemoRollback(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error)
 	}
 
 	defaultLiveManageRpcService struct {
@@ -114,4 +118,14 @@ func (m *defaultLiveManageRpcService) SmsStatusQuery(ctx context.Context, in *Sm
 func (m *defaultLiveManageRpcService) GetShortUrlBatch(ctx context.Context, in *GetShortUrlBatchReq, opts ...grpc.CallOption) (*GetShortUrlBatchReply, error) {
 	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
 	return client.GetShortUrlBatch(ctx, in, opts...)
+}
+
+func (m *defaultLiveManageRpcService) DtmDemo(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error) {
+	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
+	return client.DtmDemo(ctx, in, opts...)
+}
+
+func (m *defaultLiveManageRpcService) DtmDemoRollback(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error) {
+	client := v1.NewLiveManageRpcServiceClient(m.cli.Conn())
+	return client.DtmDemoRollback(ctx, in, opts...)
 }

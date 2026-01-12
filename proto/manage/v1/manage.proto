@@ -126,6 +126,14 @@ message SmsStatusQueryItem {
   string phone = 4; // 发送手机号
 }
 
+message DtmDemoReq{
+  string username = 1;
+}
+
+message DtmDemoResp{
+  string username = 1;
+}
+
 service LiveManageRpcService{
   // 获取法定货币信息
   rpc GetLegalTenderInfo (ManageReq) returns (CurrencyDetailReplyList);
@@ -148,4 +156,7 @@ service LiveManageRpcService{
 
   // 批量获取短链接
   rpc GetShortUrlBatch (GetShortUrlBatchReq) returns (GetShortUrlBatchReply);
+
+  rpc DtmDemo(DtmDemoReq) returns (DtmDemoResp);
+  rpc DtmDemoRollback(DtmDemoReq) returns (DtmDemoResp);
 }

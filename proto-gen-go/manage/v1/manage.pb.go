@@ -1183,6 +1183,94 @@ func (x *SmsStatusQueryItem) GetPhone() string {
 	return ""
 }
 
+type DtmDemoReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DtmDemoReq) Reset() {
+	*x = DtmDemoReq{}
+	mi := &file_manage_v1_manage_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DtmDemoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DtmDemoReq) ProtoMessage() {}
+
+func (x *DtmDemoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DtmDemoReq.ProtoReflect.Descriptor instead.
+func (*DtmDemoReq) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *DtmDemoReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+type DtmDemoResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DtmDemoResp) Reset() {
+	*x = DtmDemoResp{}
+	mi := &file_manage_v1_manage_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DtmDemoResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DtmDemoResp) ProtoMessage() {}
+
+func (x *DtmDemoResp) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_v1_manage_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DtmDemoResp.ProtoReflect.Descriptor instead.
+func (*DtmDemoResp) Descriptor() ([]byte, []int) {
+	return file_manage_v1_manage_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *DtmDemoResp) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
 var File_manage_v1_manage_proto protoreflect.FileDescriptor
 
 const file_manage_v1_manage_proto_rawDesc = "" +
@@ -1272,7 +1360,12 @@ const file_manage_v1_manage_proto_rawDesc = "" +
 	"\x12SmsStatusQueryItem\x12$\n" +
 	"\x0ethird_order_no\x18\x01 \x01(\tR\fthirdOrderNo\x12\x16\n" +
 	"\x06status\x18\x03 \x01(\x03R\x06status\x12\x14\n" +
-	"\x05phone\x18\x04 \x01(\tR\x05phone2\xd8\x05\n" +
+	"\x05phone\x18\x04 \x01(\tR\x05phone\"(\n" +
+	"\n" +
+	"DtmDemoReq\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\")\n" +
+	"\vDtmDemoResp\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername2\xd4\x06\n" +
 	"\x14LiveManageRpcService\x12N\n" +
 	"\x12GetLegalTenderInfo\x12\x14.manage.v1.ManageReq\x1a\".manage.v1.CurrencyDetailReplyList\x12P\n" +
 	"\x0fGetCurrInfoById\x12\x1d.manage.v1.GetCurrInfoByIDReq\x1a\x1e.manage.v1.CurrencyDetailReply\x12T\n" +
@@ -1283,7 +1376,9 @@ const file_manage_v1_manage_proto_rawDesc = "" +
 	"SmsBalance\x12\x18.manage.v1.SmsBalanceReq\x1a\x1a.manage.v1.SmsBalanceReply\x12?\n" +
 	"\tSendEmail\x12\x17.manage.v1.SendEmailReq\x1a\x19.manage.v1.SendEmailReply\x12M\n" +
 	"\x0eSmsStatusQuery\x12\x1c.manage.v1.SmsStatusQueryReq\x1a\x1d.manage.v1.SmsStatusQueryResp\x12T\n" +
-	"\x10GetShortUrlBatch\x12\x1e.manage.v1.GetShortUrlBatchReq\x1a .manage.v1.GetShortUrlBatchReplyB\tZ\a./pb/v1b\x06proto3"
+	"\x10GetShortUrlBatch\x12\x1e.manage.v1.GetShortUrlBatchReq\x1a .manage.v1.GetShortUrlBatchReply\x128\n" +
+	"\aDtmDemo\x12\x15.manage.v1.DtmDemoReq\x1a\x16.manage.v1.DtmDemoResp\x12@\n" +
+	"\x0fDtmDemoRollback\x12\x15.manage.v1.DtmDemoReq\x1a\x16.manage.v1.DtmDemoRespB\tZ\a./pb/v1b\x06proto3"
 
 var (
 	file_manage_v1_manage_proto_rawDescOnce sync.Once
@@ -1297,7 +1392,7 @@ func file_manage_v1_manage_proto_rawDescGZIP() []byte {
 	return file_manage_v1_manage_proto_rawDescData
 }
 
-var file_manage_v1_manage_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_manage_v1_manage_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_manage_v1_manage_proto_goTypes = []any{
 	(*ManageReq)(nil),                  // 0: manage.v1.ManageReq
 	(*ManageReply)(nil),                // 1: manage.v1.ManageReply
@@ -1320,14 +1415,16 @@ var file_manage_v1_manage_proto_goTypes = []any{
 	(*SmsStatusQueryReq)(nil),          // 18: manage.v1.SmsStatusQueryReq
 	(*SmsStatusQueryResp)(nil),         // 19: manage.v1.SmsStatusQueryResp
 	(*SmsStatusQueryItem)(nil),         // 20: manage.v1.SmsStatusQueryItem
-	nil,                                // 21: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
-	nil,                                // 22: manage.v1.SmsBalanceReply.BalancesEntry
+	(*DtmDemoReq)(nil),                 // 21: manage.v1.DtmDemoReq
+	(*DtmDemoResp)(nil),                // 22: manage.v1.DtmDemoResp
+	nil,                                // 23: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
+	nil,                                // 24: manage.v1.SmsBalanceReply.BalancesEntry
 }
 var file_manage_v1_manage_proto_depIdxs = []int32{
 	2,  // 0: manage.v1.CurrencyDetailReplyList.list:type_name -> manage.v1.CurrencyDetailReply
 	5,  // 1: manage.v1.GetIPGeolocationReply.geolocation:type_name -> manage.v1.IPGeolocationInfo
-	21, // 2: manage.v1.BatchGetIPGeolocationReply.geolocations:type_name -> manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
-	22, // 3: manage.v1.SmsBalanceReply.balances:type_name -> manage.v1.SmsBalanceReply.BalancesEntry
+	23, // 2: manage.v1.BatchGetIPGeolocationReply.geolocations:type_name -> manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry
+	24, // 3: manage.v1.SmsBalanceReply.balances:type_name -> manage.v1.SmsBalanceReply.BalancesEntry
 	20, // 4: manage.v1.SmsStatusQueryResp.list:type_name -> manage.v1.SmsStatusQueryItem
 	5,  // 5: manage.v1.BatchGetIPGeolocationReply.GeolocationsEntry.value:type_name -> manage.v1.IPGeolocationInfo
 	0,  // 6: manage.v1.LiveManageRpcService.GetLegalTenderInfo:input_type -> manage.v1.ManageReq
@@ -1339,17 +1436,21 @@ var file_manage_v1_manage_proto_depIdxs = []int32{
 	14, // 12: manage.v1.LiveManageRpcService.SendEmail:input_type -> manage.v1.SendEmailReq
 	18, // 13: manage.v1.LiveManageRpcService.SmsStatusQuery:input_type -> manage.v1.SmsStatusQueryReq
 	16, // 14: manage.v1.LiveManageRpcService.GetShortUrlBatch:input_type -> manage.v1.GetShortUrlBatchReq
-	3,  // 15: manage.v1.LiveManageRpcService.GetLegalTenderInfo:output_type -> manage.v1.CurrencyDetailReplyList
-	2,  // 16: manage.v1.LiveManageRpcService.GetCurrInfoById:output_type -> manage.v1.CurrencyDetailReply
-	7,  // 17: manage.v1.LiveManageRpcService.GetIPGeolocation:output_type -> manage.v1.GetIPGeolocationReply
-	9,  // 18: manage.v1.LiveManageRpcService.BatchGetIPGeolocation:output_type -> manage.v1.BatchGetIPGeolocationReply
-	11, // 19: manage.v1.LiveManageRpcService.SendSms:output_type -> manage.v1.SendSmsReply
-	13, // 20: manage.v1.LiveManageRpcService.SmsBalance:output_type -> manage.v1.SmsBalanceReply
-	15, // 21: manage.v1.LiveManageRpcService.SendEmail:output_type -> manage.v1.SendEmailReply
-	19, // 22: manage.v1.LiveManageRpcService.SmsStatusQuery:output_type -> manage.v1.SmsStatusQueryResp
-	17, // 23: manage.v1.LiveManageRpcService.GetShortUrlBatch:output_type -> manage.v1.GetShortUrlBatchReply
-	15, // [15:24] is the sub-list for method output_type
-	6,  // [6:15] is the sub-list for method input_type
+	21, // 15: manage.v1.LiveManageRpcService.DtmDemo:input_type -> manage.v1.DtmDemoReq
+	21, // 16: manage.v1.LiveManageRpcService.DtmDemoRollback:input_type -> manage.v1.DtmDemoReq
+	3,  // 17: manage.v1.LiveManageRpcService.GetLegalTenderInfo:output_type -> manage.v1.CurrencyDetailReplyList
+	2,  // 18: manage.v1.LiveManageRpcService.GetCurrInfoById:output_type -> manage.v1.CurrencyDetailReply
+	7,  // 19: manage.v1.LiveManageRpcService.GetIPGeolocation:output_type -> manage.v1.GetIPGeolocationReply
+	9,  // 20: manage.v1.LiveManageRpcService.BatchGetIPGeolocation:output_type -> manage.v1.BatchGetIPGeolocationReply
+	11, // 21: manage.v1.LiveManageRpcService.SendSms:output_type -> manage.v1.SendSmsReply
+	13, // 22: manage.v1.LiveManageRpcService.SmsBalance:output_type -> manage.v1.SmsBalanceReply
+	15, // 23: manage.v1.LiveManageRpcService.SendEmail:output_type -> manage.v1.SendEmailReply
+	19, // 24: manage.v1.LiveManageRpcService.SmsStatusQuery:output_type -> manage.v1.SmsStatusQueryResp
+	17, // 25: manage.v1.LiveManageRpcService.GetShortUrlBatch:output_type -> manage.v1.GetShortUrlBatchReply
+	22, // 26: manage.v1.LiveManageRpcService.DtmDemo:output_type -> manage.v1.DtmDemoResp
+	22, // 27: manage.v1.LiveManageRpcService.DtmDemoRollback:output_type -> manage.v1.DtmDemoResp
+	17, // [17:28] is the sub-list for method output_type
+	6,  // [6:17] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
 	6,  // [6:6] is the sub-list for extension extendee
 	0,  // [0:6] is the sub-list for field type_name
@@ -1366,7 +1467,7 @@ func file_manage_v1_manage_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_v1_manage_proto_rawDesc), len(file_manage_v1_manage_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

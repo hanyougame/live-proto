@@ -127,6 +127,14 @@ message UserWalletList{
   map<int64, int64> wallet_info = 1;
 }
 
+message DtmDemoReq{
+  string username = 1;
+}
+
+message DtmDemoResp{
+  string username = 1;
+}
+
 service LiveUserRpcService {
   // 根据token获取用户信息
   rpc GetInfoByUserToken(GetInfoByUserTokenReq) returns(UserDetailsInfoReply);
@@ -144,4 +152,8 @@ service LiveUserRpcService {
   rpc BatchGetUserBalance(BatchGetUserBalanceReq)returns (BatchGetUserBalanceResp);
   // 获取多用户多钱包余额接口
   rpc BatchGetUserBalanceV2(BatchGetUserBalanceV2Req)returns (BatchGetUserBalanceV2Resp);
+
+  rpc DtmDemo(DtmDemoReq) returns (DtmDemoResp);
+
+  rpc DtmDemoRollback(DtmDemoReq) returns (DtmDemoResp);
 }

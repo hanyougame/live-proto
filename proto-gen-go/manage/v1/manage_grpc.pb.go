@@ -28,6 +28,8 @@ const (
 	LiveManageRpcService_SendEmail_FullMethodName             = "/manage.v1.LiveManageRpcService/SendEmail"
 	LiveManageRpcService_SmsStatusQuery_FullMethodName        = "/manage.v1.LiveManageRpcService/SmsStatusQuery"
 	LiveManageRpcService_GetShortUrlBatch_FullMethodName      = "/manage.v1.LiveManageRpcService/GetShortUrlBatch"
+	LiveManageRpcService_DtmDemo_FullMethodName               = "/manage.v1.LiveManageRpcService/DtmDemo"
+	LiveManageRpcService_DtmDemoRollback_FullMethodName       = "/manage.v1.LiveManageRpcService/DtmDemoRollback"
 )
 
 // LiveManageRpcServiceClient is the client API for LiveManageRpcService service.
@@ -50,6 +52,8 @@ type LiveManageRpcServiceClient interface {
 	SmsStatusQuery(ctx context.Context, in *SmsStatusQueryReq, opts ...grpc.CallOption) (*SmsStatusQueryResp, error)
 	// 批量获取短链接
 	GetShortUrlBatch(ctx context.Context, in *GetShortUrlBatchReq, opts ...grpc.CallOption) (*GetShortUrlBatchReply, error)
+	DtmDemo(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error)
+	DtmDemoRollback(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error)
 }
 
 type liveManageRpcServiceClient struct {
@@ -150,6 +154,26 @@ func (c *liveManageRpcServiceClient) GetShortUrlBatch(ctx context.Context, in *G
 	return out, nil
 }
 
+func (c *liveManageRpcServiceClient) DtmDemo(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DtmDemoResp)
+	err := c.cc.Invoke(ctx, LiveManageRpcService_DtmDemo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveManageRpcServiceClient) DtmDemoRollback(ctx context.Context, in *DtmDemoReq, opts ...grpc.CallOption) (*DtmDemoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DtmDemoResp)
+	err := c.cc.Invoke(ctx, LiveManageRpcService_DtmDemoRollback_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveManageRpcServiceServer is the server API for LiveManageRpcService service.
 // All implementations must embed UnimplementedLiveManageRpcServiceServer
 // for forward compatibility.
@@ -170,6 +194,8 @@ type LiveManageRpcServiceServer interface {
 	SmsStatusQuery(context.Context, *SmsStatusQueryReq) (*SmsStatusQueryResp, error)
 	// 批量获取短链接
 	GetShortUrlBatch(context.Context, *GetShortUrlBatchReq) (*GetShortUrlBatchReply, error)
+	DtmDemo(context.Context, *DtmDemoReq) (*DtmDemoResp, error)
+	DtmDemoRollback(context.Context, *DtmDemoReq) (*DtmDemoResp, error)
 	mustEmbedUnimplementedLiveManageRpcServiceServer()
 }
 
@@ -206,6 +232,12 @@ func (UnimplementedLiveManageRpcServiceServer) SmsStatusQuery(context.Context, *
 }
 func (UnimplementedLiveManageRpcServiceServer) GetShortUrlBatch(context.Context, *GetShortUrlBatchReq) (*GetShortUrlBatchReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShortUrlBatch not implemented")
+}
+func (UnimplementedLiveManageRpcServiceServer) DtmDemo(context.Context, *DtmDemoReq) (*DtmDemoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DtmDemo not implemented")
+}
+func (UnimplementedLiveManageRpcServiceServer) DtmDemoRollback(context.Context, *DtmDemoReq) (*DtmDemoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DtmDemoRollback not implemented")
 }
 func (UnimplementedLiveManageRpcServiceServer) mustEmbedUnimplementedLiveManageRpcServiceServer() {}
 func (UnimplementedLiveManageRpcServiceServer) testEmbeddedByValue()                              {}
@@ -390,6 +422,42 @@ func _LiveManageRpcService_GetShortUrlBatch_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveManageRpcService_DtmDemo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DtmDemoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveManageRpcServiceServer).DtmDemo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveManageRpcService_DtmDemo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveManageRpcServiceServer).DtmDemo(ctx, req.(*DtmDemoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveManageRpcService_DtmDemoRollback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DtmDemoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveManageRpcServiceServer).DtmDemoRollback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveManageRpcService_DtmDemoRollback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveManageRpcServiceServer).DtmDemoRollback(ctx, req.(*DtmDemoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveManageRpcService_ServiceDesc is the grpc.ServiceDesc for LiveManageRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -432,6 +500,14 @@ var LiveManageRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShortUrlBatch",
 			Handler:    _LiveManageRpcService_GetShortUrlBatch_Handler,
+		},
+		{
+			MethodName: "DtmDemo",
+			Handler:    _LiveManageRpcService_DtmDemo_Handler,
+		},
+		{
+			MethodName: "DtmDemoRollback",
+			Handler:    _LiveManageRpcService_DtmDemoRollback_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
