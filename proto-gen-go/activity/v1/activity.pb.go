@@ -1187,7 +1187,7 @@ type LuckyPointsUsedItem struct {
 	PointBefore   int64                  `protobuf:"varint,7,opt,name=point_before,json=pointBefore,proto3" json:"point_before,omitempty"`                                             // 领取前的幸运值
 	PointAfter    int64                  `protobuf:"varint,8,opt,name=point_after,json=pointAfter,proto3" json:"point_after,omitempty"`                                                // 领取后的幸运值
 	Point         int32                  `protobuf:"varint,9,opt,name=point,proto3" json:"point,omitempty"`                                                                            // 幸运值
-	Reward        int32                  `protobuf:"varint,10,opt,name=reward,proto3" json:"reward,omitempty"`                                                                         // 奖励金额
+	Reward        int64                  `protobuf:"varint,10,opt,name=reward,proto3" json:"reward,omitempty"`                                                                         // 奖励金额
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1285,7 +1285,7 @@ func (x *LuckyPointsUsedItem) GetPoint() int32 {
 	return 0
 }
 
-func (x *LuckyPointsUsedItem) GetReward() int32 {
+func (x *LuckyPointsUsedItem) GetReward() int64 {
 	if x != nil {
 		return x.Reward
 	}
@@ -2327,7 +2327,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"pointAfter\x12\x14\n" +
 	"\x05point\x18\t \x01(\x05R\x05point\x12\x16\n" +
 	"\x06reward\x18\n" +
-	" \x01(\x05R\x06reward\x1a9\n" +
+	" \x01(\x03R\x06reward\x1a9\n" +
 	"\vDetailEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"P\n" +

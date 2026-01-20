@@ -185,7 +185,7 @@ message LuckyPointsUsedItem {
   int64  point_before = 7; // 领取前的幸运值
   int64 point_after = 8; // 领取后的幸运值
   int32 point = 9; // 幸运值
-  int32 reward = 10; // 奖励金额
+  int64 reward = 10; // 奖励金额
 }
 
 message LuckyPointsUsedListReply {
