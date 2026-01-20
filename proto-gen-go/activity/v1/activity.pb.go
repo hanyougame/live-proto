@@ -1552,7 +1552,7 @@ type UseLuckyPointReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                                            // 用户id
 	ActivityId    int64                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`                                                // 活动id
-	Reward        int32                  `protobuf:"varint,3,opt,name=reward,proto3" json:"reward,omitempty"`                                                                          // 奖励金额
+	Reward        int64                  `protobuf:"varint,3,opt,name=reward,proto3" json:"reward,omitempty"`                                                                          // 奖励金额
 	Point         int32                  `protobuf:"varint,4,opt,name=point,proto3" json:"point,omitempty"`                                                                            // 消耗的总幸运值
 	SpinType      SpinType               `protobuf:"varint,5,opt,name=spin_type,json=spinType,proto3,enum=activity.v1.SpinType" json:"spin_type,omitempty"`                            // 转盘类型
 	Detail        map[string]string      `protobuf:"bytes,6,rep,name=detail,proto3" json:"detail,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 额外信息
@@ -1605,7 +1605,7 @@ func (x *UseLuckyPointReq) GetActivityId() int64 {
 	return 0
 }
 
-func (x *UseLuckyPointReq) GetReward() int32 {
+func (x *UseLuckyPointReq) GetReward() int64 {
 	if x != nil {
 		return x.Reward
 	}
@@ -2359,7 +2359,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1f\n" +
 	"\vactivity_id\x18\x02 \x01(\x03R\n" +
 	"activityId\x12\x16\n" +
-	"\x06reward\x18\x03 \x01(\x05R\x06reward\x12\x14\n" +
+	"\x06reward\x18\x03 \x01(\x03R\x06reward\x12\x14\n" +
 	"\x05point\x18\x04 \x01(\x05R\x05point\x122\n" +
 	"\tspin_type\x18\x05 \x01(\x0e2\x15.activity.v1.SpinTypeR\bspinType\x12A\n" +
 	"\x06detail\x18\x06 \x03(\v2).activity.v1.UseLuckyPointReq.DetailEntryR\x06detail\x12\x19\n" +
