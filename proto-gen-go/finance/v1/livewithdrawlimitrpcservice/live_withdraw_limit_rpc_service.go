@@ -30,6 +30,7 @@ type (
 	BalanceResp                   = v1.BalanceResp
 	BatchAddAuditReq              = v1.BatchAddAuditReq
 	BatchAddAuditResp             = v1.BatchAddAuditResp
+	BonusRecord                   = v1.BonusRecord
 	CalcRechargeReq               = v1.CalcRechargeReq
 	CalcRechargeResp              = v1.CalcRechargeResp
 	CalcWithdrawFeeReq            = v1.CalcWithdrawFeeReq

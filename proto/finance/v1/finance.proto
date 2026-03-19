@@ -126,6 +126,14 @@ message CalcRechargeReq {
   int32 sub_target_id = 8; // 充值目标子ID （默认值0）
 }
 
+message BonusRecord {
+  int64 bonus_type = 1;//奖励类型 1-充值通道 2-推荐金额 3-首充 4-多充 5-累计充值
+  int64 reward = 2;//奖励金额
+  string reward_rate = 3;//奖励金额比例（固定金额为空）
+  int64 reward_stage = 4;//奖励阶段（多充活动）
+  int64 recharge_count = 5;//充值次数（多充活动）
+}
+
 message CalcRechargeResp {
   int64 amount = 1; // 充值金额
   int64 actual_received_amount = 2; // 实际到账金额
@@ -135,6 +143,8 @@ message CalcRechargeResp {
   int64 first_deposit_reward_amount_from = 6;//首充奖励金额起始值(随机奖金方式)
   int64 first_deposit_reward_amount_to = 7;//首充奖励金额结束值(随机奖金方式)
   int64 multi_recharge_reward = 8;//多充奖励金额
+  int64 TotalBonusAmount = 9;//总奖励金额(通道赠送+推荐金额赠送+首充奖励金额+多充奖励金额+累计充值活动奖励金额)
+  repeated BonusRecord bonus_list = 10; //奖励明细列表
 }
 
 message RechargeReq {
