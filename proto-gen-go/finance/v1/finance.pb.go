@@ -1725,14 +1725,15 @@ func (x *CalcRechargeReq) GetSubTargetId() int32 {
 }
 
 type BonusRecord struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	BonusType     int64                  `protobuf:"varint,1,opt,name=bonus_type,json=bonusType,proto3" json:"bonus_type,omitempty"`             //奖励类型 1-充值通道 2-推荐金额 3-首充 4-多充 5-累计充值
-	Reward        int64                  `protobuf:"varint,2,opt,name=reward,proto3" json:"reward,omitempty"`                                    //奖励金额
-	RewardRate    string                 `protobuf:"bytes,3,opt,name=reward_rate,json=rewardRate,proto3" json:"reward_rate,omitempty"`           //奖励金额比例（固定金额为空）
-	RewardStage   int64                  `protobuf:"varint,4,opt,name=reward_stage,json=rewardStage,proto3" json:"reward_stage,omitempty"`       //奖励阶段（多充活动）
-	RechargeCount int64                  `protobuf:"varint,5,opt,name=recharge_count,json=rechargeCount,proto3" json:"recharge_count,omitempty"` //充值次数（多充活动）
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	BonusType      int64                  `protobuf:"varint,1,opt,name=bonus_type,json=bonusType,proto3" json:"bonus_type,omitempty"`                //奖励类型 1-充值通道 2-推荐金额 3-首充 4-多充 5-累计充值
+	Reward         int64                  `protobuf:"varint,2,opt,name=reward,proto3" json:"reward,omitempty"`                                       //奖励金额
+	RewardRate     string                 `protobuf:"bytes,3,opt,name=reward_rate,json=rewardRate,proto3" json:"reward_rate,omitempty"`              //奖励金额比例（固定金额为空）
+	RewardStage    int64                  `protobuf:"varint,4,opt,name=reward_stage,json=rewardStage,proto3" json:"reward_stage,omitempty"`          //奖励阶段（多充活动）
+	RechargeCount  int64                  `protobuf:"varint,5,opt,name=recharge_count,json=rechargeCount,proto3" json:"recharge_count,omitempty"`    //充值次数（多充活动）
+	RechargeAmount int64                  `protobuf:"varint,6,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"` //充值金额(累充活动)
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *BonusRecord) Reset() {
@@ -1796,6 +1797,13 @@ func (x *BonusRecord) GetRewardStage() int64 {
 func (x *BonusRecord) GetRechargeCount() int64 {
 	if x != nil {
 		return x.RechargeCount
+	}
+	return 0
+}
+
+func (x *BonusRecord) GetRechargeAmount() int64 {
+	if x != nil {
+		return x.RechargeAmount
 	}
 	return 0
 }
@@ -4563,7 +4571,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\x12'\n" +
 	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\x12\x1b\n" +
 	"\ttarget_id\x18\a \x01(\x05R\btargetId\x12\"\n" +
-	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\"\xaf\x01\n" +
+	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\"\xd8\x01\n" +
 	"\vBonusRecord\x12\x1d\n" +
 	"\n" +
 	"bonus_type\x18\x01 \x01(\x03R\tbonusType\x12\x16\n" +
@@ -4571,7 +4579,8 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\vreward_rate\x18\x03 \x01(\tR\n" +
 	"rewardRate\x12!\n" +
 	"\freward_stage\x18\x04 \x01(\x03R\vrewardStage\x12%\n" +
-	"\x0erecharge_count\x18\x05 \x01(\x03R\rrechargeCount\"\xed\x03\n" +
+	"\x0erecharge_count\x18\x05 \x01(\x03R\rrechargeCount\x12'\n" +
+	"\x0frecharge_amount\x18\x06 \x01(\x03R\x0erechargeAmount\"\xed\x03\n" +
 	"\x10CalcRechargeResp\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\x03R\x06amount\x124\n" +
 	"\x16actual_received_amount\x18\x02 \x01(\x03R\x14actualReceivedAmount\x12#\n" +

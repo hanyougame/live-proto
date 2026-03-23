@@ -132,6 +132,7 @@ message BonusRecord {
   string reward_rate = 3;//奖励金额比例（固定金额为空）
   int64 reward_stage = 4;//奖励阶段（多充活动）
   int64 recharge_count = 5;//充值次数（多充活动）
+  int64 recharge_amount = 6;//充值金额(累充活动)
 }
 
 message CalcRechargeResp {
