@@ -91,6 +91,8 @@ type (
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
+	GetLotteryDrawListReply                  = v1.GetLotteryDrawListReply
+	GetLotteryDrawListReq                    = v1.GetLotteryDrawListReq
 	GetNewGameListReply                      = v1.GetNewGameListReply
 	GetNewGameListReq                        = v1.GetNewGameListReq
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
@@ -107,6 +109,7 @@ type (
 	GetWalletTransferBalanceReplyV2          = v1.GetWalletTransferBalanceReplyV2
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
 	GetWalletTransferBalanceReqV2            = v1.GetWalletTransferBalanceReqV2
+	LotteryDraw                              = v1.LotteryDraw
 	PlatformDetailsList                      = v1.PlatformDetailsList
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
 	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply

@@ -641,7 +641,22 @@ message AddRecentlyGamePlayReq {
   int64 user_id = 1;          // 用户ID
   int64 game_id = 2;          // 游戏ID
 }
-
+message GetLotteryDrawListReq {
+  repeated int64 tripartite_game_ids = 1;          // 三方游戏ID
+}
+message GetLotteryDrawListReply {
+  repeated LotteryDraw rows = 1;
+}
+message LotteryDraw {
+  int64 game_id = 1;                    // 游戏ID
+  repeated int32 last_draw_result = 2;   // 上次开奖结果数组
+  int64 lottery_id = 3;                 // 抽奖ID
+  int64 next_draw_time = 4;              // 下次开奖时间（毫秒时间戳）
+  int32 reward_type = 5;                // 奖励类型
+  int64 reward_value = 6;               // 奖励值
+  bool standby = 7;                    // 是否备用
+  int64 win_count = 8;                  // 中奖次数
+}
 service LiveGameRpcInnerService{
   // 添加三方转账记录
   rpc AddTripartiteTransferRecord(AddTripartiteTransferRecordReq) returns (GameReply);
@@ -674,6 +689,8 @@ service LiveGameRpcInnerService{
   rpc AddRecentlyGamePlay(AddRecentlyGamePlayReq) returns (GameReply);
   // 同步下注统计数据到pg
   rpc SyncGameBetSummaryToPGTask(GameReq) returns (GameReply);
+  // 通过第三方游戏id获取彩票开奖结果列表
+  rpc GetLotteryDrawList(GetLotteryDrawListReq)  returns (GetLotteryDrawListReply);
 
 }
 

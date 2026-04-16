@@ -91,6 +91,8 @@ type (
 	GetHotPlatformListReq                    = v1.GetHotPlatformListReq
 	GetK9GameAccessKeyReply                  = v1.GetK9GameAccessKeyReply
 	GetK9GameAccessKeyReq                    = v1.GetK9GameAccessKeyReq
+	GetLotteryDrawListReply                  = v1.GetLotteryDrawListReply
+	GetLotteryDrawListReq                    = v1.GetLotteryDrawListReq
 	GetNewGameListReply                      = v1.GetNewGameListReply
 	GetNewGameListReq                        = v1.GetNewGameListReq
 	GetPlatListSimpleByCurrReply             = v1.GetPlatListSimpleByCurrReply
@@ -107,6 +109,7 @@ type (
 	GetWalletTransferBalanceReplyV2          = v1.GetWalletTransferBalanceReplyV2
 	GetWalletTransferBalanceReq              = v1.GetWalletTransferBalanceReq
 	GetWalletTransferBalanceReqV2            = v1.GetWalletTransferBalanceReqV2
+	LotteryDraw                              = v1.LotteryDraw
 	PlatformDetailsList                      = v1.PlatformDetailsList
 	PlatformRedirectionBase                  = v1.PlatformRedirectionBase
 	ProcessMessageTransferDataReply          = v1.ProcessMessageTransferDataReply
@@ -167,6 +170,8 @@ type (
 		AddRecentlyGamePlay(ctx context.Context, in *AddRecentlyGamePlayReq, opts ...grpc.CallOption) (*GameReply, error)
 		// 同步下注统计数据到pg
 		SyncGameBetSummaryToPGTask(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error)
+		// 通过第三方游戏id获取彩票开奖结果列表
+		GetLotteryDrawList(ctx context.Context, in *GetLotteryDrawListReq, opts ...grpc.CallOption) (*GetLotteryDrawListReply, error)
 	}
 
 	defaultLiveGameRpcInnerService struct {
@@ -273,4 +278,10 @@ func (m *defaultLiveGameRpcInnerService) AddRecentlyGamePlay(ctx context.Context
 func (m *defaultLiveGameRpcInnerService) SyncGameBetSummaryToPGTask(ctx context.Context, in *GameReq, opts ...grpc.CallOption) (*GameReply, error) {
 	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
 	return client.SyncGameBetSummaryToPGTask(ctx, in, opts...)
+}
+
+// 通过第三方游戏id获取彩票开奖结果列表
+func (m *defaultLiveGameRpcInnerService) GetLotteryDrawList(ctx context.Context, in *GetLotteryDrawListReq, opts ...grpc.CallOption) (*GetLotteryDrawListReply, error) {
+	client := v1.NewLiveGameRpcInnerServiceClient(m.cli.Conn())
+	return client.GetLotteryDrawList(ctx, in, opts...)
 }
