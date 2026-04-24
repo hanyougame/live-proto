@@ -459,6 +459,7 @@ message UpdateAuditAmountReq {
   int64 tripartite_platform_id = 10; // 三方游戏平台ID
   int64 game_id = 5; // 游戏Id
   int64 tripartite_game_id = 6; // 三方游戏Id
+  int64 user_win_amount = 7; // 用户输赢金额 有负数
 }
 
 message UpdateAuditAmountResp {
