@@ -453,13 +453,14 @@ message AddAuditResp {
 // 更新稽核金额（打稽核）
 message UpdateAuditAmountReq {
   int64 user_id = 1; // 用户Id
-  int64 audit_amount = 2; // 稽核金额(投注金额)（单位:元）
+  int64 audit_amount = 2; // 稽核金额(有效投注金额)（单位:元）
   string currency_code = 3; // 币种
   int64 game_platform_id = 4; // 游戏平台Id
   int64 tripartite_platform_id = 10; // 三方游戏平台ID
   int64 game_id = 5; // 游戏Id
   int64 tripartite_game_id = 6; // 三方游戏Id
   int64 user_win_amount = 7; // 用户输赢金额 有负数
+  int64 bet_amount = 8;// 投注金额
 }
 
 message UpdateAuditAmountResp {

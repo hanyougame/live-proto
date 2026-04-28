@@ -3041,13 +3041,14 @@ func (x *AddAuditResp) GetAuditId() int64 {
 type UpdateAuditAmountReq struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	UserId               int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                              // 用户Id
-	AuditAmount          int64                  `protobuf:"varint,2,opt,name=audit_amount,json=auditAmount,proto3" json:"audit_amount,omitempty"`                               // 稽核金额(投注金额)（单位:元）
+	AuditAmount          int64                  `protobuf:"varint,2,opt,name=audit_amount,json=auditAmount,proto3" json:"audit_amount,omitempty"`                               // 稽核金额(有效投注金额)（单位:元）
 	CurrencyCode         string                 `protobuf:"bytes,3,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`                             // 币种
 	GamePlatformId       int64                  `protobuf:"varint,4,opt,name=game_platform_id,json=gamePlatformId,proto3" json:"game_platform_id,omitempty"`                    // 游戏平台Id
 	TripartitePlatformId int64                  `protobuf:"varint,10,opt,name=tripartite_platform_id,json=tripartitePlatformId,proto3" json:"tripartite_platform_id,omitempty"` // 三方游戏平台ID
 	GameId               int64                  `protobuf:"varint,5,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`                                              // 游戏Id
 	TripartiteGameId     int64                  `protobuf:"varint,6,opt,name=tripartite_game_id,json=tripartiteGameId,proto3" json:"tripartite_game_id,omitempty"`              // 三方游戏Id
 	UserWinAmount        int64                  `protobuf:"varint,7,opt,name=user_win_amount,json=userWinAmount,proto3" json:"user_win_amount,omitempty"`                       // 用户输赢金额 有负数
+	BetAmount            int64                  `protobuf:"varint,8,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount,omitempty"`                                     // 投注金额
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -3134,6 +3135,13 @@ func (x *UpdateAuditAmountReq) GetTripartiteGameId() int64 {
 func (x *UpdateAuditAmountReq) GetUserWinAmount() int64 {
 	if x != nil {
 		return x.UserWinAmount
+	}
+	return 0
+}
+
+func (x *UpdateAuditAmountReq) GetBetAmount() int64 {
+	if x != nil {
+		return x.BetAmount
 	}
 	return 0
 }
@@ -4708,7 +4716,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"walletType\x12\x19\n" +
 	"\bgame_ids\x18\x0f \x03(\x03R\agameIds\")\n" +
 	"\fAddAuditResp\x12\x19\n" +
-	"\baudit_id\x18\x01 \x01(\x03R\aauditId\"\xc6\x02\n" +
+	"\baudit_id\x18\x01 \x01(\x03R\aauditId\"\xe5\x02\n" +
 	"\x14UpdateAuditAmountReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12!\n" +
 	"\faudit_amount\x18\x02 \x01(\x03R\vauditAmount\x12#\n" +
@@ -4718,7 +4726,9 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	" \x01(\x03R\x14tripartitePlatformId\x12\x17\n" +
 	"\agame_id\x18\x05 \x01(\x03R\x06gameId\x12,\n" +
 	"\x12tripartite_game_id\x18\x06 \x01(\x03R\x10tripartiteGameId\x12&\n" +
-	"\x0fuser_win_amount\x18\a \x01(\x03R\ruserWinAmount\"\x17\n" +
+	"\x0fuser_win_amount\x18\a \x01(\x03R\ruserWinAmount\x12\x1d\n" +
+	"\n" +
+	"bet_amount\x18\b \x01(\x03R\tbetAmount\"\x17\n" +
 	"\x15UpdateAuditAmountResp\"O\n" +
 	"\x0fGetAuditInfoReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12#\n" +
