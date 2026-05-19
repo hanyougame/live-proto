@@ -990,6 +990,7 @@ message GetHotGameListReq {
   int64 user_id = 5;
   int64 game_category_id = 7;  // 游戏类别ID
   string search_key = 8;
+  int64 channel_id = 9;// 渠道ID
 }
 
 // 热门平台列表
@@ -1078,6 +1079,7 @@ message GetHomeGameItemReq {
   string currency_code = 2;
   repeated int64 game_category_ids = 3;
   int64 user_id = 4;
+  int64 channel_id = 9;// 渠道ID
 }
 
 message PlatformDetailsList {
@@ -1211,6 +1213,7 @@ message FetchHotManagementReq{
   string currency_code = 4;
   int64 user_id = 5;
   int64 game_category_id = 7;  // 游戏类别ID
+  int64 channel_id = 9;// 渠道ID
 }
 
 message FetchHotManagementReply{
