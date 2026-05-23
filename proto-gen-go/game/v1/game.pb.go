@@ -10089,6 +10089,7 @@ func (x *GameHotManagement) GetGameId() int64 {
 type FetchGameMapByIDReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GameId        []int64                `protobuf:"varint,1,rep,packed,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	ChannelId     int64                  `protobuf:"varint,2,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"` // 渠道ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -10128,6 +10129,13 @@ func (x *FetchGameMapByIDReq) GetGameId() []int64 {
 		return x.GameId
 	}
 	return nil
+}
+
+func (x *FetchGameMapByIDReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
+	}
+	return 0
 }
 
 type FetchGameMapByIDReply struct {
@@ -10177,6 +10185,7 @@ func (x *FetchGameMapByIDReply) GetInfo() map[int64]*GameDetails {
 type FetchPlatformMapByIDReq struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	GamePlatformId []int64                `protobuf:"varint,1,rep,packed,name=game_platform_id,json=gamePlatformId,proto3" json:"game_platform_id,omitempty"`
+	ChannelId      int64                  `protobuf:"varint,2,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"` // 渠道ID
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -10216,6 +10225,13 @@ func (x *FetchPlatformMapByIDReq) GetGamePlatformId() []int64 {
 		return x.GamePlatformId
 	}
 	return nil
+}
+
+func (x *FetchPlatformMapByIDReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
+	}
+	return 0
 }
 
 type FetchPlatformMapByIDReply struct {
@@ -11310,16 +11326,20 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\fhot_category\x18\x05 \x01(\x03R\vhotCategory\x12(\n" +
 	"\x10game_category_id\x18\x06 \x01(\x03R\x0egameCategoryId\x12(\n" +
 	"\x10game_platform_id\x18\a \x01(\x03R\x0egamePlatformId\x12\x17\n" +
-	"\agame_id\x18\b \x01(\x03R\x06gameId\".\n" +
+	"\agame_id\x18\b \x01(\x03R\x06gameId\"M\n" +
 	"\x13FetchGameMapByIDReq\x12\x17\n" +
-	"\agame_id\x18\x01 \x03(\x03R\x06gameId\"\xa4\x01\n" +
+	"\agame_id\x18\x01 \x03(\x03R\x06gameId\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\x02 \x01(\x03R\tchannelId\"\xa4\x01\n" +
 	"\x15FetchGameMapByIDReply\x12<\n" +
 	"\x04info\x18\x01 \x03(\v2(.game.v1.FetchGameMapByIDReply.InfoEntryR\x04info\x1aM\n" +
 	"\tInfoEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x03R\x03key\x12*\n" +
-	"\x05value\x18\x02 \x01(\v2\x14.game.v1.GameDetailsR\x05value:\x028\x01\"C\n" +
+	"\x05value\x18\x02 \x01(\v2\x14.game.v1.GameDetailsR\x05value:\x028\x01\"b\n" +
 	"\x17FetchPlatformMapByIDReq\x12(\n" +
-	"\x10game_platform_id\x18\x01 \x03(\x03R\x0egamePlatformId\"\xb3\x01\n" +
+	"\x10game_platform_id\x18\x01 \x03(\x03R\x0egamePlatformId\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\x02 \x01(\x03R\tchannelId\"\xb3\x01\n" +
 	"\x19FetchPlatformMapByIDReply\x12@\n" +
 	"\x04info\x18\x01 \x03(\v2,.game.v1.FetchPlatformMapByIDReply.InfoEntryR\x04info\x1aT\n" +
 	"\tInfoEntry\x12\x10\n" +

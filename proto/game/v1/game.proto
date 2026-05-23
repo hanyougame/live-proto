@@ -1304,6 +1304,7 @@ service LiveGameRpcService{
 
 message FetchGameMapByIDReq {
   repeated  int64 game_id = 1;
+  int64 channel_id = 2;// 渠道ID
 }
 
 message FetchGameMapByIDReply {
@@ -1312,6 +1313,7 @@ message FetchGameMapByIDReply {
 
 message FetchPlatformMapByIDReq{
   repeated int64 game_platform_id = 1;
+  int64 channel_id = 2;// 渠道ID
 
 }
 
