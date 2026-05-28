@@ -614,7 +614,9 @@ message WithdrawReq {
   string Identity = 13; // 身份证号
 }
 message WithdrawResp {
-
+  int64 status = 1; // 状态 1-Success 2-Fail
+  string msg = 2;   // 消息
+  string order_number = 3; // 订单号
 }
 
 message ExchangeRateReq {

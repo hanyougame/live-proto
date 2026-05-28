@@ -4332,6 +4332,9 @@ func (x *WithdrawReq) GetIdentity() string {
 
 type WithdrawResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        int64                  `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`                             // 状态 1-Success 2-Fail
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`                                    // 消息
+	OrderNumber   string                 `protobuf:"bytes,3,opt,name=order_number,json=orderNumber,proto3" json:"order_number,omitempty"` // 订单号
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4364,6 +4367,27 @@ func (x *WithdrawResp) ProtoReflect() protoreflect.Message {
 // Deprecated: Use WithdrawResp.ProtoReflect.Descriptor instead.
 func (*WithdrawResp) Descriptor() ([]byte, []int) {
 	return file_proto_finance_v1_finance_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *WithdrawResp) GetStatus() int64 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *WithdrawResp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *WithdrawResp) GetOrderNumber() string {
+	if x != nil {
+		return x.OrderNumber
+	}
+	return ""
 }
 
 type ExchangeRateReq struct {
@@ -4833,8 +4857,11 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	" \x01(\tR\fcurrencyCode\x12+\n" +
 	"\x11withdraw_category\x18\v \x01(\x03R\x10withdrawCategory\x12\x14\n" +
 	"\x05phone\x18\f \x01(\tR\x05phone\x12\x1a\n" +
-	"\bIdentity\x18\r \x01(\tR\bIdentity\"\x0e\n" +
-	"\fWithdrawResp\"\x8d\x01\n" +
+	"\bIdentity\x18\r \x01(\tR\bIdentity\"[\n" +
+	"\fWithdrawResp\x12\x16\n" +
+	"\x06status\x18\x01 \x01(\x03R\x06status\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\x12!\n" +
+	"\forder_number\x18\x03 \x01(\tR\vorderNumber\"\x8d\x01\n" +
 	"\x0fExchangeRateReq\x120\n" +
 	"\x14source_currency_code\x18\x01 \x01(\tR\x12sourceCurrencyCode\x120\n" +
 	"\x14target_currency_code\x18\x02 \x01(\tR\x12targetCurrencyCode\x12\x16\n" +
