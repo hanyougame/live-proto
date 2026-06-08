@@ -3049,7 +3049,8 @@ type UpdateAuditAmountReq struct {
 	TripartiteGameId     int64                  `protobuf:"varint,6,opt,name=tripartite_game_id,json=tripartiteGameId,proto3" json:"tripartite_game_id,omitempty"`              // 三方游戏Id
 	UserWinAmount        int64                  `protobuf:"varint,7,opt,name=user_win_amount,json=userWinAmount,proto3" json:"user_win_amount,omitempty"`                       // 用户输赢金额 有负数
 	BetAmount            int64                  `protobuf:"varint,8,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount,omitempty"`                                     // 投注金额
-	BetId                string                 `protobuf:"bytes,9,opt,name=bet_id,json=betId,proto3" json:"bet_id,omitempty"`                                                  // 投注记录ID
+	BetId                string                 `protobuf:"bytes,11,opt,name=bet_id,json=betId,proto3" json:"bet_id,omitempty"`                                                 // 投注记录ID
+	BetTime              int64                  `protobuf:"varint,12,opt,name=bet_time,json=betTime,proto3" json:"bet_time,omitempty"`                                          // 投注时间
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -3152,6 +3153,13 @@ func (x *UpdateAuditAmountReq) GetBetId() string {
 		return x.BetId
 	}
 	return ""
+}
+
+func (x *UpdateAuditAmountReq) GetBetTime() int64 {
+	if x != nil {
+		return x.BetTime
+	}
+	return 0
 }
 
 type UpdateAuditAmountResp struct {
@@ -4748,7 +4756,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"walletType\x12\x19\n" +
 	"\bgame_ids\x18\x0f \x03(\x03R\agameIds\")\n" +
 	"\fAddAuditResp\x12\x19\n" +
-	"\baudit_id\x18\x01 \x01(\x03R\aauditId\"\xfc\x02\n" +
+	"\baudit_id\x18\x01 \x01(\x03R\aauditId\"\x97\x03\n" +
 	"\x14UpdateAuditAmountReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12!\n" +
 	"\faudit_amount\x18\x02 \x01(\x03R\vauditAmount\x12#\n" +
@@ -4761,7 +4769,8 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x0fuser_win_amount\x18\a \x01(\x03R\ruserWinAmount\x12\x1d\n" +
 	"\n" +
 	"bet_amount\x18\b \x01(\x03R\tbetAmount\x12\x15\n" +
-	"\x06bet_id\x18\t \x01(\tR\x05betId\"\x17\n" +
+	"\x06bet_id\x18\v \x01(\tR\x05betId\x12\x19\n" +
+	"\bbet_time\x18\f \x01(\x03R\abetTime\"\x17\n" +
 	"\x15UpdateAuditAmountResp\"O\n" +
 	"\x0fGetAuditInfoReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12#\n" +

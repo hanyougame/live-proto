@@ -461,7 +461,8 @@ message UpdateAuditAmountReq {
   int64 tripartite_game_id = 6; // 三方游戏Id
   int64 user_win_amount = 7; // 用户输赢金额 有负数
   int64 bet_amount = 8;// 投注金额
-  string bet_id = 9; // 投注记录ID
+  string bet_id = 11; // 投注记录ID
+  int64 bet_time = 12;// 投注时间
 }
 
 message UpdateAuditAmountResp {
