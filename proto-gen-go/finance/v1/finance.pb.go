@@ -3883,6 +3883,7 @@ type UpdateWithdrawAmountReq struct {
 	UserId         int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                         // 用户ID
 	CurrencyCode   string                 `protobuf:"bytes,2,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`        // 币种
 	WithdrawAmount int64                  `protobuf:"varint,3,opt,name=withdraw_amount,json=withdrawAmount,proto3" json:"withdraw_amount,omitempty"` // 提现金额
+	OrderNumber    string                 `protobuf:"bytes,4,opt,name=order_number,json=orderNumber,proto3" json:"order_number,omitempty"`           // 订单号
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -3936,6 +3937,13 @@ func (x *UpdateWithdrawAmountReq) GetWithdrawAmount() int64 {
 		return x.WithdrawAmount
 	}
 	return 0
+}
+
+func (x *UpdateWithdrawAmountReq) GetOrderNumber() string {
+	if x != nil {
+		return x.OrderNumber
+	}
+	return ""
 }
 
 type UpdateWithdrawAmountResp struct {
@@ -4839,11 +4847,12 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\rcurrency_code\x18\x03 \x01(\tR\fcurrencyCode\x123\n" +
 	"\n" +
 	"audit_list\x18\x04 \x03(\v2\x14.finance.v1.AddAuditR\tauditList\"\x13\n" +
-	"\x11BatchAddAuditResp\"\x80\x01\n" +
+	"\x11BatchAddAuditResp\"\xa3\x01\n" +
 	"\x17UpdateWithdrawAmountReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12'\n" +
-	"\x0fwithdraw_amount\x18\x03 \x01(\x03R\x0ewithdrawAmount\"\x1a\n" +
+	"\x0fwithdraw_amount\x18\x03 \x01(\x03R\x0ewithdrawAmount\x12!\n" +
+	"\forder_number\x18\x04 \x01(\tR\vorderNumber\"\x1a\n" +
 	"\x18UpdateWithdrawAmountResp\"\x94\x02\n" +
 	"\x13AddWithdrawLimitReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1a\n" +

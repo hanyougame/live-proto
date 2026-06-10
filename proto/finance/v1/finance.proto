@@ -543,6 +543,7 @@ message UpdateWithdrawAmountReq {
   int64 user_id = 1; // 用户ID
   string currency_code = 2; // 币种
   int64 withdraw_amount = 3; // 提现金额
+  string order_number = 4;   // 订单号
 }
 
 message UpdateWithdrawAmountResp {
