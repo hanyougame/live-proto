@@ -2224,6 +2224,103 @@ func (x *IncreaseUserRedPacketCountReq) GetCurrentDate() string {
 	return ""
 }
 
+// 新人7日成长活动任务
+type DoNewUserGrowthActivityTaskReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Behaviors     []int64                `protobuf:"varint,2,rep,packed,name=behaviors,proto3" json:"behaviors,omitempty"`
+	Data          []byte                 `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"` // 数据
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DoNewUserGrowthActivityTaskReq) Reset() {
+	*x = DoNewUserGrowthActivityTaskReq{}
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DoNewUserGrowthActivityTaskReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DoNewUserGrowthActivityTaskReq) ProtoMessage() {}
+
+func (x *DoNewUserGrowthActivityTaskReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DoNewUserGrowthActivityTaskReq.ProtoReflect.Descriptor instead.
+func (*DoNewUserGrowthActivityTaskReq) Descriptor() ([]byte, []int) {
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *DoNewUserGrowthActivityTaskReq) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *DoNewUserGrowthActivityTaskReq) GetBehaviors() []int64 {
+	if x != nil {
+		return x.Behaviors
+	}
+	return nil
+}
+
+func (x *DoNewUserGrowthActivityTaskReq) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type DoNewUserGrowthActivityTaskReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DoNewUserGrowthActivityTaskReply) Reset() {
+	*x = DoNewUserGrowthActivityTaskReply{}
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DoNewUserGrowthActivityTaskReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DoNewUserGrowthActivityTaskReply) ProtoMessage() {}
+
+func (x *DoNewUserGrowthActivityTaskReply) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_activity_v1_activity_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DoNewUserGrowthActivityTaskReply.ProtoReflect.Descriptor instead.
+func (*DoNewUserGrowthActivityTaskReply) Descriptor() ([]byte, []int) {
+	return file_proto_activity_v1_activity_proto_rawDescGZIP(), []int{35}
+}
+
 var File_proto_activity_v1_activity_proto protoreflect.FileDescriptor
 
 const file_proto_activity_v1_activity_proto_rawDesc = "" +
@@ -2420,7 +2517,12 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\vactivity_id\x18\x02 \x01(\x03R\n" +
 	"activityId\x12!\n" +
 	"\fperiod_index\x18\x03 \x01(\x03R\vperiodIndex\x12!\n" +
-	"\fcurrent_date\x18\x04 \x01(\tR\vcurrentDate*=\n" +
+	"\fcurrent_date\x18\x04 \x01(\tR\vcurrentDate\"k\n" +
+	"\x1eDoNewUserGrowthActivityTaskReq\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1c\n" +
+	"\tbehaviors\x18\x02 \x03(\x03R\tbehaviors\x12\x12\n" +
+	"\x04data\x18\x03 \x01(\fR\x04data\"\"\n" +
+	" DoNewUserGrowthActivityTaskReply*=\n" +
 	"\tEventType\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\a\n" +
 	"\x03BET\x10\x01\x12\f\n" +
@@ -2430,7 +2532,7 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x11SPIN_TYPE_UNKNOWN\x10\x00\x12\x14\n" +
 	"\x10SPIN_TYPE_SILVER\x10\x01\x12\x12\n" +
 	"\x0eSPIN_TYPE_GOLD\x10\x02\x12\x15\n" +
-	"\x11SPIN_TYPE_DIAMOND\x10\x032\xf2\v\n" +
+	"\x11SPIN_TYPE_DIAMOND\x10\x032\xed\f\n" +
 	"\x18LiveActivityInnerService\x12\\\n" +
 	"\x16RedPacketCampaignEvent\x12&.activity.v1.RedPacketCampaignEventReq\x1a\x1a.activity.v1.ActivityReply\x12^\n" +
 	"\x17RedPacketCountdownEvent\x12'.activity.v1.RedPacketCountdownEventReq\x1a\x1a.activity.v1.ActivityReply\x12y\n" +
@@ -2448,7 +2550,8 @@ const file_proto_activity_v1_activity_proto_rawDesc = "" +
 	"\x16ReceivePromotionReward\x12&.activity.v1.PromotionRewardReceiveReq\x1a(.activity.v1.PromotionRewardReceiveReply\x12e\n" +
 	"\x1aPromotionActivityRiskCheck\x12!.activity.v1.ActivityRiskCheckReq\x1a$.activity.v1.PromotionRiskCheckReply\x12d\n" +
 	"\x14ApplyPromotionReward\x12$.activity.v1.PromotionRewardApplyReq\x1a&.activity.v1.PromotionRewardApplyReply\x12]\n" +
-	"\x16PromotionTaskRiskCheck\x12\x1d.activity.v1.TaskRiskCheckReq\x1a$.activity.v1.PromotionRiskCheckReplyB\tZ\a./pb/v1b\x06proto3"
+	"\x16PromotionTaskRiskCheck\x12\x1d.activity.v1.TaskRiskCheckReq\x1a$.activity.v1.PromotionRiskCheckReply\x12y\n" +
+	"\x1bDoNewUserGrowthActivityTask\x12+.activity.v1.DoNewUserGrowthActivityTaskReq\x1a-.activity.v1.DoNewUserGrowthActivityTaskReplyB\tZ\a./pb/v1b\x06proto3"
 
 var (
 	file_proto_activity_v1_activity_proto_rawDescOnce sync.Once
@@ -2463,7 +2566,7 @@ func file_proto_activity_v1_activity_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_activity_v1_activity_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_activity_v1_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 41)
+var file_proto_activity_v1_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
 var file_proto_activity_v1_activity_proto_goTypes = []any{
 	(EventType)(0),                           // 0: activity.v1.EventType
 	(SpinType)(0),                            // 1: activity.v1.SpinType
@@ -2501,35 +2604,37 @@ var file_proto_activity_v1_activity_proto_goTypes = []any{
 	(*CheckUserRedPacketConditionReq)(nil),   // 33: activity.v1.CheckUserRedPacketConditionReq
 	(*CheckUserRedPacketConditionReply)(nil), // 34: activity.v1.CheckUserRedPacketConditionReply
 	(*IncreaseUserRedPacketCountReq)(nil),    // 35: activity.v1.IncreaseUserRedPacketCountReq
-	nil,                                      // 36: activity.v1.PromotionRiskCheckReply.IpLimitEntry
-	nil,                                      // 37: activity.v1.PromotionRiskCheckReply.DeviceLimitEntry
-	nil,                                      // 38: activity.v1.LuckyPointsUsedItem.DetailEntry
-	nil,                                      // 39: activity.v1.LuckyPointsAddItem.DetailEntry
-	nil,                                      // 40: activity.v1.UseLuckyPointReq.DetailEntry
-	nil,                                      // 41: activity.v1.AddLuckyValReq.DetailEntry
-	nil,                                      // 42: activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
+	(*DoNewUserGrowthActivityTaskReq)(nil),   // 36: activity.v1.DoNewUserGrowthActivityTaskReq
+	(*DoNewUserGrowthActivityTaskReply)(nil), // 37: activity.v1.DoNewUserGrowthActivityTaskReply
+	nil,                                      // 38: activity.v1.PromotionRiskCheckReply.IpLimitEntry
+	nil,                                      // 39: activity.v1.PromotionRiskCheckReply.DeviceLimitEntry
+	nil,                                      // 40: activity.v1.LuckyPointsUsedItem.DetailEntry
+	nil,                                      // 41: activity.v1.LuckyPointsAddItem.DetailEntry
+	nil,                                      // 42: activity.v1.UseLuckyPointReq.DetailEntry
+	nil,                                      // 43: activity.v1.AddLuckyValReq.DetailEntry
+	nil,                                      // 44: activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
 }
 var file_proto_activity_v1_activity_proto_depIdxs = []int32{
 	9,  // 0: activity.v1.PromotionRewardReceiveReq.risk_check:type_name -> activity.v1.PromotionRiskCheckInfo
 	9,  // 1: activity.v1.ActivityRiskCheckReq.risk_check:type_name -> activity.v1.PromotionRiskCheckInfo
 	9,  // 2: activity.v1.TaskRiskCheckReq.risk_check:type_name -> activity.v1.PromotionRiskCheckInfo
-	36, // 3: activity.v1.PromotionRiskCheckReply.ip_limit:type_name -> activity.v1.PromotionRiskCheckReply.IpLimitEntry
-	37, // 4: activity.v1.PromotionRiskCheckReply.device_limit:type_name -> activity.v1.PromotionRiskCheckReply.DeviceLimitEntry
+	38, // 3: activity.v1.PromotionRiskCheckReply.ip_limit:type_name -> activity.v1.PromotionRiskCheckReply.IpLimitEntry
+	39, // 4: activity.v1.PromotionRiskCheckReply.device_limit:type_name -> activity.v1.PromotionRiskCheckReply.DeviceLimitEntry
 	13, // 5: activity.v1.PromotionRewardApplyReq.request_info:type_name -> activity.v1.RequestInfo
 	17, // 6: activity.v1.RewardListReply.data:type_name -> activity.v1.RewardData
 	1,  // 7: activity.v1.RewardData.spin_type:type_name -> activity.v1.SpinType
 	1,  // 8: activity.v1.LuckyPointsUsedItem.spin_type:type_name -> activity.v1.SpinType
 	24, // 9: activity.v1.LuckyPointsUsedItem.UsedList:type_name -> activity.v1.UseLuckyPoint
-	38, // 10: activity.v1.LuckyPointsUsedItem.detail:type_name -> activity.v1.LuckyPointsUsedItem.DetailEntry
+	40, // 10: activity.v1.LuckyPointsUsedItem.detail:type_name -> activity.v1.LuckyPointsUsedItem.DetailEntry
 	20, // 11: activity.v1.LuckyPointsUsedListReply.data:type_name -> activity.v1.LuckyPointsUsedItem
-	39, // 12: activity.v1.LuckyPointsAddItem.detail:type_name -> activity.v1.LuckyPointsAddItem.DetailEntry
+	41, // 12: activity.v1.LuckyPointsAddItem.detail:type_name -> activity.v1.LuckyPointsAddItem.DetailEntry
 	22, // 13: activity.v1.LuckyPointsAddListReply.data:type_name -> activity.v1.LuckyPointsAddItem
 	1,  // 14: activity.v1.UseLuckyPointReq.spin_type:type_name -> activity.v1.SpinType
-	40, // 15: activity.v1.UseLuckyPointReq.detail:type_name -> activity.v1.UseLuckyPointReq.DetailEntry
+	42, // 15: activity.v1.UseLuckyPointReq.detail:type_name -> activity.v1.UseLuckyPointReq.DetailEntry
 	27, // 16: activity.v1.GetLuckyPointReply.data:type_name -> activity.v1.GetLuckyPointItem
-	41, // 17: activity.v1.AddLuckyValReq.detail:type_name -> activity.v1.AddLuckyValReq.DetailEntry
+	43, // 17: activity.v1.AddLuckyValReq.detail:type_name -> activity.v1.AddLuckyValReq.DetailEntry
 	0,  // 18: activity.v1.LuckySpinEventReq.type:type_name -> activity.v1.EventType
-	42, // 19: activity.v1.CheckUserRedPacketConditionReply.user_packet_conditions:type_name -> activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
+	44, // 19: activity.v1.CheckUserRedPacketConditionReply.user_packet_conditions:type_name -> activity.v1.CheckUserRedPacketConditionReply.UserPacketConditionsEntry
 	30, // 20: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:input_type -> activity.v1.RedPacketCampaignEventReq
 	31, // 21: activity.v1.LiveActivityInnerService.RedPacketCountdownEvent:input_type -> activity.v1.RedPacketCountdownEventReq
 	33, // 22: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:input_type -> activity.v1.CheckUserRedPacketConditionReq
@@ -2546,24 +2651,26 @@ var file_proto_activity_v1_activity_proto_depIdxs = []int32{
 	6,  // 33: activity.v1.LiveActivityInnerService.PromotionActivityRiskCheck:input_type -> activity.v1.ActivityRiskCheckReq
 	11, // 34: activity.v1.LiveActivityInnerService.ApplyPromotionReward:input_type -> activity.v1.PromotionRewardApplyReq
 	7,  // 35: activity.v1.LiveActivityInnerService.PromotionTaskRiskCheck:input_type -> activity.v1.TaskRiskCheckReq
-	3,  // 36: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:output_type -> activity.v1.ActivityReply
-	3,  // 37: activity.v1.LiveActivityInnerService.RedPacketCountdownEvent:output_type -> activity.v1.ActivityReply
-	34, // 38: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:output_type -> activity.v1.CheckUserRedPacketConditionReply
-	3,  // 39: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:output_type -> activity.v1.ActivityReply
-	3,  // 40: activity.v1.LiveActivityInnerService.LuckySpinEvent:output_type -> activity.v1.ActivityReply
-	3,  // 41: activity.v1.LiveActivityInnerService.AddLuckyPoint:output_type -> activity.v1.ActivityReply
-	3,  // 42: activity.v1.LiveActivityInnerService.UseLuckyPoint:output_type -> activity.v1.ActivityReply
-	28, // 43: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:output_type -> activity.v1.GetLuckyPointReply
-	23, // 44: activity.v1.LiveActivityInnerService.LuckyPointsAddList:output_type -> activity.v1.LuckyPointsAddListReply
-	21, // 45: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:output_type -> activity.v1.LuckyPointsUsedListReply
-	16, // 46: activity.v1.LiveActivityInnerService.RewardList:output_type -> activity.v1.RewardListReply
-	15, // 47: activity.v1.LiveActivityInnerService.GetUserInviteCount:output_type -> activity.v1.GetUserInviteCountReply
-	5,  // 48: activity.v1.LiveActivityInnerService.ReceivePromotionReward:output_type -> activity.v1.PromotionRewardReceiveReply
-	8,  // 49: activity.v1.LiveActivityInnerService.PromotionActivityRiskCheck:output_type -> activity.v1.PromotionRiskCheckReply
-	12, // 50: activity.v1.LiveActivityInnerService.ApplyPromotionReward:output_type -> activity.v1.PromotionRewardApplyReply
-	8,  // 51: activity.v1.LiveActivityInnerService.PromotionTaskRiskCheck:output_type -> activity.v1.PromotionRiskCheckReply
-	36, // [36:52] is the sub-list for method output_type
-	20, // [20:36] is the sub-list for method input_type
+	36, // 36: activity.v1.LiveActivityInnerService.DoNewUserGrowthActivityTask:input_type -> activity.v1.DoNewUserGrowthActivityTaskReq
+	3,  // 37: activity.v1.LiveActivityInnerService.RedPacketCampaignEvent:output_type -> activity.v1.ActivityReply
+	3,  // 38: activity.v1.LiveActivityInnerService.RedPacketCountdownEvent:output_type -> activity.v1.ActivityReply
+	34, // 39: activity.v1.LiveActivityInnerService.CheckUserRedPacketCondition:output_type -> activity.v1.CheckUserRedPacketConditionReply
+	3,  // 40: activity.v1.LiveActivityInnerService.IncreaseUserRedPacketCount:output_type -> activity.v1.ActivityReply
+	3,  // 41: activity.v1.LiveActivityInnerService.LuckySpinEvent:output_type -> activity.v1.ActivityReply
+	3,  // 42: activity.v1.LiveActivityInnerService.AddLuckyPoint:output_type -> activity.v1.ActivityReply
+	3,  // 43: activity.v1.LiveActivityInnerService.UseLuckyPoint:output_type -> activity.v1.ActivityReply
+	28, // 44: activity.v1.LiveActivityInnerService.GetUserLuckyPoint:output_type -> activity.v1.GetLuckyPointReply
+	23, // 45: activity.v1.LiveActivityInnerService.LuckyPointsAddList:output_type -> activity.v1.LuckyPointsAddListReply
+	21, // 46: activity.v1.LiveActivityInnerService.LuckyPointsUsedList:output_type -> activity.v1.LuckyPointsUsedListReply
+	16, // 47: activity.v1.LiveActivityInnerService.RewardList:output_type -> activity.v1.RewardListReply
+	15, // 48: activity.v1.LiveActivityInnerService.GetUserInviteCount:output_type -> activity.v1.GetUserInviteCountReply
+	5,  // 49: activity.v1.LiveActivityInnerService.ReceivePromotionReward:output_type -> activity.v1.PromotionRewardReceiveReply
+	8,  // 50: activity.v1.LiveActivityInnerService.PromotionActivityRiskCheck:output_type -> activity.v1.PromotionRiskCheckReply
+	12, // 51: activity.v1.LiveActivityInnerService.ApplyPromotionReward:output_type -> activity.v1.PromotionRewardApplyReply
+	8,  // 52: activity.v1.LiveActivityInnerService.PromotionTaskRiskCheck:output_type -> activity.v1.PromotionRiskCheckReply
+	37, // 53: activity.v1.LiveActivityInnerService.DoNewUserGrowthActivityTask:output_type -> activity.v1.DoNewUserGrowthActivityTaskReply
+	37, // [37:54] is the sub-list for method output_type
+	20, // [20:37] is the sub-list for method input_type
 	20, // [20:20] is the sub-list for extension type_name
 	20, // [20:20] is the sub-list for extension extendee
 	0,  // [0:20] is the sub-list for field type_name
@@ -2580,7 +2687,7 @@ func file_proto_activity_v1_activity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_activity_v1_activity_proto_rawDesc), len(file_proto_activity_v1_activity_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   41,
+			NumMessages:   43,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

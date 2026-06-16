@@ -35,6 +35,7 @@ const (
 	LiveActivityInnerService_PromotionActivityRiskCheck_FullMethodName  = "/activity.v1.LiveActivityInnerService/PromotionActivityRiskCheck"
 	LiveActivityInnerService_ApplyPromotionReward_FullMethodName        = "/activity.v1.LiveActivityInnerService/ApplyPromotionReward"
 	LiveActivityInnerService_PromotionTaskRiskCheck_FullMethodName      = "/activity.v1.LiveActivityInnerService/PromotionTaskRiskCheck"
+	LiveActivityInnerService_DoNewUserGrowthActivityTask_FullMethodName = "/activity.v1.LiveActivityInnerService/DoNewUserGrowthActivityTask"
 )
 
 // LiveActivityInnerServiceClient is the client API for LiveActivityInnerService service.
@@ -73,6 +74,8 @@ type LiveActivityInnerServiceClient interface {
 	ApplyPromotionReward(ctx context.Context, in *PromotionRewardApplyReq, opts ...grpc.CallOption) (*PromotionRewardApplyReply, error)
 	// 任务优惠奖励风控校验
 	PromotionTaskRiskCheck(ctx context.Context, in *TaskRiskCheckReq, opts ...grpc.CallOption) (*PromotionRiskCheckReply, error)
+	// 执行新人7日成长活动任务
+	DoNewUserGrowthActivityTask(ctx context.Context, in *DoNewUserGrowthActivityTaskReq, opts ...grpc.CallOption) (*DoNewUserGrowthActivityTaskReply, error)
 }
 
 type liveActivityInnerServiceClient struct {
@@ -243,6 +246,16 @@ func (c *liveActivityInnerServiceClient) PromotionTaskRiskCheck(ctx context.Cont
 	return out, nil
 }
 
+func (c *liveActivityInnerServiceClient) DoNewUserGrowthActivityTask(ctx context.Context, in *DoNewUserGrowthActivityTaskReq, opts ...grpc.CallOption) (*DoNewUserGrowthActivityTaskReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DoNewUserGrowthActivityTaskReply)
+	err := c.cc.Invoke(ctx, LiveActivityInnerService_DoNewUserGrowthActivityTask_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LiveActivityInnerServiceServer is the server API for LiveActivityInnerService service.
 // All implementations must embed UnimplementedLiveActivityInnerServiceServer
 // for forward compatibility.
@@ -279,6 +292,8 @@ type LiveActivityInnerServiceServer interface {
 	ApplyPromotionReward(context.Context, *PromotionRewardApplyReq) (*PromotionRewardApplyReply, error)
 	// 任务优惠奖励风控校验
 	PromotionTaskRiskCheck(context.Context, *TaskRiskCheckReq) (*PromotionRiskCheckReply, error)
+	// 执行新人7日成长活动任务
+	DoNewUserGrowthActivityTask(context.Context, *DoNewUserGrowthActivityTaskReq) (*DoNewUserGrowthActivityTaskReply, error)
 	mustEmbedUnimplementedLiveActivityInnerServiceServer()
 }
 
@@ -336,6 +351,9 @@ func (UnimplementedLiveActivityInnerServiceServer) ApplyPromotionReward(context.
 }
 func (UnimplementedLiveActivityInnerServiceServer) PromotionTaskRiskCheck(context.Context, *TaskRiskCheckReq) (*PromotionRiskCheckReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PromotionTaskRiskCheck not implemented")
+}
+func (UnimplementedLiveActivityInnerServiceServer) DoNewUserGrowthActivityTask(context.Context, *DoNewUserGrowthActivityTaskReq) (*DoNewUserGrowthActivityTaskReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DoNewUserGrowthActivityTask not implemented")
 }
 func (UnimplementedLiveActivityInnerServiceServer) mustEmbedUnimplementedLiveActivityInnerServiceServer() {
 }
@@ -647,6 +665,24 @@ func _LiveActivityInnerService_PromotionTaskRiskCheck_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LiveActivityInnerService_DoNewUserGrowthActivityTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DoNewUserGrowthActivityTaskReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveActivityInnerServiceServer).DoNewUserGrowthActivityTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveActivityInnerService_DoNewUserGrowthActivityTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveActivityInnerServiceServer).DoNewUserGrowthActivityTask(ctx, req.(*DoNewUserGrowthActivityTaskReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LiveActivityInnerService_ServiceDesc is the grpc.ServiceDesc for LiveActivityInnerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -717,6 +753,10 @@ var LiveActivityInnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PromotionTaskRiskCheck",
 			Handler:    _LiveActivityInnerService_PromotionTaskRiskCheck_Handler,
+		},
+		{
+			MethodName: "DoNewUserGrowthActivityTask",
+			Handler:    _LiveActivityInnerService_DoNewUserGrowthActivityTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
