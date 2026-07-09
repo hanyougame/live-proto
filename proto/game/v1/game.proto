@@ -873,6 +873,7 @@ message GameDetails {
   int64 is_hot = 26; //  是否hot(1:开启，2：关闭)
   optional int64  is_sub_factory = 27;  // 是否开启分流
   repeated SubGameInfo sub_factory_params = 28; // 分流参数
+  repeated int64  sub_factory_channels = 29;
 }
 
 // 子游戏信息
