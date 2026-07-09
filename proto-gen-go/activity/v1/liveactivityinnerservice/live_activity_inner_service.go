@@ -21,6 +21,8 @@ type (
 	AddLuckyValReq                   = v1.AddLuckyValReq
 	CheckUserRedPacketConditionReply = v1.CheckUserRedPacketConditionReply
 	CheckUserRedPacketConditionReq   = v1.CheckUserRedPacketConditionReq
+	DoNewUserGrowthActivityTaskReply = v1.DoNewUserGrowthActivityTaskReply
+	DoNewUserGrowthActivityTaskReq   = v1.DoNewUserGrowthActivityTaskReq
 	GetLuckyPointItem                = v1.GetLuckyPointItem
 	GetLuckyPointListReq             = v1.GetLuckyPointListReq
 	GetLuckyPointReply               = v1.GetLuckyPointReply
@@ -82,6 +84,8 @@ type (
 		ApplyPromotionReward(ctx context.Context, in *PromotionRewardApplyReq, opts ...grpc.CallOption) (*PromotionRewardApplyReply, error)
 		// 任务优惠奖励风控校验
 		PromotionTaskRiskCheck(ctx context.Context, in *TaskRiskCheckReq, opts ...grpc.CallOption) (*PromotionRiskCheckReply, error)
+		// 执行新人7日成长活动任务
+		DoNewUserGrowthActivityTask(ctx context.Context, in *DoNewUserGrowthActivityTaskReq, opts ...grpc.CallOption) (*DoNewUserGrowthActivityTaskReply, error)
 	}
 
 	defaultLiveActivityInnerService struct {
@@ -189,4 +193,10 @@ func (m *defaultLiveActivityInnerService) ApplyPromotionReward(ctx context.Conte
 func (m *defaultLiveActivityInnerService) PromotionTaskRiskCheck(ctx context.Context, in *TaskRiskCheckReq, opts ...grpc.CallOption) (*PromotionRiskCheckReply, error) {
 	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
 	return client.PromotionTaskRiskCheck(ctx, in, opts...)
+}
+
+// 执行新人7日成长活动任务
+func (m *defaultLiveActivityInnerService) DoNewUserGrowthActivityTask(ctx context.Context, in *DoNewUserGrowthActivityTaskReq, opts ...grpc.CallOption) (*DoNewUserGrowthActivityTaskReply, error) {
+	client := v1.NewLiveActivityInnerServiceClient(m.cli.Conn())
+	return client.DoNewUserGrowthActivityTask(ctx, in, opts...)
 }

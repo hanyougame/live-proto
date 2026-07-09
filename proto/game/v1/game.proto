@@ -944,6 +944,7 @@ message GetGameListBySearchReq {
   int64 game_category_id = 7;
   repeated int64 game_platform_ids = 8; // 多平台ID
   string order_by = 9; // 排序字段：hot（人气），a-z（游戏名称），z-a（游戏名称）
+  int64 channel_id = 10; // 渠道ID
 }
 
 // 添加收藏
@@ -991,6 +992,7 @@ message GetHotGameListReq {
   int64 user_id = 5;
   int64 game_category_id = 7;  // 游戏类别ID
   string search_key = 8;
+  int64 channel_id = 9;// 渠道ID
 }
 
 // 热门平台列表
@@ -1079,6 +1081,7 @@ message GetHomeGameItemReq {
   string currency_code = 2;
   repeated int64 game_category_ids = 3;
   int64 user_id = 4;
+  int64 channel_id = 9;// 渠道ID
 }
 
 message PlatformDetailsList {
@@ -1212,6 +1215,7 @@ message FetchHotManagementReq{
   string currency_code = 4;
   int64 user_id = 5;
   int64 game_category_id = 7;  // 游戏类别ID
+  int64 channel_id = 9;// 渠道ID
 }
 
 message FetchHotManagementReply{
@@ -1302,6 +1306,8 @@ service LiveGameRpcService{
 
 message FetchGameMapByIDReq {
   repeated  int64 game_id = 1;
+  int64 channel_id = 2;// 渠道ID
+  string currency_code = 3;
 }
 
 message FetchGameMapByIDReply {
@@ -1310,6 +1316,8 @@ message FetchGameMapByIDReply {
 
 message FetchPlatformMapByIDReq{
   repeated int64 game_platform_id = 1;
+  int64 channel_id = 2;// 渠道ID
+  string currency_code = 3;
 
 }
 

@@ -7305,6 +7305,7 @@ type GetGameListBySearchReq struct {
 	GameCategoryId  int64                  `protobuf:"varint,7,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"`
 	GamePlatformIds []int64                `protobuf:"varint,8,rep,packed,name=game_platform_ids,json=gamePlatformIds,proto3" json:"game_platform_ids,omitempty"` // 多平台ID
 	OrderBy         string                 `protobuf:"bytes,9,opt,name=order_by,json=orderBy,proto3" json:"order_by,omitempty"`                                   // 排序字段：hot（人气），a-z（游戏名称），z-a（游戏名称）
+	ChannelId       int64                  `protobuf:"varint,10,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`                           // 渠道ID
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -7400,6 +7401,13 @@ func (x *GetGameListBySearchReq) GetOrderBy() string {
 		return x.OrderBy
 	}
 	return ""
+}
+
+func (x *GetGameListBySearchReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
+	}
+	return 0
 }
 
 // 添加收藏
@@ -7739,6 +7747,7 @@ type GetHotGameListReq struct {
 	UserId         int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	GameCategoryId int64                  `protobuf:"varint,7,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"` // 游戏类别ID
 	SearchKey      string                 `protobuf:"bytes,8,opt,name=search_key,json=searchKey,proto3" json:"search_key,omitempty"`
+	ChannelId      int64                  `protobuf:"varint,9,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"` // 渠道ID
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -7820,6 +7829,13 @@ func (x *GetHotGameListReq) GetSearchKey() string {
 		return x.SearchKey
 	}
 	return ""
+}
+
+func (x *GetHotGameListReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
+	}
+	return 0
 }
 
 // 热门平台列表
@@ -8579,6 +8595,7 @@ type GetHomeGameItemReq struct {
 	CurrencyCode    string                 `protobuf:"bytes,2,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
 	GameCategoryIds []int64                `protobuf:"varint,3,rep,packed,name=game_category_ids,json=gameCategoryIds,proto3" json:"game_category_ids,omitempty"`
 	UserId          int64                  `protobuf:"varint,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	ChannelId       int64                  `protobuf:"varint,9,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"` // 渠道ID
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -8637,6 +8654,13 @@ func (x *GetHomeGameItemReq) GetGameCategoryIds() []int64 {
 func (x *GetHomeGameItemReq) GetUserId() int64 {
 	if x != nil {
 		return x.UserId
+	}
+	return 0
+}
+
+func (x *GetHomeGameItemReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
 	}
 	return 0
 }
@@ -9818,6 +9842,7 @@ type FetchHotManagementReq struct {
 	CurrencyCode   string                 `protobuf:"bytes,4,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
 	UserId         int64                  `protobuf:"varint,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	GameCategoryId int64                  `protobuf:"varint,7,opt,name=game_category_id,json=gameCategoryId,proto3" json:"game_category_id,omitempty"` // 游戏类别ID
+	ChannelId      int64                  `protobuf:"varint,9,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`                  // 渠道ID
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -9890,6 +9915,13 @@ func (x *FetchHotManagementReq) GetUserId() int64 {
 func (x *FetchHotManagementReq) GetGameCategoryId() int64 {
 	if x != nil {
 		return x.GameCategoryId
+	}
+	return 0
+}
+
+func (x *FetchHotManagementReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
 	}
 	return 0
 }
@@ -10073,6 +10105,8 @@ func (x *GameHotManagement) GetGameId() int64 {
 type FetchGameMapByIDReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GameId        []int64                `protobuf:"varint,1,rep,packed,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	ChannelId     int64                  `protobuf:"varint,2,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"` // 渠道ID
+	CurrencyCode  string                 `protobuf:"bytes,3,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -10112,6 +10146,20 @@ func (x *FetchGameMapByIDReq) GetGameId() []int64 {
 		return x.GameId
 	}
 	return nil
+}
+
+func (x *FetchGameMapByIDReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
+	}
+	return 0
+}
+
+func (x *FetchGameMapByIDReq) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
 }
 
 type FetchGameMapByIDReply struct {
@@ -10161,6 +10209,8 @@ func (x *FetchGameMapByIDReply) GetInfo() map[int64]*GameDetails {
 type FetchPlatformMapByIDReq struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	GamePlatformId []int64                `protobuf:"varint,1,rep,packed,name=game_platform_id,json=gamePlatformId,proto3" json:"game_platform_id,omitempty"`
+	ChannelId      int64                  `protobuf:"varint,2,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"` // 渠道ID
+	CurrencyCode   string                 `protobuf:"bytes,3,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -10200,6 +10250,20 @@ func (x *FetchPlatformMapByIDReq) GetGamePlatformId() []int64 {
 		return x.GamePlatformId
 	}
 	return nil
+}
+
+func (x *FetchPlatformMapByIDReq) GetChannelId() int64 {
+	if x != nil {
+		return x.ChannelId
+	}
+	return 0
+}
+
+func (x *FetchPlatformMapByIDReq) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
 }
 
 type FetchPlatformMapByIDReply struct {
@@ -11030,7 +11094,7 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x16GamePlatformDetailsReq\x12\x17\n" +
 	"\agame_id\x18\x01 \x01(\x03R\x06gameId\x12(\n" +
 	"\x10game_category_id\x18\x02 \x01(\x03R\x0egameCategoryId\x12(\n" +
-	"\x10game_platform_id\x18\x03 \x01(\x03R\x0egamePlatformId\"\xc5\x02\n" +
+	"\x10game_platform_id\x18\x03 \x01(\x03R\x0egamePlatformId\"\xe4\x02\n" +
 	"\x16GetGameListBySearchReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x03R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\x12!\n" +
@@ -11040,7 +11104,10 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x10game_platform_id\x18\x06 \x01(\x03R\x0egamePlatformId\x12(\n" +
 	"\x10game_category_id\x18\a \x01(\x03R\x0egameCategoryId\x12*\n" +
 	"\x11game_platform_ids\x18\b \x03(\x03R\x0fgamePlatformIds\x12\x19\n" +
-	"\border_by\x18\t \x01(\tR\aorderBy\"n\n" +
+	"\border_by\x18\t \x01(\tR\aorderBy\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\n" +
+	" \x01(\x03R\tchannelId\"n\n" +
 	"\x15GameHandelFavoriteReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x17\n" +
 	"\agame_id\x18\x02 \x01(\x03R\x06gameId\x12#\n" +
@@ -11068,7 +11135,7 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x10game_category_id\x18\a \x01(\x03R\x0egameCategoryId\x12#\n" +
 	"\rcurrency_code\x18\x05 \x01(\tR\fcurrencyCode\x12\x1d\n" +
 	"\n" +
-	"search_key\x18\b \x01(\tR\tsearchKey\"\xf5\x01\n" +
+	"search_key\x18\b \x01(\tR\tsearchKey\"\x94\x02\n" +
 	"\x11GetHotGameListReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x03R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\x12(\n" +
@@ -11077,7 +11144,9 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\auser_id\x18\x05 \x01(\x03R\x06userId\x12(\n" +
 	"\x10game_category_id\x18\a \x01(\x03R\x0egameCategoryId\x12\x1d\n" +
 	"\n" +
-	"search_key\x18\b \x01(\tR\tsearchKey\"<\n" +
+	"search_key\x18\b \x01(\tR\tsearchKey\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\t \x01(\x03R\tchannelId\"<\n" +
 	"\x15GetHotPlatformListReq\x12#\n" +
 	"\rcurrency_code\x18\x01 \x01(\tR\fcurrencyCode\"J\n" +
 	"\x17GetHotPlatformListReply\x12/\n" +
@@ -11151,12 +11220,14 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\n" +
 	"bet_amount\x18\t \x01(\x03R\tbetAmount\x12\"\n" +
 	"\ruser_win_loss\x18\n" +
-	" \x01(\x03R\vuserWinLoss\"\x90\x01\n" +
+	" \x01(\x03R\vuserWinLoss\"\xaf\x01\n" +
 	"\x12GetHomeGameItemReq\x12\x10\n" +
 	"\x03num\x18\x01 \x01(\x03R\x03num\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12*\n" +
 	"\x11game_category_ids\x18\x03 \x03(\x03R\x0fgameCategoryIds\x12\x17\n" +
-	"\auser_id\x18\x04 \x01(\x03R\x06userId\"H\n" +
+	"\auser_id\x18\x04 \x01(\x03R\x06userId\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\t \x01(\x03R\tchannelId\"H\n" +
 	"\x13PlatformDetailsList\x121\n" +
 	"\x05items\x18\x01 \x03(\v2\x1b.game.v1.GamePlatformDetailR\x05items\"=\n" +
 	"\x0fGameDetailsList\x12*\n" +
@@ -11266,14 +11337,16 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\x1aFetchGamePlatformMetaReply\x125\n" +
 	"\vgame_detail\x18\x01 \x01(\v2\x14.game.v1.GameDetailsR\n" +
 	"gameDetail\x12D\n" +
-	"\x0fplatform_detail\x18\x02 \x01(\v2\x1b.game.v1.GamePlatformDetailR\x0eplatformDetail\"\xda\x01\n" +
+	"\x0fplatform_detail\x18\x02 \x01(\v2\x1b.game.v1.GamePlatformDetailR\x0eplatformDetail\"\xf9\x01\n" +
 	"\x15FetchHotManagementReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x03R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\x12(\n" +
 	"\x10game_platform_id\x18\x03 \x01(\x03R\x0egamePlatformId\x12#\n" +
 	"\rcurrency_code\x18\x04 \x01(\tR\fcurrencyCode\x12\x17\n" +
 	"\auser_id\x18\x05 \x01(\x03R\x06userId\x12(\n" +
-	"\x10game_category_id\x18\a \x01(\x03R\x0egameCategoryId\"\xaf\x01\n" +
+	"\x10game_category_id\x18\a \x01(\x03R\x0egameCategoryId\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\t \x01(\x03R\tchannelId\"\xaf\x01\n" +
 	"\x17FetchHotManagementReply\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x03R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\x12\x14\n" +
@@ -11289,16 +11362,22 @@ const file_proto_game_v1_game_proto_rawDesc = "" +
 	"\fhot_category\x18\x05 \x01(\x03R\vhotCategory\x12(\n" +
 	"\x10game_category_id\x18\x06 \x01(\x03R\x0egameCategoryId\x12(\n" +
 	"\x10game_platform_id\x18\a \x01(\x03R\x0egamePlatformId\x12\x17\n" +
-	"\agame_id\x18\b \x01(\x03R\x06gameId\".\n" +
+	"\agame_id\x18\b \x01(\x03R\x06gameId\"r\n" +
 	"\x13FetchGameMapByIDReq\x12\x17\n" +
-	"\agame_id\x18\x01 \x03(\x03R\x06gameId\"\xa4\x01\n" +
+	"\agame_id\x18\x01 \x03(\x03R\x06gameId\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\x02 \x01(\x03R\tchannelId\x12#\n" +
+	"\rcurrency_code\x18\x03 \x01(\tR\fcurrencyCode\"\xa4\x01\n" +
 	"\x15FetchGameMapByIDReply\x12<\n" +
 	"\x04info\x18\x01 \x03(\v2(.game.v1.FetchGameMapByIDReply.InfoEntryR\x04info\x1aM\n" +
 	"\tInfoEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x03R\x03key\x12*\n" +
-	"\x05value\x18\x02 \x01(\v2\x14.game.v1.GameDetailsR\x05value:\x028\x01\"C\n" +
+	"\x05value\x18\x02 \x01(\v2\x14.game.v1.GameDetailsR\x05value:\x028\x01\"\x87\x01\n" +
 	"\x17FetchPlatformMapByIDReq\x12(\n" +
-	"\x10game_platform_id\x18\x01 \x03(\x03R\x0egamePlatformId\"\xb3\x01\n" +
+	"\x10game_platform_id\x18\x01 \x03(\x03R\x0egamePlatformId\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\x02 \x01(\x03R\tchannelId\x12#\n" +
+	"\rcurrency_code\x18\x03 \x01(\tR\fcurrencyCode\"\xb3\x01\n" +
 	"\x19FetchPlatformMapByIDReply\x12@\n" +
 	"\x04info\x18\x01 \x03(\v2,.game.v1.FetchPlatformMapByIDReply.InfoEntryR\x04info\x1aT\n" +
 	"\tInfoEntry\x12\x10\n" +
