@@ -17,7 +17,7 @@ message PayInReq {
   string extra = 11; // 扩展字段
   string account = 12;// 用户付款帐号（选填）
   string convert_currency_code = 13; // 转换币种（选填）
-  string convert_amount = 14; // 转换币种金额（选填）
+  int64 convert_amount = 14; // 转换币种金额（选填）
 }
 
 message PayInResp {

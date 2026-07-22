@@ -831,7 +831,7 @@ type PayInReq struct {
 	Extra               string                 `protobuf:"bytes,11,opt,name=extra,proto3" json:"extra,omitempty"`                                                          // 扩展字段
 	Account             string                 `protobuf:"bytes,12,opt,name=account,proto3" json:"account,omitempty"`                                                      // 用户付款帐号（选填）
 	ConvertCurrencyCode string                 `protobuf:"bytes,13,opt,name=convert_currency_code,json=convertCurrencyCode,proto3" json:"convert_currency_code,omitempty"` // 转换币种（选填）
-	ConvertAmount       string                 `protobuf:"bytes,14,opt,name=convert_amount,json=convertAmount,proto3" json:"convert_amount,omitempty"`                     // 转换币种金额（选填）
+	ConvertAmount       int64                  `protobuf:"varint,14,opt,name=convert_amount,json=convertAmount,proto3" json:"convert_amount,omitempty"`                    // 转换币种金额（选填）
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -957,11 +957,11 @@ func (x *PayInReq) GetConvertCurrencyCode() string {
 	return ""
 }
 
-func (x *PayInReq) GetConvertAmount() string {
+func (x *PayInReq) GetConvertAmount() int64 {
 	if x != nil {
 		return x.ConvertAmount
 	}
-	return ""
+	return 0
 }
 
 type PayInResp struct {
@@ -4587,7 +4587,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x05extra\x18\v \x01(\tR\x05extra\x12\x18\n" +
 	"\aaccount\x18\f \x01(\tR\aaccount\x122\n" +
 	"\x15convert_currency_code\x18\r \x01(\tR\x13convertCurrencyCode\x12%\n" +
-	"\x0econvert_amount\x18\x0e \x01(\tR\rconvertAmount\"\xa7\x01\n" +
+	"\x0econvert_amount\x18\x0e \x01(\x03R\rconvertAmount\"\xa7\x01\n" +
 	"\tPayInResp\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\x03R\x06status\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12,\n" +
