@@ -126,6 +126,7 @@ message CalcRechargeReq {
   int32 recharge_target = 6; // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
   int32 target_id = 7; // 充值目标ID （默认值0)
   int32 sub_target_id = 8; // 充值目标子ID （默认值0）
+  string language = 9;        //语言
 }
 
 message BonusRecord {

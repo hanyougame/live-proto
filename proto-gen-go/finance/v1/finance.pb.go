@@ -1650,6 +1650,7 @@ type CalcRechargeReq struct {
 	RechargeTarget       int32                  `protobuf:"varint,6,opt,name=recharge_target,json=rechargeTarget,proto3" json:"recharge_target,omitempty"`                    // 充值目标 1 用户钱包 , 2 周卡 , 3 月卡 （默认值1)
 	TargetId             int32                  `protobuf:"varint,7,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`                                      // 充值目标ID （默认值0)
 	SubTargetId          int32                  `protobuf:"varint,8,opt,name=sub_target_id,json=subTargetId,proto3" json:"sub_target_id,omitempty"`                           // 充值目标子ID （默认值0）
+	Language             string                 `protobuf:"bytes,9,opt,name=language,proto3" json:"language,omitempty"`                                                       //语言
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1738,6 +1739,13 @@ func (x *CalcRechargeReq) GetSubTargetId() int32 {
 		return x.SubTargetId
 	}
 	return 0
+}
+
+func (x *CalcRechargeReq) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
 }
 
 type BonusRecord struct {
@@ -4651,7 +4659,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\vBalanceResp\x12\x18\n" +
 	"\abalance\x18\x01 \x01(\x03R\abalance\x12#\n" +
 	"\rcurrency_code\x18\x02 \x01(\tR\fcurrencyCode\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\x03R\x06status\"\xc2\x02\n" +
+	"\x06status\x18\x03 \x01(\x03R\x06status\"\xde\x02\n" +
 	"\x0fCalcRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x12.\n" +
@@ -4661,7 +4669,8 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x16recharge_currency_code\x18\x05 \x01(\tR\x14rechargeCurrencyCode\x12'\n" +
 	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\x12\x1b\n" +
 	"\ttarget_id\x18\a \x01(\x05R\btargetId\x12\"\n" +
-	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\"\xf7\x01\n" +
+	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\x12\x1a\n" +
+	"\blanguage\x18\t \x01(\tR\blanguage\"\xf7\x01\n" +
 	"\vBonusRecord\x12\x1d\n" +
 	"\n" +
 	"bonus_type\x18\x01 \x01(\x03R\tbonusType\x12\x16\n" +
