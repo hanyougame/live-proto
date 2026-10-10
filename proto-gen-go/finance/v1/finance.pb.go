@@ -1749,16 +1749,19 @@ func (x *CalcRechargeReq) GetLanguage() string {
 }
 
 type BonusRecord struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	BonusType      int64                  `protobuf:"varint,1,opt,name=bonus_type,json=bonusType,proto3" json:"bonus_type,omitempty"`                //奖励类型 1-充值通道 2-推荐金额 3-首充 4-多充 5-累计充值 6-单笔充值 7-充值次数
-	Reward         int64                  `protobuf:"varint,2,opt,name=reward,proto3" json:"reward,omitempty"`                                       //奖励金额
-	RewardRate     string                 `protobuf:"bytes,3,opt,name=reward_rate,json=rewardRate,proto3" json:"reward_rate,omitempty"`              //奖励金额比例（固定金额为空）
-	RewardStage    int64                  `protobuf:"varint,4,opt,name=reward_stage,json=rewardStage,proto3" json:"reward_stage,omitempty"`          //奖励阶段（多充活动）
-	RechargeCount  int64                  `protobuf:"varint,5,opt,name=recharge_count,json=rechargeCount,proto3" json:"recharge_count,omitempty"`    //充值次数（多充活动|充值次数活动）
-	RechargeAmount int64                  `protobuf:"varint,6,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"` //充值金额(累充活动|单笔充值活动)
-	BonusName      string                 `protobuf:"bytes,7,opt,name=bonus_name,json=bonusName,proto3" json:"bonus_name,omitempty"`                 //奖励名称(活动名称)
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	BonusType       int64                  `protobuf:"varint,1,opt,name=bonus_type,json=bonusType,proto3" json:"bonus_type,omitempty"`                     //奖励类型 1-充值通道 2-推荐金额 3-首充 4-多充 5-累计充值 6-单笔充值 7-充值次数
+	Reward          int64                  `protobuf:"varint,2,opt,name=reward,proto3" json:"reward,omitempty"`                                            //奖励金额
+	RewardRate      string                 `protobuf:"bytes,3,opt,name=reward_rate,json=rewardRate,proto3" json:"reward_rate,omitempty"`                   //奖励金额比例（固定金额为空）
+	RewardStage     int64                  `protobuf:"varint,4,opt,name=reward_stage,json=rewardStage,proto3" json:"reward_stage,omitempty"`               //奖励阶段（多充活动）
+	RechargeCount   int64                  `protobuf:"varint,5,opt,name=recharge_count,json=rechargeCount,proto3" json:"recharge_count,omitempty"`         //充值次数（多充活动|充值次数活动）
+	RechargeAmount  int64                  `protobuf:"varint,6,opt,name=recharge_amount,json=rechargeAmount,proto3" json:"recharge_amount,omitempty"`      //充值金额(累充活动|单笔充值活动)
+	BonusName       string                 `protobuf:"bytes,7,opt,name=bonus_name,json=bonusName,proto3" json:"bonus_name,omitempty"`                      //奖励名称(活动名称)
+	BonusId         int64                  `protobuf:"varint,8,opt,name=bonus_id,json=bonusId,proto3" json:"bonus_id,omitempty"`                           //奖励ID(活动ID)
+	BonusAmountFrom int64                  `protobuf:"varint,9,opt,name=bonus_amount_from,json=bonusAmountFrom,proto3" json:"bonus_amount_from,omitempty"` //奖励金额起始值(随机奖金方式)
+	BonusAmountTo   int64                  `protobuf:"varint,10,opt,name=bonus_amount_to,json=bonusAmountTo,proto3" json:"bonus_amount_to,omitempty"`      //奖励金额结束值(随机奖金方式)
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *BonusRecord) Reset() {
@@ -1840,6 +1843,27 @@ func (x *BonusRecord) GetBonusName() string {
 	return ""
 }
 
+func (x *BonusRecord) GetBonusId() int64 {
+	if x != nil {
+		return x.BonusId
+	}
+	return 0
+}
+
+func (x *BonusRecord) GetBonusAmountFrom() int64 {
+	if x != nil {
+		return x.BonusAmountFrom
+	}
+	return 0
+}
+
+func (x *BonusRecord) GetBonusAmountTo() int64 {
+	if x != nil {
+		return x.BonusAmountTo
+	}
+	return 0
+}
+
 type CalcRechargeResp struct {
 	state                        protoimpl.MessageState `protogen:"open.v1"`
 	Amount                       int64                  `protobuf:"varint,1,opt,name=amount,proto3" json:"amount,omitempty"`                                                                                       // 充值金额
@@ -1852,6 +1876,7 @@ type CalcRechargeResp struct {
 	MultiRechargeReward          int64                  `protobuf:"varint,8,opt,name=multi_recharge_reward,json=multiRechargeReward,proto3" json:"multi_recharge_reward,omitempty"`                                //多充奖励金额
 	TotalBonusAmount             int64                  `protobuf:"varint,9,opt,name=TotalBonusAmount,proto3" json:"TotalBonusAmount,omitempty"`                                                                   //总奖励金额(通道赠送+推荐金额赠送+首充奖励金额+多充奖励金额+累计充值活动奖励金额)
 	BonusList                    []*BonusRecord         `protobuf:"bytes,10,rep,name=bonus_list,json=bonusList,proto3" json:"bonus_list,omitempty"`                                                                //奖励明细列表
+	ManualBonusList              []*BonusRecord         `protobuf:"bytes,11,rep,name=manual_bonus_list,json=manualBonusList,proto3" json:"manual_bonus_list,omitempty"`                                            //手动领取奖励明细列表
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
@@ -1952,6 +1977,13 @@ func (x *CalcRechargeResp) GetTotalBonusAmount() int64 {
 func (x *CalcRechargeResp) GetBonusList() []*BonusRecord {
 	if x != nil {
 		return x.BonusList
+	}
+	return nil
+}
+
+func (x *CalcRechargeResp) GetManualBonusList() []*BonusRecord {
+	if x != nil {
+		return x.ManualBonusList
 	}
 	return nil
 }
@@ -4670,7 +4702,7 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x0frecharge_target\x18\x06 \x01(\x05R\x0erechargeTarget\x12\x1b\n" +
 	"\ttarget_id\x18\a \x01(\x05R\btargetId\x12\"\n" +
 	"\rsub_target_id\x18\b \x01(\x05R\vsubTargetId\x12\x1a\n" +
-	"\blanguage\x18\t \x01(\tR\blanguage\"\xf7\x01\n" +
+	"\blanguage\x18\t \x01(\tR\blanguage\"\xe6\x02\n" +
 	"\vBonusRecord\x12\x1d\n" +
 	"\n" +
 	"bonus_type\x18\x01 \x01(\x03R\tbonusType\x12\x16\n" +
@@ -4681,7 +4713,11 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x0erecharge_count\x18\x05 \x01(\x03R\rrechargeCount\x12'\n" +
 	"\x0frecharge_amount\x18\x06 \x01(\x03R\x0erechargeAmount\x12\x1d\n" +
 	"\n" +
-	"bonus_name\x18\a \x01(\tR\tbonusName\"\xed\x03\n" +
+	"bonus_name\x18\a \x01(\tR\tbonusName\x12\x19\n" +
+	"\bbonus_id\x18\b \x01(\x03R\abonusId\x12*\n" +
+	"\x11bonus_amount_from\x18\t \x01(\x03R\x0fbonusAmountFrom\x12&\n" +
+	"\x0fbonus_amount_to\x18\n" +
+	" \x01(\x03R\rbonusAmountTo\"\xb2\x04\n" +
 	"\x10CalcRechargeResp\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\x03R\x06amount\x124\n" +
 	"\x16actual_received_amount\x18\x02 \x01(\x03R\x14actualReceivedAmount\x12#\n" +
@@ -4694,7 +4730,8 @@ const file_proto_finance_v1_finance_proto_rawDesc = "" +
 	"\x10TotalBonusAmount\x18\t \x01(\x03R\x10TotalBonusAmount\x126\n" +
 	"\n" +
 	"bonus_list\x18\n" +
-	" \x03(\v2\x17.finance.v1.BonusRecordR\tbonusList\"\xea\x06\n" +
+	" \x03(\v2\x17.finance.v1.BonusRecordR\tbonusList\x12C\n" +
+	"\x11manual_bonus_list\x18\v \x03(\v2\x17.finance.v1.BonusRecordR\x0fmanualBonusList\"\xea\x06\n" +
 	"\vRechargeReq\x12\x1d\n" +
 	"\n" +
 	"order_type\x18\x01 \x01(\x03R\torderType\x120\n" +
@@ -5215,66 +5252,67 @@ var file_proto_finance_v1_finance_proto_depIdxs = []int32{
 	0,  // 0: finance.v1.PayInStatusResp.status:type_name -> finance.v1.PayInStatus
 	1,  // 1: finance.v1.PayOutStatusResp.status:type_name -> finance.v1.PayOutStatus
 	18, // 2: finance.v1.CalcRechargeResp.bonus_list:type_name -> finance.v1.BonusRecord
-	4,  // 3: finance.v1.AddAuditReq.auto_release_type:type_name -> finance.v1.AutoReleaseType
-	2,  // 4: finance.v1.AddAuditReq.audit_type:type_name -> finance.v1.AuditType
-	3,  // 5: finance.v1.AddAuditReq.audit_sub_type:type_name -> finance.v1.AuditSubType
-	5,  // 6: finance.v1.AddAuditReq.audit_withdraw_type:type_name -> finance.v1.AuditWithdrawType
-	39, // 7: finance.v1.GetAuditListResp.audit_list:type_name -> finance.v1.AuditInfo
-	4,  // 8: finance.v1.AddAudit.auto_release_type:type_name -> finance.v1.AutoReleaseType
-	2,  // 9: finance.v1.AddAudit.audit_type:type_name -> finance.v1.AuditType
-	3,  // 10: finance.v1.AddAudit.audit_sub_type:type_name -> finance.v1.AuditSubType
-	5,  // 11: finance.v1.AddAudit.audit_withdraw_type:type_name -> finance.v1.AuditWithdrawType
-	41, // 12: finance.v1.BatchAddAuditReq.audit_list:type_name -> finance.v1.AddAudit
-	6,  // 13: finance.v1.AddWithdrawLimitReq.withdraw_limit_type:type_name -> finance.v1.WithdrawLimitType
-	7,  // 14: finance.v1.LivePaymentRpcService.PayIn:input_type -> finance.v1.PayInReq
-	9,  // 15: finance.v1.LivePaymentRpcService.PayOut:input_type -> finance.v1.PayOutReq
-	11, // 16: finance.v1.LivePaymentRpcService.PayInStatus:input_type -> finance.v1.PayInStatusReq
-	13, // 17: finance.v1.LivePaymentRpcService.PayOutStatus:input_type -> finance.v1.PayOutStatusReq
-	15, // 18: finance.v1.LivePaymentRpcService.Balance:input_type -> finance.v1.BalanceReq
-	20, // 19: finance.v1.LivePaymentRpcService.Recharge:input_type -> finance.v1.RechargeReq
-	50, // 20: finance.v1.LivePaymentRpcService.Withdraw:input_type -> finance.v1.WithdrawReq
-	22, // 21: finance.v1.LivePaymentRpcService.AutoWithdrawJudge:input_type -> finance.v1.AutoWithdrawJudgeReq
-	24, // 22: finance.v1.LivePaymentRpcService.AutoWithdraw:input_type -> finance.v1.AutoWithdrawReq
-	26, // 23: finance.v1.LivePaymentRpcService.CalcWithdrawFee:input_type -> finance.v1.CalcWithdrawFeeReq
-	28, // 24: finance.v1.LivePaymentRpcService.AutoWithdrawMatch:input_type -> finance.v1.AutoWithdrawMatchReq
-	30, // 25: finance.v1.LivePaymentRpcService.ReWithdraw:input_type -> finance.v1.ReWithdrawReq
-	17, // 26: finance.v1.LivePaymentRpcService.CalcRecharge:input_type -> finance.v1.CalcRechargeReq
-	32, // 27: finance.v1.LiveAuditRpcService.AddAudit:input_type -> finance.v1.AddAuditReq
-	34, // 28: finance.v1.LiveAuditRpcService.UpdateAuditAmount:input_type -> finance.v1.UpdateAuditAmountReq
-	36, // 29: finance.v1.LiveAuditRpcService.GetAuditInfo:input_type -> finance.v1.GetAuditInfoReq
-	38, // 30: finance.v1.LiveAuditRpcService.GetAuditList:input_type -> finance.v1.GetAuditListReq
-	42, // 31: finance.v1.LiveAuditRpcService.BatchAddAudit:input_type -> finance.v1.BatchAddAuditReq
-	44, // 32: finance.v1.LiveAuditRpcService.UpdateWithdrawAmount:input_type -> finance.v1.UpdateWithdrawAmountReq
-	46, // 33: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:input_type -> finance.v1.AddWithdrawLimitReq
-	48, // 34: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:input_type -> finance.v1.UpdateWithdrawLimitAmountReq
-	52, // 35: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:input_type -> finance.v1.ExchangeRateReq
-	8,  // 36: finance.v1.LivePaymentRpcService.PayIn:output_type -> finance.v1.PayInResp
-	10, // 37: finance.v1.LivePaymentRpcService.PayOut:output_type -> finance.v1.PayOutResp
-	12, // 38: finance.v1.LivePaymentRpcService.PayInStatus:output_type -> finance.v1.PayInStatusResp
-	14, // 39: finance.v1.LivePaymentRpcService.PayOutStatus:output_type -> finance.v1.PayOutStatusResp
-	16, // 40: finance.v1.LivePaymentRpcService.Balance:output_type -> finance.v1.BalanceResp
-	21, // 41: finance.v1.LivePaymentRpcService.Recharge:output_type -> finance.v1.RechargeResp
-	51, // 42: finance.v1.LivePaymentRpcService.Withdraw:output_type -> finance.v1.WithdrawResp
-	23, // 43: finance.v1.LivePaymentRpcService.AutoWithdrawJudge:output_type -> finance.v1.AutoWithdrawJudgeResp
-	25, // 44: finance.v1.LivePaymentRpcService.AutoWithdraw:output_type -> finance.v1.AutoWithdrawResp
-	27, // 45: finance.v1.LivePaymentRpcService.CalcWithdrawFee:output_type -> finance.v1.CalcWithdrawFeeResp
-	29, // 46: finance.v1.LivePaymentRpcService.AutoWithdrawMatch:output_type -> finance.v1.AutoWithdrawMatchResp
-	31, // 47: finance.v1.LivePaymentRpcService.ReWithdraw:output_type -> finance.v1.ReWithdrawResp
-	19, // 48: finance.v1.LivePaymentRpcService.CalcRecharge:output_type -> finance.v1.CalcRechargeResp
-	33, // 49: finance.v1.LiveAuditRpcService.AddAudit:output_type -> finance.v1.AddAuditResp
-	35, // 50: finance.v1.LiveAuditRpcService.UpdateAuditAmount:output_type -> finance.v1.UpdateAuditAmountResp
-	37, // 51: finance.v1.LiveAuditRpcService.GetAuditInfo:output_type -> finance.v1.GetAuditInfoResp
-	40, // 52: finance.v1.LiveAuditRpcService.GetAuditList:output_type -> finance.v1.GetAuditListResp
-	43, // 53: finance.v1.LiveAuditRpcService.BatchAddAudit:output_type -> finance.v1.BatchAddAuditResp
-	45, // 54: finance.v1.LiveAuditRpcService.UpdateWithdrawAmount:output_type -> finance.v1.UpdateWithdrawAmountResp
-	47, // 55: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:output_type -> finance.v1.AddWithdrawLimitResp
-	49, // 56: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:output_type -> finance.v1.UpdateWithdrawLimitAmountResp
-	53, // 57: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:output_type -> finance.v1.ExchangeRateResp
-	36, // [36:58] is the sub-list for method output_type
-	14, // [14:36] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	18, // 3: finance.v1.CalcRechargeResp.manual_bonus_list:type_name -> finance.v1.BonusRecord
+	4,  // 4: finance.v1.AddAuditReq.auto_release_type:type_name -> finance.v1.AutoReleaseType
+	2,  // 5: finance.v1.AddAuditReq.audit_type:type_name -> finance.v1.AuditType
+	3,  // 6: finance.v1.AddAuditReq.audit_sub_type:type_name -> finance.v1.AuditSubType
+	5,  // 7: finance.v1.AddAuditReq.audit_withdraw_type:type_name -> finance.v1.AuditWithdrawType
+	39, // 8: finance.v1.GetAuditListResp.audit_list:type_name -> finance.v1.AuditInfo
+	4,  // 9: finance.v1.AddAudit.auto_release_type:type_name -> finance.v1.AutoReleaseType
+	2,  // 10: finance.v1.AddAudit.audit_type:type_name -> finance.v1.AuditType
+	3,  // 11: finance.v1.AddAudit.audit_sub_type:type_name -> finance.v1.AuditSubType
+	5,  // 12: finance.v1.AddAudit.audit_withdraw_type:type_name -> finance.v1.AuditWithdrawType
+	41, // 13: finance.v1.BatchAddAuditReq.audit_list:type_name -> finance.v1.AddAudit
+	6,  // 14: finance.v1.AddWithdrawLimitReq.withdraw_limit_type:type_name -> finance.v1.WithdrawLimitType
+	7,  // 15: finance.v1.LivePaymentRpcService.PayIn:input_type -> finance.v1.PayInReq
+	9,  // 16: finance.v1.LivePaymentRpcService.PayOut:input_type -> finance.v1.PayOutReq
+	11, // 17: finance.v1.LivePaymentRpcService.PayInStatus:input_type -> finance.v1.PayInStatusReq
+	13, // 18: finance.v1.LivePaymentRpcService.PayOutStatus:input_type -> finance.v1.PayOutStatusReq
+	15, // 19: finance.v1.LivePaymentRpcService.Balance:input_type -> finance.v1.BalanceReq
+	20, // 20: finance.v1.LivePaymentRpcService.Recharge:input_type -> finance.v1.RechargeReq
+	50, // 21: finance.v1.LivePaymentRpcService.Withdraw:input_type -> finance.v1.WithdrawReq
+	22, // 22: finance.v1.LivePaymentRpcService.AutoWithdrawJudge:input_type -> finance.v1.AutoWithdrawJudgeReq
+	24, // 23: finance.v1.LivePaymentRpcService.AutoWithdraw:input_type -> finance.v1.AutoWithdrawReq
+	26, // 24: finance.v1.LivePaymentRpcService.CalcWithdrawFee:input_type -> finance.v1.CalcWithdrawFeeReq
+	28, // 25: finance.v1.LivePaymentRpcService.AutoWithdrawMatch:input_type -> finance.v1.AutoWithdrawMatchReq
+	30, // 26: finance.v1.LivePaymentRpcService.ReWithdraw:input_type -> finance.v1.ReWithdrawReq
+	17, // 27: finance.v1.LivePaymentRpcService.CalcRecharge:input_type -> finance.v1.CalcRechargeReq
+	32, // 28: finance.v1.LiveAuditRpcService.AddAudit:input_type -> finance.v1.AddAuditReq
+	34, // 29: finance.v1.LiveAuditRpcService.UpdateAuditAmount:input_type -> finance.v1.UpdateAuditAmountReq
+	36, // 30: finance.v1.LiveAuditRpcService.GetAuditInfo:input_type -> finance.v1.GetAuditInfoReq
+	38, // 31: finance.v1.LiveAuditRpcService.GetAuditList:input_type -> finance.v1.GetAuditListReq
+	42, // 32: finance.v1.LiveAuditRpcService.BatchAddAudit:input_type -> finance.v1.BatchAddAuditReq
+	44, // 33: finance.v1.LiveAuditRpcService.UpdateWithdrawAmount:input_type -> finance.v1.UpdateWithdrawAmountReq
+	46, // 34: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:input_type -> finance.v1.AddWithdrawLimitReq
+	48, // 35: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:input_type -> finance.v1.UpdateWithdrawLimitAmountReq
+	52, // 36: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:input_type -> finance.v1.ExchangeRateReq
+	8,  // 37: finance.v1.LivePaymentRpcService.PayIn:output_type -> finance.v1.PayInResp
+	10, // 38: finance.v1.LivePaymentRpcService.PayOut:output_type -> finance.v1.PayOutResp
+	12, // 39: finance.v1.LivePaymentRpcService.PayInStatus:output_type -> finance.v1.PayInStatusResp
+	14, // 40: finance.v1.LivePaymentRpcService.PayOutStatus:output_type -> finance.v1.PayOutStatusResp
+	16, // 41: finance.v1.LivePaymentRpcService.Balance:output_type -> finance.v1.BalanceResp
+	21, // 42: finance.v1.LivePaymentRpcService.Recharge:output_type -> finance.v1.RechargeResp
+	51, // 43: finance.v1.LivePaymentRpcService.Withdraw:output_type -> finance.v1.WithdrawResp
+	23, // 44: finance.v1.LivePaymentRpcService.AutoWithdrawJudge:output_type -> finance.v1.AutoWithdrawJudgeResp
+	25, // 45: finance.v1.LivePaymentRpcService.AutoWithdraw:output_type -> finance.v1.AutoWithdrawResp
+	27, // 46: finance.v1.LivePaymentRpcService.CalcWithdrawFee:output_type -> finance.v1.CalcWithdrawFeeResp
+	29, // 47: finance.v1.LivePaymentRpcService.AutoWithdrawMatch:output_type -> finance.v1.AutoWithdrawMatchResp
+	31, // 48: finance.v1.LivePaymentRpcService.ReWithdraw:output_type -> finance.v1.ReWithdrawResp
+	19, // 49: finance.v1.LivePaymentRpcService.CalcRecharge:output_type -> finance.v1.CalcRechargeResp
+	33, // 50: finance.v1.LiveAuditRpcService.AddAudit:output_type -> finance.v1.AddAuditResp
+	35, // 51: finance.v1.LiveAuditRpcService.UpdateAuditAmount:output_type -> finance.v1.UpdateAuditAmountResp
+	37, // 52: finance.v1.LiveAuditRpcService.GetAuditInfo:output_type -> finance.v1.GetAuditInfoResp
+	40, // 53: finance.v1.LiveAuditRpcService.GetAuditList:output_type -> finance.v1.GetAuditListResp
+	43, // 54: finance.v1.LiveAuditRpcService.BatchAddAudit:output_type -> finance.v1.BatchAddAuditResp
+	45, // 55: finance.v1.LiveAuditRpcService.UpdateWithdrawAmount:output_type -> finance.v1.UpdateWithdrawAmountResp
+	47, // 56: finance.v1.LiveWithdrawLimitRpcService.AddWithdrawLimit:output_type -> finance.v1.AddWithdrawLimitResp
+	49, // 57: finance.v1.LiveWithdrawLimitRpcService.UpdateWithdrawLimitAmount:output_type -> finance.v1.UpdateWithdrawLimitAmountResp
+	53, // 58: finance.v1.LiveExchangeRateRpcService.GetExchangeRate:output_type -> finance.v1.ExchangeRateResp
+	37, // [37:59] is the sub-list for method output_type
+	15, // [15:37] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_proto_finance_v1_finance_proto_init() }

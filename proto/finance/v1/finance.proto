@@ -137,6 +137,9 @@ message BonusRecord {
   int64 recharge_count = 5;//充值次数（多充活动|充值次数活动）
   int64 recharge_amount = 6;//充值金额(累充活动|单笔充值活动)
   string bonus_name = 7;//奖励名称(活动名称)
+  int64 bonus_id = 8;//奖励ID(活动ID)
+  int64 bonus_amount_from = 9;//奖励金额起始值(随机奖金方式)
+  int64 bonus_amount_to = 10;//奖励金额结束值(随机奖金方式)
 }
 
 message CalcRechargeResp {
@@ -150,6 +153,7 @@ message CalcRechargeResp {
   int64 multi_recharge_reward = 8;//多充奖励金额
   int64 TotalBonusAmount = 9;//总奖励金额(通道赠送+推荐金额赠送+首充奖励金额+多充奖励金额+累计充值活动奖励金额)
   repeated BonusRecord bonus_list = 10; //奖励明细列表
+  repeated BonusRecord manual_bonus_list = 11; //手动领取奖励明细列表
 }
 
 message RechargeReq {
